@@ -29,74 +29,113 @@ const SH = ({ n, t }: { n: string; t: string }) => (
 export default function Home() {
   return (
     <>
-      {/* ── HERO ── */}
-      <section id="home" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: "80px 48px 60px", borderBottom: "1px solid var(--border)", position: "relative" }}>
+      {/* ── HERO: CHARACTER SELECT ── */}
+      <section id="home" style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "1fr 1fr", borderBottom: "1px solid var(--border)", position: "relative" }}>
 
-        {/* Top label */}
-        <p style={{ fontSize: 9, letterSpacing: ".26em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 48, display: "flex", alignItems: "center", gap: 16, animation: "fadeUp .6s .4s ease both" }}>
-          <span style={{ width: 24, height: 1, background: "var(--terra)", display: "inline-block" }} />
-          Lagos · Bradford · Columbia · Wharton
-          <span style={{ width: 24, height: 1, background: "var(--terra)", display: "inline-block" }} />
-        </p>
+        {/* LEFT — Name card */}
+        <div style={{ borderRight: "1px solid var(--border)", padding: "80px 56px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
 
-        {/* Name */}
-        <h1 style={{ fontFamily: "var(--font-playfair),serif", fontWeight: 900, lineHeight: .88, letterSpacing: "-.04em", marginBottom: 0, animation: "fadeUp .9s .55s ease both" }}>
-          <span style={{ display: "block", fontSize: "clamp(52px,9vw,130px)", color: "var(--ink)" }}>Onaolapo</span>
-          <span style={{ display: "block", fontSize: "clamp(52px,9vw,130px)", color: "var(--ink)" }}>Michael</span>
-          <em style={{ display: "block", fontSize: "clamp(56px,10vw,148px)", color: "var(--terra)", fontStyle: "italic" }}>Odunjo.</em>
-        </h1>
+          {/* HUD top-left */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", animation: "fadeIn .5s .3s ease both", opacity: 0, animationFillMode: "forwards" }}>
+            <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 9, letterSpacing: ".18em", color: "var(--terra)" }}>P·1 / READY</span>
+            <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 9, letterSpacing: ".14em", color: "var(--muted)" }}>LVL 28 · UNLOCKED</span>
+          </div>
 
-        {/* Divider */}
-        <div style={{ width: 1, height: 48, background: "var(--border)", margin: "40px auto", animation: "fadeIn .6s 1.1s ease both" }} />
+          {/* Name */}
+          <div style={{ animation: "fadeUp .9s .5s ease both", opacity: 0, animationFillMode: "forwards" }}>
+            <h1 style={{ fontFamily: "var(--font-playfair),serif", fontWeight: 900, lineHeight: .86, letterSpacing: "-.04em", margin: 0 }}>
+              <span style={{ display: "block", fontSize: "clamp(56px,7.5vw,108px)", color: "var(--ink)" }}>Lapo</span>
+              <em style={{ display: "block", fontSize: "clamp(56px,7.5vw,108px)", color: "var(--terra)", fontStyle: "italic" }}>Odunjo.</em>
+            </h1>
+            <div style={{ width: 48, height: 3, background: "var(--terra)", margin: "28px 0" }} />
+            <p style={{ fontFamily: "var(--font-playfair),serif", fontStyle: "italic", fontSize: "clamp(15px,1.6vw,20px)", lineHeight: 1.6, color: "var(--mid)", maxWidth: 380 }}>
+              I build AI systems that survive contact with the real world.
+              <span className="cursor-blink" />
+            </p>
+          </div>
 
-        {/* Subtitle */}
-        <p style={{ fontFamily: "var(--font-playfair),serif", fontStyle: "italic", fontSize: "clamp(17px,2.2vw,26px)", lineHeight: 1.5, maxWidth: 560, color: "var(--ink)", marginBottom: 12, animation: "fadeUp .7s 1.2s ease both" }}>
-          I build AI systems that survive contact with the real world.
-          <span className="cursor-blink" />
-        </p>
-        <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 44, animation: "fadeUp .6s 1.3s ease both" }}>
-          Staff TPM · Wharton MBA · Kinage · Amazon · Capital One
-        </p>
-
-        {/* CTAs */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center", animation: "fadeUp .6s 1.4s ease both" }}>
-          {[
-            { label: "↓ Resume", href: "/resume.pdf", primary: true, download: true },
-            { label: "See My Work", href: "/projects" },
-            { label: "LinkedIn", href: "https://linkedin.com/in/onaolapomichaelodunjo", external: true },
-            { label: "GitHub", href: "https://github.com/Omodunjo11", external: true },
-            { label: "Writing", href: "/writing" },
-          ].map((btn) => (
-            <Link key={btn.label} href={btn.href}
-              {...(btn.download ? { download: true } : {})}
-              target={btn.external ? "_blank" : undefined}
-              rel={btn.external ? "noopener" : undefined}
-              style={{ fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", border: "1px solid", borderColor: btn.primary ? "var(--terra)" : "var(--border)", padding: "10px 22px", borderRadius: 2, transition: "all .25s", background: btn.primary ? "var(--terra)" : "transparent", color: btn.primary ? "var(--paper)" : "inherit", fontWeight: btn.primary ? 600 : 400 }}
-              onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.color = "var(--paper)"; e.currentTarget.style.borderColor = "var(--ink)"; e.currentTarget.style.transform = "translateY(-1px)" }}
-              onMouseLeave={e => { e.currentTarget.style.background = btn.primary ? "var(--terra)" : "transparent"; e.currentTarget.style.color = btn.primary ? "var(--paper)" : "inherit"; e.currentTarget.style.borderColor = btn.primary ? "var(--terra)" : "var(--border)"; e.currentTarget.style.transform = "translateY(0)" }}
-            >{btn.label}</Link>
-          ))}
+          {/* Menu / CTAs styled as game menu */}
+          <div style={{ animation: "fadeUp .7s 1.1s ease both", opacity: 0, animationFillMode: "forwards" }}>
+            <div style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".2em", color: "var(--muted)", marginBottom: 12 }}>── SELECT ACTION ──</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+              {[
+                { label: "↓  Download Resume", href: "/resume.pdf", primary: true, download: true },
+                { label: "▶  View Projects", href: "/projects" },
+                { label: "▶  Read Writing", href: "/writing" },
+                { label: "▶  Connect on LinkedIn", href: "https://linkedin.com/in/onaolapomichaelodunjo", external: true },
+              ].map((btn) => (
+                <Link key={btn.label} href={btn.href}
+                  {...(btn.download ? { download: true } : {})}
+                  target={btn.external ? "_blank" : undefined}
+                  rel={btn.external ? "noopener" : undefined}
+                  style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 11, letterSpacing: ".06em", padding: "10px 16px", borderLeft: btn.primary ? "2px solid var(--terra)" : "2px solid transparent", color: btn.primary ? "var(--terra)" : "var(--mid)", transition: "all .18s", display: "block" }}
+                  onMouseEnter={e => { e.currentTarget.style.borderLeftColor = "var(--terra)"; e.currentTarget.style.color = "var(--ink)"; e.currentTarget.style.background = "rgba(196,98,45,.05)"; e.currentTarget.style.paddingLeft = "24px" }}
+                  onMouseLeave={e => { e.currentTarget.style.borderLeftColor = btn.primary ? "var(--terra)" : "transparent"; e.currentTarget.style.color = btn.primary ? "var(--terra)" : "var(--mid)"; e.currentTarget.style.background = "transparent"; e.currentTarget.style.paddingLeft = "16px" }}
+                >{btn.label}</Link>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* Scroll cue */}
-        <div style={{ position: "absolute", bottom: 28, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 6, animation: "fadeIn 1s 2s ease both", opacity: 0 }}>
-          <span style={{ fontSize: 8, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--muted)" }}>Scroll</span>
-          <div style={{ width: 1, height: 32, background: "var(--border)" }} />
+        {/* RIGHT — Stat sheet */}
+        <div style={{ padding: "80px 56px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+
+          {/* Class / faction */}
+          <div style={{ animation: "fadeIn .5s .5s ease both", opacity: 0, animationFillMode: "forwards" }}>
+            {[
+              { label: "Class", value: "Staff TPM · AI Systems Builder" },
+              { label: "Faction", value: "Wharton · Kinage · Amazon · Capital One" },
+              { label: "Region", value: "Lagos → Bradford → NYC → Philadelphia" },
+              { label: "Spec", value: "Regulated AI · Private Capital · Africa" },
+            ].map(({ label, value }) => (
+              <div key={label} style={{ display: "grid", gridTemplateColumns: "88px 1fr", gap: 16, padding: "14px 0", borderBottom: "1px solid var(--border)", alignItems: "baseline" }}>
+                <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--terra)" }}>{label}</span>
+                <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 11, color: "var(--mid)" }}>{value}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Stats */}
+          <div style={{ animation: "fadeUp .7s .8s ease both", opacity: 0, animationFillMode: "forwards" }}>
+            <div style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".2em", color: "var(--muted)", marginBottom: 20 }}>── CAREER STATS ──</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "var(--border)" }}>
+              {[
+                { n: "2B+", l: "Records Modeled" },
+                { n: "60+", l: "Companies Reviewed" },
+                { n: "36", l: "Countries Traveled" },
+                { n: "10", l: "African Markets" },
+              ].map(({ n, l }) => (
+                <div key={l} style={{ background: "var(--paper)", padding: "20px 24px", transition: "background .2s" }}
+                  onMouseEnter={e => (e.currentTarget.style.background = "var(--bg2)")}
+                  onMouseLeave={e => (e.currentTarget.style.background = "var(--paper)")}
+                >
+                  <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: 36, fontWeight: 900, lineHeight: 1, color: "var(--terra)", marginBottom: 4 }}>{n}</div>
+                  <div style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--muted)" }}>{l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom HUD */}
+          <div style={{ animation: "fadeIn .6s 1.3s ease both", opacity: 0, animationFillMode: "forwards" }}>
+            <div style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".18em", color: "var(--muted)", marginBottom: 10 }}>── CURRENT QUEST ──</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              {[
+                { k: "Active", v: "Kinage · Production AI" },
+                { k: "Side quest", v: "Wharton MBA '26" },
+                { k: "Building", v: "KOVA Credit Platform" },
+                { k: "Playing", v: "Civilization VII" },
+              ].map(({ k, v }) => (
+                <div key={k} style={{ display: "flex", gap: 12, alignItems: "center" }}>
+                  <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, color: "var(--terra)", width: 68, flexShrink: 0, letterSpacing: ".1em" }}>{k}</span>
+                  <span style={{ width: 1, height: 10, background: "var(--border)", flexShrink: 0 }} />
+                  <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 10, color: "var(--mid)" }}>{v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
-
-      {/* Stats bar */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 1, background: "var(--border)", borderBottom: "1px solid var(--border)" }}>
-        {[{ n: "2B+", l: "Records Modeled" }, { n: "60+", l: "Companies Reviewed" }, { n: "10", l: "African Markets" }, { n: "36", l: "Countries Traveled" }].map(({ n, l }) => (
-          <div key={l} style={{ background: "var(--paper)", padding: "28px 32px", textAlign: "center", transition: "background .2s" }}
-            onMouseEnter={e => (e.currentTarget.style.background = "var(--bg2)")}
-            onMouseLeave={e => (e.currentTarget.style.background = "var(--paper)")}
-          >
-            <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: 42, fontWeight: 900, lineHeight: 1, color: "var(--terra)", marginBottom: 6 }}>{n}</div>
-            <div style={{ fontSize: 9, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--muted)" }}>{l}</div>
-          </div>
-        ))}
-      </div>
 
       {/* ── STATUS BAR ── */}
       <div style={{ borderBottom: "1px solid var(--border)", background: "var(--ink)", padding: "10px 48px", display: "flex", alignItems: "center", gap: 32, flexWrap: "wrap", overflow: "hidden" }}>
