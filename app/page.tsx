@@ -30,62 +30,73 @@ export default function Home() {
   return (
     <>
       {/* ── HERO ── */}
-      <section id="home" className="grid-hero">
-        <div className="hero-left">
-          <p style={{ fontSize: 9, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 24, display: "flex", alignItems: "center", gap: 10, animation: "fadeUp .7s .5s ease both" }}>
-            <span style={{ width: 20, height: 1, background: "var(--terra)", display: "inline-block" }} />
-            AI Systems Architecture · Private Capital · Africa & U.S.
-          </p>
-          <h1 style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(52px,7vw,96px)", fontWeight: 900, lineHeight: .9, letterSpacing: "-.03em", marginBottom: 12, animation: "fadeUp .8s .65s ease both" }}>
-            Onaolapo<br />Michael<br /><em style={{ fontStyle: "italic", color: "var(--terra)" }}>Odunjo</em>
-          </h1>
-          <p style={{ fontSize: 11, color: "var(--muted)", fontStyle: "italic", marginBottom: 18, animation: "fadeUp .7s .8s ease both" }}>Lapo to most people</p>
-          <p style={{ fontFamily: "var(--font-playfair),serif", fontStyle: "italic", fontSize: "clamp(18px,2vw,24px)", lineHeight: 1.5, maxWidth: 440, marginBottom: 32, minHeight: 56, animation: "fadeUp .7s 1.05s ease both", color: "var(--ink)" }}>
-            I build AI systems that survive contact with the real world.
-            <span className="cursor-blink" />
-          </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 40, animation: "fadeUp .7s 1.15s ease both" }}>
-            {["Wharton MBA", "Kinage", "Amazon", "Capital One", "TD Bank"].map(tag => (
-              <span key={tag} style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", border: "1px solid var(--border)", padding: "4px 12px", borderRadius: 2, color: "var(--muted)" }}>{tag}</span>
-            ))}
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 10, animation: "fadeUp .7s 1.25s ease both" }}>
-            {[
-              { label: "↓ Resume", href: "/resume.pdf", primary: true, download: true },
-              { label: "See My Work", href: "/projects" },
-              { label: "LinkedIn", href: "https://linkedin.com/in/onaolapomichaelodunjo", external: true },
-              { label: "GitHub", href: "https://github.com/Omodunjo11", external: true },
-              { label: "Writing", href: "/writing" },
-            ].map((btn) => (
-              <Link key={btn.label} href={btn.href}
-                {...(btn.download ? { download: true } : {})}
-                target={btn.external ? "_blank" : undefined}
-                rel={btn.external ? "noopener" : undefined}
-                style={{ fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", border: "1px solid", borderColor: btn.primary ? "var(--terra)" : "var(--border)", padding: "9px 18px", borderRadius: 2, transition: "all .25s", background: btn.primary ? "var(--terra)" : "transparent", color: btn.primary ? "var(--paper)" : "inherit", fontWeight: btn.primary ? 600 : 400 }}
-                onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.color = "var(--paper)"; e.currentTarget.style.borderColor = "var(--ink)"; e.currentTarget.style.transform = "translateY(-1px)" }}
-                onMouseLeave={e => { e.currentTarget.style.background = btn.primary ? "var(--terra)" : "transparent"; e.currentTarget.style.color = btn.primary ? "var(--paper)" : "inherit"; e.currentTarget.style.borderColor = btn.primary ? "var(--terra)" : "var(--border)"; e.currentTarget.style.transform = "translateY(0)" }}
-              >{btn.label}</Link>
-            ))}
-          </div>
+      <section id="home" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: "80px 48px 60px", borderBottom: "1px solid var(--border)", position: "relative" }}>
+
+        {/* Top label */}
+        <p style={{ fontSize: 9, letterSpacing: ".26em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 48, display: "flex", alignItems: "center", gap: 16, animation: "fadeUp .6s .4s ease both" }}>
+          <span style={{ width: 24, height: 1, background: "var(--terra)", display: "inline-block" }} />
+          Lagos · Bradford · Columbia · Wharton
+          <span style={{ width: 24, height: 1, background: "var(--terra)", display: "inline-block" }} />
+        </p>
+
+        {/* Name */}
+        <h1 style={{ fontFamily: "var(--font-playfair),serif", fontWeight: 900, lineHeight: .88, letterSpacing: "-.04em", marginBottom: 0, animation: "fadeUp .9s .55s ease both" }}>
+          <span style={{ display: "block", fontSize: "clamp(52px,9vw,130px)", color: "var(--ink)" }}>Onaolapo</span>
+          <span style={{ display: "block", fontSize: "clamp(52px,9vw,130px)", color: "var(--ink)" }}>Michael</span>
+          <em style={{ display: "block", fontSize: "clamp(56px,10vw,148px)", color: "var(--terra)", fontStyle: "italic" }}>Odunjo.</em>
+        </h1>
+
+        {/* Divider */}
+        <div style={{ width: 1, height: 48, background: "var(--border)", margin: "40px auto", animation: "fadeIn .6s 1.1s ease both" }} />
+
+        {/* Subtitle */}
+        <p style={{ fontFamily: "var(--font-playfair),serif", fontStyle: "italic", fontSize: "clamp(17px,2.2vw,26px)", lineHeight: 1.5, maxWidth: 560, color: "var(--ink)", marginBottom: 12, animation: "fadeUp .7s 1.2s ease both" }}>
+          I build AI systems that survive contact with the real world.
+          <span className="cursor-blink" />
+        </p>
+        <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 44, animation: "fadeUp .6s 1.3s ease both" }}>
+          Staff TPM · Wharton MBA · Kinage · Amazon · Capital One
+        </p>
+
+        {/* CTAs */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center", animation: "fadeUp .6s 1.4s ease both" }}>
+          {[
+            { label: "↓ Resume", href: "/resume.pdf", primary: true, download: true },
+            { label: "See My Work", href: "/projects" },
+            { label: "LinkedIn", href: "https://linkedin.com/in/onaolapomichaelodunjo", external: true },
+            { label: "GitHub", href: "https://github.com/Omodunjo11", external: true },
+            { label: "Writing", href: "/writing" },
+          ].map((btn) => (
+            <Link key={btn.label} href={btn.href}
+              {...(btn.download ? { download: true } : {})}
+              target={btn.external ? "_blank" : undefined}
+              rel={btn.external ? "noopener" : undefined}
+              style={{ fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", border: "1px solid", borderColor: btn.primary ? "var(--terra)" : "var(--border)", padding: "10px 22px", borderRadius: 2, transition: "all .25s", background: btn.primary ? "var(--terra)" : "transparent", color: btn.primary ? "var(--paper)" : "inherit", fontWeight: btn.primary ? 600 : 400 }}
+              onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.color = "var(--paper)"; e.currentTarget.style.borderColor = "var(--ink)"; e.currentTarget.style.transform = "translateY(-1px)" }}
+              onMouseLeave={e => { e.currentTarget.style.background = btn.primary ? "var(--terra)" : "transparent"; e.currentTarget.style.color = btn.primary ? "var(--paper)" : "inherit"; e.currentTarget.style.borderColor = btn.primary ? "var(--terra)" : "var(--border)"; e.currentTarget.style.transform = "translateY(0)" }}
+            >{btn.label}</Link>
+          ))}
         </div>
-        <div className="hero-right" style={{ animation: "fadeIn 1s .8s ease both" }}>
-          <div style={{ flex: 1, overflow: "hidden", position: "relative" }}>
-            <Image src="/images/IMG_3437.jpg" alt="Lapo Odunjo" fill style={{ objectFit: "cover", objectPosition: "center top", filter: "grayscale(8%) contrast(1.05)" }} priority />
-            <span style={{ position: "absolute", bottom: 12, left: 14, fontSize: 9, letterSpacing: ".12em", textTransform: "uppercase", color: "rgba(245,240,232,.75)" }}>Philadelphia, 2025</span>
-          </div>
-          <div className="grid-stats">
-            {[{ n: "2B+", l: "Records Modeled" }, { n: "60+", l: "Companies Reviewed" }, { n: "10", l: "African Markets" }, { n: "36", l: "Countries Traveled" }].map(({ n, l }) => (
-              <div key={l} style={{ background: "var(--paper)", padding: 20, transition: "background .2s" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "var(--bg2)")}
-                onMouseLeave={e => (e.currentTarget.style.background = "var(--paper)")}
-              >
-                <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: 38, fontWeight: 900, lineHeight: 1, color: "var(--terra)", marginBottom: 4 }}>{n}</div>
-                <div style={{ fontSize: 9, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--muted)" }}>{l}</div>
-              </div>
-            ))}
-          </div>
+
+        {/* Scroll cue */}
+        <div style={{ position: "absolute", bottom: 28, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 6, animation: "fadeIn 1s 2s ease both", opacity: 0 }}>
+          <span style={{ fontSize: 8, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--muted)" }}>Scroll</span>
+          <div style={{ width: 1, height: 32, background: "var(--border)" }} />
         </div>
       </section>
+
+      {/* Stats bar */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 1, background: "var(--border)", borderBottom: "1px solid var(--border)" }}>
+        {[{ n: "2B+", l: "Records Modeled" }, { n: "60+", l: "Companies Reviewed" }, { n: "10", l: "African Markets" }, { n: "36", l: "Countries Traveled" }].map(({ n, l }) => (
+          <div key={l} style={{ background: "var(--paper)", padding: "28px 32px", textAlign: "center", transition: "background .2s" }}
+            onMouseEnter={e => (e.currentTarget.style.background = "var(--bg2)")}
+            onMouseLeave={e => (e.currentTarget.style.background = "var(--paper)")}
+          >
+            <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: 42, fontWeight: 900, lineHeight: 1, color: "var(--terra)", marginBottom: 6 }}>{n}</div>
+            <div style={{ fontSize: 9, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--muted)" }}>{l}</div>
+          </div>
+        ))}
+      </div>
 
       {/* ── STATUS BAR ── */}
       <div style={{ borderBottom: "1px solid var(--border)", background: "var(--ink)", padding: "10px 48px", display: "flex", alignItems: "center", gap: 32, flexWrap: "wrap", overflow: "hidden" }}>
