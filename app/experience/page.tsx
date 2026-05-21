@@ -196,7 +196,7 @@ export default function ExperiencePage() {
               Onaolapo <em style={{ color: "var(--terra)", fontStyle: "italic" }}>Odunjo</em>
             </h1>
             <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 12, animation: "fadeUp .6s .6s ease both" }}>
-              New York, NY · omodunjo@wharton.upenn.edu · +1-646-421-3781
+              New York, NY · odunjoonaolapo@gmail.com · +1-646-421-3781
             </p>
           </div>
           <Link

@@ -69,7 +69,7 @@ export default function Home() {
             <Image src="/images/IMG_3437.jpg" alt="Lapo Odunjo" fill style={{ objectFit: "cover", objectPosition: "center top", filter: "grayscale(8%) contrast(1.05)" }} priority />
             <span style={{ position: "absolute", bottom: 12, left: 14, fontSize: 9, letterSpacing: ".12em", textTransform: "uppercase", color: "rgba(245,240,232,.75)" }}>Philadelphia, 2025</span>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "var(--border)", borderTop: "1px solid var(--border)" }}>
+          <div className="grid-stats">
             {[{ n: "2B+", l: "Records Modeled" }, { n: "60+", l: "Companies Reviewed" }, { n: "10", l: "African Markets" }, { n: "36", l: "Countries Traveled" }].map(({ n, l }) => (
               <div key={l} style={{ background: "var(--paper)", padding: 20, transition: "background .2s" }}
                 onMouseEnter={e => (e.currentTarget.style.background = "var(--bg2)")}
@@ -397,7 +397,7 @@ export default function Home() {
       </section>
 
       {/* ── PHOTO BREAK ── */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: 460, borderTop: "1px solid var(--border)" }}>
+      <div className="grid-photo">
         <div style={{ overflow: "hidden", position: "relative" }}>
           <Image src="/images/IMG_3436.jpg" alt="Lapo in Philadelphia" fill style={{ objectFit: "cover", objectPosition: "center 20%", filter: "contrast(1.07) brightness(.88)" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg,rgba(196,98,45,.15) 0%,transparent 60%)" }} />
@@ -426,7 +426,7 @@ export default function Home() {
       {/* ── CONTACT ── */}
       <section id="contact" style={{ borderTop: "1px solid var(--border)", padding: "80px 48px" }}>
         <Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72, alignItems: "center" }}>
+          <div className="grid-contact">
             <div>
               <h2 style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(28px,3.5vw,48px)", fontWeight: 900, lineHeight: 1.05, marginBottom: 20 }}>
                 Let&apos;s build something{" "}
@@ -438,7 +438,7 @@ export default function Home() {
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
               {[
-                { label: "Email", value: "omodunjo@wharton.upenn.edu", href: "mailto:omodunjo@wharton.upenn.edu" },
+                { label: "Email", value: "odunjoonaolapo@gmail.com", href: "mailto:odunjoonaolapo@gmail.com" },
                 { label: "LinkedIn", value: "onaolapomichaelodunjo", href: "https://linkedin.com/in/onaolapomichaelodunjo" },
                 { label: "GitHub", value: "Omodunjo11", href: "https://github.com/Omodunjo11" },
                 { label: "Coaching", value: "Leland MBA Advisory", href: "https://www.joinleland.com/coach/onaolapo-o" },
