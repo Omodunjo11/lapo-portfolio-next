@@ -39,7 +39,7 @@ export default function WritingPage() {
               <Link href={essay.url} target="_blank" rel="noopener">
                 <div
                   style={{ background: "var(--paper)", padding: "40px 36px", height: "100%", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", transition: "background .25s", borderTop: "2px solid transparent" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(212,112,58,.07)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
                   onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.borderTopColor = "transparent" }}
                 >
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
@@ -94,7 +94,7 @@ export default function WritingPage() {
         <Reveal delay={0.1}>
           <div
             className="grid-pub" style={{ border: "1px solid var(--border)", padding: "40px 44px", transition: "background .2s", borderRadius: 2 }}
-            onMouseEnter={e => (e.currentTarget.style.background = "rgba(212,112,58,.07)")}
+            onMouseEnter={e => (e.currentTarget.style.background = "rgba(196,98,45,.03)")}
             onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
           >
             <div>

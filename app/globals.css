@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --ink:    #eeeae2;
-  --paper:  #0f0e0d;
-  --terra:  #d4703a;
+  --ink:    #0d0d0d;
+  --paper:  #f5f0e8;
+  --terra:  #c4622d;
   --gold:   #c9a84c;
-  --muted:  #6a6258;
-  --mid:    #9a8e80;
-  --bg2:    #1c1916;
-  --border: rgba(238,234,226,0.09);
+  --muted:  #8a8070;
+  --mid:    #555555;
+  --bg2:    #ede8de;
+  --border: rgba(13,13,13,0.10);
 }
 
 html { scroll-behavior: smooth; }

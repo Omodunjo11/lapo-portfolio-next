@@ -145,7 +145,7 @@ export default function ProjectDetail({ project, prev, next }: Props) {
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
               {project.features.map((f) => (
                 <li key={f} style={{ fontSize: 12, color: "var(--mid)", lineHeight: 1.65, display: "flex", gap: 10, alignItems: "flex-start" }}>
-                  <span style={{ color: "var(--gold)", fontSize: 8, marginTop: 4, flexShrink: 0 }}>▸</span>
+                  <span style={{ color: "#7a6020", fontSize: 8, marginTop: 4, flexShrink: 0 }}>▸</span>
                   {f}
                 </li>
               ))}
@@ -156,7 +156,7 @@ export default function ProjectDetail({ project, prev, next }: Props) {
             <div style={{ fontSize: 9, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 16 }}>Tech Stack</div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
               {project.stack.map((s) => (
-                <span key={s} style={{ fontSize: 9, background: "rgba(201,168,76,.18)", color: "#c9a84c", padding: "4px 10px", borderRadius: 2 }}>{s}</span>
+                <span key={s} style={{ fontSize: 9, background: "rgba(201,168,76,.12)", color: "#c9a84c", padding: "4px 10px", borderRadius: 2 }}>{s}</span>
               ))}
             </div>
           </div>

@@ -17,10 +17,12 @@ const tickerItems = [
 ]
 
 const SH = ({ n, t }: { n: string; t: string }) => (
-  <div style={{ padding: "56px 48px 32px", display: "flex", alignItems: "center", gap: 18 }}>
-    <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>{n}</span>
-    <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>{t}</span>
-    <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+  <div style={{ padding: "64px 48px 36px" }}>
+    <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 6 }}>
+      {n && <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".22em", color: "var(--terra)" }}>{n} —</span>}
+      <h2 style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(28px,3.5vw,44px)", fontWeight: 900, letterSpacing: "-.02em", lineHeight: 1, margin: 0 }}>{t}</h2>
+    </div>
+    <div style={{ width: 40, height: 2, background: "var(--terra)", marginTop: 10 }} />
   </div>
 )
 
@@ -38,13 +40,15 @@ export default function Home() {
             Onaolapo<br />Michael<br /><em style={{ fontStyle: "italic", color: "var(--terra)" }}>Odunjo</em>
           </h1>
           <p style={{ fontSize: 11, color: "var(--muted)", fontStyle: "italic", marginBottom: 18, animation: "fadeUp .7s .8s ease both" }}>Lapo to most people</p>
-          <p style={{ fontFamily: "var(--font-playfair),serif", fontStyle: "italic", fontSize: 18, lineHeight: 1.5, maxWidth: 420, marginBottom: 8, minHeight: 56, animation: "fadeUp .7s 1.05s ease both", color: "var(--ink)" }}>
+          <p style={{ fontFamily: "var(--font-playfair),serif", fontStyle: "italic", fontSize: "clamp(18px,2vw,24px)", lineHeight: 1.5, maxWidth: 440, marginBottom: 32, minHeight: 56, animation: "fadeUp .7s 1.05s ease both", color: "var(--ink)" }}>
             I build AI systems that survive contact with the real world.
             <span className="cursor-blink" />
           </p>
-          <p style={{ fontSize: 12, color: "var(--muted)", maxWidth: 400, marginBottom: 40, animation: "fadeUp .7s 1.15s ease both" }}>
-            Wharton MBA · Kinage · KOVA · Amazon · Capital One · TD Bank · City Ventures
-          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 40, animation: "fadeUp .7s 1.15s ease both" }}>
+            {["Wharton MBA", "Kinage", "Amazon", "Capital One", "TD Bank"].map(tag => (
+              <span key={tag} style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", border: "1px solid var(--border)", padding: "4px 12px", borderRadius: 2, color: "var(--muted)" }}>{tag}</span>
+            ))}
+          </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10, animation: "fadeUp .7s 1.25s ease both" }}>
             {[
               { label: "↓ Resume", href: "/resume.pdf", primary: true, download: true },
@@ -75,7 +79,7 @@ export default function Home() {
                 onMouseEnter={e => (e.currentTarget.style.background = "var(--bg2)")}
                 onMouseLeave={e => (e.currentTarget.style.background = "var(--paper)")}
               >
-                <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: 30, fontWeight: 700, color: "var(--terra)" }}>{n}</div>
+                <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: 38, fontWeight: 900, lineHeight: 1, color: "var(--terra)", marginBottom: 4 }}>{n}</div>
                 <div style={{ fontSize: 9, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--muted)" }}>{l}</div>
               </div>
             ))}
@@ -84,7 +88,7 @@ export default function Home() {
       </section>
 
       {/* ── STATUS BAR ── */}
-      <div style={{ borderBottom: "1px solid var(--border)", background: "var(--bg2)", padding: "10px 48px", display: "flex", alignItems: "center", gap: 32, flexWrap: "wrap", overflow: "hidden" }}>
+      <div style={{ borderBottom: "1px solid var(--border)", background: "var(--ink)", padding: "10px 48px", display: "flex", alignItems: "center", gap: 32, flexWrap: "wrap", overflow: "hidden" }}>
         <span style={{ fontSize: 8, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--terra)", flexShrink: 0 }}>◆ Currently</span>
         {[
           { label: "Playing", value: "Civilization VII" },
@@ -118,14 +122,11 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.1}>
             <div className="about-right" style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-              <p style={{ fontSize: 14, lineHeight: 1.85, color: "var(--mid)" }}>I grew up between Lagos and Bradford. The question that followed me out of both was the same: how does this actually work, and what breaks first under pressure?</p>
-              <p style={{ fontSize: 14, lineHeight: 1.85, color: "var(--mid)" }}>That question took me from chemical engineering to product management to AI systems to private capital. The path looks nonlinear from the outside. From the inside, it has always been one thing: find the leverage point, then build toward it.</p>
-              <blockquote style={{ borderLeft: "2px solid var(--terra)", paddingLeft: 24, fontFamily: "var(--font-playfair),serif", fontStyle: "italic", fontSize: 16, lineHeight: 1.6, color: "var(--ink)", margin: "8px 0" }}>
-                Most AI systems fail in regulated institutions not because the models are weak, but because the escalation logic is naive.
+              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)", marginBottom: 20 }}>Lagos raised me to distrust surface explanations. Bradford taught me rigour. Columbia gave me the language. Wharton gave me the room. Now I build AI systems that actually survive in regulated environments — finance, compliance, enterprise data — where most models fail not because they're weak, but because nobody thought through what happens when they're wrong.</p>
+              <blockquote style={{ borderLeft: "3px solid var(--terra)", paddingLeft: 24, fontFamily: "var(--font-playfair),serif", fontStyle: "italic", fontSize: 18, lineHeight: 1.55, color: "var(--ink)", margin: "24px 0" }}>
+                "I have never been the smartest person in the room. I am usually the one who read the room differently."
               </blockquote>
-              <blockquote style={{ borderLeft: "2px solid var(--gold)", paddingLeft: 24, fontFamily: "var(--font-playfair),serif", fontStyle: "italic", fontSize: 15, color: "var(--mid)", lineHeight: 1.6 }}>
-                I have never been the smartest person in the room. I am usually the one who read the room differently.
-              </blockquote>
+              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>The path looks nonlinear from the outside — chemical engineering to product to AI to private capital. From the inside it has always been one thing: find the leverage point, then build toward it.</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
                 {["AI Systems", "Private Markets", "Africa", "Fintech", "Regulated Industries", "Electrochemistry"].map(tag => (
                   <span key={tag} style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", border: "1px solid var(--border)", padding: "4px 12px", borderRadius: 2, color: "var(--mid)" }}>{tag}</span>
@@ -182,7 +183,7 @@ export default function Home() {
             <Reveal key={card.name} delay={i * 0.07}>
               <div
                 style={{ background: "var(--paper)", padding: "32px 28px", height: "100%", transition: "background .25s", position: "relative" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "rgba(212,112,58,.07)")}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(196,98,45,.03)")}
                 onMouseLeave={e => (e.currentTarget.style.background = "var(--paper)")}
               >
                 <div style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", border: "1px solid rgba(196,98,45,.3)", padding: "3px 9px", borderRadius: 2, display: "inline-block", marginBottom: 14 }}>{card.label}</div>
@@ -233,7 +234,7 @@ export default function Home() {
               <Link href={`/projects/${project.slug}`}>
                 <div
                   style={{ background: "var(--paper)", padding: "36px 32px", height: "100%", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", transition: "background .25s", borderTop: "2px solid transparent" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(212,112,58,.07)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
                   onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.borderTopColor = "transparent" }}
                 >
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
@@ -241,10 +242,10 @@ export default function Home() {
                     <span style={{ fontSize: 9, color: "var(--muted)" }}>{project.year}</span>
                   </div>
                   <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 18, fontWeight: 800, marginBottom: 8, lineHeight: 1.2 }}>{project.name}</div>
-                  <div style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--gold)", marginBottom: 16 }}>{project.role}</div>
+                  <div style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", color: "#7a6020", marginBottom: 16 }}>{project.role}</div>
                   <p style={{ fontSize: 13, lineHeight: 1.85, color: "var(--mid)", flex: 1, marginBottom: 24 }}>{project.tagline}</p>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 20 }}>
-                    {project.stack.slice(0, 3).map(s => <span key={s} style={{ fontSize: 8, background: "rgba(201,168,76,.18)", color: "#c9a84c", padding: "3px 8px", borderRadius: 2 }}>{s}</span>)}
+                    {project.stack.slice(0, 3).map(s => <span key={s} style={{ fontSize: 8, background: "rgba(201,168,76,.12)", color: "#c9a84c", padding: "3px 8px", borderRadius: 2 }}>{s}</span>)}
                   </div>
                   <div style={{ fontSize: 10, color: "var(--terra)", letterSpacing: ".1em" }}>Read full breakdown →</div>
                 </div>
@@ -285,14 +286,14 @@ export default function Home() {
           ].map((card, i) => (
             <Reveal key={card.name} delay={i * 0.1}>
               <div style={{ background: "var(--paper)", padding: "32px 28px", height: "100%", transition: "background .25s", borderTop: "2px solid transparent" }}
-                onMouseEnter={e => { e.currentTarget.style.background = "rgba(212,112,58,.07)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
                 onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.borderTopColor = "transparent" }}
               >
                 <span style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", border: "1px solid rgba(196,98,45,.3)", padding: "3px 9px", borderRadius: 2, display: "inline-block", marginBottom: 14 }}>{card.label}</span>
                 <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 16, fontWeight: 800, marginBottom: 12 }}>{card.name}</div>
                 <p style={{ fontSize: 12, lineHeight: 1.8, color: "var(--mid)", marginBottom: 16 }}>{card.desc}</p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
-                  {card.chips.map(c => <span key={c} style={{ fontSize: 8, background: "rgba(201,168,76,.18)", color: "#c9a84c", padding: "3px 8px", borderRadius: 2 }}>{c}</span>)}
+                  {card.chips.map(c => <span key={c} style={{ fontSize: 8, background: "rgba(201,168,76,.12)", color: "#c9a84c", padding: "3px 8px", borderRadius: 2 }}>{c}</span>)}
                 </div>
               </div>
             </Reveal>
@@ -318,7 +319,7 @@ export default function Home() {
               <Link href={essay.url} target="_blank" rel="noopener">
                 <div
                   style={{ background: "var(--paper)", padding: "32px 28px", height: "100%", display: "flex", flexDirection: "column", transition: "background .25s", borderTop: "2px solid transparent" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(212,112,58,.07)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
                   onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.borderTopColor = "transparent" }}
                 >
                   <div style={{ fontSize: 8, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 12 }}>{essay.category}</div>
@@ -343,7 +344,7 @@ export default function Home() {
           ].map((edu, i) => (
             <Reveal key={edu.school} delay={i * 0.1}>
               <div style={{ background: "var(--paper)", padding: "32px 26px", transition: "background .25s" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "rgba(212,112,58,.07)")}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(196,98,45,.03)")}
                 onMouseLeave={e => (e.currentTarget.style.background = "var(--paper)")}
               >
                 <div style={{ fontSize: 9, letterSpacing: ".12em", color: "var(--terra)", marginBottom: 10 }}>{edu.year}</div>
@@ -370,14 +371,14 @@ export default function Home() {
           ].map((award, i) => (
             <Reveal key={award.name} delay={(i % 2) * 0.08}>
               <div style={{ background: "var(--paper)", padding: "24px 26px", display: "flex", gap: 12, alignItems: "flex-start", transition: "background .2s, transform .2s" }}
-                onMouseEnter={e => { e.currentTarget.style.background = "rgba(212,112,58,.07)"; e.currentTarget.style.transform = "translateX(4px)" }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.transform = "translateX(4px)" }}
                 onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.transform = "translateX(0)" }}
               >
-                <span style={{ color: "var(--gold)", flexShrink: 0, fontSize: 14 }}>🏆</span>
+                <span style={{ color: "#7a6020", flexShrink: 0, fontSize: 14 }}>🏆</span>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8 }}>
                     <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 12, fontWeight: 700, marginBottom: 2 }}>{award.name}</div>
-                    <span style={{ fontSize: 8, letterSpacing: ".1em", textTransform: "uppercase", background: "rgba(201,168,76,.18)", color: "#c9a84c", padding: "2px 7px", borderRadius: 2, flexShrink: 0 }}>{award.xp}</span>
+                    <span style={{ fontSize: 8, letterSpacing: ".1em", textTransform: "uppercase", background: "rgba(201,168,76,.12)", color: "#c9a84c", padding: "2px 7px", borderRadius: 2, flexShrink: 0 }}>{award.xp}</span>
                   </div>
                   <div style={{ fontSize: 10, color: "var(--muted)", fontStyle: "italic" }}>{award.inst}</div>
                 </div>
@@ -406,7 +407,7 @@ export default function Home() {
                       onMouseEnter={e => { e.currentTarget.style.color = "var(--terra)"; e.currentTarget.style.transform = "translateX(4px)" }}
                       onMouseLeave={e => { e.currentTarget.style.color = "var(--ink)"; e.currentTarget.style.transform = "translateX(0)" }}
                     >
-                      <span style={{ color: "var(--gold)", fontSize: 8, marginTop: 3, flexShrink: 0 }}>▸</span>
+                      <span style={{ color: "#7a6020", fontSize: 8, marginTop: 3, flexShrink: 0 }}>▸</span>
                       {item}
                     </li>
                   ))}
@@ -423,10 +424,10 @@ export default function Home() {
           <Image src="/images/IMG_3436.jpg" alt="Lapo in Philadelphia" fill style={{ objectFit: "cover", objectPosition: "center 20%", filter: "contrast(1.07) brightness(.88)" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg,rgba(196,98,45,.15) 0%,transparent 60%)" }} />
         </div>
-        <div style={{ padding: "64px 56px", display: "flex", flexDirection: "column", justifyContent: "center", background: "#1c1916" }}>
+        <div style={{ padding: "64px 56px", display: "flex", flexDirection: "column", justifyContent: "center", background: "var(--ink)" }}>
           <p style={{ fontSize: 9, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 16 }}>◆ Philadelphia, 2025</p>
           <h2 style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(24px,3vw,40px)", fontWeight: 900, lineHeight: 1.1, color: "#f5f0e8", marginBottom: 18 }}>
-            The systems matter.<br /><em style={{ color: "var(--gold)", fontStyle: "italic" }}>So do the people they affect.</em>
+            The systems matter.<br /><em style={{ color: "#7a6020", fontStyle: "italic" }}>So do the people they affect.</em>
           </h2>
           <p style={{ fontSize: 12, color: "rgba(245,240,232,.55)", lineHeight: 1.85, maxWidth: 340, marginBottom: 28 }}>That is the through-line in everything I build.</p>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
@@ -449,12 +450,12 @@ export default function Home() {
         <Reveal>
           <div className="grid-contact">
             <div>
-              <h2 style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(28px,3.5vw,48px)", fontWeight: 900, lineHeight: 1.05, marginBottom: 20 }}>
-                Let&apos;s build something{" "}
-                <em style={{ color: "var(--terra)", fontStyle: "italic" }}>worth building.</em>
+              <h2 style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(30px,3.5vw,52px)", fontWeight: 900, lineHeight: 1.0, marginBottom: 20, letterSpacing: "-.02em" }}>
+                If you have a real problem,{" "}
+                <em style={{ color: "var(--terra)", fontStyle: "italic" }}>let&apos;s talk.</em>
               </h2>
-              <p style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.8, maxWidth: 340 }}>
-                AI product strategy, regulated-industry AI, private markets in Africa and emerging markets — if any of that is the problem, I want to hear about it.
+              <p style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.85, maxWidth: 340 }}>
+                AI systems in regulated industries. Private markets across Africa. Anything that doesn&apos;t fit a clean slide deck. Those are my favourite conversations.
               </p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>

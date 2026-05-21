@@ -294,7 +294,7 @@ export default function ExperiencePage() {
               {leadership.map((item, i) => (
                 <Reveal key={item.org} delay={i * 0.08}>
                   <div style={{ background: "var(--paper)", padding: "32px 28px", height: "100%", transition: "background .25s", borderTop: "2px solid transparent" }}
-                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(212,112,58,.07)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
+                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
                     onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.borderTopColor = "transparent" }}
                   >
                     <div style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 10 }}>{item.period}</div>
@@ -324,7 +324,7 @@ export default function ExperiencePage() {
                 ].map((a, i) => (
                   <Reveal key={a.name} delay={(i % 2) * 0.08}>
                     <div style={{ background: "var(--paper)", padding: "22px 26px", display: "flex", gap: 12, alignItems: "flex-start", transition: "background .2s, transform .2s" }}
-                      onMouseEnter={e => { e.currentTarget.style.background = "rgba(212,112,58,.07)"; e.currentTarget.style.transform = "translateX(4px)" }}
+                      onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.transform = "translateX(4px)" }}
                       onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.transform = "translateX(0)" }}
                     >
                       <span style={{ color: "var(--terra)", flexShrink: 0 }}>◆</span>
@@ -347,7 +347,7 @@ export default function ExperiencePage() {
               {education.map((edu, i) => (
                 <Reveal key={edu.school} delay={i * 0.1}>
                   <div style={{ background: "var(--paper)", padding: "36px 28px", transition: "background .25s", borderTop: "2px solid transparent" }}
-                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(212,112,58,.07)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
+                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
                     onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.borderTopColor = "transparent" }}
                   >
                     <div style={{ fontSize: 9, letterSpacing: ".12em", color: "var(--terra)", marginBottom: 12 }}>{edu.year}</div>
@@ -363,7 +363,7 @@ export default function ExperiencePage() {
             {/* ACS publication */}
             <Reveal>
               <div className="grid-pub" style={{ border: "1px solid var(--border)", padding: "36px 44px", borderRadius: 2, transition: "background .2s" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "rgba(212,112,58,.07)")}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(196,98,45,.03)")}
                 onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
               >
                 <div>
