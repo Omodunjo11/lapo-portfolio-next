@@ -7,13 +7,13 @@ import { featuredProjects } from "@/lib/projects"
 import { essays } from "@/lib/writing"
 
 const tickerItems = [
-  { text: "Retrieval Architecture", highlight: true }, { text: "36 Countries Visited" },
-  { text: "LLM Evaluation", highlight: true }, { text: "Yoruba Native Speaker" },
-  { text: "Enterprise ML", highlight: true }, { text: "Africa & Emerging Markets" },
-  { text: "Regulatory AI", highlight: true }, { text: "Chemical Engineer at Heart" },
-  { text: "Drift Monitoring", highlight: true }, { text: "Wharton MBA 26" },
-  { text: "Platform Strategy", highlight: true }, { text: "Private Equity" },
-  { text: "RAG Systems", highlight: true }, { text: "Jollof Rice Connoisseur" },
+  { text: "Achievement Unlocked: Staff TPM", highlight: true }, { text: "Lagos → Bradford → NYC → Philly" },
+  { text: "Final Boss Energy", highlight: true }, { text: "36 Countries. Still Grinding." },
+  { text: "RAG Systems in Prod", highlight: true }, { text: "Side Quest: Wharton MBA" },
+  { text: "LLM Evaluation Frameworks", highlight: true }, { text: "Yoruba Native Speaker" },
+  { text: "No Skip Cutscene", highlight: true }, { text: "Jollof Rice Connoisseur" },
+  { text: "Currently Grinding", highlight: true }, { text: "Respawn Requires Coffee" },
+  { text: "Regulatory AI", highlight: true }, { text: "Built Different · Lagos Edition" },
 ]
 
 const SH = ({ n, t }: { n: string; t: string }) => (
@@ -39,7 +39,7 @@ export default function Home() {
           </h1>
           <p style={{ fontSize: 11, color: "var(--muted)", fontStyle: "italic", marginBottom: 18, animation: "fadeUp .7s .8s ease both" }}>Lapo to most people</p>
           <p style={{ fontFamily: "var(--font-playfair),serif", fontStyle: "italic", fontSize: 18, lineHeight: 1.5, maxWidth: 420, marginBottom: 8, minHeight: 56, animation: "fadeUp .7s 1.05s ease both", color: "var(--ink)" }}>
-            Building AI systems that work in regulated environments.
+            I build AI systems that survive contact with the real world.
             <span className="cursor-blink" />
           </p>
           <p style={{ fontSize: 12, color: "var(--muted)", maxWidth: 400, marginBottom: 40, animation: "fadeUp .7s 1.15s ease both" }}>
@@ -83,6 +83,24 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── STATUS BAR ── */}
+      <div style={{ borderBottom: "1px solid var(--border)", background: "var(--ink)", padding: "10px 48px", display: "flex", alignItems: "center", gap: 32, flexWrap: "wrap", overflow: "hidden" }}>
+        <span style={{ fontSize: 8, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--terra)", flexShrink: 0 }}>◆ Currently</span>
+        {[
+          { label: "Playing", value: "Civilization VII" },
+          { label: "Building", value: "Kinage in Prod" },
+          { label: "Reading", value: "Team of Teams" },
+          { label: "Grinding", value: "Wharton MBA '26" },
+        ].map(({ label, value }) => (
+          <div key={label} style={{ display: "flex", gap: 6, alignItems: "center" }}>
+            <span style={{ fontSize: 8, letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(245,240,232,.35)" }}>{label}:</span>
+            <span style={{ fontSize: 10, color: "rgba(245,240,232,.75)", fontFamily: "var(--font-dm-mono),monospace" }}>{value}</span>
+          </div>
+        ))}
+        <div style={{ flex: 1 }} />
+        <span style={{ fontSize: 8, color: "rgba(245,240,232,.2)", letterSpacing: ".12em", flexShrink: 0 }}>↑↑↓↓←→←→BA</span>
+      </div>
+
       <Ticker items={tickerItems} />
 
       {/* ── ABOUT ── */}
@@ -120,7 +138,7 @@ export default function Home() {
 
       {/* ── THE LONGER VERSION ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
-        <Reveal><SH n="02" t="The Longer Version" /></Reveal>
+        <Reveal><SH n="02" t="Extended Lore" /></Reveal>
         <div className="grid-3col" style={{ margin: "0 48px" }}>
           {[
             {
@@ -139,9 +157,9 @@ export default function Home() {
               body: "Nigerian jollof is better. This is not a debate, it is a fact with citations.\n\nMost AI failures in enterprises are communication failures dressed up as technical ones.\n\nThe best investors in African markets are the ones who have been embarrassed by their first deal. Overconfidence is the most expensive mistake you can make in a market you do not actually understand yet.\n\nAnyone who has never left their home country should not be building products for people who have.",
             },
             {
-              label: "Beyond the work",
-              name: "What I am like in the room",
-              body: "I will talk to anyone at a party. I will remember their name, what they said, and follow up three weeks later. That is not a networking tactic. That is just how I am wired.\n\nI am usually the last person to leave a room and the first to suggest extending the conversation somewhere else. That is not a personality flaw. It has just always led somewhere useful.\n\nFluent in English and Yoruba. Conversational in French. Working on Swahili for reasons that will make sense eventually.",
+              label: "Side quest: gaming",
+              name: "How games actually trained me",
+              body: "I have been a gamer since I was old enough to hold a controller. What I did not realise until recently is that games taught me everything that matters: resource allocation under uncertainty, reading patterns before they complete, knowing when to push and when to reset.\n\nEvery PM I have ever met who moves fast and breaks nothing learned it the same way — through a thousand invisible iterations before the stakes were real.\n\nThe strategy games especially. If you have ever spent three hours optimising a build order in an RTS, you already understand roadmap sequencing. You just call it something different at work.",
             },
             {
               label: "Right now",
@@ -340,24 +358,27 @@ export default function Home() {
 
       {/* ── AWARDS ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
-        <Reveal><SH n="07" t="Awards & Honors" /></Reveal>
+        <Reveal><SH n="07" t="Achievements Unlocked" /></Reveal>
         <div className="grid-2col" style={{ margin: "0 48px" }}>
           {[
-            { name: "Trailblazer Fellowship, 50% Merit", inst: "The Wharton School, UPenn" },
-            { name: "Full Merit Scholarship", inst: "Columbia University, 21 of 5,000+ applicants" },
-            { name: "Bradford Dean Award, Full-Ride", inst: "University of Bradford" },
-            { name: "Manhattan Prep Scholarship", inst: "Merit, quantitative achievement" },
-            { name: "President, Wharton Graduate Association", inst: "Elected · $6M budget · 1,700+ students" },
-            { name: "Peer-Reviewed Publication", inst: "ACS Applied Energy Materials, 2024" },
+            { name: "Trailblazer Fellowship, 50% Merit", inst: "The Wharton School, UPenn", xp: "+500 XP" },
+            { name: "Full Merit Scholarship", inst: "Columbia University, 21 of 5,000+ applicants", xp: "Rare Drop" },
+            { name: "Bradford Dean Award, Full-Ride", inst: "University of Bradford", xp: "+300 XP" },
+            { name: "Manhattan Prep Scholarship", inst: "Merit, quantitative achievement", xp: "+150 XP" },
+            { name: "President, Wharton Graduate Association", inst: "Elected · $6M budget · 1,700+ students", xp: "Boss Cleared" },
+            { name: "Peer-Reviewed Publication", inst: "ACS Applied Energy Materials, 2024", xp: "Side Quest ✓" },
           ].map((award, i) => (
             <Reveal key={award.name} delay={(i % 2) * 0.08}>
               <div style={{ background: "var(--paper)", padding: "24px 26px", display: "flex", gap: 12, alignItems: "flex-start", transition: "background .2s, transform .2s" }}
                 onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.transform = "translateX(4px)" }}
                 onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.transform = "translateX(0)" }}
               >
-                <span style={{ color: "var(--terra)", flexShrink: 0, fontSize: 12 }}>◆</span>
-                <div>
-                  <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 12, fontWeight: 700, marginBottom: 2 }}>{award.name}</div>
+                <span style={{ color: "var(--gold)", flexShrink: 0, fontSize: 14 }}>🏆</span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8 }}>
+                    <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 12, fontWeight: 700, marginBottom: 2 }}>{award.name}</div>
+                    <span style={{ fontSize: 8, letterSpacing: ".1em", textTransform: "uppercase", background: "rgba(201,168,76,.12)", color: "#7a6020", padding: "2px 7px", borderRadius: 2, flexShrink: 0 }}>{award.xp}</span>
+                  </div>
                   <div style={{ fontSize: 10, color: "var(--muted)", fontStyle: "italic" }}>{award.inst}</div>
                 </div>
               </div>
@@ -368,7 +389,7 @@ export default function Home() {
 
       {/* ── SKILLS ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
-        <Reveal><SH n="08" t="Skills & Tools" /></Reveal>
+        <Reveal><SH n="08" t="Loadout" /></Reveal>
         <div className="grid-4col" style={{ margin: "0 48px" }}>
           {[
             { title: "AI & Product Systems", items: ["Platform Strategy", "RAG Architecture", "LLM Evaluation", "Drift Monitoring", "Anomaly Detection", "Experimentation Frameworks", "Governance & Escalation Design"] },
