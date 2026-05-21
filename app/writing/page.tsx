@@ -22,7 +22,7 @@ export default function WritingPage() {
           Essays · Medium · Thinking Out Loud
         </p>
         <h1 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "clamp(40px,6vw,76px)", fontWeight: 900, lineHeight: .92, letterSpacing: "-.03em", marginBottom: 20, animation: "fadeUp .8s .55s ease both" }}>
-          He thinks in essays,<br /><em style={{ color: "var(--terra)", fontStyle: "italic" }}>not bullet points.</em>
+          I think in essays,<br /><em style={{ color: "var(--terra)", fontStyle: "italic" }}>not bullet points.</em>
         </h1>
         <p style={{ fontSize: 13, color: "var(--muted)", maxWidth: 560, lineHeight: 1.85, animation: "fadeUp .7s .7s ease both" }}>
           Writing is where I process what I cannot yet systematise. Identity, economics, belonging, burnout — the things that don't fit neatly into a pitch deck or a product spec.

@@ -5,6 +5,7 @@ import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
 import Cursor from "@/components/Cursor"
 import KonamiCode from "@/components/KonamiCode"
+import PixelRunner from "@/components/PixelRunner"
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body style={{ fontFamily: "var(--font-dm-mono), monospace" }}>
         <Cursor />
         <KonamiCode />
+        <PixelRunner />
         <Nav />
         <main style={{ paddingTop: 57 }}>{children}</main>
         <Footer />
