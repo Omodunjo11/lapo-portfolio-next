@@ -75,18 +75,51 @@ export default function ProjectDetail({ project, prev, next }: Props) {
 
       {/* Body */}
       <div style={{ padding: "64px 48px", display: "grid", gridTemplateColumns: "2fr 1fr", gap: 64, alignItems: "start" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 48 }}>
-          {[
-            { num: "01", label: "The Problem", text: project.problem },
-            { num: "02", label: "What I Built", text: project.what },
-          ].map(({ num, label, text }) => (
-            <div key={label}>
-              <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
-                <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>{num}</span>
-                <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>{label}</span>
-                <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
-              </div>
-              <p style={{ fontSize: 14, lineHeight: 1.9, color: "var(--mid)" }}>{text}</p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 56 }}>
+
+          {/* Overview */}
+          <div>
+            <SectionHeader num="01" label="Overview" />
+            <p style={{ fontSize: 14, lineHeight: 1.95, color: "var(--mid)" }}>{project.overview}</p>
+          </div>
+
+          {/* Key Objectives */}
+          <div>
+            <SectionHeader num="02" label="Key Objectives" />
+            <ol style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 20 }}>
+              {project.objectives.map((obj, i) => (
+                <li key={i} style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
+                  <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, color: "var(--terra)", minWidth: 22, paddingTop: 2 }}>{i + 1}.</span>
+                  <div>
+                    <span style={{ fontWeight: 700, fontSize: 14 }}>{obj.title}: </span>
+                    <span style={{ fontSize: 14, color: "var(--mid)", lineHeight: 1.85 }}>{obj.description}</span>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          {/* Methodology */}
+          <div>
+            <SectionHeader num="03" label="Methodology" />
+            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 18 }}>
+              {project.methodology.map((item, i) => (
+                <li key={i} style={{ display: "flex", gap: 14, alignItems: "flex-start", paddingLeft: 4 }}>
+                  <span style={{ color: "var(--terra)", fontSize: 8, marginTop: 6, flexShrink: 0 }}>◆</span>
+                  <div>
+                    <span style={{ fontWeight: 700, fontSize: 14 }}>{item.title}: </span>
+                    <span style={{ fontSize: 14, color: "var(--mid)", lineHeight: 1.85 }}>{item.description}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Optional deep-dive sections */}
+          {project.sections && project.sections.map((sec, i) => (
+            <div key={i}>
+              <SectionHeader num={String(i + 4).padStart(2, "0")} label={sec.title} />
+              <p style={{ fontSize: 14, lineHeight: 1.95, color: "var(--mid)" }}>{sec.body}</p>
             </div>
           ))}
 
@@ -100,11 +133,7 @@ export default function ProjectDetail({ project, prev, next }: Props) {
 
           {/* Outcome */}
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
-              <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>03</span>
-              <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Outcome</span>
-              <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
-            </div>
+            <SectionHeader label="Outcome" />
             <p style={{ fontSize: 14, lineHeight: 1.9, color: "var(--mid)" }}>{project.outcome}</p>
           </div>
         </div>
@@ -185,5 +214,15 @@ export default function ProjectDetail({ project, prev, next }: Props) {
         </div>
       )}
     </>
+  )
+}
+
+function SectionHeader({ num, label }: { num?: string; label: string }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
+      {num && <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>{num}</span>}
+      <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>{label}</span>
+      <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+    </div>
   )
 }
