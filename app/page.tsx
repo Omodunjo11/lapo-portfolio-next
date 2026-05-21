@@ -163,7 +163,7 @@ export default function Home() {
         <div className="grid-about pad-page">
           <Reveal>
             <div className="about-left">
-              <Image src="/images/IMG_3438.png" alt="Lapo Odunjo" width={400} height={500} style={{ width: "100%", height: "auto", objectFit: "cover", filter: "grayscale(15%) contrast(1.05)", marginBottom: 24 }} />
+              <Image src="/images/IMG_3437.jpg" alt="Lapo Odunjo" width={400} height={500} style={{ width: "100%", height: "auto", objectFit: "cover", objectPosition: "center top", filter: "grayscale(100%) contrast(1.05)", marginBottom: 24 }} />
               <div style={{ paddingTop: 16, borderTop: "1px solid var(--border)" }}>
                 <div style={{ fontSize: 9, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 6 }}>AD ASTRA PER ASPERA</div>
                 <div style={{ fontSize: 11, color: "var(--muted)", fontStyle: "italic" }}>To the stars through difficulties.</div>
