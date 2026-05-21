@@ -28,10 +28,10 @@ const syne = Syne({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lapo-portfolio-next.vercel.app"),
-  title: "Lapo Odunjo — AI Systems Builder",
+  title: "Lapo Odunjo · AI Systems Builder",
   description: "Staff TPM building production AI systems for regulated industries. Kinage · Amazon · TD Bank · Capital One · Wharton MBA.",
   openGraph: {
-    title: "Lapo Odunjo — AI Systems Builder",
+    title: "Lapo Odunjo · AI Systems Builder",
     description: "Staff TPM building production AI systems for regulated industries. LLM evaluation, agentic workflows, enterprise data platforms.",
     url: "https://lapo-portfolio-next.vercel.app",
     siteName: "Lapo Odunjo",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lapo Odunjo — AI Systems Builder",
+    title: "Lapo Odunjo · AI Systems Builder",
     description: "Staff TPM building production AI systems for regulated industries.",
     images: ["/images/IMG_3437.jpg"],
   },

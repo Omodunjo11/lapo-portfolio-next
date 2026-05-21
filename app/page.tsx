@@ -19,7 +19,7 @@ const tickerItems = [
 const SH = ({ n, t }: { n: string; t: string }) => (
   <div style={{ padding: "64px 48px 36px" }}>
     <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 6 }}>
-      {n && <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".22em", color: "var(--terra)" }}>{n} —</span>}
+      {n && <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".22em", color: "var(--terra)" }}>{n}</span>}
       <h2 style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(28px,3.5vw,44px)", fontWeight: 900, letterSpacing: "-.02em", lineHeight: 1, margin: 0 }}>{t}</h2>
     </div>
     <div style={{ width: 40, height: 2, background: "var(--terra)", marginTop: 10 }} />
@@ -32,7 +32,7 @@ export default function Home() {
       {/* ── HERO: CHARACTER SELECT ── */}
       <section id="home" style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "1fr 1fr", borderBottom: "1px solid var(--border)", position: "relative" }}>
 
-        {/* LEFT — Name card */}
+        {/* LEFT, Name card */}
         <div style={{ borderRight: "1px solid var(--border)", padding: "80px 56px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
 
           {/* HUD top-left */}
@@ -77,7 +77,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* RIGHT — Stat sheet */}
+        {/* RIGHT, Stat sheet */}
         <div style={{ padding: "80px 56px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
 
           {/* Class / faction */}
@@ -172,11 +172,12 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.1}>
             <div className="about-right" style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)", marginBottom: 20 }}>Lagos raised me to distrust surface explanations. Bradford taught me rigour. Columbia gave me the language. Wharton gave me the room. Now I build AI systems that actually survive in regulated environments — finance, compliance, enterprise data — where most models fail not because they're weak, but because nobody thought through what happens when they're wrong.</p>
+              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)", marginBottom: 20 }}>I go by Lapo. Grew up between Lagos and Bradford, the two places that shaped how I think more than anything that came after. Lagos taught me to distrust surface explanations. Bradford gave me the rigour to find the real ones. Columbia gave me the language for it. Wharton gave me the room.</p>
+              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)", marginBottom: 20 }}>Now I build AI systems that actually survive in regulated environments. Finance, compliance, enterprise data. Most models fail in these spaces not because they are weak, but because nobody thought through what happens when they are wrong. That is the gap I work in.</p>
               <blockquote style={{ borderLeft: "3px solid var(--terra)", paddingLeft: 24, fontFamily: "var(--font-playfair),serif", fontStyle: "italic", fontSize: 18, lineHeight: 1.55, color: "var(--ink)", margin: "24px 0" }}>
                 "I have never been the smartest person in the room. I am usually the one who read the room differently."
               </blockquote>
-              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>The path looks nonlinear from the outside — chemical engineering to product to AI to private capital. From the inside it has always been one thing: find the leverage point, then build toward it.</p>
+              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>When I am not building, you will find me on a tennis court or running somewhere in New York City. The path from chemical engineering to product to AI to private capital looks nonlinear from the outside. From the inside it has always been one thing: find the leverage point, then build toward it.</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
                 {["AI Systems", "Private Markets", "Africa", "Fintech", "Regulated Industries", "Electrochemistry"].map(tag => (
                   <span key={tag} style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", border: "1px solid var(--border)", padding: "4px 12px", borderRadius: 2, color: "var(--mid)" }}>{tag}</span>
@@ -195,7 +196,7 @@ export default function Home() {
             {
               label: "What shaped the lens",
               name: "The thing Lagos actually taught me",
-              body: "Growing up in Lagos did not teach me to be resilient. Everyone says that. What it actually taught me was to distrust surface explanations.\n\nWhen a system breaks visibly, the cause is almost never where the break is. The fuel queue is not a fuel problem. The FX swing is not an exchange rate problem. That instinct — tracing effects back to their actual origin — is the thing I bring to every model I build and every investment I evaluate.\n\nBradford gave me rigor. Lagos gave me the reason to use it.",
+              body: "Growing up in Lagos did not teach me to be resilient. Everyone says that. What it actually taught me was to distrust surface explanations.\n\nWhen a system breaks visibly, the cause is almost never where the break is. The fuel queue is not a fuel problem. The FX swing is not an exchange rate problem. That instinct, tracing effects back to their actual origin, is the thing I bring to every model I build and every investment I evaluate.\n\nBradford gave me rigor. Lagos gave me the reason to use it.",
             },
             {
               label: "What I am obsessed with right now",
@@ -210,7 +211,7 @@ export default function Home() {
             {
               label: "Side quest: gaming",
               name: "How games actually trained me",
-              body: "I have been a gamer since I was old enough to hold a controller. What I did not realise until recently is that games taught me everything that matters: resource allocation under uncertainty, reading patterns before they complete, knowing when to push and when to reset.\n\nEvery PM I have ever met who moves fast and breaks nothing learned it the same way — through a thousand invisible iterations before the stakes were real.\n\nThe strategy games especially. If you have ever spent three hours optimising a build order in an RTS, you already understand roadmap sequencing. You just call it something different at work.",
+              body: "I have been a gamer since I was old enough to hold a controller. What I did not realise until recently is that games taught me everything that matters: resource allocation under uncertainty, reading patterns before they complete, knowing when to push and when to reset.\n\nEvery PM I have ever met who moves fast and breaks nothing learned it the same way, through a thousand invisible iterations before the stakes were real.\n\nThe strategy games especially. If you have ever spent three hours optimising a build order in an RTS, you already understand roadmap sequencing. You just call it something different at work.",
             },
             {
               label: "Right now",
@@ -324,12 +325,12 @@ export default function Home() {
             {
               label: "City Ventures",
               name: "African & Emerging Markets",
-              desc: "Full investment lifecycle: market sizing, financial diligence, deal leadership, post-investment monitoring. 60+ companies reviewed. Two closed investments (mid-to-high seven figures). Built the firm's framework for markets where the standard U.S. playbook doesn't apply — FX stress, regulatory disruption, exit uncertainty across Nigeria, Kenya, South Africa, Ghana, and Egypt.",
+              desc: "Full investment lifecycle: market sizing, financial diligence, deal leadership, post-investment monitoring. 60+ companies reviewed. Two closed investments (mid-to-high seven figures). Built the firm's framework for markets where the standard U.S. playbook doesn't apply, FX stress, regulatory disruption, exit uncertainty across Nigeria, Kenya, South Africa, Ghana, and Egypt.",
               chips: ["60+ companies", "Two 7-fig leads", "FX stress", "Nigeria · Kenya · S. Africa · Ghana · Egypt"],
             },
             {
               label: "Founding Member · Philadelphia",
-              name: "KOVA — Raising",
+              name: "KOVA, Raising",
               desc: "Building a credit data platform that converts informal financial behaviour (savings groups, rent, school fees) into structured, usable credit signals for Nigeria's informal economy. Designed the onboarding model leveraging existing collector networks to drive adoption at grassroots scale. Operating across a 5-person cross-functional team.",
               chips: ["Nigeria", "Credit infrastructure", "Informal economy", "Fintech"],
             },

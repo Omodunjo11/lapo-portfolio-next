@@ -25,7 +25,7 @@ export default function WritingPage() {
           I think in essays,<br /><em style={{ color: "var(--terra)", fontStyle: "italic" }}>not bullet points.</em>
         </h1>
         <p style={{ fontSize: 13, color: "var(--muted)", maxWidth: 560, lineHeight: 1.85, animation: "fadeUp .7s .7s ease both" }}>
-          Writing is where I process what I cannot yet systematise. Identity, economics, belonging, burnout — the things that don't fit neatly into a pitch deck or a product spec.
+          Writing is where I process what I cannot yet systematise. Identity, economics, belonging, burnout, the things that don't fit neatly into a pitch deck or a product spec.
         </p>
       </div>
 
@@ -67,7 +67,7 @@ export default function WritingPage() {
             <div>
               <div style={{ fontSize: 8, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 8 }}>Medium</div>
               <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: 20, fontWeight: 700, marginBottom: 6 }}>More where that came from.</div>
-              <p style={{ fontSize: 11, color: "var(--muted)", maxWidth: 380 }}>All essays published on Medium — the full archive of things I couldn't stop thinking about.</p>
+              <p style={{ fontSize: 11, color: "var(--muted)", maxWidth: 380 }}>All essays published on Medium, the full archive of things I couldn't stop thinking about.</p>
             </div>
             <Link
               href="https://medium.com/@odunjoonaolapo"

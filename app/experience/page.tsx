@@ -408,7 +408,7 @@ export default function ExperiencePage() {
                 <div>
                   <div style={{ fontSize: 8, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 8 }}>Full CV</div>
                   <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Download the complete resume</div>
-                  <p style={{ fontSize: 11, color: "var(--muted)" }}>AI systems, private markets, leadership, publications — consolidated. Last updated 2026.</p>
+                  <p style={{ fontSize: 11, color: "var(--muted)" }}>AI systems, private markets, leadership, publications, consolidated. Last updated 2026.</p>
                 </div>
                 <Link href="/resume.pdf" target="_blank" rel="noopener"
                   style={{ display: "inline-flex", alignItems: "center", gap: 9, fontFamily: "var(--font-syne),sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", background: "var(--terra)", color: "var(--paper)", padding: "13px 26px", borderRadius: 2, whiteSpace: "nowrap", flexShrink: 0, transition: "background .25s, transform .2s" }}

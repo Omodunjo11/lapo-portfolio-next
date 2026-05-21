@@ -77,7 +77,7 @@ export default function ProjectsPage() {
             animation: "fadeUp .7s .7s ease both",
           }}
         >
-          Every project here started with a real problem — a team drowning in meeting transcripts, a compliance team missing regulatory signals, a chatbot that couldn&apos;t tell a founder from an analyst. I found the gap, designed the solution, and built the thing.
+          Every project here started with a real problem, a team drowning in meeting transcripts, a compliance team missing regulatory signals, a chatbot that couldn&apos;t tell a founder from an analyst. I found the gap, designed the solution, and built the thing.
         </p>
       </div>
 
@@ -98,7 +98,7 @@ export default function ProjectsPage() {
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
               <p style={{ fontSize: 13, color: "var(--mid)", lineHeight: 1.9 }}>
-                Most AI demos collapse the moment they touch a real workflow — inconsistent outputs, no escalation logic, no way to audit what the model actually did.{" "}
+                Most AI demos collapse the moment they touch a real workflow, inconsistent outputs, no escalation logic, no way to audit what the model actually did.{" "}
                 <strong style={{ color: "var(--ink)", fontWeight: 600 }}>I build AI systems designed to survive contact with reality.</strong>{" "}
                 That means thinking about failure modes before launch, not after.
               </p>
@@ -109,7 +109,7 @@ export default function ProjectsPage() {
                   fontSize: 16, lineHeight: 1.6, color: "var(--ink)", margin: "8px 0",
                 }}
               >
-                I come to every product as both the PM and the person who can build a working prototype by Tuesday — which changes what questions you ask and how fast you move.
+                I come to every product as both the PM and the person who can build a working prototype by Tuesday, which changes what questions you ask and how fast you move.
               </blockquote>
               <p style={{ fontSize: 13, color: "var(--mid)", lineHeight: 1.9 }}>
                 Across these projects, I&apos;ve worked the full AI product surface:{" "}
@@ -133,8 +133,8 @@ export default function ProjectsPage() {
           </div>
           <div className="grid-4col" style={{ margin: "0 48px" }}>
             {[
-              { icon: "🧩", title: "Product Definition", desc: "I find the real problem under the stated one. Every project here started from a workflow gap — not a feature request. I write specs, define success metrics, and kill bad ideas before they become bad code." },
-              { icon: "⚙️", title: "Technical Depth", desc: "LLM context windows, retrieval pipelines, role-aware prompting, async message queues — I understand the stack well enough to call out engineering tradeoffs in a design review, not just in a post-mortem." },
+              { icon: "🧩", title: "Product Definition", desc: "I find the real problem under the stated one. Every project here started from a workflow gap, not a feature request. I write specs, define success metrics, and kill bad ideas before they become bad code." },
+              { icon: "⚙️", title: "Technical Depth", desc: "LLM context windows, retrieval pipelines, role-aware prompting, async message queues, I understand the stack well enough to call out engineering tradeoffs in a design review, not just in a post-mortem." },
               { icon: "📐", title: "Ship Velocity", desc: "All of this was built outside a big org. No platform team, no infra support. That forces ruthless prioritisation and an allergy to scope creep. I know what a v1 needs to be and what it can be later." },
               { icon: "🏛️", title: "Regulated Domains", desc: "Fintech, compliance, and enterprise AI are my home turf. I understand why a CISO blocks an LLM rollout and what it takes to make an AI product trustworthy enough to deploy inside a bank or regulator." },
             ].map((cap) => (
@@ -301,7 +301,7 @@ export default function ProjectsPage() {
           <div>
             <div style={{ fontSize: 8, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 8 }}>Open Source</div>
             <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: 22, fontWeight: 700, marginBottom: 6 }}>See everything on GitHub</div>
-            <p style={{ fontSize: 11, color: "var(--muted)", maxWidth: 420 }}>All projects are public. Code, commits, and context — no gatekeeping.</p>
+            <p style={{ fontSize: 11, color: "var(--muted)", maxWidth: 420 }}>All projects are public. Code, commits, and context, no gatekeeping.</p>
           </div>
           <Link
             href="https://github.com/Omodunjo11"
