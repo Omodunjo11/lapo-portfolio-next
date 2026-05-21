@@ -185,9 +185,59 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── FEATURED PROJECTS ── */}
+      <section id="work" style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
+        <Reveal>
+          <div style={{ padding: "0 48px 40px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+              <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>02</span>
+              <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Featured Projects</span>
+              <div style={{ width: 120, height: 1, background: "var(--border)" }} />
+            </div>
+            <Link href="/projects" style={{ fontSize: 9, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)" }}>View All →</Link>
+          </div>
+        </Reveal>
+        <div className="grid-2col pad-page">
+          {featuredProjects.map((project, i) => (
+            <Reveal key={project.slug} delay={i * 0.1}>
+              <Link href={`/projects/${project.slug}`}>
+                <div
+                  style={{ background: "var(--paper)", padding: "36px 32px", height: "100%", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", transition: "background .25s", borderTop: "2px solid transparent" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.borderTopColor = "transparent" }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+                    <span style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", border: "1px solid rgba(196,98,45,.3)", color: "var(--terra)", padding: "3px 9px", borderRadius: 2 }}>{project.lang}</span>
+                    <span style={{ fontSize: 9, color: "var(--muted)" }}>{project.year}</span>
+                  </div>
+                  <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 18, fontWeight: 800, marginBottom: 8, lineHeight: 1.2 }}>{project.name}</div>
+                  <div style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", color: "#7a6020", marginBottom: 16 }}>{project.role}</div>
+                  <p style={{ fontSize: 13, lineHeight: 1.85, color: "var(--mid)", flex: 1, marginBottom: 24 }}>{project.tagline}</p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 20 }}>
+                    {project.stack.slice(0, 3).map(s => <span key={s} style={{ fontSize: 8, background: "rgba(201,168,76,.12)", color: "#c9a84c", padding: "3px 8px", borderRadius: 2 }}>{s}</span>)}
+                  </div>
+                  <div style={{ fontSize: 10, color: "var(--terra)", letterSpacing: ".1em" }}>Read full breakdown →</div>
+                </div>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal>
+          <div style={{ padding: "32px 48px 0", textAlign: "center" }}>
+            <Link href="/projects"
+              style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--font-syne),sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", border: "1px solid var(--border)", padding: "13px 32px", borderRadius: 2, transition: "all .25s" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.color = "var(--paper)"; e.currentTarget.style.borderColor = "var(--ink)" }}
+              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "inherit"; e.currentTarget.style.borderColor = "var(--border)" }}
+            >
+              See all 11 projects →
+            </Link>
+          </div>
+        </Reveal>
+      </section>
+
       {/* ── THE LONGER VERSION ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
-        <Reveal><SH n="02" t="Extended Lore" /></Reveal>
+        <Reveal><SH n="03" t="Extended Lore" /></Reveal>
         <div className="grid-3col" style={{ margin: "0 48px" }}>
           {[
             {
@@ -262,56 +312,6 @@ export default function Home() {
             </Reveal>
           ))}
         </div>
-      </section>
-
-      {/* ── FEATURED PROJECTS ── */}
-      <section id="work" style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
-        <Reveal>
-          <div style={{ padding: "0 48px 40px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-              <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>03</span>
-              <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Featured Projects</span>
-              <div style={{ width: 120, height: 1, background: "var(--border)" }} />
-            </div>
-            <Link href="/projects" style={{ fontSize: 9, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)" }}>View All →</Link>
-          </div>
-        </Reveal>
-        <div className="grid-2col pad-page">
-          {featuredProjects.map((project, i) => (
-            <Reveal key={project.slug} delay={i * 0.1}>
-              <Link href={`/projects/${project.slug}`}>
-                <div
-                  style={{ background: "var(--paper)", padding: "36px 32px", height: "100%", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", transition: "background .25s", borderTop: "2px solid transparent" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.borderTopColor = "transparent" }}
-                >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-                    <span style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", border: "1px solid rgba(196,98,45,.3)", color: "var(--terra)", padding: "3px 9px", borderRadius: 2 }}>{project.lang}</span>
-                    <span style={{ fontSize: 9, color: "var(--muted)" }}>{project.year}</span>
-                  </div>
-                  <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 18, fontWeight: 800, marginBottom: 8, lineHeight: 1.2 }}>{project.name}</div>
-                  <div style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", color: "#7a6020", marginBottom: 16 }}>{project.role}</div>
-                  <p style={{ fontSize: 13, lineHeight: 1.85, color: "var(--mid)", flex: 1, marginBottom: 24 }}>{project.tagline}</p>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 20 }}>
-                    {project.stack.slice(0, 3).map(s => <span key={s} style={{ fontSize: 8, background: "rgba(201,168,76,.12)", color: "#c9a84c", padding: "3px 8px", borderRadius: 2 }}>{s}</span>)}
-                  </div>
-                  <div style={{ fontSize: 10, color: "var(--terra)", letterSpacing: ".1em" }}>Read full breakdown →</div>
-                </div>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
-        <Reveal>
-          <div style={{ padding: "32px 48px 0", textAlign: "center" }}>
-            <Link href="/projects"
-              style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--font-syne),sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", border: "1px solid var(--border)", padding: "13px 32px", borderRadius: 2, transition: "all .25s" }}
-              onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.color = "var(--paper)"; e.currentTarget.style.borderColor = "var(--ink)" }}
-              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "inherit"; e.currentTarget.style.borderColor = "var(--border)" }}
-            >
-              See all 11 projects →
-            </Link>
-          </div>
-        </Reveal>
       </section>
 
       {/* ── CAPITAL ── */}
