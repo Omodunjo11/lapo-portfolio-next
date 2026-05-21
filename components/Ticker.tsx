@@ -6,7 +6,7 @@ export default function Ticker({ items }: TickerProps) {
   const doubled = [...items, ...items]
 
   return (
-    <div style={{ overflow: "hidden", background: "var(--ink)", padding: "11px 0" }}>
+    <div style={{ overflow: "hidden", background: "var(--bg2)", padding: "11px 0", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
       <div className="ticker-inner">
         {doubled.map((item, i) => (
           <span
@@ -17,7 +17,7 @@ export default function Ticker({ items }: TickerProps) {
               fontWeight: 600,
               letterSpacing: ".14em",
               textTransform: "uppercase",
-              color: item.highlight ? "var(--gold)" : "rgba(245,240,232,.65)",
+              color: item.highlight ? "var(--gold)" : "rgba(238,234,226,.45)",
               padding: "0 24px",
             }}
           >

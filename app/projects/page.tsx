@@ -141,7 +141,7 @@ export default function ProjectsPage() {
               <div
                 key={cap.title}
                 style={{ background: "var(--paper)", padding: "30px 24px", transition: "background .25s", position: "relative", overflow: "hidden" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "rgba(196,98,45,.03)")}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(212,112,58,.07)")}
                 onMouseLeave={e => (e.currentTarget.style.background = "var(--paper)")}
               >
                 <div style={{ fontSize: 20, marginBottom: 14 }}>{cap.icon}</div>
@@ -199,7 +199,7 @@ export default function ProjectsPage() {
                     borderTop: "2px solid transparent",
                   }}
                   onMouseEnter={e => {
-                    e.currentTarget.style.background = "rgba(196,98,45,.03)"
+                    e.currentTarget.style.background = "rgba(212,112,58,.07)"
                     e.currentTarget.style.borderTopColor = "var(--terra)"
                   }}
                   onMouseLeave={e => {
@@ -265,7 +265,7 @@ export default function ProjectsPage() {
                         key={s}
                         style={{
                           fontSize: 8, letterSpacing: ".07em",
-                          background: "rgba(201,168,76,.1)", color: "#7a6020",
+                          background: "rgba(201,168,76,.18)", color: "#c9a84c",
                           padding: "3px 8px", borderRadius: 2,
                         }}
                       >

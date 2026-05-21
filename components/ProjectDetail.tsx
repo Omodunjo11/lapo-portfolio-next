@@ -156,7 +156,7 @@ export default function ProjectDetail({ project, prev, next }: Props) {
             <div style={{ fontSize: 9, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 16 }}>Tech Stack</div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
               {project.stack.map((s) => (
-                <span key={s} style={{ fontSize: 9, background: "rgba(201,168,76,.12)", color: "#7a6020", padding: "4px 10px", borderRadius: 2 }}>{s}</span>
+                <span key={s} style={{ fontSize: 9, background: "rgba(201,168,76,.18)", color: "#c9a84c", padding: "4px 10px", borderRadius: 2 }}>{s}</span>
               ))}
             </div>
           </div>
