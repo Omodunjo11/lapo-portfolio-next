@@ -33,7 +33,7 @@ export default function WritingPage() {
 
       {/* Essays grid */}
       <section style={{ padding: "64px 48px 80px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 1, background: "var(--border)" }}>
+        <div className="grid-2col">
           {essays.map((essay, i) => (
             <Reveal key={essay.slug} delay={i * 0.08}>
               <Link href={essay.url} target="_blank" rel="noopener">
@@ -93,7 +93,7 @@ export default function WritingPage() {
         </Reveal>
         <Reveal delay={0.1}>
           <div
-            style={{ border: "1px solid var(--border)", padding: "40px 44px", display: "grid", gridTemplateColumns: "1fr auto", gap: 48, alignItems: "center", transition: "background .2s", borderRadius: 2 }}
+            className="grid-pub" style={{ border: "1px solid var(--border)", padding: "40px 44px", transition: "background .2s", borderRadius: 2 }}
             onMouseEnter={e => (e.currentTarget.style.background = "rgba(196,98,45,.03)")}
             onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
           >

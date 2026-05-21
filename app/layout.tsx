@@ -25,8 +25,23 @@ const syne = Syne({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://lapo-portfolio-next.vercel.app"),
   title: "Lapo Odunjo — AI Systems Builder",
-  description: "AI systems builder. Infrastructure investor. Wharton MBA.",
+  description: "Staff TPM building production AI systems for regulated industries. Kinage · Amazon · TD Bank · Capital One · Wharton MBA.",
+  openGraph: {
+    title: "Lapo Odunjo — AI Systems Builder",
+    description: "Staff TPM building production AI systems for regulated industries. LLM evaluation, agentic workflows, enterprise data platforms.",
+    url: "https://lapo-portfolio-next.vercel.app",
+    siteName: "Lapo Odunjo",
+    images: [{ url: "/images/IMG_3437.jpg", width: 1200, height: 630, alt: "Lapo Odunjo" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lapo Odunjo — AI Systems Builder",
+    description: "Staff TPM building production AI systems for regulated industries.",
+    images: ["/images/IMG_3437.jpg"],
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

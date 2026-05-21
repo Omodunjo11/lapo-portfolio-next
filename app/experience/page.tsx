@@ -213,7 +213,7 @@ export default function ExperiencePage() {
       </div>
 
       {/* Tabs */}
-      <div style={{ borderBottom: "1px solid var(--border)", padding: "0 48px", display: "flex", gap: 0 }}>
+      <div className="exp-tabs" style={{ borderBottom: "1px solid var(--border)", display: "flex", gap: 0, overflowX: "auto" }}>
         {tabs.map(tab => (
           <button
             key={tab.key}
@@ -244,7 +244,7 @@ export default function ExperiencePage() {
             {jobs.map((job, idx) => (
               <Reveal key={job.company + job.role} delay={idx * 0.04}>
                 <div style={{ borderBottom: "1px solid var(--border)", paddingBottom: 48, marginBottom: 48 }}>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 24, alignItems: "flex-start", marginBottom: 20 }}>
+                  <div className="grid-exp-row" style={{ marginBottom: 20 }}>
                     <div>
                       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8, flexWrap: "wrap" }}>
                         <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 18, fontWeight: 800 }}>{job.company}</div>
@@ -290,7 +290,7 @@ export default function ExperiencePage() {
         {/* ── LEADERSHIP ── */}
         {activeTab === "leadership" && (
           <div style={{ padding: "48px 48px 0" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 1, background: "var(--border)" }}>
+            <div className="grid-3col">
               {leadership.map((item, i) => (
                 <Reveal key={item.org} delay={i * 0.08}>
                   <div style={{ background: "var(--paper)", padding: "32px 28px", height: "100%", transition: "background .25s", borderTop: "2px solid transparent" }}
@@ -313,7 +313,7 @@ export default function ExperiencePage() {
                 <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Awards & Honors</span>
                 <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 1, background: "var(--border)" }}>
+              <div className="grid-2col">
                 {[
                   { name: "Trailblazer Fellowship, 50% Merit", inst: "The Wharton School, UPenn" },
                   { name: "Full Merit Scholarship", inst: "Columbia University, 21 of 5,000+ applicants" },
@@ -362,7 +362,7 @@ export default function ExperiencePage() {
 
             {/* ACS publication */}
             <Reveal>
-              <div style={{ border: "1px solid var(--border)", padding: "36px 44px", display: "grid", gridTemplateColumns: "1fr auto", gap: 40, alignItems: "center", borderRadius: 2, transition: "background .2s" }}
+              <div className="grid-pub" style={{ border: "1px solid var(--border)", padding: "36px 44px", borderRadius: 2, transition: "background .2s" }}
                 onMouseEnter={e => (e.currentTarget.style.background = "rgba(196,98,45,.03)")}
                 onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
               >
@@ -384,7 +384,7 @@ export default function ExperiencePage() {
         {/* ── SKILLS ── */}
         {activeTab === "skills" && (
           <div style={{ padding: "48px 48px 0" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 1, background: "var(--border)" }}>
+            <div className="grid-3col">
               {skillGroups.map((sg, i) => (
                 <Reveal key={sg.title} delay={i * 0.06}>
                   <div style={{ background: "var(--paper)", padding: "28px 26px" }}>

@@ -28,8 +28,8 @@ export default function Home() {
   return (
     <>
       {/* ── HERO ── */}
-      <section id="home" style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "55% 45%", borderBottom: "1px solid var(--border)" }}>
-        <div style={{ padding: "80px 64px 80px 48px", display: "flex", flexDirection: "column", justifyContent: "center", borderRight: "1px solid var(--border)" }}>
+      <section id="home" className="grid-hero">
+        <div className="hero-left">
           <p style={{ fontSize: 9, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 24, display: "flex", alignItems: "center", gap: 10, animation: "fadeUp .7s .5s ease both" }}>
             <span style={{ width: 20, height: 1, background: "var(--terra)", display: "inline-block" }} />
             AI Systems Architecture · Private Capital · Africa & U.S.
@@ -64,7 +64,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", animation: "fadeIn 1s .8s ease both" }}>
+        <div className="hero-right" style={{ animation: "fadeIn 1s .8s ease both" }}>
           <div style={{ flex: 1, overflow: "hidden", position: "relative" }}>
             <Image src="/images/IMG_3437.jpg" alt="Lapo Odunjo" fill style={{ objectFit: "cover", objectPosition: "center top", filter: "grayscale(8%) contrast(1.05)" }} priority />
             <span style={{ position: "absolute", bottom: 12, left: 14, fontSize: 9, letterSpacing: ".12em", textTransform: "uppercase", color: "rgba(245,240,232,.75)" }}>Philadelphia, 2025</span>
@@ -88,9 +88,9 @@ export default function Home() {
       {/* ── ABOUT ── */}
       <section id="about" style={{ padding: "72px 0 80px" }}>
         <Reveal><SH n="01" t="About" /></Reveal>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 0, padding: "0 48px", alignItems: "start" }}>
+        <div className="grid-about pad-page">
           <Reveal>
-            <div style={{ paddingRight: 56, borderRight: "1px solid var(--border)" }}>
+            <div className="about-left">
               <Image src="/images/IMG_3438.png" alt="Lapo Odunjo" width={400} height={500} style={{ width: "100%", height: "auto", objectFit: "cover", filter: "grayscale(15%) contrast(1.05)", marginBottom: 24 }} />
               <div style={{ paddingTop: 16, borderTop: "1px solid var(--border)" }}>
                 <div style={{ fontSize: 9, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 6 }}>AD ASTRA PER ASPERA</div>
@@ -99,7 +99,7 @@ export default function Home() {
             </div>
           </Reveal>
           <Reveal delay={0.1}>
-            <div style={{ paddingLeft: 56, display: "flex", flexDirection: "column", gap: 20 }}>
+            <div className="about-right" style={{ display: "flex", flexDirection: "column", gap: 20 }}>
               <p style={{ fontSize: 14, lineHeight: 1.85, color: "var(--mid)" }}>I grew up between Lagos and Bradford. The question that followed me out of both was the same: how does this actually work, and what breaks first under pressure?</p>
               <p style={{ fontSize: 14, lineHeight: 1.85, color: "var(--mid)" }}>That question took me from chemical engineering to product management to AI systems to private capital. The path looks nonlinear from the outside. From the inside, it has always been one thing: find the leverage point, then build toward it.</p>
               <blockquote style={{ borderLeft: "2px solid var(--terra)", paddingLeft: 24, fontFamily: "var(--font-playfair),serif", fontStyle: "italic", fontSize: 16, lineHeight: 1.6, color: "var(--ink)", margin: "8px 0" }}>
@@ -121,7 +121,7 @@ export default function Home() {
       {/* ── THE LONGER VERSION ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
         <Reveal><SH n="02" t="The Longer Version" /></Reveal>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 1, background: "var(--border)", margin: "0 48px" }}>
+        <div className="grid-3col" style={{ margin: "0 48px" }}>
           {[
             {
               label: "What shaped the lens",
@@ -209,7 +209,7 @@ export default function Home() {
             <Link href="/projects" style={{ fontSize: 9, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)" }}>View All →</Link>
           </div>
         </Reveal>
-        <div style={{ padding: "0 48px", display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 1, background: "var(--border)" }}>
+        <div className="grid-2col pad-page">
           {featuredProjects.map((project, i) => (
             <Reveal key={project.slug} delay={i * 0.1}>
               <Link href={`/projects/${project.slug}`}>
@@ -250,7 +250,7 @@ export default function Home() {
       {/* ── CAPITAL ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
         <Reveal><SH n="04" t="Capital Allocation" /></Reveal>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 1, background: "var(--border)", margin: "0 48px" }}>
+        <div className="grid-2col" style={{ margin: "0 48px" }}>
           {[
             {
               label: "City Ventures",
@@ -294,7 +294,7 @@ export default function Home() {
             <Link href="/writing" style={{ fontSize: 9, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)" }}>All Essays →</Link>
           </div>
         </Reveal>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 1, background: "var(--border)", margin: "0 48px" }}>
+        <div className="grid-2col" style={{ margin: "0 48px" }}>
           {essays.map((essay, i) => (
             <Reveal key={essay.slug} delay={i * 0.07}>
               <Link href={essay.url} target="_blank" rel="noopener">
@@ -317,7 +317,7 @@ export default function Home() {
       {/* ── EDUCATION ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
         <Reveal><SH n="06" t="Education" /></Reveal>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 1, background: "var(--border)", margin: "0 48px" }}>
+        <div className="grid-3col" style={{ margin: "0 48px" }}>
           {[
             { year: "2024 – 2026", school: "The Wharton School", degree: "MBA, Finance & AI Operations\nUniversity of Pennsylvania", note: "Trailblazer Fellowship (50% merit) · President, Wharton Graduate Association ($6M P&L, 1,700+ students) · VP, Wharton Tech Club Conferences · Co-CEO, Africa AI Leaders Fellowship" },
             { year: "2021 – 2023", school: "Columbia University", degree: "MS, Chemical Engineering\nNew York, NY", note: "Full merit, 21 of 5,000+ applicants · GPA 3.8 · ACS Applied Energy Materials publication" },
@@ -341,7 +341,7 @@ export default function Home() {
       {/* ── AWARDS ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
         <Reveal><SH n="07" t="Awards & Honors" /></Reveal>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 1, background: "var(--border)", margin: "0 48px" }}>
+        <div className="grid-2col" style={{ margin: "0 48px" }}>
           {[
             { name: "Trailblazer Fellowship, 50% Merit", inst: "The Wharton School, UPenn" },
             { name: "Full Merit Scholarship", inst: "Columbia University, 21 of 5,000+ applicants" },
@@ -369,7 +369,7 @@ export default function Home() {
       {/* ── SKILLS ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
         <Reveal><SH n="08" t="Skills & Tools" /></Reveal>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 1, background: "var(--border)", margin: "0 48px" }}>
+        <div className="grid-4col" style={{ margin: "0 48px" }}>
           {[
             { title: "AI & Product Systems", items: ["Platform Strategy", "RAG Architecture", "LLM Evaluation", "Drift Monitoring", "Anomaly Detection", "Experimentation Frameworks", "Governance & Escalation Design"] },
             { title: "Investment", items: ["DCF & LBO Modeling", "IRR Sensitivity", "NAV Analysis", "Monte Carlo", "Portfolio Construction", "FX Stress Testing", "Blended Finance"] },

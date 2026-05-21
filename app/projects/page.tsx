@@ -85,8 +85,8 @@ export default function ProjectsPage() {
 
       {/* Narrative */}
       <Reveal>
-        <section style={{ padding: "72px 48px", borderBottom: "1px solid var(--border)" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 64, alignItems: "start" }}>
+        <section className="pad-section" style={{ borderBottom: "1px solid var(--border)" }}>
+          <div className="grid-1-2">
             <div>
               <div style={{ fontSize: 9, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 16 }}>
                 The Through-Line
@@ -131,7 +131,7 @@ export default function ProjectsPage() {
             <span style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>What I bring to an AI PM role</span>
             <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 1, background: "var(--border)", margin: "0 48px" }}>
+          <div className="grid-4col" style={{ margin: "0 48px" }}>
             {[
               { icon: "🧩", title: "Product Definition", desc: "I find the real problem under the stated one. Every project here started from a workflow gap — not a feature request. I write specs, define success metrics, and kill bad ideas before they become bad code." },
               { icon: "⚙️", title: "Technical Depth", desc: "LLM context windows, retrieval pipelines, role-aware prompting, async message queues — I understand the stack well enough to call out engineering tradeoffs in a design review, not just in a post-mortem." },
@@ -184,8 +184,8 @@ export default function ProjectsPage() {
       </div>
 
       {/* Grid */}
-      <section style={{ padding: "0 48px 80px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 1, background: "var(--border)" }}>
+      <section className="pad-page" style={{ paddingBottom: 80 }}>
+        <div className="grid-3col">
           {visible.map((project, i) => (
             <Reveal key={project.slug} delay={((i % 3) * 0.08)}>
               <Link href={`/projects/${project.slug}`}>

@@ -90,3 +90,71 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
   body { cursor: auto; }
   #cursor, #cursor-ring { display: none; }
 }
+
+/* ── Responsive layout helpers ── */
+.grid-hero      { display: grid; grid-template-columns: 55% 45%; min-height: 100vh; border-bottom: 1px solid var(--border); }
+.grid-2col      { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--border); }
+.grid-3col      { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); }
+.grid-4col      { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); }
+.grid-about     { display: grid; grid-template-columns: 1fr 2fr; gap: 0; align-items: start; }
+.grid-1-2       { display: grid; grid-template-columns: 1fr 2fr; gap: 64px; align-items: start; }
+.grid-detail    { display: grid; grid-template-columns: 2fr 1fr; gap: 64px; align-items: start; }
+.grid-exp-row   { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: flex-start; }
+.grid-pub       { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
+.pad-section    { padding: 64px 48px; }
+.pad-page       { padding: 0 48px; }
+.pad-hero       { padding: 80px 48px 60px; }
+.hero-left      { padding: 80px 64px 80px 48px; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--border); }
+.hero-right     { display: flex; flex-direction: column; }
+.about-left     { padding-right: 56px; border-right: 1px solid var(--border); }
+.about-right    { padding-left: 56px; }
+.sidebar-sticky { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 32px; }
+
+/* Nav mobile toggle */
+.nav-links-wrap       { display: flex; align-items: center; gap: 28px; list-style: none; }
+.nav-hamburger        { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+.mobile-menu-overlay  { display: none; }
+
+@media (max-width: 768px) {
+  /* Grids collapse to single column */
+  .grid-hero     { grid-template-columns: 1fr; min-height: auto; }
+  .grid-2col     { grid-template-columns: 1fr; }
+  .grid-3col     { grid-template-columns: 1fr; }
+  .grid-4col     { grid-template-columns: repeat(2,1fr); }
+  .grid-about    { grid-template-columns: 1fr; }
+  .grid-1-2      { grid-template-columns: 1fr; gap: 32px; }
+  .grid-detail   { grid-template-columns: 1fr; gap: 40px; }
+  .grid-exp-row  { grid-template-columns: 1fr; gap: 12px; }
+  .grid-pub      { grid-template-columns: 1fr; gap: 20px; }
+
+  /* Padding reduction */
+  .pad-section   { padding: 40px 20px; }
+  .pad-page      { padding: 0 20px; }
+  .pad-hero      { padding: 48px 20px 40px; }
+  .hero-left     { padding: 56px 20px 40px; border-right: none; border-bottom: 1px solid var(--border); }
+  .hero-right    { min-height: 60vw; }
+  .about-left    { padding-right: 0; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 32px; margin-bottom: 0; }
+  .about-right   { padding-left: 0; padding-top: 32px; }
+  .sidebar-sticky { position: static; }
+
+  /* Nav mobile */
+  .nav-hamburger        { display: flex; align-items: center; color: var(--ink); }
+  .nav-links-wrap       { display: none !important; }
+  .mobile-menu-overlay  { display: block !important; }
+  nav                   { padding: 16px 20px !important; }
+
+  /* Section header padding */
+  .sh-wrap { padding: 40px 20px 24px !important; }
+
+  /* GitHub band */
+  .github-band { flex-direction: column; align-items: flex-start !important; gap: 20px !important; }
+  .github-band a { width: 100%; justify-content: center; }
+
+  /* Experience page */
+  .exp-tabs { padding: 0 20px !important; overflow-x: auto; }
+  .exp-tabs button { padding: 16px 14px !important; font-size: 9px !important; white-space: nowrap; }
+
+  /* Project detail hero meta */
+  .detail-hero-grid { grid-template-columns: 1fr !important; }
+  .detail-meta { min-width: unset !important; width: 100%; }
+}

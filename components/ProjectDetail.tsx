@@ -27,7 +27,7 @@ export default function ProjectDetail({ project, prev, next }: Props) {
 
       {/* Hero */}
       <div style={{ padding: "48px 48px 64px", borderBottom: "1px solid var(--border)" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 40, alignItems: "start" }}>
+        <div className="detail-hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 40, alignItems: "start" }}>
           <div>
             <p style={{ fontSize: 9, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 16, display: "flex", alignItems: "center", gap: 10, animation: "fadeUp .6s .2s ease both" }}>
               <span style={{ width: 20, height: 1, background: "var(--terra)", display: "inline-block" }} />
@@ -74,7 +74,7 @@ export default function ProjectDetail({ project, prev, next }: Props) {
       </div>
 
       {/* Body */}
-      <div style={{ padding: "64px 48px", display: "grid", gridTemplateColumns: "2fr 1fr", gap: 64, alignItems: "start" }}>
+      <div className="grid-detail pad-section">
         <div style={{ display: "flex", flexDirection: "column", gap: 56 }}>
 
           {/* Overview */}
@@ -139,7 +139,7 @@ export default function ProjectDetail({ project, prev, next }: Props) {
         </div>
 
         {/* Sidebar */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 32, position: "sticky", top: 80 }}>
+        <div className="sidebar-sticky">
           <div style={{ border: "1px solid var(--border)", padding: "28px 24px" }}>
             <div style={{ fontSize: 9, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 16 }}>Key Features</div>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
