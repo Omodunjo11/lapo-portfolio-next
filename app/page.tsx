@@ -172,12 +172,9 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.1}>
             <div className="about-right" style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)", marginBottom: 20 }}>I go by Lapo. Grew up between Lagos and Bradford, the two places that shaped how I think more than anything that came after. Lagos taught me to distrust surface explanations. Bradford gave me the rigour to find the real ones. Columbia gave me the language for it. Wharton gave me the room.</p>
-              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)", marginBottom: 20 }}>Now I build AI systems that actually survive in regulated environments. Finance, compliance, enterprise data. Most models fail in these spaces not because they are weak, but because nobody thought through what happens when they are wrong. That is the gap I work in.</p>
-              <blockquote style={{ borderLeft: "3px solid var(--terra)", paddingLeft: 24, fontFamily: "var(--font-playfair),serif", fontStyle: "italic", fontSize: 18, lineHeight: 1.55, color: "var(--ink)", margin: "24px 0" }}>
-                "I have never been the smartest person in the room. I am usually the one who read the room differently."
-              </blockquote>
-              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>When I am not building, you will find me on a tennis court or running somewhere in New York City. The path from chemical engineering to product to AI to private capital looks nonlinear from the outside. From the inside it has always been one thing: find the leverage point, then build toward it.</p>
+              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)", marginBottom: 20 }}>I go by Lapo. Grew up in Lagos, moved to Bradford for uni, ended up in New York. I build AI systems for regulated industries, the kind of environments where a wrong model output is not just embarrassing, it is a compliance issue.</p>
+              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)", marginBottom: 20 }}>The path from chemical engineering to product to AI to private capital looks random from the outside. It is not. I have always been looking for the same thing: where is the actual problem, and what genuinely fixes it.</p>
+              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>When I am not doing that, I am on a tennis court or running somewhere in the city. Currently finishing the Wharton MBA and building Kinage in production at the same time, which is exactly as intense as it sounds.</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
                 {["AI Systems", "Private Markets", "Africa", "Fintech", "Regulated Industries", "Electrochemistry"].map(tag => (
                   <span key={tag} style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", border: "1px solid var(--border)", padding: "4px 12px", borderRadius: 2, color: "var(--mid)" }}>{tag}</span>
@@ -196,7 +193,7 @@ export default function Home() {
             {
               label: "What shaped the lens",
               name: "The thing Lagos actually taught me",
-              body: "Growing up in Lagos did not teach me to be resilient. Everyone says that. What it actually taught me was to distrust surface explanations.\n\nWhen a system breaks visibly, the cause is almost never where the break is. The fuel queue is not a fuel problem. The FX swing is not an exchange rate problem. That instinct, tracing effects back to their actual origin, is the thing I bring to every model I build and every investment I evaluate.\n\nBradford gave me rigor. Lagos gave me the reason to use it.",
+              body: "I grew up in Lagos. The city moves fast and nothing is ever quite what it looks like on the surface. You learn early to look past the obvious explanation, because the obvious one is almost always wrong.\n\nThat habit never left me. When an AI system keeps failing, or an investment keeps underperforming, the first thing I do is ignore where the pain is showing up. The real problem is almost always somewhere else.",
             },
             {
               label: "What I am obsessed with right now",
@@ -216,7 +213,7 @@ export default function Home() {
             {
               label: "Right now",
               name: "What the calendar actually looks like",
-              body: "Finishing the Wharton MBA. Running Kinage in production. Raising for KOVA. Writing about what happens when AI models meet regulated institutions and neither side is ready.\n\nI co-founded Young Africans in Diaspora because the community needed to exist and nobody was building it. I run Sunday conversations about AI, capital, and what it means to operate from the continent inside Western institutions. The most interesting problems live at intersections. I keep moving toward them.",
+              body: "Finishing the Wharton MBA. Running Kinage in production. Raising for KOVA. Writing about what happens when AI models meet regulated institutions and neither side is ready.\n\nI also co-founded Young Africans in Diaspora because the community needed to exist and nobody was building it. Most weeks I am juggling more than I probably should. It is fine.",
             },
             {
               label: "What I am reading",
@@ -478,9 +475,9 @@ export default function Home() {
         <div style={{ padding: "64px 56px", display: "flex", flexDirection: "column", justifyContent: "center", background: "var(--ink)" }}>
           <p style={{ fontSize: 9, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 16 }}>◆ Philadelphia, 2025</p>
           <h2 style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(24px,3vw,40px)", fontWeight: 900, lineHeight: 1.1, color: "#f5f0e8", marginBottom: 18 }}>
-            The systems matter.<br /><em style={{ color: "#7a6020", fontStyle: "italic" }}>So do the people they affect.</em>
+            Building things that<br /><em style={{ color: "var(--gold)", fontStyle: "italic" }}>actually work.</em>
           </h2>
-          <p style={{ fontSize: 12, color: "rgba(245,240,232,.55)", lineHeight: 1.85, maxWidth: 340, marginBottom: 28 }}>That is the through-line in everything I build.</p>
+          <p style={{ fontSize: 12, color: "rgba(245,240,232,.55)", lineHeight: 1.85, maxWidth: 340, marginBottom: 28 }}>Not just in demos. In production, under pressure, in regulated environments where it actually matters.</p>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
             <Link href="https://medium.com/@odunjoonaolapo" target="_blank" rel="noopener"
               style={{ fontSize: 9, letterSpacing: ".12em", textTransform: "uppercase", background: "var(--gold)", color: "var(--ink)", padding: "9px 18px", borderRadius: 2, fontFamily: "var(--font-syne),sans-serif", fontWeight: 700, transition: "background .25s" }}
