@@ -6,6 +6,7 @@ const links = [
   { href: "/#about", label: "Story" },
   { href: "/#work", label: "Build" },
   { href: "/projects", label: "Projects" },
+  { href: "/experience", label: "Experience" },
   { href: "/writing", label: "Writing" },
   { href: "/#contact", label: "Connect" },
 ]
@@ -34,6 +35,7 @@ export default function Nav() {
         {links.map(({ href, label }) => {
           const active =
             (href === "/projects" && pathname.startsWith("/projects")) ||
+            (href === "/experience" && pathname.startsWith("/experience")) ||
             (href === "/writing" && pathname.startsWith("/writing"))
           return (
             <li key={href}>

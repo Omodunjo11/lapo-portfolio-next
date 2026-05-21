@@ -47,7 +47,7 @@ export default function Home() {
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10, animation: "fadeUp .7s 1.25s ease both" }}>
             {[
-              { label: "↓ Resume", href: "/Website-Resume.pdf", primary: true, download: true },
+              { label: "↓ Resume", href: "/resume.pdf", primary: true, download: true },
               { label: "See My Work", href: "/projects" },
               { label: "LinkedIn", href: "https://linkedin.com/in/onaolapomichaelodunjo", external: true },
               { label: "GitHub", href: "https://github.com/Omodunjo11", external: true },
