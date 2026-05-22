@@ -6,6 +6,10 @@ import Footer from "@/components/Footer"
 import Cursor from "@/components/Cursor"
 import KonamiCode from "@/components/KonamiCode"
 import PixelRunner from "@/components/PixelRunner"
+import AchievementToast from "@/components/AchievementToast"
+import ScrollXP from "@/components/ScrollXP"
+import GameSounds from "@/components/GameSounds"
+import ContinueScreen from "@/components/ContinueScreen"
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -53,6 +57,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Cursor />
         <KonamiCode />
         <PixelRunner />
+        <AchievementToast />
+        <ScrollXP />
+        <GameSounds />
+        <ContinueScreen />
         <Nav />
         <main style={{ paddingTop: 57 }}>{children}</main>
         <Footer />
