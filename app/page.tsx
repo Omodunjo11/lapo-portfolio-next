@@ -3,6 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import Ticker from "@/components/Ticker"
 import Reveal from "@/components/Reveal"
+import CloudScene from "@/components/CloudScene"
 import { featuredProjects } from "@/lib/projects"
 import { essays } from "@/lib/writing"
 
@@ -30,133 +31,7 @@ const SH = ({ n, t, game }: { n: string; t: string; game?: string }) => (
 export default function Home() {
   return (
     <>
-      {/* ── HERO: CHARACTER SELECT ── */}
-      <section id="home" className="scanlines" style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "1fr 1fr", borderBottom: "1px solid var(--border)", position: "relative" }}>
-
-        {/* LEFT, Name card */}
-        <div style={{ borderRight: "1px solid var(--border)", padding: "80px 56px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-
-          {/* HUD top-left */}
-          <div style={{ animation: "fadeIn .5s .3s ease both", opacity: 0, animationFillMode: "forwards" }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-              <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 9, letterSpacing: ".18em", color: "var(--terra)" }}>P·1 / READY</span>
-              <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 9, letterSpacing: ".14em", color: "var(--muted)" }}>LVL 28 · UNLOCKED</span>
-            </div>
-            {/* HP / XP bars */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
-              {[
-                { label: "HP", color: "#e05c3a", pct: "91%", val: "91/100" },
-                { label: "XP", color: "var(--gold)", pct: "78%", val: "78/100" },
-              ].map(({ label, color, pct, val }) => (
-                <div key={label} style={{ display: "grid", gridTemplateColumns: "24px 1fr 52px", gap: 8, alignItems: "center" }}>
-                  <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, color: "var(--terra)", letterSpacing: ".1em" }}>{label}</span>
-                  <div className="xp-bar-track" style={{ ["--xp-target" as string]: pct } as React.CSSProperties}>
-                    <div className="xp-bar-fill" style={{ background: color, width: pct, animationDelay: label === "XP" ? ".2s" : "0s" }} />
-                  </div>
-                  <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 7, color: "var(--muted)", letterSpacing: ".08em", textAlign: "right" }}>{val}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Name */}
-          <div style={{ animation: "fadeUp .9s .5s ease both", opacity: 0, animationFillMode: "forwards" }}>
-            <h1 style={{ fontFamily: "var(--font-playfair),serif", fontWeight: 900, lineHeight: .86, letterSpacing: "-.04em", margin: 0 }}>
-              <span style={{ display: "block", fontSize: "clamp(56px,7.5vw,108px)", color: "var(--ink)" }}>Lapo</span>
-              <em style={{ display: "block", fontSize: "clamp(56px,7.5vw,108px)", color: "var(--terra)", fontStyle: "italic" }}>Odunjo.</em>
-            </h1>
-            <div style={{ width: 48, height: 3, background: "var(--terra)", margin: "28px 0" }} />
-            <p style={{ fontFamily: "var(--font-playfair),serif", fontStyle: "italic", fontSize: "clamp(15px,1.6vw,20px)", lineHeight: 1.6, color: "var(--mid)", maxWidth: 380 }}>
-              I build AI systems that survive contact with the real world.
-              <span className="cursor-blink" />
-            </p>
-          </div>
-
-          {/* Menu / CTAs styled as game menu */}
-          <div style={{ animation: "fadeUp .7s 1.1s ease both", opacity: 0, animationFillMode: "forwards" }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
-              <div style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".2em", color: "var(--muted)" }}>── SELECT ACTION ──</div>
-              <span className="insert-coin" style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 7, letterSpacing: ".14em", color: "var(--gold)", opacity: 0.5 }}>▶ PRESS START</span>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              {[
-                { label: "↓  Download Resume", href: "/resume.pdf", primary: true, download: true },
-                { label: "▶  View Projects", href: "/projects" },
-                { label: "▶  Read Writing", href: "/writing" },
-                { label: "▶  Connect on LinkedIn", href: "https://linkedin.com/in/onaolapomichaelodunjo", external: true },
-              ].map((btn) => (
-                <Link key={btn.label} href={btn.href}
-                  {...(btn.download ? { download: true } : {})}
-                  target={btn.external ? "_blank" : undefined}
-                  rel={btn.external ? "noopener" : undefined}
-                  style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 11, letterSpacing: ".06em", padding: "10px 16px", borderLeft: btn.primary ? "2px solid var(--terra)" : "2px solid transparent", color: btn.primary ? "var(--terra)" : "var(--mid)", transition: "all .18s", display: "block" }}
-                  onMouseEnter={e => { e.currentTarget.style.borderLeftColor = "var(--terra)"; e.currentTarget.style.color = "var(--ink)"; e.currentTarget.style.background = "rgba(186,230,253,.45)"; e.currentTarget.style.paddingLeft = "24px" }}
-                  onMouseLeave={e => { e.currentTarget.style.borderLeftColor = btn.primary ? "var(--terra)" : "transparent"; e.currentTarget.style.color = btn.primary ? "var(--terra)" : "var(--mid)"; e.currentTarget.style.background = "transparent"; e.currentTarget.style.paddingLeft = "16px" }}
-                >{btn.label}</Link>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* RIGHT, Stat sheet */}
-        <div style={{ padding: "80px 56px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-
-          {/* Class / faction */}
-          <div style={{ animation: "fadeIn .5s .5s ease both", opacity: 0, animationFillMode: "forwards" }}>
-            {[
-              { label: "Role", value: "Staff TPM · AI Systems Builder" },
-              { label: "Faction", value: "Wharton · Kinage · Amazon · Capital One" },
-              { label: "Region", value: "Lagos → Bradford → NYC → Philadelphia" },
-              { label: "Spec", value: "Regulated AI · Private Capital · Africa" },
-            ].map(({ label, value }) => (
-              <div key={label} style={{ display: "grid", gridTemplateColumns: "88px 1fr", gap: 16, padding: "14px 0", borderBottom: "1px solid var(--border)", alignItems: "baseline" }}>
-                <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--terra)" }}>{label}</span>
-                <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 11, color: "var(--mid)" }}>{value}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Stats */}
-          <div style={{ animation: "fadeUp .7s .8s ease both", opacity: 0, animationFillMode: "forwards" }}>
-            <div style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".2em", color: "var(--muted)", marginBottom: 20 }}>── CAREER STATS ──</div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "var(--border)" }}>
-              {[
-                { n: "2B+", l: "Records Modeled" },
-                { n: "60+", l: "Companies Reviewed" },
-                { n: "36", l: "Countries Traveled" },
-                { n: "10", l: "African Markets" },
-              ].map(({ n, l }) => (
-                <div key={l} style={{ background: "var(--paper)", padding: "20px 24px", transition: "background .2s" }}
-                  onMouseEnter={e => (e.currentTarget.style.background = "var(--bg2)")}
-                  onMouseLeave={e => (e.currentTarget.style.background = "var(--paper)")}
-                >
-                  <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: 36, fontWeight: 900, lineHeight: 1, color: "var(--terra)", marginBottom: 4 }}>{n}</div>
-                  <div style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--muted)" }}>{l}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Bottom HUD */}
-          <div style={{ animation: "fadeIn .6s 1.3s ease both", opacity: 0, animationFillMode: "forwards" }}>
-            <div style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".18em", color: "var(--muted)", marginBottom: 10 }}>── CURRENT QUEST ──</div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              {[
-                { k: "Active", v: "Kinage · Production AI" },
-                { k: "Completed", v: "Wharton MBA" },
-                { k: "Building", v: "KOVA Credit Platform" },
-                { k: "Playing", v: "Civilization VII" },
-              ].map(({ k, v }) => (
-                <div key={k} style={{ display: "flex", gap: 12, alignItems: "center" }}>
-                  <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, color: "var(--terra)", width: 68, flexShrink: 0, letterSpacing: ".1em" }}>{k}</span>
-                  <span style={{ width: 1, height: 10, background: "var(--border)", flexShrink: 0 }} />
-                  <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 10, color: "var(--mid)" }}>{v}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <CloudScene />
 
       {/* ── STATUS BAR ── */}
       <div style={{ borderBottom: "1px solid var(--border)", background: "var(--ink)", padding: "10px 48px", display: "flex", alignItems: "center", gap: 32, flexWrap: "wrap", overflow: "hidden" }}>
