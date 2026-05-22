@@ -24,7 +24,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: linear-gradient(160deg, #E0F2FE 0%, #F0F9FF 38%, #F8FAFC 62%, #EDE9FE 100%);
+  background: linear-gradient(180deg, #5BBFE0 0%, #BAE6FD 18%, #E0F2FE 42%, #F8FAFC 68%, #EEF0FF 100%);
   background-attachment: fixed;
   color: var(--ink);
   overflow-x: hidden;
