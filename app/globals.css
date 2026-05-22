@@ -24,7 +24,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: linear-gradient(180deg, #5BBFE0 0%, #BAE6FD 18%, #E0F2FE 42%, #F8FAFC 68%, #EEF0FF 100%);
+  background: linear-gradient(180deg, #0284C7 0%, #0EA5E9 8%, #38BDF8 22%, #7DD3FC 42%, #BAE6FD 62%, #E0F2FE 80%, #F0F9FF 100%);
   background-attachment: fixed;
   color: var(--ink);
   overflow-x: hidden;
@@ -78,6 +78,9 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
 @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
 @keyframes pageLoad { to { opacity: 1; } }
 @keyframes xpFill { from { width: 0%; } to { width: var(--xp-target); } }
+@keyframes cloudDriftL { from { transform: translateX(0); } to { transform: translateX(-60px); } }
+@keyframes cloudDriftR { from { transform: translateX(0); } to { transform: translateX(60px); } }
+@keyframes cloudDriftS { from { transform: translateX(0); } to { transform: translateX(-40px); } }
 @keyframes insertCoin { 0%,60% { opacity: 0.5; } 61%,100% { opacity: 0; } }
 @keyframes achieveSlide { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
 @keyframes levelUpPop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
