@@ -66,6 +66,51 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
 @keyframes navIn { to { transform: translateY(0); } }
 @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
 @keyframes pageLoad { to { opacity: 1; } }
+@keyframes xpFill { from { width: 0%; } to { width: var(--xp-target); } }
+@keyframes insertCoin { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
+
+/* NES scanlines overlay on hero */
+.scanlines {
+  position: relative;
+}
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0,0,0,0.025) 3px,
+    rgba(0,0,0,0.025) 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 8-bit XP / HP bar */
+.xp-bar-track {
+  height: 8px;
+  background: rgba(13,13,13,0.12);
+  image-rendering: pixelated;
+  position: relative;
+  overflow: hidden;
+}
+.xp-bar-fill {
+  height: 100%;
+  animation: xpFill 1.4s cubic-bezier(.22,1,.36,1) both;
+}
+
+/* INSERT COIN blink */
+.insert-coin {
+  animation: insertCoin 1.2s step-end infinite;
+}
+
+/* Pixel art image rendering */
+.pixel-art {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
 
 .cursor-blink {
   display: inline-block;

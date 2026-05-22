@@ -30,15 +30,32 @@ export default function Home() {
   return (
     <>
       {/* ── HERO: CHARACTER SELECT ── */}
-      <section id="home" style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "1fr 1fr", borderBottom: "1px solid var(--border)", position: "relative" }}>
+      <section id="home" className="scanlines" style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "1fr 1fr", borderBottom: "1px solid var(--border)", position: "relative" }}>
 
         {/* LEFT, Name card */}
         <div style={{ borderRight: "1px solid var(--border)", padding: "80px 56px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
 
           {/* HUD top-left */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", animation: "fadeIn .5s .3s ease both", opacity: 0, animationFillMode: "forwards" }}>
-            <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 9, letterSpacing: ".18em", color: "var(--terra)" }}>P·1 / READY</span>
-            <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 9, letterSpacing: ".14em", color: "var(--muted)" }}>LVL 28 · UNLOCKED</span>
+          <div style={{ animation: "fadeIn .5s .3s ease both", opacity: 0, animationFillMode: "forwards" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+              <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 9, letterSpacing: ".18em", color: "var(--terra)" }}>P·1 / READY</span>
+              <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 9, letterSpacing: ".14em", color: "var(--muted)" }}>LVL 28 · UNLOCKED</span>
+            </div>
+            {/* HP / XP bars */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
+              {[
+                { label: "HP", color: "#e05c3a", pct: "91%", val: "91/100" },
+                { label: "XP", color: "var(--gold)", pct: "78%", val: "78/100" },
+              ].map(({ label, color, pct, val }) => (
+                <div key={label} style={{ display: "grid", gridTemplateColumns: "24px 1fr 52px", gap: 8, alignItems: "center" }}>
+                  <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, color: "var(--terra)", letterSpacing: ".1em" }}>{label}</span>
+                  <div className="xp-bar-track" style={{ ["--xp-target" as string]: pct } as React.CSSProperties}>
+                    <div className="xp-bar-fill" style={{ background: color, width: pct, animationDelay: label === "XP" ? ".2s" : "0s" }} />
+                  </div>
+                  <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 7, color: "var(--muted)", letterSpacing: ".08em", textAlign: "right" }}>{val}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Name */}
@@ -56,7 +73,10 @@ export default function Home() {
 
           {/* Menu / CTAs styled as game menu */}
           <div style={{ animation: "fadeUp .7s 1.1s ease both", opacity: 0, animationFillMode: "forwards" }}>
-            <div style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".2em", color: "var(--muted)", marginBottom: 12 }}>── SELECT ACTION ──</div>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+              <div style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".2em", color: "var(--muted)" }}>── SELECT ACTION ──</div>
+              <span className="insert-coin" style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".14em", color: "var(--gold)" }}>▶ PRESS START</span>
+            </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
               {[
                 { label: "↓  Download Resume", href: "/resume.pdf", primary: true, download: true },

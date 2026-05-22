@@ -1,53 +1,112 @@
 "use client"
 import { useEffect, useState } from "react"
 
-// Pixel art frames using box-shadow (each pixel = 3px)
-// Character 1: running figure in terracotta
-// Character 2: chasing figure slightly behind
+// NES-style pixel sprites via box-shadow
+// Each "pixel" = 4px block; position = col*4px, row*4px
+const P = 4
 
-const style = `
-@keyframes runAcross {
-  0%   { left: -60px; }
-  100% { left: calc(100% + 60px); }
+function px(col: number, row: number, color: string): string {
+  return `${col * P}px ${row * P}px 0 0 ${color}`
 }
-@keyframes runAcross2 {
-  0%   { left: -120px; }
-  100% { left: calc(100% + 10px); }
+
+// Terracotta runner — frame A (left leg forward)
+function runA(c: string, h: string) {
+  return [
+    px(3,0,c), px(4,0,c),
+    px(2,1,c), px(3,1,c), px(4,1,c), px(5,1,c),
+    px(2,2,c), px(3,2,h), px(4,2,h), px(5,2,c),
+    px(2,3,c), px(3,3,c), px(4,3,c), px(5,3,c),
+    // body
+    px(3,4,c), px(4,4,c),
+    px(2,5,c), px(3,5,c), px(4,5,c), px(5,5,c),
+    px(1,6,c), px(2,6,c), px(3,6,c), px(4,6,c), px(5,6,c), px(6,6,c),
+    px(3,7,c), px(4,7,c),
+    // legs A
+    px(2,8,c), px(5,8,c),
+    px(1,9,c), px(5,9,c), px(6,9,c),
+    px(0,10,c), px(6,10,c), px(7,10,c),
+    px(0,11,c), px(7,11,c),
+  ].join(",")
 }
-@keyframes legA {
-  0%,100% { transform: rotate(20deg); }
-  50%      { transform: rotate(-20deg); }
+
+// Frame B (right leg forward)
+function runB(c: string, h: string) {
+  return [
+    px(3,0,c), px(4,0,c),
+    px(2,1,c), px(3,1,c), px(4,1,c), px(5,1,c),
+    px(2,2,c), px(3,2,h), px(4,2,h), px(5,2,c),
+    px(2,3,c), px(3,3,c), px(4,3,c), px(5,3,c),
+    px(3,4,c), px(4,4,c),
+    px(2,5,c), px(3,5,c), px(4,5,c), px(5,5,c),
+    px(1,6,c), px(2,6,c), px(3,6,c), px(4,6,c), px(5,6,c), px(6,6,c),
+    px(3,7,c), px(4,7,c),
+    // legs B (swapped)
+    px(2,8,c), px(5,8,c),
+    px(2,9,c), px(3,9,c), px(5,9,c),
+    px(3,10,c), px(6,10,c),
+    px(4,10,c), px(6,11,c), px(7,11,c),
+  ].join(",")
 }
-@keyframes legB {
-  0%,100% { transform: rotate(-20deg); }
-  50%      { transform: rotate(20deg); }
+
+// Gold chaser — helmet variant, frame A
+function chaserA(c: string, h: string) {
+  return [
+    px(2,0,c), px(3,0,c), px(4,0,c), px(5,0,c),
+    px(2,1,c), px(3,1,c), px(4,1,c), px(5,1,c), px(6,1,c),
+    px(2,2,c), px(3,2,h), px(4,2,h), px(5,2,c), px(6,2,c),
+    px(2,3,c), px(3,3,c), px(4,3,c), px(5,3,c),
+    px(3,4,c), px(4,4,c),
+    px(2,5,c), px(3,5,c), px(4,5,c), px(5,5,c),
+    px(1,6,c), px(2,6,c), px(3,6,c), px(4,6,c), px(5,6,c), px(6,6,c),
+    px(3,7,c), px(4,7,c),
+    px(2,8,c), px(5,8,c),
+    px(1,9,c), px(5,9,c), px(6,9,c),
+    px(0,10,c), px(6,10,c), px(7,10,c),
+    px(0,11,c), px(7,11,c),
+  ].join(",")
 }
-@keyframes armA {
-  0%,100% { transform: rotate(-30deg); }
-  50%      { transform: rotate(30deg); }
+
+function chaserB(c: string, h: string) {
+  return [
+    px(2,0,c), px(3,0,c), px(4,0,c), px(5,0,c),
+    px(2,1,c), px(3,1,c), px(4,1,c), px(5,1,c), px(6,1,c),
+    px(2,2,c), px(3,2,h), px(4,2,h), px(5,2,c), px(6,2,c),
+    px(2,3,c), px(3,3,c), px(4,3,c), px(5,3,c),
+    px(3,4,c), px(4,4,c),
+    px(2,5,c), px(3,5,c), px(4,5,c), px(5,5,c),
+    px(1,6,c), px(2,6,c), px(3,6,c), px(4,6,c), px(5,6,c), px(6,6,c),
+    px(3,7,c), px(4,7,c),
+    px(2,8,c), px(5,8,c),
+    px(2,9,c), px(3,9,c), px(5,9,c),
+    px(3,10,c), px(6,10,c),
+    px(4,10,c), px(6,11,c), px(7,11,c),
+  ].join(",")
 }
-@keyframes bounce {
-  0%,100% { transform: translateY(0); }
-  50%      { transform: translateY(-3px); }
+
+const css = `
+@keyframes runAcross  { 0% { left: -60px; } 100% { left: calc(100% + 60px); } }
+@keyframes runAcross2 { 0% { left: -120px;} 100% { left: calc(100% + 20px); } }
+@keyframes bounce { 0%,100%{ transform:translateY(0); } 40%{ transform:translateY(-${P}px); } }
+@keyframes spriteA {
+  0%,49%  { box-shadow: var(--fA); }
+  50%,100%{ box-shadow: var(--fB); }
+}
+@keyframes spriteC {
+  0%,49%  { box-shadow: var(--fA); }
+  50%,100%{ box-shadow: var(--fB); }
 }
 `
 
-function Figure({ color, size = 1 }: { color: string; size?: number }) {
-  const s = size
+function Sprite({ fA, fB, run, delay = "0s" }: { fA: string; fB: string; run: string; delay?: string }) {
   return (
-    <div style={{ position: "relative", width: 14 * s, height: 24 * s, animation: `bounce .32s linear infinite` }}>
-      {/* Head */}
-      <div style={{ position: "absolute", top: 0, left: 4 * s, width: 6 * s, height: 6 * s, background: color, borderRadius: "50%" }} />
-      {/* Body */}
-      <div style={{ position: "absolute", top: 7 * s, left: 5 * s, width: 4 * s, height: 7 * s, background: color }} />
-      {/* Left arm */}
-      <div style={{ position: "absolute", top: 8 * s, left: 2 * s, width: 3 * s, height: 1.5 * s, background: color, transformOrigin: "right center", animation: `armA .32s linear infinite` }} />
-      {/* Right arm */}
-      <div style={{ position: "absolute", top: 8 * s, left: 9 * s, width: 3 * s, height: 1.5 * s, background: color, transformOrigin: "left center", animation: `legA .32s linear infinite` }} />
-      {/* Left leg */}
-      <div style={{ position: "absolute", top: 14 * s, left: 4 * s, width: 2 * s, height: 6 * s, background: color, transformOrigin: "top center", animation: `legA .32s linear infinite` }} />
-      {/* Right leg */}
-      <div style={{ position: "absolute", top: 14 * s, left: 8 * s, width: 2 * s, height: 6 * s, background: color, transformOrigin: "top center", animation: `legB .32s linear infinite` }} />
+    <div style={{ position: "absolute", bottom: 0, animation: `${run} 7s linear infinite`, animationDelay: delay }}>
+      <div style={{
+        width: P,
+        height: P,
+        animation: `bounce .32s ${delay} linear infinite, spriteA .32s ${delay} step-end infinite`,
+        ["--fA" as string]: fA,
+        ["--fB" as string]: fB,
+      } as React.CSSProperties} />
     </div>
   )
 }
@@ -57,43 +116,15 @@ export default function PixelRunner() {
   useEffect(() => { setMounted(true) }, [])
   if (!mounted) return null
 
+  const t = "var(--terra)", th = "#e8856a"
+  const g = "var(--gold)",  gh = "#e8d08a"
+
   return (
     <>
-      <style>{style}</style>
-      {/* Fixed to bottom of viewport, runs continuously */}
-      <div style={{
-        position: "fixed",
-        bottom: 18,
-        left: 0,
-        right: 0,
-        pointerEvents: "none",
-        zIndex: 50,
-        height: 32,
-        overflow: "hidden",
-      }}>
-        {/* Chaser (slightly behind, gold) */}
-        <div style={{
-          position: "absolute",
-          bottom: 0,
-          animation: "runAcross2 7s linear infinite",
-          animationDelay: ".6s",
-          display: "flex",
-          alignItems: "flex-end",
-          gap: 0,
-        }}>
-          <Figure color="var(--gold)" />
-        </div>
-
-        {/* Runner (front, terracotta) */}
-        <div style={{
-          position: "absolute",
-          bottom: 0,
-          animation: "runAcross 7s linear infinite",
-          display: "flex",
-          alignItems: "flex-end",
-        }}>
-          <Figure color="var(--terra)" />
-        </div>
+      <style>{css}</style>
+      <div style={{ position: "fixed", bottom: 18, left: 0, right: 0, pointerEvents: "none", zIndex: 50, height: P * 13, overflow: "hidden" }}>
+        <Sprite fA={chaserA(g, gh)}  fB={chaserB(g, gh)}  run="runAcross2" delay=".6s" />
+        <Sprite fA={runA(t, th)}     fB={runB(t, th)}     run="runAcross" />
       </div>
     </>
   )
