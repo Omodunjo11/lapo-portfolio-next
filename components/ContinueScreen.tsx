@@ -9,36 +9,30 @@ export default function ContinueScreen() {
   const timerRef   = useRef<ReturnType<typeof setInterval> | null>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
 
-  // Observe footer — only arm after 45s on page
+  // Exit-intent: mouse leaves toward top of viewport
+  // Only arms after 20s on page so it doesn't fire on quick bounces
   useEffect(() => {
     if (dismissed) return
-    const footer = document.querySelector("footer")
-    if (!footer) return
 
     let armed = false
-    const armTimer = setTimeout(() => { armed = true }, 45000)
+    const armTimer = setTimeout(() => { armed = true }, 20000)
 
-    observerRef.current = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && armed) {
-          setVisible(true)
-          window.dispatchEvent(new Event("game:gameover"))
-        } else {
-          clearInterval(timerRef.current ?? undefined)
-          setVisible(false)
-          setCount(9)
-        }
-      },
-      { threshold: 0.4 },
-    )
-    observerRef.current.observe(footer)
+    const onMouseLeave = (e: MouseEvent) => {
+      if (!armed || dismissed) return
+      if (e.clientY <= 8) {
+        setVisible(true)
+        window.dispatchEvent(new Event("game:gameover"))
+      }
+    }
+
+    document.addEventListener("mouseleave", onMouseLeave)
     return () => {
       clearTimeout(armTimer)
-      observerRef.current?.disconnect()
+      document.removeEventListener("mouseleave", onMouseLeave)
     }
   }, [dismissed])
 
-  // Countdown
+  // Countdown — auto-continues when it hits 0
   useEffect(() => {
     if (!visible || dismissed) return
     setCount(9)
@@ -54,7 +48,7 @@ export default function ContinueScreen() {
     }, 1000)
     return () => clearInterval(timerRef.current ?? undefined)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible, dismissed])
+  }, [visible])
 
   function handleContinue() {
     setExiting(true)
