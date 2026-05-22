@@ -71,7 +71,7 @@ export default function ContinueScreen() {
     <div
       style={{
         position: "fixed", inset: 0, zIndex: 9000,
-        background: "rgba(0,0,0,0.94)",
+        background: "rgba(10,18,40,0.96)",
         display: "flex", flexDirection: "column",
         alignItems: "center", justifyContent: "center",
         animation: exiting ? "fadeOut .3s ease both" : "fadeIn .4s ease both",

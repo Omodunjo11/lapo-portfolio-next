@@ -1,20 +1,31 @@
 @import "tailwindcss";
 
 :root {
-  --ink:    #0d0d0d;
-  --paper:  #f5f0e8;
-  --terra:  #c4622d;
-  --gold:   #c9a84c;
-  --muted:  #8a8070;
-  --mid:    #555555;
-  --bg2:    #ede8de;
-  --border: rgba(13,13,13,0.10);
+  /* Sky palette */
+  --sky:      #BAE6FD;
+  --sky2:     #7DD3FC;
+  --lavender: #DDD6FE;
+  --violet:   #A78BFA;
+  --green:    #86EFAC;
+
+  /* Core semantic */
+  --terra:  #38BDF8;              /* sky accent — replaces terracotta */
+  --gold:   #FDE68A;              /* warm gold — achievement badges */
+  --ink:    #0F172A;              /* deep navy text */
+  --paper:  #F8FAFC;              /* cloud white surface */
+  --bg2:    #E0F2FE;              /* soft blue surface */
+  --muted:  #64748B;              /* slate muted text */
+  --mid:    #334155;              /* medium slate text */
+  --border: rgba(125,211,252,0.30); /* sky border */
+  --card:   rgba(255,255,255,0.72); /* glassmorphism card */
+  --shadow: 0 2px 24px rgba(56,189,248,0.10), 0 1px 4px rgba(15,23,42,0.06);
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--paper);
+  background: linear-gradient(160deg, #E0F2FE 0%, #F0F9FF 38%, #F8FAFC 62%, #EDE9FE 100%);
+  background-attachment: fixed;
   color: var(--ink);
   overflow-x: hidden;
 }
@@ -72,7 +83,7 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
 @keyframes levelUpPop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
 
-/* NES scanlines overlay on hero */
+/* Sky scanlines — very light, barely visible on pale bg */
 .scanlines {
   position: relative;
 }
@@ -84,11 +95,20 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
     0deg,
     transparent,
     transparent 3px,
-    rgba(0,0,0,0.025) 3px,
-    rgba(0,0,0,0.025) 4px
+    rgba(56,189,248,0.022) 3px,
+    rgba(56,189,248,0.022) 4px
   );
   pointer-events: none;
   z-index: 2;
+}
+
+/* Glassmorphism card */
+.glass-card {
+  background: var(--card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(125,211,252,0.3);
+  box-shadow: var(--shadow);
 }
 
 /* 8-bit XP / HP bar */

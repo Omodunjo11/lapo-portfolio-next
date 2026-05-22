@@ -116,8 +116,8 @@ export default function PixelRunner() {
   useEffect(() => { setMounted(true) }, [])
   if (!mounted) return null
 
-  const t = "var(--terra)", th = "#e8856a"
-  const g = "var(--gold)",  gh = "#e8d08a"
+  const t = "#38BDF8",  th = "#BAE6FD"   // sky blue runner
+  const g = "#A78BFA",  gh = "#DDD6FE"  // violet chaser
 
   return (
     <>

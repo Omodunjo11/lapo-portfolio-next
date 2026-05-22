@@ -58,19 +58,20 @@ export default function AchievementToast() {
         <div
           key={t.id}
           style={{
-            background: "var(--ink)",
-            border: "2px solid var(--terra)",
+            background: "rgba(255,255,255,0.90)",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            border: "1px solid rgba(125,211,252,0.55)",
             padding: "12px 14px",
             width: 270,
             animation: "achieveSlide .35s cubic-bezier(.22,1,.36,1) both",
             animationDelay: `${idx * 0.06}s`,
-            imageRendering: "pixelated",
-            boxShadow: "4px 4px 0 rgba(196,98,45,.25)",
+            boxShadow: "0 4px 24px rgba(56,189,248,.18), 0 1px 4px rgba(15,23,42,.08)",
           }}
         >
           <div style={{
             fontFamily: "var(--font-dm-mono),monospace", fontSize: 7,
-            letterSpacing: ".22em", color: "var(--terra)", marginBottom: 8,
+            letterSpacing: ".22em", color: "#38BDF8", marginBottom: 8,
             animation: "blink .9s step-end infinite",
           }}>
             ◆ ACHIEVEMENT UNLOCKED
@@ -80,7 +81,7 @@ export default function AchievementToast() {
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{
                 fontFamily: "var(--font-dm-mono),monospace", fontSize: 11,
-                color: "var(--paper)", fontWeight: 700, marginBottom: 2, letterSpacing: ".04em",
+                color: "var(--ink)", fontWeight: 700, marginBottom: 2, letterSpacing: ".04em",
               }}>{t.title}</div>
               <div style={{
                 fontFamily: "var(--font-dm-mono),monospace", fontSize: 8,

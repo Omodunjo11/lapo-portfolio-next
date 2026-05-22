@@ -28,9 +28,10 @@ export default function Nav() {
           position: "fixed", top: 0, left: 0, right: 0, zIndex: 200,
           display: "flex", justifyContent: "space-between", alignItems: "center",
           padding: "16px 48px",
-          background: "rgba(245,240,232,0.95)",
-          backdropFilter: "blur(16px)",
-          borderBottom: "1px solid var(--border)",
+          background: "rgba(248,250,252,0.82)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          borderBottom: "1px solid rgba(125,211,252,0.25)",
           transform: "translateY(-100%)",
           animation: "navIn .6s .2s cubic-bezier(.16,1,.3,1) forwards",
         }}
@@ -99,7 +100,7 @@ export default function Nav() {
       {open && (
         <div className="mobile-menu-overlay" style={{
           position: "fixed", top: 57, left: 0, right: 0,
-          background: "rgba(245,240,232,0.98)",
+          background: "rgba(248,250,252,0.92)",
           backdropFilter: "blur(16px)",
           borderBottom: "1px solid var(--border)",
           padding: "8px 24px 24px",

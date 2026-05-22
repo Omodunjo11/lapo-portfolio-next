@@ -90,7 +90,7 @@ export default function Home() {
                   target={btn.external ? "_blank" : undefined}
                   rel={btn.external ? "noopener" : undefined}
                   style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 11, letterSpacing: ".06em", padding: "10px 16px", borderLeft: btn.primary ? "2px solid var(--terra)" : "2px solid transparent", color: btn.primary ? "var(--terra)" : "var(--mid)", transition: "all .18s", display: "block" }}
-                  onMouseEnter={e => { e.currentTarget.style.borderLeftColor = "var(--terra)"; e.currentTarget.style.color = "var(--ink)"; e.currentTarget.style.background = "rgba(196,98,45,.05)"; e.currentTarget.style.paddingLeft = "24px" }}
+                  onMouseEnter={e => { e.currentTarget.style.borderLeftColor = "var(--terra)"; e.currentTarget.style.color = "var(--ink)"; e.currentTarget.style.background = "rgba(186,230,253,.45)"; e.currentTarget.style.paddingLeft = "24px" }}
                   onMouseLeave={e => { e.currentTarget.style.borderLeftColor = btn.primary ? "var(--terra)" : "transparent"; e.currentTarget.style.color = btn.primary ? "var(--terra)" : "var(--mid)"; e.currentTarget.style.background = "transparent"; e.currentTarget.style.paddingLeft = "16px" }}
                 >{btn.label}</Link>
               ))}
@@ -168,12 +168,12 @@ export default function Home() {
           { label: "Completed", value: "Wharton MBA" },
         ].map(({ label, value }) => (
           <div key={label} style={{ display: "flex", gap: 6, alignItems: "center" }}>
-            <span style={{ fontSize: 8, letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(245,240,232,.35)" }}>{label}:</span>
-            <span style={{ fontSize: 10, color: "rgba(245,240,232,.75)", fontFamily: "var(--font-dm-mono),monospace" }}>{value}</span>
+            <span style={{ fontSize: 8, letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(186,230,253,.6)" }}>{label}:</span>
+            <span style={{ fontSize: 10, color: "rgba(248,250,252,.9)", fontFamily: "var(--font-dm-mono),monospace" }}>{value}</span>
           </div>
         ))}
         <div style={{ flex: 1 }} />
-        <span style={{ fontSize: 8, color: "rgba(245,240,232,.2)", letterSpacing: ".12em", flexShrink: 0 }}>↑↑↓↓←→←→BA</span>
+        <span style={{ fontSize: 8, color: "rgba(186,230,253,.25)", letterSpacing: ".12em", flexShrink: 0 }}>↑↑↓↓←→←→BA</span>
       </div>
 
       <Ticker items={tickerItems} />
@@ -227,18 +227,18 @@ export default function Home() {
               <Link href={`/projects/${project.slug}`}>
                 <div
                   style={{ background: "var(--paper)", padding: "36px 32px", height: "100%", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", transition: "background .25s", borderTop: "2px solid transparent" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(186,230,253,.28)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
                   onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.borderTopColor = "transparent" }}
                 >
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-                    <span style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", border: "1px solid rgba(196,98,45,.3)", color: "var(--terra)", padding: "3px 9px", borderRadius: 2 }}>{project.lang}</span>
+                    <span style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", border: "1px solid rgba(125,211,252,.6)", color: "var(--terra)", padding: "3px 9px", borderRadius: 2 }}>{project.lang}</span>
                     <span style={{ fontSize: 9, color: "var(--muted)" }}>{project.year}</span>
                   </div>
                   <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 18, fontWeight: 800, marginBottom: 8, lineHeight: 1.2 }}>{project.name}</div>
-                  <div style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", color: "#7a6020", marginBottom: 16 }}>{project.role}</div>
+                  <div style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", color: "#A78BFA", marginBottom: 16 }}>{project.role}</div>
                   <p style={{ fontSize: 13, lineHeight: 1.85, color: "var(--mid)", flex: 1, marginBottom: 24 }}>{project.tagline}</p>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 20 }}>
-                    {project.stack.slice(0, 3).map(s => <span key={s} style={{ fontSize: 8, background: "rgba(201,168,76,.12)", color: "#c9a84c", padding: "3px 8px", borderRadius: 2 }}>{s}</span>)}
+                    {project.stack.slice(0, 3).map(s => <span key={s} style={{ fontSize: 8, background: "rgba(167,139,250,.15)", color: "#A78BFA", padding: "3px 8px", borderRadius: 2 }}>{s}</span>)}
                   </div>
                   <div style={{ fontSize: 10, color: "var(--terra)", letterSpacing: ".1em" }}>Read full breakdown →</div>
                 </div>
@@ -312,10 +312,10 @@ export default function Home() {
             <Reveal key={card.name} delay={i * 0.07}>
               <div
                 style={{ background: "var(--paper)", padding: "32px 28px", height: "100%", transition: "background .25s", position: "relative" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "rgba(196,98,45,.03)")}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(186,230,253,.28)")}
                 onMouseLeave={e => (e.currentTarget.style.background = "var(--paper)")}
               >
-                <div style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", border: "1px solid rgba(196,98,45,.3)", padding: "3px 9px", borderRadius: 2, display: "inline-block", marginBottom: 14 }}>{card.label}</div>
+                <div style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", border: "1px solid rgba(125,211,252,.6)", padding: "3px 9px", borderRadius: 2, display: "inline-block", marginBottom: 14 }}>{card.label}</div>
                 <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 14, fontWeight: 800, marginBottom: 16, lineHeight: 1.3 }}>{card.name}</div>
                 {card.body ? (
                   <div style={{ fontSize: 12, color: "var(--mid)", lineHeight: 1.8 }}>
@@ -365,14 +365,14 @@ export default function Home() {
           ].map((card, i) => (
             <Reveal key={card.name} delay={i * 0.1}>
               <div style={{ background: "var(--paper)", padding: "32px 28px", height: "100%", transition: "background .25s", borderTop: "2px solid transparent" }}
-                onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(186,230,253,.28)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
                 onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.borderTopColor = "transparent" }}
               >
-                <span style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", border: "1px solid rgba(196,98,45,.3)", padding: "3px 9px", borderRadius: 2, display: "inline-block", marginBottom: 14 }}>{card.label}</span>
+                <span style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", border: "1px solid rgba(125,211,252,.6)", padding: "3px 9px", borderRadius: 2, display: "inline-block", marginBottom: 14 }}>{card.label}</span>
                 <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 16, fontWeight: 800, marginBottom: 12 }}>{card.name}</div>
                 <p style={{ fontSize: 12, lineHeight: 1.8, color: "var(--mid)", marginBottom: 16 }}>{card.desc}</p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
-                  {card.chips.map(c => <span key={c} style={{ fontSize: 8, background: "rgba(201,168,76,.12)", color: "#c9a84c", padding: "3px 8px", borderRadius: 2 }}>{c}</span>)}
+                  {card.chips.map(c => <span key={c} style={{ fontSize: 8, background: "rgba(167,139,250,.15)", color: "#A78BFA", padding: "3px 8px", borderRadius: 2 }}>{c}</span>)}
                 </div>
               </div>
             </Reveal>
@@ -398,7 +398,7 @@ export default function Home() {
               <Link href={essay.url} target="_blank" rel="noopener">
                 <div
                   style={{ background: "var(--paper)", padding: "32px 28px", height: "100%", display: "flex", flexDirection: "column", transition: "background .25s", borderTop: "2px solid transparent" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(186,230,253,.28)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
                   onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.borderTopColor = "transparent" }}
                 >
                   <div style={{ fontSize: 8, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 12 }}>{essay.category}</div>
@@ -423,7 +423,7 @@ export default function Home() {
           ].map((edu, i) => (
             <Reveal key={edu.school} delay={i * 0.1}>
               <div style={{ background: "var(--paper)", padding: "32px 26px", transition: "background .25s" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "rgba(196,98,45,.03)")}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(186,230,253,.28)")}
                 onMouseLeave={e => (e.currentTarget.style.background = "var(--paper)")}
               >
                 <div style={{ fontSize: 9, letterSpacing: ".12em", color: "var(--terra)", marginBottom: 10 }}>{edu.year}</div>
@@ -450,14 +450,14 @@ export default function Home() {
           ].map((award, i) => (
             <Reveal key={award.name} delay={(i % 2) * 0.08}>
               <div style={{ background: "var(--paper)", padding: "24px 26px", display: "flex", gap: 12, alignItems: "flex-start", transition: "background .2s, transform .2s" }}
-                onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.transform = "translateX(4px)" }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(186,230,253,.28)"; e.currentTarget.style.transform = "translateX(4px)" }}
                 onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.transform = "translateX(0)" }}
               >
-                <span style={{ color: "#7a6020", flexShrink: 0, fontSize: 14 }}>🏆</span>
+                <span style={{ color: "#A78BFA", flexShrink: 0, fontSize: 14 }}>🏆</span>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8 }}>
                     <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 12, fontWeight: 700, marginBottom: 2 }}>{award.name}</div>
-                    <span style={{ fontSize: 8, letterSpacing: ".1em", textTransform: "uppercase", background: "rgba(201,168,76,.12)", color: "#c9a84c", padding: "2px 7px", borderRadius: 2, flexShrink: 0 }}>{award.xp}</span>
+                    <span style={{ fontSize: 8, letterSpacing: ".1em", textTransform: "uppercase", background: "rgba(167,139,250,.15)", color: "#A78BFA", padding: "2px 7px", borderRadius: 2, flexShrink: 0 }}>{award.xp}</span>
                   </div>
                   <div style={{ fontSize: 10, color: "var(--muted)", fontStyle: "italic" }}>{award.inst}</div>
                 </div>
@@ -486,7 +486,7 @@ export default function Home() {
                       onMouseEnter={e => { e.currentTarget.style.color = "var(--terra)"; e.currentTarget.style.transform = "translateX(4px)" }}
                       onMouseLeave={e => { e.currentTarget.style.color = "var(--ink)"; e.currentTarget.style.transform = "translateX(0)" }}
                     >
-                      <span style={{ color: "#7a6020", fontSize: 8, marginTop: 3, flexShrink: 0 }}>▸</span>
+                      <span style={{ color: "#A78BFA", fontSize: 8, marginTop: 3, flexShrink: 0 }}>▸</span>
                       {item}
                     </li>
                   ))}
@@ -501,14 +501,14 @@ export default function Home() {
       <div className="grid-photo">
         <div style={{ overflow: "hidden", position: "relative" }}>
           <Image src="/images/IMG_3436.jpg" alt="Lapo in Philadelphia" fill style={{ objectFit: "cover", objectPosition: "center 20%", filter: "contrast(1.07) brightness(.88)" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg,rgba(196,98,45,.15) 0%,transparent 60%)" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg,rgba(56,189,248,.12) 0%,transparent 60%)" }} />
         </div>
         <div style={{ padding: "64px 56px", display: "flex", flexDirection: "column", justifyContent: "center", background: "var(--ink)" }}>
           <p style={{ fontSize: 9, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 16 }}>◆ Philadelphia, 2025</p>
-          <h2 style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(24px,3vw,40px)", fontWeight: 900, lineHeight: 1.1, color: "#f5f0e8", marginBottom: 18 }}>
+          <h2 style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(24px,3vw,40px)", fontWeight: 900, lineHeight: 1.1, color: "var(--paper)", marginBottom: 18 }}>
             Building things that<br /><em style={{ color: "var(--gold)", fontStyle: "italic" }}>actually work.</em>
           </h2>
-          <p style={{ fontSize: 12, color: "rgba(245,240,232,.55)", lineHeight: 1.85, maxWidth: 340, marginBottom: 28 }}>Not just in demos. In production, under pressure, in regulated environments where it actually matters.</p>
+          <p style={{ fontSize: 12, color: "rgba(186,230,253,.7)", lineHeight: 1.85, maxWidth: 340, marginBottom: 28 }}>Not just in demos. In production, under pressure, in regulated environments where it actually matters.</p>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
             <Link href="https://medium.com/@odunjoonaolapo" target="_blank" rel="noopener"
               style={{ fontSize: 9, letterSpacing: ".12em", textTransform: "uppercase", background: "var(--gold)", color: "var(--ink)", padding: "9px 18px", borderRadius: 2, fontFamily: "var(--font-syne),sans-serif", fontWeight: 700, transition: "background .25s" }}
@@ -516,9 +516,9 @@ export default function Home() {
               onMouseLeave={e => (e.currentTarget.style.background = "var(--gold)")}
             >Essays on Medium</Link>
             <Link href="mailto:odunjoonaolapo@gmail.com"
-              style={{ fontSize: 9, letterSpacing: ".12em", textTransform: "uppercase", border: "1px solid rgba(245,240,232,.18)", color: "#f5f0e8", padding: "9px 18px", borderRadius: 2, fontFamily: "var(--font-syne),sans-serif", fontWeight: 600, transition: "all .25s" }}
+              style={{ fontSize: 9, letterSpacing: ".12em", textTransform: "uppercase", border: "1px solid rgba(245,240,232,.18)", color: "var(--paper)", padding: "9px 18px", borderRadius: 2, fontFamily: "var(--font-syne),sans-serif", fontWeight: 600, transition: "all .25s" }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--terra)"; e.currentTarget.style.color = "var(--terra)" }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(245,240,232,.18)"; e.currentTarget.style.color = "#f5f0e8" }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(125,211,252,.25)"; e.currentTarget.style.color = "var(--paper)" }}
             >Get In Touch</Link>
           </div>
         </div>
@@ -537,7 +537,7 @@ export default function Home() {
         <div className="grid-2col" style={{ margin: "0 48px" }}>
           <Reveal>
             <div style={{ background: "var(--paper)", padding: "36px 32px" }}>
-              <div style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", border: "1px solid rgba(196,98,45,.3)", padding: "3px 9px", borderRadius: 2, display: "inline-block", marginBottom: 16 }}>Off the clock</div>
+              <div style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", border: "1px solid rgba(125,211,252,.6)", padding: "3px 9px", borderRadius: 2, display: "inline-block", marginBottom: 16 }}>Off the clock</div>
               <p style={{ fontSize: 13, lineHeight: 1.85, color: "var(--mid)" }}>
                 When I am not building, I am usually reading in a coffee shop, planning a trip, playing tennis, running, or gaming. I like games that reward strategy, timing, adaptation, and character mastery, which probably explains the League of Legends, Mortal Kombat, and God of War rotation.
               </p>
@@ -548,7 +548,7 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.08}>
             <div style={{ background: "var(--paper)", padding: "36px 32px" }}>
-              <div style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", border: "1px solid rgba(196,98,45,.3)", padding: "3px 9px", borderRadius: 2, display: "inline-block", marginBottom: 16 }}>Current rotation</div>
+              <div style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", border: "1px solid rgba(125,211,252,.6)", padding: "3px 9px", borderRadius: 2, display: "inline-block", marginBottom: 16 }}>Current rotation</div>
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 {[
                   { icon: "🎮", label: "Gaming", value: "League · Mortal Kombat · God of War" },

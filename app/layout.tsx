@@ -6,6 +6,7 @@ import Footer from "@/components/Footer"
 import Cursor from "@/components/Cursor"
 import KonamiCode from "@/components/KonamiCode"
 import PixelRunner from "@/components/PixelRunner"
+import SkyBackground from "@/components/SkyBackground"
 import AchievementToast from "@/components/AchievementToast"
 import ScrollXP from "@/components/ScrollXP"
 import GameSounds from "@/components/GameSounds"
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${playfair.variable} ${dmMono.variable} ${syne.variable}`}>
       <body style={{ fontFamily: "var(--font-dm-mono), monospace" }}>
+        <SkyBackground />
         <Cursor />
         <KonamiCode />
         <PixelRunner />

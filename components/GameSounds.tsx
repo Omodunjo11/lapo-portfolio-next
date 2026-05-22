@@ -113,9 +113,11 @@ export default function GameSounds() {
       title={muted ? "Enable 8-bit sounds" : "Mute sounds"}
       style={{
         position: "fixed", bottom: 72, right: 20, zIndex: 300,
-        background: "rgba(13,13,13,0.88)",
-        border: `1px solid ${muted ? "rgba(255,255,255,.12)" : "rgba(201,168,76,.5)"}`,
-        color: muted ? "var(--muted)" : "var(--gold)",
+        background: "rgba(255,255,255,0.82)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        border: `1px solid ${muted ? "rgba(125,211,252,.25)" : "rgba(125,211,252,.6)"}`,
+        color: muted ? "var(--muted)" : "#38BDF8",
         fontFamily: "var(--font-dm-mono),monospace",
         fontSize: 8, letterSpacing: ".12em",
         padding: "7px 11px", cursor: "pointer",

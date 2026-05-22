@@ -61,8 +61,10 @@ export default function ScrollXP() {
         onMouseEnter={() => setExpanded(true)}
         onMouseLeave={() => setExpanded(false)}
         style={{
-          background: "rgba(13,13,13,0.82)",
-          border: `1px solid ${leveledUp ? "var(--gold)" : "rgba(201,168,76,.25)"}`,
+          background: "rgba(255,255,255,0.82)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          border: `1px solid ${leveledUp ? "#FDE68A" : "rgba(125,211,252,0.4)"}`,
           padding: expanded ? "7px 11px" : "5px 8px",
           transition: "all .25s cubic-bezier(.22,1,.36,1)",
           overflow: "hidden",
