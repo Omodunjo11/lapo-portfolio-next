@@ -7,13 +7,13 @@ import { featuredProjects } from "@/lib/projects"
 import { essays } from "@/lib/writing"
 
 const tickerItems = [
-  { text: "Achievement Unlocked: Staff TPM", highlight: true }, { text: "Lagos → Bradford → NYC → Philly" },
-  { text: "Final Boss Energy", highlight: true }, { text: "36 Countries. Still Grinding." },
-  { text: "RAG Systems in Prod", highlight: true }, { text: "Quest Complete: Wharton MBA" },
-  { text: "LLM Evaluation Frameworks", highlight: true }, { text: "Yoruba Native Speaker" },
-  { text: "No Skip Cutscene", highlight: true }, { text: "Jollof Rice Connoisseur" },
-  { text: "Currently Grinding", highlight: true }, { text: "Respawn Requires Coffee" },
-  { text: "Regulatory AI", highlight: true }, { text: "Built Different · Lagos Edition" },
+  { text: "Staff TPM · AI Systems Builder", highlight: true }, { text: "Lagos → Bradford → NYC → Philly" },
+  { text: "RAG Systems in Production", highlight: true }, { text: "36 Countries. Always Curious." },
+  { text: "LLM Evaluation Frameworks", highlight: true }, { text: "Wharton MBA · Completed" },
+  { text: "Regulated AI · Trust Infrastructure", highlight: true }, { text: "Yoruba Native Speaker" },
+  { text: "Kinage · KOVA · Building", highlight: true }, { text: "Jollof Rice Connoisseur" },
+  { text: "Private Capital · Africa", highlight: true }, { text: "Coffee. Reading. Tennis. Repeat." },
+  { text: "Agentic Workflows · Production", highlight: true }, { text: "Lagos Raised · World Shaped" },
 ]
 
 const SH = ({ n, t, game }: { n: string; t: string; game?: string }) => (
@@ -104,7 +104,7 @@ export default function Home() {
           {/* Class / faction */}
           <div style={{ animation: "fadeIn .5s .5s ease both", opacity: 0, animationFillMode: "forwards" }}>
             {[
-              { label: "Class", value: "Staff TPM · AI Systems Builder" },
+              { label: "Role", value: "Staff TPM · AI Systems Builder" },
               { label: "Faction", value: "Wharton · Kinage · Amazon · Capital One" },
               { label: "Region", value: "Lagos → Bradford → NYC → Philadelphia" },
               { label: "Spec", value: "Regulated AI · Private Capital · Africa" },
@@ -143,7 +143,7 @@ export default function Home() {
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
               {[
                 { k: "Active", v: "Kinage · Production AI" },
-                { k: "Completed", v: "Wharton MBA '26" },
+                { k: "Completed", v: "Wharton MBA" },
                 { k: "Building", v: "KOVA Credit Platform" },
                 { k: "Playing", v: "Civilization VII" },
               ].map(({ k, v }) => (
@@ -165,7 +165,7 @@ export default function Home() {
           { label: "Playing", value: "Civilization VII" },
           { label: "Building", value: "Kinage in Prod" },
           { label: "Reading", value: "Team of Teams" },
-          { label: "Completed", value: "Wharton MBA '26" },
+          { label: "Completed", value: "Wharton MBA" },
         ].map(({ label, value }) => (
           <div key={label} style={{ display: "flex", gap: 6, alignItems: "center" }}>
             <span style={{ fontSize: 8, letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(245,240,232,.35)" }}>{label}:</span>
@@ -193,9 +193,11 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.1}>
             <div className="about-right" style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)", marginBottom: 20 }}>I go by Lapo. Grew up in Lagos, moved to Bradford for uni, ended up in New York. I build AI systems for regulated industries, the kind of environments where a wrong model output is not just embarrassing, it is a compliance issue.</p>
-              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)", marginBottom: 20 }}>The path from chemical engineering to product to AI to private capital looks random from the outside. It is not. I have always been looking for the same thing: where is the actual problem, and what genuinely fixes it.</p>
-              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>When I am not doing that, I am on a tennis court or running somewhere in the city. Just finished the Wharton MBA while building Kinage in production at the same time. Exactly as intense as it sounds, and worth it.</p>
+              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>I go by Lapo. I grew up in Lagos, left home for university in Bradford, found my way through New York and Philadelphia, and have been shaped by every place that asked me to begin again.</p>
+              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>A lot of my story has been about new beginnings: learning new systems, entering new rooms, building new communities, and finding my voice in places that did not always feel familiar at first. That is probably why I am drawn to products and people in transition. I like helping make complicated things feel more navigable.</p>
+              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>Today, I build AI systems for regulated industries, especially in environments where trust matters and the cost of a wrong answer is real. My work sits at the intersection of product, AI, financial infrastructure, and practical judgment.</p>
+              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>The path from chemical engineering to product to AI to private capital may look random from the outside. To me, it has always been connected by one question: where is the real problem, and what would actually help?</p>
+              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>Outside the build, you will usually find me reading in a coffee shop, planning the next trip, playing tennis, running somewhere in the city, or getting pulled into one more game of League, Mortal Kombat, or God of War. I recently finished the Wharton MBA while building Kinage in production at the same time. It was intense, humbling, and deeply worth it.</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
                 {["AI Systems", "Private Markets", "Africa", "Fintech", "Regulated Industries", "Electrochemistry"].map(tag => (
                   <span key={tag} style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", border: "1px solid var(--border)", padding: "4px 12px", borderRadius: 2, color: "var(--mid)" }}>{tag}</span>
@@ -245,7 +247,7 @@ export default function Home() {
           ))}
         </div>
         <Reveal>
-          <div style={{ padding: "32px 48px 0", textAlign: "center" }}>
+          <div style={{ padding: "32px 48px 0", display: "flex", alignItems: "center", justifyContent: "center", gap: 16, flexWrap: "wrap" }}>
             <Link href="/projects"
               style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--font-syne),sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", border: "1px solid var(--border)", padding: "13px 32px", borderRadius: 2, transition: "all .25s" }}
               onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.color = "var(--paper)"; e.currentTarget.style.borderColor = "var(--ink)" }}
@@ -253,13 +255,20 @@ export default function Home() {
             >
               See all 11 projects →
             </Link>
+            <Link href="https://github.com/Omodunjo11" target="_blank" rel="noopener"
+              style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--font-syne),sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", background: "var(--ink)", color: "var(--paper)", padding: "13px 32px", borderRadius: 2, transition: "all .25s" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "var(--terra)" }}
+              onMouseLeave={e => { e.currentTarget.style.background = "var(--ink)" }}
+            >
+              Build Archive on GitHub ↗
+            </Link>
           </div>
         </Reveal>
       </section>
 
       {/* ── THE LONGER VERSION ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
-        <Reveal><SH n="03" t="Extended Lore" game="side quests" /></Reveal>
+        <Reveal><SH n="03" t="Story" game="extended lore" /></Reveal>
         <div className="grid-3col" style={{ margin: "0 48px" }}>
           {[
             {
@@ -408,7 +417,7 @@ export default function Home() {
         <Reveal><SH n="06" t="Education" game="training arc" /></Reveal>
         <div className="grid-3col" style={{ margin: "0 48px" }}>
           {[
-            { year: "2024 – 2026 ✓", school: "The Wharton School", degree: "MBA, Finance & AI Operations\nUniversity of Pennsylvania", note: "Trailblazer Fellowship (50% merit) · President, Wharton Graduate Association ($6M P&L, 1,700+ students) · VP, Wharton Tech Club Conferences · Co-CEO, Africa AI Leaders Fellowship" },
+            { year: "Completed", school: "The Wharton School", degree: "MBA, Finance & AI Operations\nUniversity of Pennsylvania", note: "Trailblazer Fellowship (50% merit) · President, Wharton Graduate Association ($6M P&L, 1,700+ students) · VP, Wharton Tech Club Conferences · Co-CEO, Africa AI Leaders Fellowship" },
             { year: "2021 – 2023", school: "Columbia University", degree: "MS, Chemical Engineering\nNew York, NY", note: "Full merit, 21 of 5,000+ applicants · GPA 3.8 · ACS Applied Energy Materials publication" },
             { year: "2015 – 2018", school: "University of Bradford", degree: "B.Eng., Chemical & Process Engineering\nBradford, UK", note: "Bradford Dean Award, full-ride · GPA 3.7" },
           ].map((edu, i) => (
@@ -515,17 +524,64 @@ export default function Home() {
         </div>
       </div>
 
+      {/* ── BASE CAMP ── */}
+      <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
+        <Reveal>
+          <div style={{ padding: "0 48px 40px", display: "flex", alignItems: "center", gap: 18 }}>
+            <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>09</span>
+            <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Base Camp</span>
+            <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".12em", color: "var(--muted)", opacity: 0.55 }}>// when not building</span>
+            <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+          </div>
+        </Reveal>
+        <div className="grid-2col" style={{ margin: "0 48px" }}>
+          <Reveal>
+            <div style={{ background: "var(--paper)", padding: "36px 32px" }}>
+              <div style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", border: "1px solid rgba(196,98,45,.3)", padding: "3px 9px", borderRadius: 2, display: "inline-block", marginBottom: 16 }}>Off the clock</div>
+              <p style={{ fontSize: 13, lineHeight: 1.85, color: "var(--mid)" }}>
+                When I am not building, I am usually reading in a coffee shop, planning a trip, playing tennis, running, or gaming. I like games that reward strategy, timing, adaptation, and character mastery, which probably explains the League of Legends, Mortal Kombat, and God of War rotation.
+              </p>
+              <p style={{ fontSize: 13, lineHeight: 1.85, color: "var(--mid)", marginTop: 16 }}>
+                Travel has shaped how I build too. Moving through different cities, cultures, and systems made me care more about products that work outside polished environments. Thirty-six countries in, that instinct only gets stronger.
+              </p>
+            </div>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <div style={{ background: "var(--paper)", padding: "36px 32px" }}>
+              <div style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", border: "1px solid rgba(196,98,45,.3)", padding: "3px 9px", borderRadius: 2, display: "inline-block", marginBottom: 16 }}>Current rotation</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                {[
+                  { icon: "🎮", label: "Gaming", value: "League · Mortal Kombat · God of War" },
+                  { icon: "🎾", label: "Sport", value: "Tennis · Running (NYC routes)" },
+                  { icon: "✈️", label: "Travel", value: "36 countries · always planning the next" },
+                  { icon: "📖", label: "Reading", value: "Whatever's in the coffee shop bag" },
+                  { icon: "☕", label: "Base", value: "Philadelphia, for now" },
+                ].map(({ icon, label, value }) => (
+                  <div key={label} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                    <span style={{ fontSize: 16, lineHeight: 1, flexShrink: 0, marginTop: 2 }}>{icon}</span>
+                    <div>
+                      <div style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 2 }}>{label}</div>
+                      <div style={{ fontSize: 12, color: "var(--mid)" }}>{value}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ── CONTACT ── */}
       <section id="contact" style={{ borderTop: "1px solid var(--border)", padding: "80px 48px" }}>
         <Reveal>
           <div className="grid-contact">
             <div>
               <h2 style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(30px,3.5vw,52px)", fontWeight: 900, lineHeight: 1.0, marginBottom: 20, letterSpacing: "-.02em" }}>
-                If you have a real problem,{" "}
-                <em style={{ color: "var(--terra)", fontStyle: "italic" }}>let&apos;s talk.</em>
+                Start a conversation.{" "}
+                <em style={{ color: "var(--terra)", fontStyle: "italic" }}>Or a co-op.</em>
               </h2>
               <p style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.85, maxWidth: 340 }}>
-                AI systems in regulated industries. Private markets across Africa. Anything that doesn&apos;t fit a clean slide deck. Those are my favourite conversations.
+                AI systems in regulated industries. Private markets across Africa. Anything that does not fit a clean slide deck. Those are my favourite conversations.
               </p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
