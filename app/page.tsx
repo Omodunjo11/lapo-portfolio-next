@@ -16,11 +16,12 @@ const tickerItems = [
   { text: "Regulatory AI", highlight: true }, { text: "Built Different · Lagos Edition" },
 ]
 
-const SH = ({ n, t }: { n: string; t: string }) => (
+const SH = ({ n, t, game }: { n: string; t: string; game?: string }) => (
   <div style={{ padding: "64px 48px 36px" }}>
     <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 6 }}>
       {n && <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".22em", color: "var(--terra)" }}>{n}</span>}
       <h2 style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(28px,3.5vw,44px)", fontWeight: 900, letterSpacing: "-.02em", lineHeight: 1, margin: 0 }}>{t}</h2>
+      {game && <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".14em", color: "var(--muted)", marginLeft: 4, opacity: 0.6 }}>// {game}</span>}
     </div>
     <div style={{ width: 40, height: 2, background: "var(--terra)", marginTop: 10 }} />
   </div>
@@ -75,7 +76,7 @@ export default function Home() {
           <div style={{ animation: "fadeUp .7s 1.1s ease both", opacity: 0, animationFillMode: "forwards" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
               <div style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".2em", color: "var(--muted)" }}>── SELECT ACTION ──</div>
-              <span className="insert-coin" style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".14em", color: "var(--gold)" }}>▶ PRESS START</span>
+              <span className="insert-coin" style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 7, letterSpacing: ".14em", color: "var(--gold)", opacity: 0.5 }}>▶ PRESS START</span>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
               {[
@@ -179,7 +180,7 @@ export default function Home() {
 
       {/* ── ABOUT ── */}
       <section id="about" style={{ padding: "72px 0 80px" }}>
-        <Reveal><SH n="01" t="About" /></Reveal>
+        <Reveal><SH n="01" t="About" game="character profile" /></Reveal>
         <div className="grid-about pad-page">
           <Reveal>
             <div className="about-left">
@@ -212,6 +213,7 @@ export default function Home() {
             <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
               <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>02</span>
               <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Featured Projects</span>
+              <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".12em", color: "var(--muted)", opacity: 0.55 }}>// quest log</span>
               <div style={{ width: 120, height: 1, background: "var(--border)" }} />
             </div>
             <Link href="/projects" style={{ fontSize: 9, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)" }}>View All →</Link>
@@ -257,7 +259,7 @@ export default function Home() {
 
       {/* ── THE LONGER VERSION ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
-        <Reveal><SH n="03" t="Extended Lore" /></Reveal>
+        <Reveal><SH n="03" t="Extended Lore" game="side quests" /></Reveal>
         <div className="grid-3col" style={{ margin: "0 48px" }}>
           {[
             {
@@ -336,7 +338,7 @@ export default function Home() {
 
       {/* ── CAPITAL ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
-        <Reveal><SH n="04" t="Capital Allocation" /></Reveal>
+        <Reveal><SH n="04" t="Capital Allocation" game="resource management" /></Reveal>
         <div className="grid-2col" style={{ margin: "0 48px" }}>
           {[
             {
@@ -403,7 +405,7 @@ export default function Home() {
 
       {/* ── EDUCATION ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
-        <Reveal><SH n="06" t="Education" /></Reveal>
+        <Reveal><SH n="06" t="Education" game="training arc" /></Reveal>
         <div className="grid-3col" style={{ margin: "0 48px" }}>
           {[
             { year: "2024 – 2026 ✓", school: "The Wharton School", degree: "MBA, Finance & AI Operations\nUniversity of Pennsylvania", note: "Trailblazer Fellowship (50% merit) · President, Wharton Graduate Association ($6M P&L, 1,700+ students) · VP, Wharton Tech Club Conferences · Co-CEO, Africa AI Leaders Fellowship" },
@@ -427,7 +429,7 @@ export default function Home() {
 
       {/* ── AWARDS ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
-        <Reveal><SH n="07" t="Achievements Unlocked" /></Reveal>
+        <Reveal><SH n="07" t="Achievements Unlocked" game="rare drops" /></Reveal>
         <div className="grid-2col" style={{ margin: "0 48px" }}>
           {[
             { name: "Trailblazer Fellowship, 50% Merit", inst: "The Wharton School, UPenn", xp: "+500 XP" },
@@ -458,7 +460,7 @@ export default function Home() {
 
       {/* ── SKILLS ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
-        <Reveal><SH n="08" t="Loadout" /></Reveal>
+        <Reveal><SH n="08" t="Loadout" game="skill tree" /></Reveal>
         <div className="grid-4col" style={{ margin: "0 48px" }}>
           {[
             { title: "AI & Product Systems", items: ["Platform Strategy", "RAG Architecture", "LLM Evaluation", "Drift Monitoring", "Anomaly Detection", "Experimentation Frameworks", "Governance & Escalation Design"] },

@@ -9,15 +9,18 @@ export default function ContinueScreen() {
   const timerRef   = useRef<ReturnType<typeof setInterval> | null>(null)
   const observerRef = useRef<IntersectionObserver | null>(null)
 
-  // Observe footer
+  // Observe footer — only arm after 45s on page
   useEffect(() => {
     if (dismissed) return
     const footer = document.querySelector("footer")
     if (!footer) return
 
+    let armed = false
+    const armTimer = setTimeout(() => { armed = true }, 45000)
+
     observerRef.current = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && armed) {
           setVisible(true)
           window.dispatchEvent(new Event("game:gameover"))
         } else {
@@ -29,7 +32,10 @@ export default function ContinueScreen() {
       { threshold: 0.4 },
     )
     observerRef.current.observe(footer)
-    return () => observerRef.current?.disconnect()
+    return () => {
+      clearTimeout(armTimer)
+      observerRef.current?.disconnect()
+    }
   }, [dismissed])
 
   // Countdown

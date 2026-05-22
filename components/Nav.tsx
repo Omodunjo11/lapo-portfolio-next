@@ -4,12 +4,11 @@ import { usePathname } from "next/navigation"
 import { useState } from "react"
 
 const links = [
-  { href: "/#about", label: "Story" },
-  { href: "/#work", label: "Build" },
+  { href: "/#about", label: "About" },
   { href: "/projects", label: "Projects" },
   { href: "/experience", label: "Experience" },
   { href: "/writing", label: "Writing" },
-  { href: "/#contact", label: "Connect" },
+  { href: "/#contact", label: "Contact" },
 ]
 
 export default function Nav() {

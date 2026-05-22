@@ -17,26 +17,33 @@ export default function AchievementToast() {
   const shown = useRef(new Set<number>())
 
   useEffect(() => {
+    // Don't fire anything until the user has been on the page 5s
+    let ready = false
+    const readyTimer = setTimeout(() => { ready = true }, 5000)
+
+    const fire = (i: number, m: typeof MILESTONES[0]) => {
+      shown.current.add(i)
+      const toast: Toast = { id: `${i}-${Date.now()}`, ...m }
+      setQueue(prev => [...prev, toast])
+      window.dispatchEvent(new Event("game:achievement"))
+      setTimeout(() => setQueue(prev => prev.filter(t => t.id !== toast.id)), 3800)
+    }
+
     const onScroll = () => {
+      if (!ready) return
       const max = document.body.scrollHeight - window.innerHeight
       if (max <= 0) return
       const pct = (window.scrollY / max) * 100
-
       MILESTONES.forEach((m, i) => {
-        if (pct >= m.pct && !shown.current.has(i)) {
-          shown.current.add(i)
-          const toast: Toast = { id: `${i}-${Date.now()}`, ...m }
-          setQueue(prev => [...prev, toast])
-          window.dispatchEvent(new Event("game:achievement"))
-          setTimeout(() => setQueue(prev => prev.filter(t => t.id !== toast.id)), 3800)
-        }
+        if (pct >= m.pct && !shown.current.has(i)) fire(i, m)
       })
     }
 
     window.addEventListener("scroll", onScroll, { passive: true })
-    // trigger on load for the first one
-    setTimeout(onScroll, 1200)
-    return () => window.removeEventListener("scroll", onScroll)
+    return () => {
+      clearTimeout(readyTimer)
+      window.removeEventListener("scroll", onScroll)
+    }
   }, [])
 
   if (queue.length === 0) return null

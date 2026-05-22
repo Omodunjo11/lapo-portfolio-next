@@ -67,7 +67,7 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
 @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
 @keyframes pageLoad { to { opacity: 1; } }
 @keyframes xpFill { from { width: 0%; } to { width: var(--xp-target); } }
-@keyframes insertCoin { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
+@keyframes insertCoin { 0%,60% { opacity: 0.5; } 61%,100% { opacity: 0; } }
 @keyframes achieveSlide { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
 @keyframes levelUpPop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
@@ -106,7 +106,7 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
 
 /* INSERT COIN blink */
 .insert-coin {
-  animation: insertCoin 1.2s step-end infinite;
+  animation: insertCoin 2.4s step-end infinite;
 }
 
 /* Pixel art image rendering */
