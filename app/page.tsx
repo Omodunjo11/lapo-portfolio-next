@@ -9,7 +9,7 @@ import { essays } from "@/lib/writing"
 const tickerItems = [
   { text: "Achievement Unlocked: Staff TPM", highlight: true }, { text: "Lagos → Bradford → NYC → Philly" },
   { text: "Final Boss Energy", highlight: true }, { text: "36 Countries. Still Grinding." },
-  { text: "RAG Systems in Prod", highlight: true }, { text: "Side Quest: Wharton MBA" },
+  { text: "RAG Systems in Prod", highlight: true }, { text: "Quest Complete: Wharton MBA" },
   { text: "LLM Evaluation Frameworks", highlight: true }, { text: "Yoruba Native Speaker" },
   { text: "No Skip Cutscene", highlight: true }, { text: "Jollof Rice Connoisseur" },
   { text: "Currently Grinding", highlight: true }, { text: "Respawn Requires Coffee" },
@@ -122,7 +122,7 @@ export default function Home() {
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
               {[
                 { k: "Active", v: "Kinage · Production AI" },
-                { k: "Side quest", v: "Wharton MBA '26" },
+                { k: "Completed", v: "Wharton MBA '26" },
                 { k: "Building", v: "KOVA Credit Platform" },
                 { k: "Playing", v: "Civilization VII" },
               ].map(({ k, v }) => (
@@ -144,7 +144,7 @@ export default function Home() {
           { label: "Playing", value: "Civilization VII" },
           { label: "Building", value: "Kinage in Prod" },
           { label: "Reading", value: "Team of Teams" },
-          { label: "Grinding", value: "Wharton MBA '26" },
+          { label: "Completed", value: "Wharton MBA '26" },
         ].map(({ label, value }) => (
           <div key={label} style={{ display: "flex", gap: 6, alignItems: "center" }}>
             <span style={{ fontSize: 8, letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(245,240,232,.35)" }}>{label}:</span>
@@ -174,7 +174,7 @@ export default function Home() {
             <div className="about-right" style={{ display: "flex", flexDirection: "column", gap: 20 }}>
               <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)", marginBottom: 20 }}>I go by Lapo. Grew up in Lagos, moved to Bradford for uni, ended up in New York. I build AI systems for regulated industries, the kind of environments where a wrong model output is not just embarrassing, it is a compliance issue.</p>
               <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)", marginBottom: 20 }}>The path from chemical engineering to product to AI to private capital looks random from the outside. It is not. I have always been looking for the same thing: where is the actual problem, and what genuinely fixes it.</p>
-              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>When I am not doing that, I am on a tennis court or running somewhere in the city. Currently finishing the Wharton MBA and building Kinage in production at the same time, which is exactly as intense as it sounds.</p>
+              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>When I am not doing that, I am on a tennis court or running somewhere in the city. Just finished the Wharton MBA while building Kinage in production at the same time. Exactly as intense as it sounds, and worth it.</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
                 {["AI Systems", "Private Markets", "Africa", "Fintech", "Regulated Industries", "Electrochemistry"].map(tag => (
                   <span key={tag} style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", border: "1px solid var(--border)", padding: "4px 12px", borderRadius: 2, color: "var(--mid)" }}>{tag}</span>
@@ -263,7 +263,7 @@ export default function Home() {
             {
               label: "Right now",
               name: "What the calendar actually looks like",
-              body: "Finishing the Wharton MBA. Running Kinage in production. Raising for KOVA. Writing about what happens when AI models meet regulated institutions and neither side is ready.\n\nI also co-founded Young Africans in Diaspora because the community needed to exist and nobody was building it. Most weeks I am juggling more than I probably should. It is fine.",
+              body: "Finished the Wharton MBA. Running Kinage in production. Raising for KOVA. Writing about what happens when AI models meet regulated institutions and neither side is ready.\n\nI also co-founded Young Africans in Diaspora because the community needed to exist and nobody was building it. Most weeks I am juggling more than I probably should. It is fine.",
             },
             {
               label: "What I am reading",
@@ -386,7 +386,7 @@ export default function Home() {
         <Reveal><SH n="06" t="Education" /></Reveal>
         <div className="grid-3col" style={{ margin: "0 48px" }}>
           {[
-            { year: "2024 – 2026", school: "The Wharton School", degree: "MBA, Finance & AI Operations\nUniversity of Pennsylvania", note: "Trailblazer Fellowship (50% merit) · President, Wharton Graduate Association ($6M P&L, 1,700+ students) · VP, Wharton Tech Club Conferences · Co-CEO, Africa AI Leaders Fellowship" },
+            { year: "2024 – 2026 ✓", school: "The Wharton School", degree: "MBA, Finance & AI Operations\nUniversity of Pennsylvania", note: "Trailblazer Fellowship (50% merit) · President, Wharton Graduate Association ($6M P&L, 1,700+ students) · VP, Wharton Tech Club Conferences · Co-CEO, Africa AI Leaders Fellowship" },
             { year: "2021 – 2023", school: "Columbia University", degree: "MS, Chemical Engineering\nNew York, NY", note: "Full merit, 21 of 5,000+ applicants · GPA 3.8 · ACS Applied Energy Materials publication" },
             { year: "2015 – 2018", school: "University of Bradford", degree: "B.Eng., Chemical & Process Engineering\nBradford, UK", note: "Bradford Dean Award, full-ride · GPA 3.7" },
           ].map((edu, i) => (
