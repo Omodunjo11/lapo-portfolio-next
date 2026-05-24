@@ -200,7 +200,7 @@ export default function CloudScene() {
             textShadow: "0 1px 12px rgba(3,105,161,0.4)",
             letterSpacing: ".01em",
           }}>
-            I build AI systems that survive contact with the real world.
+            AI PM focused on trust systems, decision infrastructure, and human-in-the-loop design.
           </p>
         </div>
 

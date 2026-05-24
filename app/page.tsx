@@ -33,6 +33,45 @@ export default function Home() {
     <>
       <CloudScene />
 
+      {/* ── PROOF METRICS ── */}
+      <div style={{
+        background: "rgba(255,255,255,0.72)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
+        borderBottom: "1px solid rgba(125,211,252,0.3)",
+        padding: "20px clamp(20px,5vw,64px)",
+        display: "flex",
+        alignItems: "center",
+        gap: "clamp(20px,4vw,56px)",
+        flexWrap: "wrap",
+        justifyContent: "center",
+      }}>
+        {[
+          { metric: "$148M",  label: "Retention opportunity scoped at Amazon" },
+          { metric: "2B+",    label: "Records modeled across AI systems" },
+          { metric: "11",     label: "AI products shipped end-to-end" },
+          { metric: "10",     label: "African markets · fintech & private capital" },
+        ].map(({ metric, label }) => (
+          <div key={metric} style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
+            <span style={{
+              fontFamily: "var(--font-playfair),serif",
+              fontWeight: 900,
+              fontSize: "clamp(22px,2.8vw,32px)",
+              color: "var(--terra)",
+              lineHeight: 1,
+            }}>{metric}</span>
+            <span style={{
+              fontFamily: "var(--font-dm-mono),monospace",
+              fontSize: "clamp(8px,1vw,10px)",
+              letterSpacing: ".08em",
+              color: "var(--muted)",
+              maxWidth: 160,
+              lineHeight: 1.4,
+            }}>{label}</span>
+          </div>
+        ))}
+      </div>
+
       {/* ── STATUS BAR ── */}
       <div style={{ borderBottom: "1px solid var(--border)", background: "var(--ink)", padding: "10px 48px", display: "flex", alignItems: "center", gap: 32, flexWrap: "wrap", overflow: "hidden" }}>
         <span style={{ fontSize: 8, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--terra)", flexShrink: 0 }}>◆ Currently</span>
@@ -136,6 +175,13 @@ export default function Home() {
               onMouseLeave={e => { e.currentTarget.style.background = "var(--ink)" }}
             >
               Build Archive on GitHub ↗
+            </Link>
+            <Link href="/how-i-build"
+              style={{ display: "inline-flex", alignItems: "center", gap: 10, fontFamily: "var(--font-syne),sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", border: "1px solid var(--terra)", color: "var(--terra)", padding: "13px 32px", borderRadius: 2, transition: "all .25s" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "var(--terra)"; e.currentTarget.style.color = "white" }}
+              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--terra)" }}
+            >
+              How I Build AI Products →
             </Link>
           </div>
         </Reveal>
