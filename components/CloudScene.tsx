@@ -166,6 +166,7 @@ export default function CloudScene() {
           justifyContent: "center",
           overflow: "hidden",
           animation: "sceneFadeUp .9s ease both",
+          background: "linear-gradient(180deg, #2d2a4a 0%, #3d3560 10%, #5c4a7a 28%, #8b6e9e 50%, #b89abf 70%, #d9c4d4 88%, #ede5ec 100%)",
         }}
       >
         {/* ── Name + tagline ── */}
