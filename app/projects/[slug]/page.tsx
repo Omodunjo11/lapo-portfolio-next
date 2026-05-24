@@ -9,7 +9,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const project = getProject(slug)
-  return { title: project ? `${project.name} — Lapo Odunjo` : "Project Not Found" }
+  return { title: project ? `${project.name}, Lapo Odunjo` : "Project Not Found" }
 }
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {

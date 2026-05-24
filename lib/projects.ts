@@ -33,7 +33,7 @@ export const projects: Project[] = [
     year: "2026",
     lang: "TypeScript",
     category: ["ai", "fullstack"],
-    tagline: "Semantic intelligence pipeline for analyst-grade market signal classification — from raw feed noise to trust-weighted, ranked intelligence.",
+    tagline: "Semantic intelligence pipeline for analyst-grade market signal classification, from raw feed noise to trust-weighted, ranked intelligence.",
     overview:
       "Kinage's analyst team was spending the first hour of every morning manually trawling news sources, newsletters, and social feeds to identify relevant market signals. The process was inconsistent across team members, had no shared taxonomy for what counted as a signal, and meant high-value intelligence routinely surfaced too late. This project replaces that workflow with a structured, real-time intelligence dashboard built around how analysts actually think.",
     objectives: [
@@ -109,7 +109,7 @@ export const projects: Project[] = [
     year: "2026",
     lang: "JavaScript",
     category: ["ai", "fullstack"],
-    tagline: "Behavioral trust infrastructure for AI-assisted decision-making — role-aware constraint architecture with full audit trail for accountability.",
+    tagline: "Behavioral trust infrastructure for AI-assisted decision-making, role-aware constraint architecture with full audit trail for accountability.",
     overview:
       "Most enterprise AI deployments fail because they treat all users the same. A founder needs strategic framing and executive brevity. An analyst needs precision and sourcing. A new user needs guardrails and guided onboarding. A single generic system prompt collapses these needs into mediocrity, and mediocrity in AI looks like confident wrong answers. Kova Bot is a WhatsApp-based conversational AI that assigns each user one of five roles during onboarding and runs every subsequent interaction through role-aware constraints.",
     objectives: [
@@ -184,7 +184,7 @@ export const projects: Project[] = [
     year: "2026",
     lang: "TypeScript",
     category: ["ai", "fullstack"],
-    tagline: "AI-assisted anomaly detection and risk classification for regulated institutions — surfacing what matters, suppressing what doesn't, with defensible audit trails.",
+    tagline: "AI-assisted anomaly detection and risk classification for regulated institutions, surfacing what matters, suppressing what doesn't, with defensible audit trails.",
     overview:
       "Compliance teams at financial institutions operate in an environment where missing a single regulatory update can trigger audit findings, fines, or enforcement action. Yet the current workflow at most institutions is a patchwork of email alerts, manual document review, and ad hoc searches across dozens of regulatory sources. The signal-to-noise ratio is brutal. Glean Regulatory is a purpose-built intelligence platform that tracks, surfaces, and prioritises regulatory changes for compliance analysts, designed around the compliance workflow, not a generic news aggregator.",
     objectives: [
@@ -259,7 +259,7 @@ export const projects: Project[] = [
     year: "2026",
     lang: "Python",
     category: ["ai", "automation"],
-    tagline: "Automated knowledge extraction pipeline — schema-constrained LLM orchestration that converts raw meeting transcripts into structured, actionable intelligence.",
+    tagline: "Automated knowledge extraction pipeline, schema-constrained LLM orchestration that converts raw meeting transcripts into structured, actionable intelligence.",
     overview:
       "The average knowledge worker spends 4+ hours a week in meetings and captures almost nothing actionable from them. Meeting notes, when they exist, are scattered across Drive folders with inconsistent structure, no tagging, and no follow-through. Insights stay trapped in transcripts nobody re-reads. This project builds a fully automated pipeline that converts raw meeting transcripts into structured intelligence documents, without any manual step between recording and output.",
     objectives: [
@@ -334,7 +334,7 @@ export const projects: Project[] = [
     year: "2026",
     lang: "Python",
     category: ["ai", "systems"],
-    tagline: "LLM evaluation framework for regulated environments — drift detection, regression harnesses, and failure-mode classification calibrated to compliance-grade tolerances.",
+    tagline: "LLM evaluation framework for regulated environments, drift detection, regression harnesses, and failure-mode classification calibrated to compliance-grade tolerances.",
     overview:
       "In regulated environments, finance, healthcare, legal, a silent LLM failure isn't just a product bug. It's a compliance incident. Most AI teams catch model drift in post-mortems, after a user reports something wrong. This project builds the tooling to catch it before it reaches users: a Python toolkit for measuring LLM reliability in production, covering drift detection across model updates, regression testing harnesses, and failure mode classification with severity scoring calibrated to regulated-industry tolerances.",
     objectives: [
@@ -481,7 +481,7 @@ export const projects: Project[] = [
     year: "2026",
     lang: "Python",
     category: ["ai", "automation"],
-    tagline: "Decoupled AI orchestration layer — contract-first API design separating intelligence reasoning from product interface for independent deployment and iteration.",
+    tagline: "Decoupled AI orchestration layer, contract-first API design separating intelligence reasoning from product interface for independent deployment and iteration.",
     overview:
       "As the Kinage Intelligence dashboard grew in complexity, it became clear that coupling AI reasoning logic to the frontend code would create a maintenance problem, any prompt change or model update would require frontend deployment, and any UI iteration would risk breaking AI behaviour. The Kinage AI Layer is the Python backend that decouples the intelligence and reasoning layer from the product interface, exposing clean API contracts so each can evolve independently.",
     objectives: [
