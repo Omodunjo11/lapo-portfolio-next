@@ -5,7 +5,7 @@ import Link from "next/link"
    CloudScene — anime-style Black boy characters
    Reference aesthetic: Boondocks / Afro Samurai
    Deep skin, serious expressions, gi/kimono,
-   dramatic hair, kanji labels.
+   bold hair, kanji labels.
    ───────────────────────────────────────────── */
 
 // Palette
