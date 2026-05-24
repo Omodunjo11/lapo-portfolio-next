@@ -3,108 +3,308 @@ import Link from "next/link"
 
 /* ─────────────────────────────────────────────
    CloudScene
-   Full-screen sky splash with three animated
-   Black boy silhouette characters on clouds.
+   Full-screen sky splash with three anime-style
+   Black boy characters on clouds.
    ───────────────────────────────────────────── */
 
-// Shared colours for silhouettes
-const SKIN  = "#1a0a00"   // deep brown/black silhouette
-const SHIRT = "#0F172A"   // near-black body
-const SKIN2 = "#2d1200"   // slightly lighter — catches light
+// Palette
+const SKIN   = "#8B5E3C"   // warm brown skin
+const SKIN_D = "#6B4226"   // shadow / darker tone
+const SKIN_L = "#C4845A"   // highlight on skin
+const OUTLINE = "#1A0A00"  // bold anime outline
+const HAIR   = "#0F0A00"   // near-black hair
+const WHITE  = "#FFFFFF"
+const EYE    = "#1A1A2E"   // deep eye colour
+const EYE_HL = "#FFFFFF"   // eye highlight
 
-/* ── Reader character (left cloud) ──
-   Sitting, legs dangling and swinging.
-   SVG viewBox: 0 0 60 90                       */
+/* ─── Shared face component ─── */
+function AnimeFace({
+  cx, cy, r = 14,
+  eyeStyle = "open",   // "open" | "closed" | "focused"
+  mouthStyle = "smile" // "smile" | "grin" | "open"
+}: {
+  cx: number; cy: number; r?: number;
+  eyeStyle?: "open" | "closed" | "focused"
+  mouthStyle?: "smile" | "grin" | "open"
+}) {
+  const ew = r * 0.38   // eye width
+  const eh = r * 0.32   // eye height
+  const ex1 = cx - r * 0.38
+  const ex2 = cx + r * 0.38
+  const ey  = cy + r * 0.05
+
+  return (
+    <g>
+      {/* Head base */}
+      <ellipse cx={cx} cy={cy} rx={r} ry={r * 1.05} fill={SKIN} stroke={OUTLINE} strokeWidth="1.4" />
+      {/* Chin shadow */}
+      <ellipse cx={cx} cy={cy + r * 0.6} rx={r * 0.55} ry={r * 0.22} fill={SKIN_D} opacity="0.35" />
+      {/* Cheek highlight */}
+      <ellipse cx={cx - r * 0.42} cy={cy + r * 0.28} rx={r * 0.18} ry={r * 0.12} fill={SKIN_L} opacity="0.45" />
+      <ellipse cx={cx + r * 0.42} cy={cy + r * 0.28} rx={r * 0.18} ry={r * 0.12} fill={SKIN_L} opacity="0.45" />
+
+      {/* ── Eyebrows ── */}
+      <path d={`M ${ex1 - ew * 0.7} ${ey - eh * 1.9} Q ${ex1} ${ey - eh * 2.3} ${ex1 + ew * 0.7} ${ey - eh * 1.9}`}
+        fill="none" stroke={OUTLINE} strokeWidth="1.4" strokeLinecap="round" />
+      <path d={`M ${ex2 - ew * 0.7} ${ey - eh * 1.9} Q ${ex2} ${ey - eh * 2.3} ${ex2 + ew * 0.7} ${ey - eh * 1.9}`}
+        fill="none" stroke={OUTLINE} strokeWidth="1.4" strokeLinecap="round" />
+
+      {/* ── Eyes ── */}
+      {eyeStyle === "open" && <>
+        {/* Left eye */}
+        <ellipse cx={ex1} cy={ey} rx={ew} ry={eh} fill={WHITE} stroke={OUTLINE} strokeWidth="1.2" />
+        <ellipse cx={ex1} cy={ey + eh * 0.1} rx={ew * 0.62} ry={eh * 0.72} fill={EYE} />
+        <circle  cx={ex1 - ew * 0.2} cy={ey - eh * 0.2} r={ew * 0.24} fill={EYE_HL} />
+        {/* Right eye */}
+        <ellipse cx={ex2} cy={ey} rx={ew} ry={eh} fill={WHITE} stroke={OUTLINE} strokeWidth="1.2" />
+        <ellipse cx={ex2} cy={ey + eh * 0.1} rx={ew * 0.62} ry={eh * 0.72} fill={EYE} />
+        <circle  cx={ex2 - ew * 0.2} cy={ey - eh * 0.2} r={ew * 0.24} fill={EYE_HL} />
+      </>}
+      {eyeStyle === "closed" && <>
+        <path d={`M ${ex1 - ew} ${ey} Q ${ex1} ${ey - eh * 1.1} ${ex1 + ew} ${ey}`}
+          fill="none" stroke={OUTLINE} strokeWidth="1.4" strokeLinecap="round" />
+        <path d={`M ${ex2 - ew} ${ey} Q ${ex2} ${ey - eh * 1.1} ${ex2 + ew} ${ey}`}
+          fill="none" stroke={OUTLINE} strokeWidth="1.4" strokeLinecap="round" />
+      </>}
+      {eyeStyle === "focused" && <>
+        {/* Determined squint */}
+        <ellipse cx={ex1} cy={ey} rx={ew} ry={eh * 0.6} fill={WHITE} stroke={OUTLINE} strokeWidth="1.2" />
+        <ellipse cx={ex1} cy={ey} rx={ew * 0.55} ry={eh * 0.5} fill={EYE} />
+        <circle  cx={ex1 - ew * 0.18} cy={ey - eh * 0.12} r={ew * 0.2} fill={EYE_HL} />
+        <ellipse cx={ex2} cy={ey} rx={ew} ry={eh * 0.6} fill={WHITE} stroke={OUTLINE} strokeWidth="1.2" />
+        <ellipse cx={ex2} cy={ey} rx={ew * 0.55} ry={eh * 0.5} fill={EYE} />
+        <circle  cx={ex2 - ew * 0.18} cy={ey - eh * 0.12} r={ew * 0.2} fill={EYE_HL} />
+      </>}
+
+      {/* ── Nose (small, anime-style) ── */}
+      <path d={`M ${cx - r * 0.07} ${cy + r * 0.28} Q ${cx} ${cy + r * 0.38} ${cx + r * 0.07} ${cy + r * 0.28}`}
+        fill="none" stroke={SKIN_D} strokeWidth="1.1" strokeLinecap="round" />
+
+      {/* ── Mouth ── */}
+      {mouthStyle === "smile" &&
+        <path d={`M ${cx - r * 0.24} ${cy + r * 0.52} Q ${cx} ${cy + r * 0.68} ${cx + r * 0.24} ${cy + r * 0.52}`}
+          fill="none" stroke={OUTLINE} strokeWidth="1.3" strokeLinecap="round" />}
+      {mouthStyle === "grin" && <>
+        <path d={`M ${cx - r * 0.28} ${cy + r * 0.50} Q ${cx} ${cy + r * 0.72} ${cx + r * 0.28} ${cy + r * 0.50}`}
+          fill={OUTLINE} />
+        <path d={`M ${cx - r * 0.24} ${cy + r * 0.54} Q ${cx} ${cy + r * 0.62} ${cx + r * 0.24} ${cy + r * 0.54}`}
+          fill={WHITE} />
+      </>}
+      {mouthStyle === "open" && <>
+        <ellipse cx={cx} cy={cy + r * 0.58} rx={r * 0.22} ry={r * 0.14} fill={OUTLINE} />
+        <ellipse cx={cx} cy={cy + r * 0.60} rx={r * 0.16} ry={r * 0.08} fill="#8B3A3A" />
+      </>}
+    </g>
+  )
+}
+
+/* ─── Hair helper ─── */
+function AnimeHair({ cx, cy, r = 14, style = "spiky" }: {
+  cx: number; cy: number; r?: number; style?: "spiky" | "short" | "dreads"
+}) {
+  if (style === "spiky") return (
+    <g fill={HAIR} stroke={OUTLINE} strokeWidth="1">
+      {/* Back of head */}
+      <ellipse cx={cx} cy={cy - r * 0.1} rx={r * 1.02} ry={r * 1.02} fill={HAIR} />
+      {/* Spikes */}
+      <polygon points={`${cx - r * 0.6},${cy - r * 0.7} ${cx - r * 0.9},${cy - r * 1.7} ${cx - r * 0.2},${cy - r * 1.0}`} />
+      <polygon points={`${cx - r * 0.2},${cy - r * 0.9} ${cx - r * 0.3},${cy - r * 1.9} ${cx + r * 0.3},${cy - r * 1.1}`} />
+      <polygon points={`${cx + r * 0.2},${cy - r * 0.9} ${cx + r * 0.4},${cy - r * 1.85} ${cx + r * 0.8},${cy - r * 0.9}`} />
+      <polygon points={`${cx + r * 0.6},${cy - r * 0.7} ${cx + r * 1.0},${cy - r * 1.5} ${cx + r * 0.95},${cy - r * 0.5}`} />
+    </g>
+  )
+  if (style === "short") return (
+    <g fill={HAIR} stroke={OUTLINE} strokeWidth="1">
+      <ellipse cx={cx} cy={cy - r * 0.15} rx={r * 1.0} ry={r * 0.88} />
+      {/* Short fringe */}
+      <ellipse cx={cx - r * 0.45} cy={cy - r * 0.88} rx={r * 0.32} ry={r * 0.24} />
+      <ellipse cx={cx}             cy={cy - r * 0.98} rx={r * 0.30} ry={r * 0.22} />
+      <ellipse cx={cx + r * 0.45} cy={cy - r * 0.88} rx={r * 0.32} ry={r * 0.24} />
+    </g>
+  )
+  // dreads
+  return (
+    <g fill={HAIR} stroke={OUTLINE} strokeWidth="0.8">
+      <ellipse cx={cx} cy={cy - r * 0.1} rx={r * 1.0} ry={r * 0.95} />
+      {/* Dread locks hanging */}
+      {[-0.7,-0.4,-0.1,0.2,0.5,0.8].map((ox, i) => (
+        <rect key={i} x={cx + ox * r - r * 0.12} y={cy - r * 0.5} width={r * 0.22} height={r * (0.8 + i * 0.1)} rx={r * 0.1} fill={HAIR} />
+      ))}
+    </g>
+  )
+}
+
+/* ══════════════════════════════════════════
+   CHARACTER 1 — Reader (left cloud)
+   Sitting relaxed, legs dangling, book open,
+   happy closed eyes (absorbed in reading)
+   ══════════════════════════════════════════ */
 function Reader() {
-  return (
-    <svg viewBox="0 0 60 90" width="60" height="90" style={{ overflow: "visible" }}>
-      {/* Head */}
-      <ellipse cx="30" cy="14" rx="11" ry="12" fill={SKIN} />
-      {/* Body */}
-      <rect x="18" y="24" width="24" height="26" rx="4" fill={SHIRT} />
-      {/* Book in lap */}
-      <rect x="12" y="38" width="36" height="22" rx="3" fill="#DDD6FE" opacity="0.9" />
-      <rect x="29" y="38" width="2" height="22" fill="#A78BFA" opacity="0.7" />
-      {/* Left arm holding book */}
-      <rect x="10" y="32" width="10" height="18" rx="4" fill={SKIN} />
-      {/* Right arm holding book */}
-      <rect x="40" y="32" width="10" height="18" rx="4" fill={SKIN} />
+  const W = 90, H = 130
+  const hx = W / 2, hy = 22
+  const r = 15
 
-      {/* Left leg — swinging */}
-      <g style={{ transformOrigin: "22px 50px", animation: "legSwingL 2.2s ease-in-out infinite" }}>
-        <rect x="18" y="50" width="10" height="28" rx="4" fill={SKIN} />
-        {/* shoe */}
-        <ellipse cx="22" cy="79" rx="7" ry="4" fill={SKIN2} />
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} style={{ overflow: "visible" }}>
+
+      {/* ── Body (hoodie, relaxed sit) ── */}
+      {/* Torso */}
+      <rect x="26" y="36" width="38" height="36" rx="8" fill="#DDD6FE" stroke={OUTLINE} strokeWidth="1.3" />
+      {/* Hoodie pocket */}
+      <rect x="33" y="54" width="24" height="14" rx="5" fill="#C4B5FD" stroke={OUTLINE} strokeWidth="0.9" />
+      {/* Left arm (holding book) */}
+      <rect x="10" y="40" width="18" height="10" rx="5" fill={SKIN} stroke={OUTLINE} strokeWidth="1.2" />
+      {/* Right arm (holding book) */}
+      <rect x="62" y="40" width="18" height="10" rx="5" fill={SKIN} stroke={OUTLINE} strokeWidth="1.2" />
+      {/* Hands */}
+      <ellipse cx="13" cy="46" rx="6" ry="5" fill={SKIN} stroke={OUTLINE} strokeWidth="1" />
+      <ellipse cx="77" cy="46" rx="6" ry="5" fill={SKIN} stroke={OUTLINE} strokeWidth="1" />
+
+      {/* ── Book ── */}
+      <rect x="14" y="44" width="62" height="36" rx="4" fill="#EDE9FE" stroke={OUTLINE} strokeWidth="1.3" />
+      <rect x="43" y="44" width="3"  height="36" fill="#A78BFA" opacity="0.6" />
+      {/* Page lines */}
+      {[50,55,60,65,70].map(y => (
+        <line key={y} x1="18" y1={y} x2="42" y2={y} stroke="#C4B5FD" strokeWidth="1" />
+      ))}
+      {[50,55,60,65,70].map(y => (
+        <line key={y} x1="48" y1={y} x2="72" y2={y} stroke="#C4B5FD" strokeWidth="1" />
+      ))}
+
+      {/* ── Legs dangling ── */}
+      <g style={{ transformOrigin: `${W/2 - 10}px 80px`, animation: "legSwingL 2.4s ease-in-out infinite" }}>
+        <rect x="30" y="72" width="14" height="34" rx="7" fill="#334155" stroke={OUTLINE} strokeWidth="1.2" />
+        {/* Sneaker */}
+        <ellipse cx="37" cy="107" rx="11" ry="7" fill="#0F172A" stroke={OUTLINE} strokeWidth="1" />
+        <ellipse cx="34" cy="105" rx="6" ry="3" fill="white" opacity="0.4" />
       </g>
-      {/* Right leg — swinging opposite */}
-      <g style={{ transformOrigin: "38px 50px", animation: "legSwingR 2.2s ease-in-out infinite" }}>
-        <rect x="32" y="50" width="10" height="28" rx="4" fill={SKIN} />
-        <ellipse cx="37" cy="79" rx="7" ry="4" fill={SKIN2} />
+      <g style={{ transformOrigin: `${W/2 + 10}px 80px`, animation: "legSwingR 2.4s ease-in-out infinite" }}>
+        <rect x="47" y="72" width="14" height="34" rx="7" fill="#334155" stroke={OUTLINE} strokeWidth="1.2" />
+        <ellipse cx="54" cy="107" rx="11" ry="7" fill="#0F172A" stroke={OUTLINE} strokeWidth="1" />
+        <ellipse cx="51" cy="105" rx="6" ry="3" fill="white" opacity="0.4" />
       </g>
+
+      {/* ── Hair ── */}
+      <AnimeHair cx={hx} cy={hy} r={r} style="dreads" />
+
+      {/* ── Face ── */}
+      <AnimeFace cx={hx} cy={hy} r={r} eyeStyle="closed" mouthStyle="smile" />
     </svg>
   )
 }
 
-/* ── Jumper character (centre) ──
-   Mid-air, arms spread, jumping between mini clouds.
-   SVG viewBox: 0 0 64 96                        */
+/* ══════════════════════════════════════════
+   CHARACTER 2 — Jumper (centre)
+   Mid-air, arms out wide, big open mouth
+   excited expression, spiky hair flying
+   ══════════════════════════════════════════ */
 function Jumper() {
+  const W = 100, H = 140
+  const hx = W / 2, hy = 22
+  const r = 16
+
   return (
-    <svg viewBox="0 0 64 96" width="64" height="96" style={{ overflow: "visible" }}>
-      {/* Head */}
-      <ellipse cx="32" cy="14" rx="12" ry="13" fill={SKIN} />
-      {/* Body */}
-      <rect x="19" y="26" width="26" height="28" rx="5" fill={SHIRT} />
+    <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} style={{ overflow: "visible" }}>
 
-      {/* Left arm — spread out */}
-      <g style={{ transformOrigin: "20px 32px", animation: "armSpread 3.6s ease-in-out infinite" }}>
-        <rect x="0" y="28" width="22" height="9" rx="4" fill={SKIN} />
+      {/* ── Body (tracksuit) ── */}
+      <rect x="28" y="38" width="44" height="40" rx="9" fill="#38BDF8" stroke={OUTLINE} strokeWidth="1.4" />
+      {/* Stripe */}
+      <rect x="47" y="38" width="6" height="40" fill="#7DD3FC" opacity="0.6" />
+
+      {/* ── Arms spread wide ── */}
+      <g style={{ transformOrigin: "30px 46px", animation: "armSpread 3.6s ease-in-out infinite" }}>
+        <rect x="0" y="40" width="30" height="12" rx="6" fill={SKIN} stroke={OUTLINE} strokeWidth="1.2" />
+        <ellipse cx="4" cy="46" rx="7" ry="6" fill={SKIN} stroke={OUTLINE} strokeWidth="1" />
       </g>
-      {/* Right arm — spread out */}
-      <g style={{ transformOrigin: "44px 32px", animation: "armSpreadR 3.6s ease-in-out infinite" }}>
-        <rect x="42" y="28" width="22" height="9" rx="4" fill={SKIN} />
+      <g style={{ transformOrigin: "70px 46px", animation: "armSpreadR 3.6s ease-in-out infinite" }}>
+        <rect x="70" y="40" width="30" height="12" rx="6" fill={SKIN} stroke={OUTLINE} strokeWidth="1.2" />
+        <ellipse cx="96" cy="46" rx="7" ry="6" fill={SKIN} stroke={OUTLINE} strokeWidth="1" />
       </g>
 
-      {/* Left leg — tucked slightly */}
-      <g style={{ transformOrigin: "26px 54px", animation: "legSwingL 3.6s ease-in-out infinite" }}>
-        <rect x="20" y="54" width="11" height="26" rx="4" fill={SKIN} />
-        <ellipse cx="25" cy="81" rx="7" ry="4" fill={SKIN2} />
+      {/* ── Legs (tucked up in jump) ── */}
+      <g style={{ transformOrigin: "38px 80px", animation: "legSwingL 3.6s ease-in-out infinite" }}>
+        <rect x="28" y="78" width="16" height="36" rx="8" fill="#0F172A" stroke={OUTLINE} strokeWidth="1.2" />
+        <ellipse cx="36" cy="116" rx="13" ry="8" fill="#1E293B" stroke={OUTLINE} strokeWidth="1" />
+        <ellipse cx="33" cy="113" rx="7" ry="3" fill="white" opacity="0.35" />
       </g>
-      {/* Right leg */}
-      <g style={{ transformOrigin: "40px 54px", animation: "legSwingR 3.6s ease-in-out infinite" }}>
-        <rect x="34" y="54" width="11" height="26" rx="4" fill={SKIN} />
-        <ellipse cx="40" cy="81" rx="7" ry="4" fill={SKIN2} />
+      <g style={{ transformOrigin: "62px 80px", animation: "legSwingR 3.6s ease-in-out infinite" }}>
+        <rect x="56" y="78" width="16" height="36" rx="8" fill="#0F172A" stroke={OUTLINE} strokeWidth="1.2" />
+        <ellipse cx="64" cy="116" rx="13" ry="8" fill="#1E293B" stroke={OUTLINE} strokeWidth="1" />
+        <ellipse cx="61" cy="113" rx="7" ry="3" fill="white" opacity="0.35" />
       </g>
+
+      {/* ── Hair (spiky, mid-air energy) ── */}
+      <AnimeHair cx={hx} cy={hy} r={r} style="spiky" />
+
+      {/* ── Face ── */}
+      <AnimeFace cx={hx} cy={hy} r={r} eyeStyle="open" mouthStyle="open" />
+
+      {/* ── Speed lines behind character ── */}
+      {[-28,-18,-8,8,18,28].map((ox, i) => (
+        <line key={i}
+          x1={hx + ox} y1={hy + 60 + i * 4}
+          x2={hx + ox} y2={hy + 80 + i * 4}
+          stroke="rgba(186,230,253,0.45)" strokeWidth="1.5" strokeLinecap="round" />
+      ))}
     </svg>
   )
 }
 
-/* ── Gamer character (right cloud) ──
-   Sitting cross-legged, holding controller.
-   SVG viewBox: 0 0 64 80                        */
+/* ══════════════════════════════════════════
+   CHARACTER 3 — Gamer (right cloud)
+   Cross-legged, leaning forward, focused
+   eyes, controller glowing
+   ══════════════════════════════════════════ */
 function Gamer() {
+  const W = 90, H = 110
+  const hx = W / 2, hy = 20
+  const r = 15
+
   return (
-    <svg viewBox="0 0 64 80" width="64" height="80" style={{ overflow: "visible" }}>
-      {/* Head */}
-      <ellipse cx="32" cy="13" rx="12" ry="13" fill={SKIN} />
-      {/* Body */}
-      <rect x="18" y="24" width="28" height="26" rx="5" fill={SHIRT} />
+    <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} style={{ overflow: "visible" }}>
 
-      {/* Controller */}
-      <rect x="14" y="42" width="36" height="16" rx="6" fill="#334155" />
-      <circle cx="22" cy="50" r="3" fill="#38BDF8" opacity="0.8" />
-      <circle cx="42" cy="50" r="3" fill="#A78BFA" opacity="0.8" />
-      <rect x="29" y="47" width="6" height="2" rx="1" fill="#64748B" />
-      <rect x="31" y="45" width="2" height="6" rx="1" fill="#64748B" />
+      {/* ── Body (zip-up, leaning forward) ── */}
+      <rect x="22" y="34" width="46" height="36" rx="8" fill="#1E293B" stroke={OUTLINE} strokeWidth="1.3" />
+      {/* Zipper */}
+      <line x1="45" y1="34" x2="45" y2="70" stroke="#475569" strokeWidth="2" />
+      {/* Collar */}
+      <path d="M 38,34 Q 45,42 52,34" fill="none" stroke="#475569" strokeWidth="1.5" />
 
-      {/* Left arm */}
-      <rect x="8" y="30" width="12" height="20" rx="4" fill={SKIN} />
-      {/* Right arm */}
-      <rect x="44" y="30" width="12" height="20" rx="4" fill={SKIN} />
+      {/* ── Arms down to controller ── */}
+      <rect x="10" y="44" width="14" height="22" rx="6" fill={SKIN} stroke={OUTLINE} strokeWidth="1.1" />
+      <rect x="66" y="44" width="14" height="22" rx="6" fill={SKIN} stroke={OUTLINE} strokeWidth="1.1" />
+      {/* Hands */}
+      <ellipse cx="17" cy="66" rx="7" ry="5" fill={SKIN} stroke={OUTLINE} strokeWidth="1" />
+      <ellipse cx="73" cy="66" rx="7" ry="5" fill={SKIN} stroke={OUTLINE} strokeWidth="1" />
 
-      {/* Cross legs */}
-      <ellipse cx="22" cy="64" rx="13" ry="8" fill={SKIN} transform="rotate(-12,22,64)" />
-      <ellipse cx="42" cy="64" rx="13" ry="8" fill={SKIN} transform="rotate(12,42,64)" />
+      {/* ── Controller (glowing) ── */}
+      <rect x="16" y="62" width="58" height="24" rx="10" fill="#0F172A" stroke="#38BDF8" strokeWidth="1.5" />
+      {/* Glow effect */}
+      <rect x="16" y="62" width="58" height="24" rx="10" fill="none" stroke="#38BDF8" strokeWidth="3" opacity="0.25" />
+      {/* D-pad */}
+      <rect x="25" y="70" width="10" height="4" rx="1" fill="#334155" />
+      <rect x="28" y="67" width="4"  height="10" rx="1" fill="#334155" />
+      {/* Buttons */}
+      <circle cx="60" cy="70" r="3.5" fill="#A78BFA" stroke="#7C3AED" strokeWidth="0.8" />
+      <circle cx="68" cy="74" r="3.5" fill="#38BDF8" stroke="#0284C7" strokeWidth="0.8" />
+      <circle cx="60" cy="78" r="3.5" fill="#86EFAC" stroke="#16A34A" strokeWidth="0.8" />
+      <circle cx="52" cy="74" r="3.5" fill="#FDE68A" stroke="#D97706" strokeWidth="0.8" />
+      {/* Analog sticks */}
+      <circle cx="38" cy="76" r="4" fill="#1E293B" stroke="#475569" strokeWidth="1" />
+      <circle cx="52" cy="81" r="4" fill="#1E293B" stroke="#475569" strokeWidth="1" />
+
+      {/* ── Crossed legs ── */}
+      <ellipse cx="27" cy="88" rx="16" ry="9" fill="#0F172A" stroke={OUTLINE} strokeWidth="1.1" transform="rotate(-8,27,88)" />
+      <ellipse cx="63" cy="88" rx="16" ry="9" fill="#0F172A" stroke={OUTLINE} strokeWidth="1.1" transform="rotate(8,63,88)" />
+      {/* Sneakers */}
+      <ellipse cx="18" cy="94" rx="10" ry="6" fill="#1E293B" stroke={OUTLINE} strokeWidth="1" />
+      <ellipse cx="72" cy="94" rx="10" ry="6" fill="#1E293B" stroke={OUTLINE} strokeWidth="1" />
+
+      {/* ── Hair (short taper) ── */}
+      <AnimeHair cx={hx} cy={hy} r={r} style="short" />
+
+      {/* ── Face (focused/determined) ── */}
+      <AnimeFace cx={hx} cy={hy} r={r} eyeStyle="focused" mouthStyle="smile" />
     </svg>
   )
 }
@@ -222,23 +422,17 @@ export default function CloudScene() {
           {/* ── LEFT: Reader ── */}
           <div style={{
             position: "absolute",
-            left: "clamp(20px, 8%, 120px)",
+            left: "clamp(10px, 5%, 80px)",
             bottom: "clamp(60px,12vh,130px)",
             animation: "cloudDriftL 110s linear infinite alternate",
             zIndex: 4,
           }}>
-            {/* Character sits on cloud top */}
-            <div style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 0,
-            }}>
-              <div style={{ animation: "cloudBobSlow 4.8s ease-in-out infinite", marginBottom: -10 }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0 }}>
+              <div style={{ animation: "cloudBobSlow 4.8s ease-in-out infinite", marginBottom: -14 }}>
                 <Reader />
               </div>
               <div style={{ animation: "cloudSquish 4.8s ease-in-out infinite" }}>
-                <Cloud w={200} h={88} />
+                <Cloud w={220} h={96} />
               </div>
             </div>
           </div>
@@ -293,22 +487,17 @@ export default function CloudScene() {
           {/* ── RIGHT: Gamer ── */}
           <div style={{
             position: "absolute",
-            right: "clamp(20px, 8%, 120px)",
+            right: "clamp(10px, 5%, 80px)",
             bottom: "clamp(60px,12vh,130px)",
             animation: "cloudDriftR 95s linear infinite alternate",
             zIndex: 4,
           }}>
-            <div style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 0,
-            }}>
-              <div style={{ animation: "cloudBob 5.4s ease-in-out infinite", marginBottom: -10 }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0 }}>
+              <div style={{ animation: "cloudBob 5.4s ease-in-out infinite", marginBottom: -14 }}>
                 <Gamer />
               </div>
               <div style={{ animation: "cloudSquish 5.4s ease-in-out infinite" }}>
-                <Cloud w={190} h={84} />
+                <Cloud w={210} h={92} />
               </div>
             </div>
           </div>
