@@ -33,6 +33,8 @@ export default function Home() {
     <>
       <CloudScene />
 
+      <div style={{ background: "var(--paper)" }}>
+
       {/* ── PROOF METRICS ── */}
       <div style={{
         background: "rgba(255,255,255,0.72)",
@@ -528,6 +530,8 @@ export default function Home() {
           </div>
         </Reveal>
       </section>
+
+      </div>{/* end paper wrapper */}
     </>
   )
 }

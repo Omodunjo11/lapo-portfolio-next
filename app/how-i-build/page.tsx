@@ -90,7 +90,7 @@ const principles = [
 
 export default function HowIBuild() {
   return (
-    <main style={{ background: "var(--paper)", minHeight: "100vh" }}>
+    <main style={{ background: "linear-gradient(180deg, #ede5ec 0%, #f0eaef 15%, var(--paper) 40%)", minHeight: "100vh" }}>
 
       {/* ── Hero ── */}
       <div style={{

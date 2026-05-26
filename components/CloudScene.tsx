@@ -143,7 +143,7 @@ function MiniCloud({ w = 80, h = 38 }: { w?: number; h?: number }) {
 const MAP_LINKS = [
   { href: "/#about",    label: "Story",      icon: "📖", sub: "Origin & lore" },
   { href: "/#work",     label: "Build",      icon: "⚒️", sub: "Quest log" },
-  { href: "/projects",  label: "Projects",   icon: "🗺️", sub: "World map" },
+  { href: "/projects",  label: "Projects",   icon: "🗺️", sub: "Full portfolio" },
   { href: "/experience",label: "Experience", icon: "⚔️", sub: "Battle history" },
   { href: "/writing",   label: "Writing",    icon: "🪶", sub: "Field notes" },
   { href: "/#contact",  label: "Connect",    icon: "🌐", sub: "Start a co-op" },
@@ -352,10 +352,9 @@ export default function CloudScene() {
           PANEL 2 — World map portal
           ═══════════════════════════════════════ */}
       <section id="map" style={{
-        background: "rgba(248,250,252,0.55)",
-        backdropFilter: "blur(2px)",
-        borderTop: "1px solid rgba(125,211,252,0.35)",
-        borderBottom: "1px solid rgba(125,211,252,0.35)",
+        background: "linear-gradient(180deg, #ede5ec 0%, #e8dfe8 40%, #dfd8e0 100%)",
+        borderTop: "1px solid rgba(180,160,180,0.3)",
+        borderBottom: "1px solid rgba(180,160,180,0.3)",
         padding: "clamp(48px,8vh,96px) clamp(20px,6vw,64px)",
       }}>
         {/* Header */}
