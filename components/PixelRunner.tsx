@@ -113,6 +113,7 @@ function Sprite({ fA, fB, run, delay = "0s" }: { fA: string; fB: string; run: st
 
 export default function PixelRunner() {
   const [mounted, setMounted] = useState(false)
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setMounted(true) }, [])
   if (!mounted) return null
 

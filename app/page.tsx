@@ -22,7 +22,7 @@ const SH = ({ n, t, game }: { n: string; t: string; game?: string }) => (
     <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 6 }}>
       {n && <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".22em", color: "var(--terra)" }}>{n}</span>}
       <h2 style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(28px,3.5vw,44px)", fontWeight: 900, letterSpacing: "-.02em", lineHeight: 1, margin: 0 }}>{t}</h2>
-      {game && <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".14em", color: "var(--muted)", marginLeft: 4, opacity: 0.6 }}>// {game}</span>}
+      {game && <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".14em", color: "var(--muted)", marginLeft: 4, opacity: 0.6 }}>{'// '}{game}</span>}
     </div>
     <div style={{ width: 40, height: 2, background: "var(--terra)", marginTop: 10 }} />
   </div>
@@ -131,7 +131,7 @@ export default function Home() {
             <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
               <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>02</span>
               <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Featured Projects</span>
-              <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".12em", color: "var(--muted)", opacity: 0.55 }}>// quest log</span>
+              <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".12em", color: "var(--muted)", opacity: 0.55 }}>{'// quest log'}</span>
               <div style={{ width: 120, height: 1, background: "var(--border)" }} />
             </div>
             <Link href="/projects" style={{ fontSize: 9, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)" }}>View All →</Link>
@@ -453,7 +453,7 @@ export default function Home() {
           <div style={{ padding: "0 48px 40px", display: "flex", alignItems: "center", gap: 18 }}>
             <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>09</span>
             <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Base Camp</span>
-            <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".12em", color: "var(--muted)", opacity: 0.55 }}>// when not building</span>
+            <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".12em", color: "var(--muted)", opacity: 0.55 }}>{'// when not building'}</span>
             <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
           </div>
         </Reveal>

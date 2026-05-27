@@ -184,7 +184,7 @@ export default function HowIBuild() {
                   fontSize: 14,
                   lineHeight: 1.6,
                   color: "rgba(248,250,252,0.85)",
-                }}>"{q}"</div>
+                }}>&ldquo;{q}&rdquo;</div>
               </div>
             ))}
           </div>
@@ -195,7 +195,7 @@ export default function HowIBuild() {
             color: "rgba(186,230,253,.4)",
             marginTop: 40,
           }}>
-            These are the essays I'm writing. If any of these are live, they'll be in Writing ↗
+            These are the essays I&apos;m writing. If any of these are live, they&apos;ll be in Writing ↗
           </p>
         </div>
       </div>
@@ -210,7 +210,7 @@ export default function HowIBuild() {
       }}>
         <h2 style={{ ...H2_STYLE, textAlign: "center" }}>Want to go deeper?</h2>
         <p style={{ ...BODY_STYLE, margin: "0 auto 36px", textAlign: "center" }}>
-          See the systems I've actually built, or start a conversation.
+          See the systems I&apos;ve actually built, or start a conversation.
         </p>
         <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
           <Link href="/projects"

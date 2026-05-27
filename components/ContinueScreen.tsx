@@ -6,8 +6,7 @@ export default function ContinueScreen() {
   const [count, setCount]         = useState(9)
   const [dismissed, setDismissed] = useState(false)
   const [exiting, setExiting]     = useState(false)
-  const timerRef   = useRef<ReturnType<typeof setInterval> | null>(null)
-  const observerRef = useRef<IntersectionObserver | null>(null)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   // Exit-intent: mouse leaves toward top of viewport
   // Only arms after 20s on page so it doesn't fire on quick bounces
@@ -35,6 +34,7 @@ export default function ContinueScreen() {
   // Countdown — auto-continues when it hits 0
   useEffect(() => {
     if (!visible || dismissed) return
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCount(9)
     timerRef.current = setInterval(() => {
       setCount(c => {
