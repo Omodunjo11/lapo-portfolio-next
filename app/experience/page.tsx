@@ -14,20 +14,19 @@ const jobs = [
   {
     company: "Kinage",
     location: "Philadelphia, PA",
-    role: "Staff Technical Product Manager",
+    role: "Forward Deployed Product Manager",
     period: "2025 – Present",
     tag: "Current",
     tagColor: "var(--terra)",
     summary: "Lead production AI systems, enterprise deployment, evaluation infrastructure, and GTM automation for regulated financial workflows, including top 10 U.S. bank design partner workflows.",
     bullets: [
-      "Defined 0→1 product strategy and enterprise roadmap for AI-powered decision intelligence platform, sequencing ingestion, classification, anomaly detection, workflow state management, analyst validation, GTM intelligence, and human review based on customer risk, technical dependency, and enterprise readiness.",
-      "Architected AI financial operating system managing lifecycle state from Detected → Categorized → Due → Paid → Reconciled; made core tradeoffs across multi-source ingestion, fuzzy-matching ETL, duplicate detection, backend state integrity, and human-in-the-loop approvals.",
-      "Built production AI evaluation infrastructure processing 500+ weekly signals into 5–10 high-confidence outputs used in 100% of enterprise sales conversations; improved precision 22% → 50% and reduced false positives 60% → 15% through 300+ labeled examples, error taxonomy, and confidence calibration.",
+      "Built production agentic workflow embedded inside top 10 U.S. banks: nine-node architecture across ingestion, extraction, enrichment, classification, anomaly detection, state management, confidence scoring, policy gating, and human review using Claude API, OpenAI API, and n8n orchestration.",
+      "Designed AI escalation triage copilot for enterprise support workflows, combining context retrieval, issue classification, recommendation generation, confidence-based routing, and human-in-the-loop review to reduce time-to-resolution and improve decision consistency.",
+      "Defined product strategy for high-trust autonomous agent systems, translating ambiguous regulated workflows into system architecture, acceptance criteria, V1/V2/V3 roadmap sequencing, and human-in-the-loop operating models; produced ~$600K in estimated annual client savings.",
+      "Improved precision 22% → 50% and reduced false positives 60% → 15% through 300+ labeled examples, confusion matrix analysis, and confidence calibration.",
+      "Designed four-tier GTM intelligence system (Signal Capture → Enrichment → Intelligence → Execution); centralized ICP scoring in Claude-powered governance layer connected to Clay, HeyReach, and HubSpot; reduced GTM stack cost ~$215K annually.",
       "Embedded two days/week with top 10 U.S. bank's risk and compliance team as enterprise design partner, translating live analyst workflows, edge cases, and decision criteria into model requirements, eval cases, and product acceptance thresholds.",
-      "Designed four-tier agentic workflow system: Signal Capture → Enrichment → Intelligence → Execution; centralized ICP scoring, account qualification, and next-best-action recommendations in Claude-powered governance layer exposed via API to Clay, HeyReach, and HubSpot.",
-      "Built transcript intelligence pipeline from Google Meet → Claude API → HubSpot, converting discovery calls into CRM-linked account context, qualification signals, and next-best-action recommendations.",
-      "Reduced AI workflow cost-to-serve by $17.9K/month (~$215K annually) by re-architecting tool boundaries, shifting classification from Clay to Claude API, and validating REST API integrations against native connectors.",
-      "Hired and managed 14-person contracted product, engineering, data operations, and evaluation team across Python/FastAPI backend, Next.js frontend, and GitHub Actions CI/CD.",
+      "Hired and managed 14-person contracted team across engineering, data ops, and evaluation; defined all specs and acceptance criteria; shipped Python/FastAPI backend and Next.js frontend from 0 to production.",
     ],
     stack: ["Claude API", "Python/FastAPI", "Next.js", "n8n", "Make", "HubSpot", "GitHub Actions"],
   },
@@ -57,7 +56,7 @@ const jobs = [
     bullets: [
       "Owned product strategy for $148M ARR Prime subscription initiative serving 1.17M+ monthly active users within broader $8.4B business, translating churn analysis into activation, personalization, and lifecycle engagement roadmap.",
       "Shipped ML-driven targeting framework for subscription personalization and retention, partnering with data science to define behavioral segments, measurement approach, and incremental lift analysis.",
-      "Instrumented usage tracking across subscription behaviors, analyzed conversion funnels and cohort patterns, and converted findings into roadmap priorities for first-week activation, habit formation, and benefit awareness.",
+      "Aligned 8 cross-functional stakeholder teams — Data Science, Engineering, Marketing, Finance, and Legal — on targeting framework scope, success metrics, and launch criteria; presented roadmap to VP-level leadership.",
     ],
     stack: ["ML Targeting", "Behavioral Segmentation", "A/B Testing", "Cohort Analysis"],
   },
@@ -111,6 +110,33 @@ const jobs = [
     stack: ["Mobile Banking", "Enterprise Delivery"],
   },
   {
+    company: "UnoTelos (IBM)",
+    location: "New York, NY",
+    role: "Product Manager",
+    period: "2017 – 2019",
+    tag: "Earlier",
+    tagColor: "var(--muted)",
+    summary: "Led multi-team delivery coordination on enterprise systems for IBM clients.",
+    bullets: [
+      "Led multi-team delivery coordination on enterprise systems for IBM clients; introduced structured dependency tracking improving execution reliability across complex programs.",
+    ],
+    stack: ["Enterprise Systems", "IBM", "Delivery Coordination"],
+  },
+  {
+    company: "Santander Bank",
+    location: "Bradford, UK",
+    role: "Product Manager (promoted from QA Engineer)",
+    period: "2013 – 2017",
+    tag: "Earlier",
+    tagColor: "var(--muted)",
+    summary: "Transitioned from QA to product ownership on regulated banking systems within 12 months; promoted to project management within 2 years.",
+    bullets: [
+      "Transitioned from QA to product ownership on regulated banking systems within 12 months; promoted to project management within 2 years.",
+      "Built reporting and analytics systems supporting business decision-making on high-availability platform.",
+    ],
+    stack: ["Regulated Banking", "QA", "Analytics", "Product Management"],
+  },
+  {
     company: "Chevron",
     location: "Lagos, Nigeria",
     role: "Process Engineer & Financial Analyst",
@@ -119,7 +145,7 @@ const jobs = [
     tagColor: "var(--muted)",
     summary: "Built data-driven process models improving refinery throughput 8–10%; supported $50M+ capital investment decisions through scenario modeling and cost-benefit analysis.",
     bullets: [
-      "Built data-driven process models improving refinery throughput 8-10%; supported $50M+ capital investment decisions through scenario modeling, cost-benefit analysis, and structured system analysis on high-stakes infrastructure projects.",
+      "Built data-driven process models improving refinery throughput 8–10%; supported $50M+ capital investment decisions through scenario modeling, cost-benefit analysis, and structured system analysis on high-stakes infrastructure projects.",
     ],
     stack: ["Process Modeling", "Financial Analysis", "Capital Decisions"],
   },
@@ -188,7 +214,7 @@ export default function ExperiencePage() {
       <div style={{ padding: "64px 48px 48px", borderBottom: "1px solid var(--border)" }}>
         <p style={{ fontSize: 9, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 18, display: "flex", alignItems: "center", gap: 10, animation: "fadeUp .7s .3s ease both" }}>
           <span style={{ width: 20, height: 1, background: "var(--terra)", display: "inline-block" }} />
-          Staff Technical Product Manager · AI Systems · Enterprise Platforms
+          FDE Product Manager · Production AI Systems · Enterprise Platforms · Forward-Deployed Products
         </p>
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 40, flexWrap: "wrap" }}>
           <div>
