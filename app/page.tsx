@@ -365,7 +365,7 @@ export default function Home() {
         <div className="grid-2col" style={{ margin: "0 48px" }}>
           {[
             { name: "Trailblazer Fellowship, 50% Merit", inst: "The Wharton School, UPenn", xp: "+500 XP" },
-            { name: "Full Merit Scholarship", inst: "Columbia University, 21 of 5,000+ applicants", xp: "Rare Drop" },
+            { name: "Full Merit Scholarship", inst: "Columbia University, 21 of 5,000+ applicants", xp: "+1000 XP" },
             { name: "Bradford Dean Award, Full-Ride", inst: "University of Bradford", xp: "+300 XP" },
             { name: "Manhattan Prep Scholarship", inst: "Merit, quantitative achievement", xp: "+150 XP" },
             { name: "President, Wharton Graduate Association", inst: "Elected · $6M budget · 1,700+ students", xp: "Boss Cleared" },
