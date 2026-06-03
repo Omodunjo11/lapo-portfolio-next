@@ -223,12 +223,12 @@ export default function Home() {
               label: "What I am reading",
               name: "The shelf right now",
               books: [
-                { title: "Berlin", author: "Bea Setton", bg: "linear-gradient(145deg,#1a2a3a,#2d4a6e)", url: "https://www.goodreads.com/book/show/195822703" },
-                { title: "Days at the Morisaki Bookshop", author: "Yagisawa", bg: "linear-gradient(145deg,#1a3a2a,#2d6e4a)", url: "https://www.goodreads.com/book/show/60784546" },
-                { title: "Team of Teams", author: "McChrystal", bg: "linear-gradient(145deg,#0d1a0d,#1a3a1a)", url: "https://www.goodreads.com/book/show/22875451" },
-                { title: "The Poisoned King", author: "Rundell", bg: "linear-gradient(145deg,#2c1810,#5c2d0e)", url: "https://www.goodreads.com/book/show/217497829" },
-                { title: "Nietzsche on Love", author: "Nietzsche", bg: "linear-gradient(145deg,#3a2a0d,#6e520d)", url: "https://www.goodreads.com/book/show/62926" },
-                { title: "Impossible Creatures", author: "Rundell", bg: "linear-gradient(145deg,#3a1a0d,#c4622d)", url: "https://www.goodreads.com/book/show/61230834" },
+                { title: "Berlin", author: "Bea Setton", bg: "linear-gradient(145deg,#1a2a3a,#2d4a6e)", url: "https://www.goodreads.com/book/show/195822703", isbn: "9780593537787" },
+                { title: "Days at the Morisaki Bookshop", author: "Yagisawa", bg: "linear-gradient(145deg,#1a3a2a,#2d6e4a)", url: "https://www.goodreads.com/book/show/60784546", isbn: "9781250872760" },
+                { title: "Team of Teams", author: "McChrystal", bg: "linear-gradient(145deg,#0d1a0d,#1a3a1a)", url: "https://www.goodreads.com/book/show/22875451", isbn: "9781591847489" },
+                { title: "The Poisoned King", author: "Rundell", bg: "linear-gradient(145deg,#2c1810,#5c2d0e)", url: "https://www.goodreads.com/book/show/217497829", isbn: "9781526674838" },
+                { title: "Nietzsche on Love", author: "Nietzsche", bg: "linear-gradient(145deg,#3a2a0d,#6e520d)", url: "https://www.goodreads.com/book/show/62926", isbn: "9780226584713" },
+                { title: "Impossible Creatures", author: "Rundell", bg: "linear-gradient(145deg,#3a1a0d,#c4622d)", url: "https://www.goodreads.com/book/show/61230834", isbn: "9781250344069" },
               ],
             },
           ].map((card, i) => (
@@ -249,12 +249,21 @@ export default function Home() {
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, marginBottom: 18 }}>
                       {card.books.map((book) => (
                         <Link key={book.title} href={book.url} target="_blank" rel="noopener">
-                          <div style={{ background: book.bg, borderRadius: 3, padding: "12px 8px", minHeight: 90, display: "flex", flexDirection: "column", justifyContent: "flex-end", transition: "transform .2s" }}
+                          <div style={{ background: book.bg, borderRadius: 3, minHeight: 130, display: "flex", flexDirection: "column", justifyContent: "flex-end", transition: "transform .2s", overflow: "hidden", position: "relative" }}
                             onMouseEnter={e => (e.currentTarget.style.transform = "translateY(-3px)")}
                             onMouseLeave={e => (e.currentTarget.style.transform = "translateY(0)")}
                           >
-                            <div style={{ fontSize: 8, fontWeight: 700, color: "rgba(245,240,232,.9)", lineHeight: 1.3, marginBottom: 3 }}>{book.title}</div>
-                            <div style={{ fontSize: 7, color: "rgba(245,240,232,.6)" }}>{book.author}</div>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={`https://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`}
+                              alt={book.title}
+                              onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none" }}
+                              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", borderRadius: 3 }}
+                            />
+                            <div style={{ position: "relative", zIndex: 1, padding: "8px", background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%)" }}>
+                              <div style={{ fontSize: 8, fontWeight: 700, color: "rgba(245,240,232,.95)", lineHeight: 1.3, marginBottom: 2 }}>{book.title}</div>
+                              <div style={{ fontSize: 7, color: "rgba(245,240,232,.7)" }}>{book.author}</div>
+                            </div>
                           </div>
                         </Link>
                       ))}
