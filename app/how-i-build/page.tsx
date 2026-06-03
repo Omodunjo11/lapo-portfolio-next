@@ -40,51 +40,69 @@ const TAG_STYLE = {
 const principles = [
   {
     n: "01",
-    tag: "Evaluation First",
-    title: "Ship the eval harness before the feature.",
-    body: "Most teams build the feature, then figure out how to measure it. I do the opposite. Before any model integration goes into production I define what good looks like, which queries should return what kinds of outputs, what failure modes are acceptable and which ones aren't, and what the severity threshold is for regulated vs. consumer contexts. The evaluation suite is a first-class product artifact, version-controlled and treated as seriously as the code it tests.\n\nIn regulated environments, a silent model failure isn't just a product bug, it's a compliance incident. The difference is whether you find out from a user report or from a regression test you wrote three weeks before launch.",
+    tag: "Systems Thinking",
+    title: "The model is not the product. The system around it is.",
+    body: "Most AI teams get this wrong. They pick a model, write a prompt, and call it a product. What they have actually built is a demo. A real AI product has inputs, retrieval, reasoning, confidence checks, routing, human review, evaluation, and feedback loops. The prompt is one layer. The system is everything.\n\nWeak AI product: send data to the model, get an answer. Strong AI product: normalize the input, retrieve the right context, constrain the model's task, check confidence, cite sources, route uncertainty, collect feedback, improve over time. That distinction is the difference between a prototype and something that survives production. Most AI product failures I have seen are not model failures. They are system failures: bad input structure, wrong retrieval context, missing escalation paths, evaluation criteria defined after the feature shipped.",
   },
   {
     n: "02",
-    tag: "Trust Calibration",
-    title: "Confidence without calibration is the most dangerous thing in AI.",
-    body: "An AI system that says 'I don't know' when it doesn't know is more valuable than one that answers fluently and incorrectly. Calibrating model confidence, understanding when to show uncertainty, when to escalate to a human, when to refuse, is a product design problem, not an engineering one.\n\nI design explicit escalation paths for every AI system I build. If the model's confidence score drops below a defined threshold on a high-stakes query, the system surfaces that uncertainty visibly rather than smoothing it away. In financial and regulatory contexts, the cost of false confidence is asymmetric and severe. The design should reflect that.",
+    tag: "Workflow First",
+    title: "Stop thinking in features. Start thinking in workflows.",
+    body: "When someone says we need an AI tool, the wrong instinct is to jump to model selection. The right instinct is to ask: what enters the system? What needs to be cleaned? What context is missing? What decision needs to be made? Who trusts the output? What happens when the system is unsure? What feedback improves the next version?\n\nThat workflow lens applies everywhere — fraud detection, sales enablement, legal review, compliance, credit infrastructure. The reusable architecture is almost always the same: Ingest, Retrieve, Analyze, Recommend, Escalate or Execute, Learn. Once you can see that pattern, you can design around it. Once you can design around it, you can build something that works outside a controlled demo environment.",
   },
   {
     n: "03",
-    tag: "Human-in-the-Loop",
-    title: "Automation should expand human judgment, not replace it.",
-    body: "The goal of a human-in-the-loop system isn't to add a human as a rubber stamp on AI outputs. It's to route decisions to the right decision-maker at the right moment, using automation to handle what's routine so humans can focus on what's genuinely ambiguous.\n\nI design override mechanisms and escalation flows before I design the automation layer. That means deciding: which outputs can ship without review, which need a human checkpoint, and which should never be automated at all. The override design tells you more about what the system believes than the happy path does.",
+    tag: "Input Quality",
+    title: "Object design precedes model design.",
+    body: "Messy inputs create bad AI outputs. Before the model can reason well, the system needs clean objects. Notes need founder, date, meeting type, topics, numbers, and commitments. Bills need vendor, amount, due date, status, and source. Customer data needs identity resolution, event definitions, timestamps, and behavioral context.\n\nThis is why so much real AI product work happens before the model is involved. The question is rarely which model should we use. It is almost always what object is the model reasoning over, and is that object clean enough to reason over reliably. That is a major AI systems concept that most product specs skip entirely. Skipping it is why so many AI products fail at scale rather than in testing.",
   },
   {
     n: "04",
-    tag: "Model vs System",
-    title: "The model is not the product. The system around it is.",
-    body: "Most AI product failures I've seen aren't model failures. They're system failures, bad prompt architecture, no fallback logic, missing telemetry, evaluation criteria defined too late, retrieval layers that degrade silently at scale. The model is a component. The product is the orchestration, constraints, and feedback loops that make that component reliable.\n\nThis is why I build evaluation infrastructure, contract-first API boundaries, and modular classification pipelines, not because I want the engineering complexity, but because the alternative is a system where changing one thing breaks something invisible three layers down.",
+    tag: "Retrieval Quality",
+    title: "Confident wrongness is the worst kind of AI failure.",
+    body: "RAG matters because a model does not inherently know your internal notes, contracts, customer history, or operational data. Retrieval brings the right external context into the model's working environment. But retrieval alone is not enough. You have to evaluate retrieval quality before reasoning. If the system retrieves the wrong context, the model may still sound confident. That is confident wrongness, and it is harder to detect than a blank error.\n\nA serious AI product needs retrieval scoring, source citations, reranking, freshness checks, and defined behavior for not enough evidence. Semantic search finds meaning. Keyword search finds exact terms. Hybrid retrieval covers both. Choosing between them is a product decision, not just an engineering one, and it should be driven by the cost of the failure mode you are most trying to avoid.",
   },
   {
     n: "05",
-    tag: "Latency & Tradeoffs",
-    title: "Every architecture decision is a tradeoff, not a best practice.",
-    body: "RAG is not always the right retrieval strategy. A larger model is not always the right model. Real-time inference is not always the right serving pattern. I built a C++ retrieval engine from scratch not to be an infrastructure engineer, but to have concrete numbers in my head when the engineering team says 'this won't scale.'\n\nThe PMs who make the best architecture calls are the ones who can reason about latency surfaces, context window tradeoffs, and inference cost curves, not because they'll implement it, but because they'll know when to push back, when to ask the right question, and when to stop trading accuracy for speed.",
+    tag: "State and Time",
+    title: "Most AI failures are time and state failures, not model failures.",
+    body: "A lot of AI systems treat information as flat. But real-world data changes. A churn rate shifts between March and June. A legal template gets updated six months later. A bill status moves from upcoming to paid. A customer's risk profile changes after a behavioral event. A fraud pattern evolves with a new attack vector.\n\nThe system has to understand sequence, freshness, and versioning. It needs to know not only what the data says but when it was true. This is a recurring root cause in AI production incidents: the model was not wrong, it was reasoning from stale state. Building for temporal coherence is one of the things that separates people who have shipped AI products from people who have demoed them.",
   },
   {
     n: "06",
-    tag: "Telemetry & Feedback",
-    title: "If you can't observe it, you can't improve it.",
-    body: "Every AI system I build has three things wired in from day one: structured logging on inputs and outputs, a mechanism to capture negative signals (explicit or implicit), and a regular review cadence on the evaluation suite. Not because these are nice to have, because they're the only way to know if the system is degrading between deployments.\n\nModel drift is real, prompt sensitivity is real, and distribution shift in production data is real. Telemetry doesn't prevent these things. It makes them visible before they become user-facing incidents.",
+    tag: "Confidence Routing",
+    title: "Confidence is operational. It controls what happens next.",
+    body: "Confidence should determine what the system does next in the workflow, not just what gets shown to the user. High confidence proceeds. Medium confidence triggers another retrieval pass, a clarification request, or human review. Low confidence escalates or refuses to answer.\n\nA confidence score sitting inert in a tooltip is waste. A confidence threshold that routes a decision to a human reviewer is infrastructure. The architecture question is never should we show confidence. It is what should the system do at each confidence level. Getting that right is what converts uncertainty from a product liability into a product feature.",
   },
   {
     n: "07",
-    tag: "Regulated Environments",
-    title: "Low-trust environments require different design instincts.",
-    body: "I work primarily in regulated industries, financial services, compliance infrastructure, private capital. These environments share a common constraint: the cost of a wrong answer is not a bad user experience, it's an audit finding, a regulatory action, or a missed investment decision worth millions.\n\nThat changes how I think about AI design: hallucination is a liability, not just a UX problem; audit trails are a product requirement, not an ops afterthought; and 'good enough' accuracy from a demo does not transfer to production at regulated-institution tolerances. Building for this context is a specific skill, and most AI product frameworks don't account for it.",
+    tag: "Productive Refusal",
+    title: "A system that knows when not to answer is more valuable than one that always does.",
+    body: "This is one of the clearest maturity markers in AI product design. A weak AI system always answers. A strong AI system says: I do not have enough evidence. This is based on one partial source. These records conflict. This recommendation needs human review. That is not a failure state. That is trustworthy design.\n\nIn most real products, especially regulated ones, the cost of a wrong answer is higher than the cost of a non-answer. Refusal, escalation, and surfaced uncertainty are part of the product experience. Building them in from the start is what separates a system that earns long-term trust from one that erodes it slowly through confident errors that users eventually stop reporting because they have already stopped trusting.",
   },
   {
     n: "08",
-    tag: "What I've Learned Building",
-    title: "The hard lessons don't come from the models.",
-    body: "The most expensive mistakes I've seen in AI product development are not technical. They're communication failures: unclear contracts between the AI layer and the product interface, evaluation criteria defined after the feature shipped, human-override flows that nobody tested under pressure, prompt changes that broke downstream assumptions nobody documented.\n\nThe best AI PM I've found is one who treats the system design, the contracts, the constraints, the escalation paths, as seriously as the model selection. That's what I try to do.",
+    tag: "Human-in-the-Loop",
+    title: "Human review is not anti-AI. It is how AI earns trust in high-stakes domains.",
+    body: "The goal of a human-in-the-loop system is not to add a human as a rubber stamp on AI outputs. It is to route decisions to the right decision-maker at the right moment, using automation to handle what is routine so humans can focus on what is genuinely ambiguous. In early versions, human review creates safety and generates training data. Over time, the system can loosen gates only where evidence shows it is reliable.\n\nThe right question is not how do we remove humans. The right question is where does human judgment create the most value, and where can the system safely reduce human effort. I design override mechanisms and escalation flows before I design the automation layer. The override design tells you more about what the system actually believes than the happy path does.",
+  },
+  {
+    n: "09",
+    tag: "Evaluation",
+    title: "Accuracy is not enough. The metric depends on the cost of being wrong.",
+    body: "Real AI evaluation is business-specific. A legal contract system cares deeply about false negatives — a missed clause creates liability. A fraud system cares about precision — too many false alarms destroy analyst trust and investigation throughput. A churn system cares about retained revenue and whether users actually changed behavior. The severity of the error determines the evaluation criteria, not the other way around.\n\nBeyond accuracy: retrieval relevance, confidence calibration, override rate, edit rate, acceptance rate, time saved, escalation rate, downstream business outcome. And online evaluation often beats static benchmarks. When users accept, edit, or override AI output, they are generating the most honest signal about system quality. At Kinage, analyst corrections moved precision from 22% to 50%. That feedback loop was the product.",
+  },
+  {
+    n: "10",
+    tag: "Version Strategy",
+    title: "V1 proves the loop. V2 earns trust. V3 scales the economics.",
+    body: "V1 should be deliberately constrained. Build the simplest loop that tests the riskiest assumption: can we get the right data in, can we retrieve the right context, does the model produce useful output, do users trust it enough to return. Prove that loop manually, with human review, before adding automation or scale.\n\nV2 is about reliability: confidence gates, source citations, human review rules, error taxonomies, contradiction detection, model calibration. Trust is its own product layer and you cannot bolt it on later. V3 is economics: route simple tasks to cheaper models, cache repeated queries, invalidate stale answers, batch non-urgent work, instrument cost per decision not just cost per API call. The order matters. Optimizing cost before reliability is dangerous. You only optimize aggressively after you know exactly what quality you must preserve.",
+  },
+  {
+    n: "11",
+    tag: "Tradeoffs",
+    title: "Strong AI PMs speak in tradeoffs, not answers.",
+    body: "Speed versus reliability. Automation versus human review. Cost versus accuracy. Small model versus large model. Semantic search versus hybrid search. Real-time ingestion versus batch. Precision versus recall. False positives versus false negatives. Vendor speed versus infrastructure control. These are not engineering questions. They are product questions, and the right answer changes depending on the business context, the cost of error, and the current maturity of the system.\n\nStrong AI PMs do not present one perfect answer. They explain why they chose a particular tradeoff given what they know about the domain, the users, and the consequences of failure. That explanation is how you demonstrate that you understand deployment, not just demos. Anyone can pick a model. Knowing which tradeoffs are acceptable in which context is what makes an AI PM worth hiring.",
   },
 ]
 
@@ -114,10 +132,10 @@ export default function HowIBuild() {
           <em style={{ color: "var(--terra)", fontStyle: "italic" }}>AI Products.</em>
         </h1>
         <p style={{ ...BODY_STYLE, fontSize: "clamp(15px,1.6vw,18px)", marginBottom: 32 }}>
-          Eight principles I actually follow when building AI systems, on evaluation, trust calibration, human-in-the-loop design, and the things most teams get wrong.
+          Eleven principles from building production AI systems, on systems thinking, retrieval quality, confidence routing, evaluation, and the version strategy most teams get backwards.
         </p>
         <p style={{ ...BODY_STYLE, color: "var(--muted)", fontSize: 13 }}>
-          These are not best practices borrowed from a framework. They come from building AI systems in production for regulated industries, running evals, watching systems fail in interesting ways, and rebuilding with better constraints the second time.
+          These are not best practices borrowed from a framework. They come from shipping AI in regulated financial environments, watching systems fail in production, running evals, and rebuilding with better constraints. The through-line: the real product is not the model. The real product is the decision system around it.
         </p>
       </div>
 
@@ -165,12 +183,12 @@ export default function HowIBuild() {
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 16 }}>
             {[
-              "Why most AI copilots fail retention after week two.",
-              "Why trust calibration matters more than raw accuracy in regulated contexts.",
-              "What PMs misunderstand about agent UX and oversight.",
-              "Building AI systems for environments where users don't trust the model by default.",
-              "Why evaluation infrastructure is the real competitive moat in AI products.",
-              "The difference between 'AI-powered' and 'AI-reliable' as a product property.",
+              "Why object design is the real starting point for AI product development.",
+              "Why confident wrongness is harder to fix than obvious model failures.",
+              "How production user behavior is more honest than any static benchmark.",
+              "Why most AI production incidents are time and state failures, not model failures.",
+              "The case for productive refusal as a first-class product feature.",
+              "Why V1, V2, and V3 require completely different product instincts.",
             ].map((q, i) => (
               <div key={i} style={{
                 background: "rgba(255,255,255,0.05)",
