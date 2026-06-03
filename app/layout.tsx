@@ -5,10 +5,8 @@ import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
 import Cursor from "@/components/Cursor"
 import KonamiCode from "@/components/KonamiCode"
-import PixelRunner from "@/components/PixelRunner"
 import SkyBackground from "@/components/SkyBackground"
 import AchievementToast from "@/components/AchievementToast"
-import ScrollXP from "@/components/ScrollXP"
 import GameSounds from "@/components/GameSounds"
 import ContinueScreen from "@/components/ContinueScreen"
 
@@ -58,9 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SkyBackground />
         <Cursor />
         <KonamiCode />
-        <PixelRunner />
         <AchievementToast />
-        <ScrollXP />
         <GameSounds />
         <ContinueScreen />
         <Nav />

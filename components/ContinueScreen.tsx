@@ -14,7 +14,7 @@ export default function ContinueScreen() {
     if (dismissed) return
 
     let armed = false
-    const armTimer = setTimeout(() => { armed = true }, 20000)
+    const armTimer = setTimeout(() => { armed = true }, 180000)
 
     const onMouseLeave = (e: MouseEvent) => {
       if (!armed || dismissed) return

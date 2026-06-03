@@ -158,6 +158,15 @@ export default function ProjectsPage() {
         <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>01</span>
         <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>All Projects</span>
         <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+        {/* Language colour legend */}
+        <div style={{ display: "flex", gap: 14, alignItems: "center", flexShrink: 0 }}>
+          {Object.entries({ TypeScript: "#3178c6", Python: "#3572A5", JavaScript: "#f1e05a", "C++": "#f34b7d" }).map(([lang, col]) => (
+            <div key={lang} style={{ display: "flex", gap: 5, alignItems: "center" }}>
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: col, display: "inline-block", flexShrink: 0 }} />
+              <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 7, letterSpacing: ".1em", color: "var(--muted)" }}>{lang}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Filters */}
@@ -219,6 +228,14 @@ export default function ProjectsPage() {
                       {project.lang}
                     </span>
                     <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                      {project.live && (
+                        <span style={{
+                          fontSize: 7, letterSpacing: ".12em", textTransform: "uppercase",
+                          background: "rgba(134,239,172,0.15)", color: "#4ade80",
+                          border: "1px solid rgba(134,239,172,0.35)",
+                          padding: "2px 7px", borderRadius: 2,
+                        }}>● Live</span>
+                      )}
                       <span
                         style={{
                           width: 8, height: 8, borderRadius: "50%",

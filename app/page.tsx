@@ -113,7 +113,7 @@ export default function Home() {
               <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>A lot of my story has been about new beginnings: learning new systems, entering new rooms, building new communities, and finding my voice in places that did not always feel familiar at first. That is probably why I am drawn to products and people in transition. I like helping make complicated things feel more navigable.</p>
               <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>Today, I build AI systems for regulated industries, especially in environments where trust matters and the cost of a wrong answer is real. My work sits at the intersection of product, AI, financial infrastructure, and practical judgment.</p>
               <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>The path from chemical engineering to product to AI to private capital may look random from the outside. To me, it has always been connected by one question: where is the real problem, and what would actually help?</p>
-              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>Outside the build, you will usually find me reading in a coffee shop, planning the next trip, playing tennis, running somewhere in the city, or getting pulled into one more game of League, Mortal Kombat, or God of War. I recently finished the Wharton MBA while building Kinage in production at the same time. It was intense, humbling, and deeply worth it.</p>
+              <p style={{ fontSize: 15, lineHeight: 1.9, color: "var(--mid)" }}>Outside the build, you will usually find me reading in a coffee shop, planning the next trip, playing tennis, running somewhere in the city, or getting pulled into one more game of League, Mortal Kombat, or God of War. I recently finished my Wharton MBA while simultaneously building Kinage, an AI-powered market intelligence platform, in production. Intense, humbling, and worth every minute.</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
                 {["AI Systems", "Private Markets", "Africa", "Fintech", "Regulated Industries", "Electrochemistry"].map(tag => (
                   <span key={tag} style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", border: "1px solid var(--border)", padding: "4px 12px", borderRadius: 2, color: "var(--mid)" }}>{tag}</span>
@@ -274,7 +274,7 @@ export default function Home() {
         <div className="grid-2col" style={{ margin: "0 48px" }}>
           {[
             {
-              label: "City Ventures",
+              label: "Operations Lead · City Ventures",
               name: "African & Emerging Markets",
               desc: "Full investment lifecycle: market sizing, financial diligence, deal leadership, post-investment monitoring. 60+ companies reviewed. Two closed investments (mid-to-high seven figures). Built the firm's framework for markets where the standard U.S. playbook doesn't apply, FX stress, regulatory disruption, exit uncertainty across Nigeria, Kenya, South Africa, Ghana, and Egypt.",
               chips: ["60+ companies", "Two 7-fig leads", "FX stress", "Nigeria · Kenya · S. Africa · Ghana · Egypt"],
@@ -361,7 +361,7 @@ export default function Home() {
 
       {/* ── AWARDS ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
-        <Reveal><SH n="07" t="Achievements Unlocked" game="rare drops" /></Reveal>
+        <Reveal><SH n="07" t="Achievements Unlocked" game="milestones" /></Reveal>
         <div className="grid-2col" style={{ margin: "0 48px" }}>
           {[
             { name: "Trailblazer Fellowship, 50% Merit", inst: "The Wharton School, UPenn", xp: "+500 XP" },

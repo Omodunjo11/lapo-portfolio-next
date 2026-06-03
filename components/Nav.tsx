@@ -66,7 +66,7 @@ export default function Nav() {
           })}
           <li>
             <Link
-              href="mailto:odunjoonaolapo@gmail.com"
+              href="/#contact"
               style={{ background: "var(--ink)", color: "var(--paper)", padding: "7px 18px", borderRadius: 2, fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", transition: "background .25s", display: "inline-block" }}
               onMouseEnter={e => (e.currentTarget.style.background = "var(--terra)")}
               onMouseLeave={e => (e.currentTarget.style.background = "var(--ink)")}
@@ -125,7 +125,7 @@ export default function Nav() {
             </Link>
           ))}
           <Link
-            href="mailto:odunjoonaolapo@gmail.com"
+            href="/#contact"
             onClick={() => setOpen(false)}
             style={{ display: "block", marginTop: 16, background: "var(--ink)", color: "var(--paper)", padding: "12px 18px", borderRadius: 2, fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", textAlign: "center" }}
           >
