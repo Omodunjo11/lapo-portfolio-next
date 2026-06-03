@@ -13,6 +13,19 @@ const filters = [
   { key: "systems", label: "Systems" },
 ]
 
+const statusFilters = [
+  { key: "all", label: "All" },
+  { key: "live", label: "● Live" },
+  { key: "building", label: "◐ Building" },
+  { key: "built", label: "◇ Built" },
+]
+
+const statusConfig = {
+  live:     { label: "● Live",      bg: "rgba(74,222,128,0.12)",  color: "#4ade80",  border: "rgba(74,222,128,0.35)" },
+  building: { label: "◐ Building",  bg: "rgba(56,189,248,0.12)",  color: "var(--terra)", border: "rgba(56,189,248,0.35)" },
+  built:    { label: "◇ Built",     bg: "rgba(167,139,250,0.12)", color: "#A78BFA",  border: "rgba(167,139,250,0.35)" },
+}
+
 const tickerItems = [
   { text: "Claude API", highlight: true }, { text: "0→1 Products" },
   { text: "RAG Systems", highlight: true }, { text: "TypeScript" },
@@ -32,9 +45,12 @@ const langColors: Record<string, string> = {
 
 export default function ProjectsPage() {
   const [active, setActive] = useState("all")
+  const [statusActive, setStatusActive] = useState("all")
 
   const visible = projects.filter(
-    (p) => active === "all" || p.category.includes(active)
+    (p) =>
+      (active === "all" || p.category.includes(active)) &&
+      (statusActive === "all" || p.status === statusActive)
   )
 
   return (
@@ -170,8 +186,8 @@ export default function ProjectsPage() {
       </div>
 
       {/* Filters */}
-      <div style={{ padding: "24px 48px 32px", display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
-        <span style={{ fontSize: 9, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--muted)", marginRight: 8 }}>Filter by</span>
+      <div style={{ padding: "24px 48px 8px", display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+        <span style={{ fontSize: 9, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--muted)", marginRight: 8 }}>Category</span>
         {filters.map((f) => (
           <button
             key={f.key}
@@ -190,6 +206,33 @@ export default function ProjectsPage() {
             {f.label}
           </button>
         ))}
+      </div>
+
+      {/* Status filters */}
+      <div style={{ padding: "8px 48px 32px", display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+        <span style={{ fontSize: 9, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--muted)", marginRight: 8 }}>Status</span>
+        {statusFilters.map((f) => {
+          const cfg = f.key !== "all" ? statusConfig[f.key as keyof typeof statusConfig] : null
+          const isActive = statusActive === f.key
+          return (
+            <button
+              key={f.key}
+              onClick={() => setStatusActive(f.key)}
+              style={{
+                fontSize: 9, letterSpacing: ".1em",
+                border: "1px solid",
+                borderColor: isActive ? (cfg?.color ?? "var(--terra)") : "var(--border)",
+                padding: "6px 16px", borderRadius: 2,
+                background: isActive ? (cfg?.bg ?? "var(--terra)") : "transparent",
+                color: isActive ? (cfg?.color ?? "var(--paper)") : "var(--mid)",
+                fontFamily: "var(--font-dm-mono), monospace",
+                cursor: "none", transition: "all .2s",
+              }}
+            >
+              {f.label}
+            </button>
+          )
+        })}
       </div>
 
       {/* Grid */}
@@ -228,14 +271,18 @@ export default function ProjectsPage() {
                       {project.lang}
                     </span>
                     <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-                      {project.live && (
-                        <span style={{
-                          fontSize: 7, letterSpacing: ".12em", textTransform: "uppercase",
-                          background: "rgba(134,239,172,0.15)", color: "#4ade80",
-                          border: "1px solid rgba(134,239,172,0.35)",
-                          padding: "2px 7px", borderRadius: 2,
-                        }}>● Live</span>
-                      )}
+                      {(() => {
+                        const cfg = statusConfig[project.status]
+                        return (
+                          <span style={{
+                            fontSize: 7, letterSpacing: ".12em",
+                            background: cfg.bg, color: cfg.color,
+                            border: `1px solid ${cfg.border}`,
+                            padding: "2px 7px", borderRadius: 2,
+                            whiteSpace: "nowrap",
+                          }}>{cfg.label}</span>
+                        )
+                      })()}
                       <span
                         style={{
                           width: 8, height: 8, borderRadius: "50%",

@@ -23,6 +23,7 @@ export type Project = {
   github: string
   live?: string
   featured?: boolean
+  status: "live" | "building" | "built"
 }
 
 export const projects: Project[] = [
@@ -101,6 +102,7 @@ export const projects: Project[] = [
     github: "https://github.com/Omodunjo11/kinage-intelligence",
     live: "https://kinage-intelligence.vercel.app",
     featured: true,
+    status: "live" as const,
   },
   {
     slug: "kova-bot",
@@ -176,6 +178,7 @@ export const projects: Project[] = [
     stack: ["JavaScript", "Express", "Claude API", "Prisma", "WhatsApp API"],
     github: "https://github.com/Omodunjo11/Kova-Bot",
     featured: true,
+    status: "building" as const,
   },
   {
     slug: "glean-regulatory",
@@ -251,6 +254,7 @@ export const projects: Project[] = [
     github: "https://github.com/Omodunjo11/Glean-Regulatory-Updated",
     live: "https://glean-regulatory-updated.vercel.app",
     featured: true,
+    status: "live" as const,
   },
   {
     slug: "transcript-intelligence",
@@ -326,6 +330,7 @@ export const projects: Project[] = [
     stack: ["Python", "Claude API", "Google Drive API", "Google Docs API"],
     github: "https://github.com/Omodunjo11/Kinage-Transcript-Tool",
     featured: true,
+    status: "live" as const,
   },
   {
     slug: "llm-reliability",
@@ -400,6 +405,7 @@ export const projects: Project[] = [
     ],
     stack: ["Python", "LLM Evaluation", "MLOps", "Drift Detection"],
     github: "https://github.com/Omodunjo11/llm-system-reliability",
+    status: "live" as const,
   },
   {
     slug: "ai-retrieval-core",
@@ -473,6 +479,7 @@ export const projects: Project[] = [
     ],
     stack: ["C++", "Vector Search", "Indexing", "Retrieval Systems"],
     github: "https://github.com/Omodunjo11/ai-retrieval-core-cpp",
+    status: "built" as const,
   },
   {
     slug: "kinage-ai-layer",
@@ -542,6 +549,7 @@ export const projects: Project[] = [
     ],
     stack: ["Python", "AI / ML", "REST API", "Signal Processing"],
     github: "https://github.com/Omodunjo11/Kinage-AL-",
+    status: "live" as const,
   },
   {
     slug: "incident-command",
@@ -611,6 +619,7 @@ export const projects: Project[] = [
     ],
     stack: ["HTML", "JavaScript", "Incident Management"],
     github: "https://github.com/Omodunjo11/Incident-Command",
+    status: "built" as const,
   },
   {
     slug: "personal-assistant",
@@ -680,6 +689,7 @@ export const projects: Project[] = [
     ],
     stack: ["Python", "Claude API", "AI Agents", "Automation"],
     github: "https://github.com/Omodunjo11/Personal-Assistant-",
+    status: "built" as const,
   },
   {
     slug: "kinage-notifications",
@@ -749,6 +759,7 @@ export const projects: Project[] = [
     ],
     stack: ["JavaScript", "Event-Driven", "Real-Time", "Notifications API"],
     github: "https://github.com/Omodunjo11/Kinage-Notifications",
+    status: "live" as const,
   },
   {
     slug: "mailgun-push",
@@ -818,6 +829,7 @@ export const projects: Project[] = [
     ],
     stack: ["JavaScript", "Mailgun API", "Push Notifications"],
     github: "https://github.com/Omodunjo11/Mailgun-Push",
+    status: "live" as const,
   },
 ]
 
