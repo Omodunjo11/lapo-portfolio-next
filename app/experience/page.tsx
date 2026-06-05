@@ -211,7 +211,7 @@ export default function ExperiencePage() {
   return (
     <>
       {/* Hero */}
-      <div style={{ padding: "64px 48px 48px", borderBottom: "1px solid var(--border)" }}>
+      <div style={{ padding: "clamp(40px,8vh,64px) clamp(16px,6vw,48px) 40px", borderBottom: "1px solid var(--border)" }}>
         <p style={{ fontSize: 9, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 18, display: "flex", alignItems: "center", gap: 10, animation: "fadeUp .7s .3s ease both" }}>
           <span style={{ width: 20, height: 1, background: "var(--terra)", display: "inline-block" }} />
           FDE Product Manager · Production AI Systems · Enterprise Platforms · Forward-Deployed Products
@@ -266,7 +266,7 @@ export default function ExperiencePage() {
 
         {/* ── EXPERIENCE ── */}
         {activeTab === "experience" && (
-          <div style={{ padding: "48px 48px 0" }}>
+          <div style={{ padding: "clamp(24px,6vw,48px) clamp(16px,6vw,48px) 0" }}>
             {jobs.map((job, idx) => (
               <Reveal key={job.company + job.role} delay={idx * 0.04}>
                 <div style={{ borderBottom: "1px solid var(--border)", paddingBottom: 48, marginBottom: 48 }}>
@@ -315,7 +315,7 @@ export default function ExperiencePage() {
 
         {/* ── LEADERSHIP ── */}
         {activeTab === "leadership" && (
-          <div style={{ padding: "48px 48px 0" }}>
+          <div style={{ padding: "clamp(24px,6vw,48px) clamp(16px,6vw,48px) 0" }}>
             <div className="grid-3col">
               {leadership.map((item, i) => (
                 <Reveal key={item.org} delay={i * 0.08}>
@@ -368,7 +368,7 @@ export default function ExperiencePage() {
 
         {/* ── EDUCATION ── */}
         {activeTab === "education" && (
-          <div style={{ padding: "48px 48px 0" }}>
+          <div style={{ padding: "clamp(24px,6vw,48px) clamp(16px,6vw,48px) 0" }}>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 1, background: "var(--border)", marginBottom: 56 }}>
               {education.map((edu, i) => (
                 <Reveal key={edu.school} delay={i * 0.1}>
@@ -409,7 +409,7 @@ export default function ExperiencePage() {
 
         {/* ── SKILLS ── */}
         {activeTab === "skills" && (
-          <div style={{ padding: "48px 48px 0" }}>
+          <div style={{ padding: "clamp(24px,6vw,48px) clamp(16px,6vw,48px) 0" }}>
             <div className="grid-3col">
               {skillGroups.map((sg, i) => (
                 <Reveal key={sg.title} delay={i * 0.06}>

@@ -213,7 +213,11 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
 .mobile-menu-overlay  { display: none; }
 
 @media (max-width: 768px) {
-  /* Grids collapse to single column */
+  /* ── Core overflow prevention ── */
+  html, body { overflow-x: hidden; max-width: 100vw; }
+  * { box-sizing: border-box; max-width: 100%; }
+
+  /* ── Grids collapse to single column ── */
   .grid-hero     { grid-template-columns: 1fr; min-height: auto; }
   .grid-2col     { grid-template-columns: 1fr; }
   .grid-3col     { grid-template-columns: 1fr; }
@@ -222,53 +226,80 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
   .grid-1-2      { grid-template-columns: 1fr; gap: 32px; }
   .grid-detail   { grid-template-columns: 1fr; gap: 40px; }
   .grid-exp-row  { grid-template-columns: 1fr; gap: 12px; }
-  .grid-pub      { grid-template-columns: 1fr; gap: 20px; }
+  .grid-pub      { grid-template-columns: 1fr; gap: 16px; }
   .grid-contact  { grid-template-columns: 1fr; gap: 32px; }
   .grid-photo    { grid-template-columns: 1fr; min-height: auto; }
   .grid-photo > div:first-child { min-height: 260px; position: relative; }
   .grid-stats    { grid-template-columns: 1fr 1fr; }
 
-  /* Prevent horizontal overflow everywhere */
-  section, div { max-width: 100%; }
-  * { box-sizing: border-box; }
-
-  /* Contact section padding */
-  #contact { padding: 48px 20px !important; }
-
-  /* Photo break dark panel */
-  .grid-photo > div:last-child { padding: 40px 24px !important; }
-
-  /* Padding reduction */
+  /* ── Padding/margin reduction ── */
   .pad-section   { padding: 40px 20px; }
   .pad-page      { padding: 0 20px; }
   .pad-hero      { padding: 48px 20px 40px; }
   .hero-left     { padding: 56px 20px 40px; border-right: none; border-bottom: 1px solid var(--border); }
   .hero-right    { min-height: 60vw; }
-  .about-left    { padding-right: 0; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 32px; margin-bottom: 0; }
+  .about-left    { padding-right: 0; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 32px; }
   .about-right   { padding-left: 0; padding-top: 32px; }
   .sidebar-sticky { position: static; }
 
-  /* Nav mobile */
+  /* ── Hard-coded inline padding overrides ── */
+  /* Status bar */
+  #status-bar    { padding: 10px 16px !important; gap: 14px !important; flex-wrap: wrap; }
+  /* Section content padding throughout homepage */
+  #about, #work, #writing, #contact,
+  section        { padding-left: 0 !important; padding-right: 0 !important; }
+  /* Inner content areas that use 48px margin */
+  #about .grid-about,
+  #work .grid-2col,
+  section .grid-2col,
+  section .grid-3col { margin-left: 0 !important; margin-right: 0 !important; }
+
+  /* ── Contact section ── */
+  #contact { padding: 40px 20px !important; }
+
+  /* ── Photo break ── */
+  .grid-photo > div:last-child { padding: 40px 24px !important; }
+
+  /* ── Proof metrics bar: 2x2 grid on mobile ── */
+  .metrics-bar { flex-wrap: wrap !important; padding: 16px 16px !important; gap: 16px !important; justify-content: flex-start !important; }
+  .metrics-bar > div { flex: 1 1 calc(50% - 8px); min-width: 0; }
+
+  /* ── Nav mobile ── */
   .nav-hamburger        { display: flex; align-items: center; color: var(--ink); }
   .nav-links-wrap       { display: none !important; }
   .mobile-menu-overlay  { display: block !important; }
   nav                   { padding: 16px 20px !important; }
 
-  /* Section header padding */
+  /* ── Section headers ── */
   .sh-wrap { padding: 40px 20px 24px !important; }
 
-  /* GitHub band */
-  .github-band { flex-direction: column; align-items: flex-start !important; gap: 20px !important; }
-  .github-band a { width: 100%; justify-content: center; }
+  /* ── Experience page ── */
+  .exp-tabs { padding: 0 16px !important; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .exp-tabs button { padding: 16px 12px !important; font-size: 9px !important; white-space: nowrap; }
+  /* Experience content */
+  .exp-content { padding: 32px 16px 0 !important; }
 
-  /* Experience page */
-  .exp-tabs { padding: 0 20px !important; overflow-x: auto; }
-  .exp-tabs button { padding: 16px 14px !important; font-size: 9px !important; white-space: nowrap; }
+  /* ── Projects page ── */
+  .projects-filters { padding: 20px 16px 8px !important; }
+  .projects-status-filters { padding: 8px 16px 20px !important; }
+  .projects-grid { padding: 0 16px 60px !important; }
+  .projects-grid .grid-3col { grid-template-columns: 1fr; }
 
-  /* Project detail hero meta */
+  /* ── How I Build page ── */
+  .how-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+
+  /* ── World map grid (CloudScene panel 2) ── */
+  #map { padding: 40px 16px !important; }
+  #map [style*="repeat(3"] { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* ── Project detail ── */
   .detail-hero-grid { grid-template-columns: 1fr !important; }
   .detail-meta { min-width: unset !important; width: 100%; }
 
-  /* World map grid */
-  #map [style*="repeat(3"] { grid-template-columns: repeat(2, 1fr) !important; }
+  /* ── How I Build principles grid ── */
+  [style*="gridTemplateColumns"][style*="clamp(48"] { grid-template-columns: 1fr !important; gap: 12px !important; }
+
+  /* ── Buttons / CTAs stack on mobile ── */
+  .cta-row { flex-direction: column !important; align-items: stretch !important; }
+  .cta-row a, .cta-row button { width: 100% !important; text-align: center; justify-content: center; }
 }

@@ -18,7 +18,7 @@ const tickerItems = [
 ]
 
 const SH = ({ n, t, game }: { n: string; t: string; game?: string }) => (
-  <div style={{ padding: "64px 48px 36px" }}>
+  <div style={{ padding: "clamp(40px,8vh,64px) clamp(20px,6vw,48px) 36px" }}>
     <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 6 }}>
       {n && <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".22em", color: "var(--terra)" }}>{n}</span>}
       <h2 style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(28px,3.5vw,44px)", fontWeight: 900, letterSpacing: "-.02em", lineHeight: 1, margin: 0 }}>{t}</h2>
@@ -36,15 +36,15 @@ export default function Home() {
       <div style={{ background: "var(--paper)" }}>
 
       {/* ── PROOF METRICS ── */}
-      <div style={{
+      <div className="metrics-bar" style={{
         background: "rgba(255,255,255,0.72)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
         borderBottom: "1px solid rgba(125,211,252,0.3)",
-        padding: "20px clamp(20px,5vw,64px)",
+        padding: "20px clamp(16px,5vw,64px)",
         display: "flex",
         alignItems: "center",
-        gap: "clamp(20px,4vw,56px)",
+        gap: "clamp(16px,4vw,56px)",
         flexWrap: "wrap",
         justifyContent: "center",
       }}>
@@ -54,13 +54,14 @@ export default function Home() {
           { metric: "11",     label: "AI products shipped end-to-end" },
           { metric: "10",     label: "African markets · fintech & private capital" },
         ].map(({ metric, label }) => (
-          <div key={metric} style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
+          <div key={metric} style={{ display: "flex", alignItems: "baseline", gap: 8, minWidth: 0 }}>
             <span style={{
               fontFamily: "var(--font-playfair),serif",
               fontWeight: 900,
-              fontSize: "clamp(22px,2.8vw,32px)",
+              fontSize: "clamp(20px,2.8vw,32px)",
               color: "var(--terra)",
               lineHeight: 1,
+              flexShrink: 0,
             }}>{metric}</span>
             <span style={{
               fontFamily: "var(--font-dm-mono),monospace",
@@ -75,7 +76,7 @@ export default function Home() {
       </div>
 
       {/* ── STATUS BAR ── */}
-      <div style={{ borderBottom: "1px solid var(--border)", background: "var(--ink)", padding: "10px 48px", display: "flex", alignItems: "center", gap: 32, flexWrap: "wrap", overflow: "hidden" }}>
+      <div id="status-bar" style={{ borderBottom: "1px solid var(--border)", background: "var(--ink)", padding: "10px clamp(16px,4vw,48px)", display: "flex", alignItems: "center", gap: 24, flexWrap: "wrap", overflow: "hidden" }}>
         <span style={{ fontSize: 8, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--terra)", flexShrink: 0 }}>◆ Currently</span>
         {[
           { label: "Playing", value: "Civilization VII" },
@@ -127,7 +128,7 @@ export default function Home() {
       {/* ── FEATURED PROJECTS ── */}
       <section id="work" style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
         <Reveal>
-          <div style={{ padding: "0 48px 40px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ padding: "0 clamp(16px,6vw,48px) 40px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
               <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>02</span>
               <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Featured Projects</span>
@@ -192,7 +193,7 @@ export default function Home() {
       {/* ── THE LONGER VERSION ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
         <Reveal><SH n="03" t="Story" game="extended lore" /></Reveal>
-        <div className="grid-3col" style={{ margin: "0 48px" }}>
+        <div className="grid-3col" style={{ margin: "0 clamp(16px,6vw,48px)" }}>
           {[
             {
               label: "What shaped the lens",
@@ -280,7 +281,7 @@ export default function Home() {
       {/* ── CAPITAL ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
         <Reveal><SH n="04" t="Capital Allocation" game="resource management" /></Reveal>
-        <div className="grid-2col" style={{ margin: "0 48px" }}>
+        <div className="grid-2col" style={{ margin: "0 clamp(16px,6vw,48px)" }}>
           {[
             {
               label: "Operations Lead · City Ventures",
@@ -315,7 +316,7 @@ export default function Home() {
       {/* ── WRITING PREVIEW ── */}
       <section id="writing" style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
         <Reveal>
-          <div style={{ padding: "0 48px 40px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ padding: "0 clamp(16px,6vw,48px) 40px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
               <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>05</span>
               <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Thoughts</span>
@@ -324,7 +325,7 @@ export default function Home() {
             <Link href="/writing" style={{ fontSize: 9, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)" }}>All Essays →</Link>
           </div>
         </Reveal>
-        <div className="grid-2col" style={{ margin: "0 48px" }}>
+        <div className="grid-2col" style={{ margin: "0 clamp(16px,6vw,48px)" }}>
           {essays.map((essay, i) => (
             <Reveal key={essay.slug} delay={i * 0.07}>
               <Link href={essay.url} target="_blank" rel="noopener">
@@ -347,7 +348,7 @@ export default function Home() {
       {/* ── EDUCATION ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
         <Reveal><SH n="06" t="Education" game="training arc" /></Reveal>
-        <div className="grid-3col" style={{ margin: "0 48px" }}>
+        <div className="grid-3col" style={{ margin: "0 clamp(16px,6vw,48px)" }}>
           {[
             { year: "Completed", school: "The Wharton School", degree: "MBA, Finance & AI Operations\nUniversity of Pennsylvania", note: "Trailblazer Fellowship (50% merit) · President, Wharton Graduate Association ($6M P&L, 1,700+ students) · VP, Wharton Tech Club Conferences · Co-CEO, Africa AI Leaders Fellowship" },
             { year: "2021 – 2023", school: "Columbia University", degree: "MS, Chemical Engineering\nNew York, NY", note: "Full merit, 21 of 5,000+ applicants · GPA 3.8 · ACS Applied Energy Materials publication" },
@@ -371,7 +372,7 @@ export default function Home() {
       {/* ── AWARDS ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
         <Reveal><SH n="07" t="Achievements Unlocked" game="milestones" /></Reveal>
-        <div className="grid-2col" style={{ margin: "0 48px" }}>
+        <div className="grid-2col" style={{ margin: "0 clamp(16px,6vw,48px)" }}>
           {[
             { name: "Trailblazer Fellowship, 50% Merit", inst: "The Wharton School, UPenn", xp: "+500 XP" },
             { name: "Full Merit Scholarship", inst: "Columbia University, 21 of 5,000+ applicants", xp: "+1000 XP" },
@@ -402,7 +403,7 @@ export default function Home() {
       {/* ── SKILLS ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
         <Reveal><SH n="08" t="Loadout" game="skill tree" /></Reveal>
-        <div className="grid-4col" style={{ margin: "0 48px" }}>
+        <div className="grid-4col" style={{ margin: "0 clamp(16px,6vw,48px)" }}>
           {[
             { title: "AI & Product Systems", items: ["Platform Strategy", "RAG Architecture", "LLM Evaluation", "Drift Monitoring", "Anomaly Detection", "Experimentation Frameworks", "Governance & Escalation Design"] },
             { title: "Investment", items: ["DCF & LBO Modeling", "IRR Sensitivity", "NAV Analysis", "Monte Carlo", "Portfolio Construction", "FX Stress Testing", "Blended Finance"] },
@@ -459,14 +460,14 @@ export default function Home() {
       {/* ── BASE CAMP ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
         <Reveal>
-          <div style={{ padding: "0 48px 40px", display: "flex", alignItems: "center", gap: 18 }}>
+          <div style={{ padding: "0 clamp(16px,6vw,48px) 40px", display: "flex", alignItems: "center", gap: 18 }}>
             <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>09</span>
             <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Base Camp</span>
             <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".12em", color: "var(--muted)", opacity: 0.55 }}>{'// when not building'}</span>
             <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
           </div>
         </Reveal>
-        <div className="grid-2col" style={{ margin: "0 48px" }}>
+        <div className="grid-2col" style={{ margin: "0 clamp(16px,6vw,48px)" }}>
           <Reveal>
             <div style={{ background: "var(--paper)", padding: "36px 32px" }}>
               <div style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", border: "1px solid rgba(125,211,252,.6)", padding: "3px 9px", borderRadius: 2, display: "inline-block", marginBottom: 16 }}>Off the clock</div>

@@ -60,7 +60,7 @@ export default function ProjectsPage() {
         style={{
           minHeight: "48vh",
           display: "flex", flexDirection: "column", justifyContent: "flex-end",
-          padding: "80px 48px 60px",
+          padding: "clamp(48px,10vh,80px) clamp(16px,6vw,48px) 60px",
           borderBottom: "1px solid var(--border)",
         }}
       >
@@ -142,7 +142,7 @@ export default function ProjectsPage() {
       {/* Capabilities */}
       <Reveal>
         <div style={{ padding: "0 0 48px" }}>
-          <div style={{ padding: "56px 48px 32px", display: "flex", alignItems: "center", gap: 18 }}>
+          <div style={{ padding: "clamp(32px,7vh,56px) clamp(16px,6vw,48px) 32px", display: "flex", alignItems: "center", gap: 18 }}>
             <span style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>◆</span>
             <span style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>What I bring to an AI PM role</span>
             <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
@@ -170,7 +170,7 @@ export default function ProjectsPage() {
       </Reveal>
 
       {/* Section header */}
-      <div style={{ padding: "32px 48px 0", display: "flex", alignItems: "center", gap: 18 }}>
+      <div style={{ padding: "32px clamp(16px,6vw,48px) 0", display: "flex", alignItems: "center", gap: 18 }}>
         <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>01</span>
         <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>All Projects</span>
         <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
@@ -186,7 +186,7 @@ export default function ProjectsPage() {
       </div>
 
       {/* Filters */}
-      <div style={{ padding: "24px 48px 8px", display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+      <div style={{ padding: "24px clamp(16px,6vw,48px) 8px", display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
         <span style={{ fontSize: 9, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--muted)", marginRight: 8 }}>Category</span>
         {filters.map((f) => (
           <button
@@ -209,7 +209,7 @@ export default function ProjectsPage() {
       </div>
 
       {/* Status filters */}
-      <div style={{ padding: "8px 48px 32px", display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+      <div style={{ padding: "8px clamp(16px,6vw,48px) 32px", display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
         <span style={{ fontSize: 9, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--muted)", marginRight: 8 }}>Status</span>
         {statusFilters.map((f) => {
           const cfg = f.key !== "all" ? statusConfig[f.key as keyof typeof statusConfig] : null

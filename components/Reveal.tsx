@@ -17,7 +17,7 @@ export default function Reveal({
     if (!el) return
     const obs = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) el.classList.add("visible") },
-      { threshold: 0.08 }
+      { threshold: 0, rootMargin: "0px 0px -40px 0px" }
     )
     obs.observe(el)
     return () => obs.disconnect()
