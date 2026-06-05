@@ -147,7 +147,7 @@ export default function ProjectsPage() {
             <span style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>What I bring to an AI PM role</span>
             <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
           </div>
-          <div className="grid-4col" style={{ margin: "0 48px" }}>
+          <div className="grid-4col" style={{ margin: "0 clamp(16px,6vw,48px)" }}>
             {[
               { icon: "🧩", title: "Product Definition", desc: "I find the real problem under the stated one. Every project here started from a workflow gap, not a feature request. I write specs, define success metrics, and kill bad ideas before they become bad code." },
               { icon: "⚙️", title: "Technical Depth", desc: "LLM context windows, retrieval pipelines, role-aware prompting, async message queues, I understand the stack well enough to call out engineering tradeoffs in a design review, not just in a post-mortem." },

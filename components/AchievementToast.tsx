@@ -12,17 +12,34 @@ const MILESTONES: Array<{ pct: number; icon: string; title: string; desc: string
   { pct: 94, icon: "⚔️", title: "Final Boss Reached", desc: "You made it to the end screen",   xp: "+500 XP" },
 ]
 
+const SESSION_KEY = "lapo_achievements_shown"
+
+function getSessionShown(): Set<number> {
+  try {
+    const raw = sessionStorage.getItem(SESSION_KEY)
+    return raw ? new Set(JSON.parse(raw) as number[]) : new Set()
+  } catch { return new Set() }
+}
+
+function saveSessionShown(set: Set<number>) {
+  try { sessionStorage.setItem(SESSION_KEY, JSON.stringify([...set])) } catch {}
+}
+
 export default function AchievementToast() {
   const [queue, setQueue] = useState<Toast[]>([])
-  const shown = useRef(new Set<number>())
+  const shown = useRef<Set<number>>(new Set())
 
   useEffect(() => {
+    // Restore already-seen achievements from this session
+    shown.current = getSessionShown()
+
     // Don't fire anything until the user has been on the page 5s
     let ready = false
     const readyTimer = setTimeout(() => { ready = true }, 5000)
 
     const fire = (i: number, m: typeof MILESTONES[0]) => {
       shown.current.add(i)
+      saveSessionShown(shown.current)
       const toast: Toast = { id: `${i}-${Date.now()}`, ...m }
       setQueue(prev => [...prev, toast])
       window.dispatchEvent(new Event("game:achievement"))

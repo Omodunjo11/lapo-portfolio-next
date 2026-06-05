@@ -29,6 +29,24 @@ export default function WritingPage() {
         </p>
       </div>
 
+      {/* Why I write */}
+      <div style={{ borderBottom: "1px solid var(--border)", padding: "48px 48px", display: "grid", gridTemplateColumns: "1fr 2fr", gap: 64, alignItems: "start" }}>
+        <div>
+          <div style={{ fontSize: 9, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 12 }}>Why I write</div>
+          <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(18px,2vw,24px)", fontWeight: 700, lineHeight: 1.2 }}>
+            Thinking that hasn&apos;t made it into a product yet.
+          </div>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          <p style={{ fontSize: 13, lineHeight: 1.9, color: "var(--mid)" }}>
+            Most of my work is about making complex systems legible — to users, to regulators, to teams who have to trust something they cannot fully see. Writing is where I do that for myself first. I write when I have a conviction I have not yet stress-tested, when I notice something that does not fit the standard explanation, or when the same question keeps surfacing across completely different contexts.
+          </p>
+          <p style={{ fontSize: 13, lineHeight: 1.9, color: "var(--mid)" }}>
+            The essays below are mostly about the intersection of systems and people — financial systems, cultural systems, institutional systems, and what happens when someone who grew up outside them has to learn to operate inside them without losing the thread back. Some of it is personal. Some of it is economic. All of it is honest.
+          </p>
+        </div>
+      </div>
+
       <Ticker items={tickerItems} />
 
       {/* Essays grid */}

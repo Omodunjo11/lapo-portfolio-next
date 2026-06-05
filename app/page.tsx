@@ -350,7 +350,7 @@ export default function Home() {
         <Reveal><SH n="06" t="Education" game="training arc" /></Reveal>
         <div className="grid-3col" style={{ margin: "0 clamp(16px,6vw,48px)" }}>
           {[
-            { year: "Completed", school: "The Wharton School", degree: "MBA, Finance & AI Operations\nUniversity of Pennsylvania", note: "Trailblazer Fellowship (50% merit) · President, Wharton Graduate Association ($6M P&L, 1,700+ students) · VP, Wharton Tech Club Conferences · Co-CEO, Africa AI Leaders Fellowship" },
+            { year: "2024 – 2026", school: "The Wharton School", degree: "MBA, Finance & Strategic Management\nUniversity of Pennsylvania", note: "Trailblazer Fellowship (50% merit) · President, Wharton Graduate Association ($6M P&L, 1,700+ students) · VP, Wharton Tech Club Conferences · Co-CEO, Africa AI Leaders Fellowship" },
             { year: "2021 – 2023", school: "Columbia University", degree: "MS, Chemical Engineering\nNew York, NY", note: "Full merit, 21 of 5,000+ applicants · GPA 3.8 · ACS Applied Energy Materials publication" },
             { year: "2015 – 2018", school: "University of Bradford", degree: "B.Eng., Chemical & Process Engineering\nBradford, UK", note: "Bradford Dean Award, full-ride · GPA 3.7" },
           ].map((edu, i) => (
@@ -522,7 +522,6 @@ export default function Home() {
                 { label: "Email", value: "odunjoonaolapo@gmail.com", href: "mailto:odunjoonaolapo@gmail.com" },
                 { label: "LinkedIn", value: "onaolapomichaelodunjo", href: "https://linkedin.com/in/onaolapomichaelodunjo" },
                 { label: "GitHub", value: "Omodunjo11", href: "https://github.com/Omodunjo11" },
-                { label: "Coaching", value: "Leland MBA Advisory", href: "https://www.joinleland.com/coach/onaolapo-o" },
               ].map(({ label, value, href }) => (
                 <Link key={label} href={href}
                   target={href.startsWith("http") ? "_blank" : undefined}
