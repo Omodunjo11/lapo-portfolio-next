@@ -28,6 +28,83 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "kinage-gtm",
+    name: "Kinage GTM",
+    role: "GTM Engineering · Revenue Signal Infrastructure",
+    year: "2026",
+    lang: "TypeScript",
+    category: ["fullstack", "automation"],
+    tagline: "GTM intelligence layer that turns signal feeds into pipeline — Clay enrichment, HubSpot sync, and an outreach dashboard built around how sales actually operates.",
+    overview:
+      "Most GTM teams are drowning in data and starving for signal. CRM records go stale, outreach sequences fire on the wrong triggers, and the gap between what the intelligence layer knows and what the sales rep sees in HubSpot grows wider every day. Kinage GTM closes that gap by building a structured layer between signal classification and outreach execution — connecting the intelligence feed to Clay enrichment workflows, keeping HubSpot in sync, and surfacing the right contact at the right moment in a single outreach dashboard.",
+    objectives: [
+      {
+        title: "Signal-to-Outreach Pipeline",
+        description: "Build a pipeline that routes classified signals from the Kinage intelligence layer directly into actionable outreach triggers, eliminating manual handoff between intelligence and sales execution.",
+      },
+      {
+        title: "Clay Enrichment Integration",
+        description: "Integrate Clay to enrich contact and company records on each signal event, ensuring every outreach action is backed by current, accurate data rather than stale CRM records.",
+      },
+      {
+        title: "HubSpot Sync Architecture",
+        description: "Design a bidirectional HubSpot sync that keeps deal stages, contact properties, and sequence enrolment consistent with the signal layer without creating duplicate or conflicting records.",
+      },
+      {
+        title: "Outreach Dashboard",
+        description: "Build a single dashboard that shows the rep exactly who to contact, why, and what signal triggered the action — so no context is lost between the intelligence layer and the outreach motion.",
+      },
+    ],
+    methodology: [
+      {
+        title: "GTM Workflow Mapping",
+        description: "Mapped the existing outreach workflow end-to-end, identifying where signal context was being lost between the intelligence feed, CRM records, and the rep's daily queue.",
+      },
+      {
+        title: "Data Model Design",
+        description: "Designed the signal-to-contact schema before building any integrations — defining how a classified signal maps to a HubSpot contact, deal stage, and Clay enrichment trigger.",
+      },
+      {
+        title: "Integration Architecture",
+        description: "Built Clay and HubSpot integrations with idempotency and deduplication logic so the same signal event never creates duplicate enrichment runs or CRM updates.",
+      },
+      {
+        title: "Dashboard Development",
+        description: "Developed the outreach dashboard as a Next.js frontend consuming the GTM API, surfacing signal context alongside contact data so reps act with full context rather than a cold list.",
+      },
+    ],
+    sections: [
+      {
+        title: "Why Signal Context Gets Lost",
+        body: "The intelligence layer knows why a company is worth contacting right now. The CRM holds the contact record. The outreach tool owns the sequence. In most GTM stacks these systems don't talk to each other, so the rep receives a contact name with no context and the intelligence that triggered the action disappears into a spreadsheet. Kinage GTM treats signal context as a first-class field: every outreach action carries the signal that created it, the enriched contact record, and the current deal stage — so the rep's opening message is informed by the same intelligence that surfaced the lead.",
+      },
+      {
+        title: "The Clay and HubSpot Integration Design",
+        body: "Clay enrichment and HubSpot sync run as event-driven operations triggered by the signal classification layer. Each new signal event fires a Clay enrichment job for the associated company and contact, and the enriched data is written back to HubSpot before the lead appears in the outreach dashboard. The bidirectional sync handles the edge cases — stale contacts, duplicate company records, and sequence conflicts — so the rep's dashboard reflects reality rather than what the CRM last captured.",
+      },
+    ],
+    problem:
+      "Signal context was getting lost between the Kinage intelligence feed and the sales rep's outreach queue. Reps were working from stale CRM records without knowing why a lead was relevant right now.",
+    what:
+      "A TypeScript GTM intelligence layer that connects Kinage's signal feed to Clay enrichment workflows and HubSpot, with an outreach dashboard that surfaces who to contact, why, and what signal triggered the action. Deployed on Vercel and live.",
+    pmAngle:
+      "The core product decision was treating signal context as a first-class field in the CRM, not an annotation that lives in a separate spreadsheet. That architectural choice determined the integration design and drove every schema decision in the Clay-to-HubSpot sync.",
+    outcome:
+      "Outreach actions are now backed by current signal context and enriched contact data, eliminating the gap between what the intelligence layer knows and what the rep sees.",
+    features: [
+      "Signal-to-outreach pipeline from Kinage intelligence feed",
+      "Clay enrichment integration triggered on each signal event",
+      "Bidirectional HubSpot sync with deduplication logic",
+      "Outreach dashboard with full signal context per contact",
+      "Deployed and live on Vercel",
+    ],
+    stack: ["TypeScript", "Next.js", "Clay", "HubSpot API", "Vercel"],
+    github: "https://github.com/Omodunjo11/kinage-gtm",
+    live: "https://kinage-gtm.vercel.app",
+    featured: true,
+    status: "live" as const,
+  },
+  {
     slug: "kinage-intelligence",
     name: "Kinage Intelligence",
     role: "AI Product · Semantic Signal Infrastructure",
