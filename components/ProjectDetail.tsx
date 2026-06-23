@@ -195,7 +195,13 @@ export default function ProjectDetail({ project, prev, next }: Props) {
               >
                 <div style={{ fontSize: 9, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 6 }}>Private repository</div>
                 <div style={{ fontWeight: 600, color: "var(--ink)", marginBottom: 4 }}>{repoLabel(project.github)}</div>
-                <div style={{ fontSize: 11 }}>Code available on request for recruiters and hiring teams.</div>
+                <div style={{ fontSize: 11 }}>
+                  Code available on request for recruiters and hiring teams. Email{" "}
+                  <a href="mailto:odunjoonaolapo@gmail.com?subject=GitHub%20repo%20access%20request" style={{ color: "var(--terra)", textDecoration: "underline" }}>
+                    odunjoonaolapo@gmail.com
+                  </a>{" "}
+                  with your GitHub username.
+                </div>
               </div>
             ) : (
               <Link
