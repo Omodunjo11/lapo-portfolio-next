@@ -190,72 +190,74 @@ export const projects: Project[] = [
     year: "2025",
     lang: "JavaScript",
     category: ["ai", "fullstack"],
-    tagline: "WhatsApp-native financial platform for Nigeria's informal economy — converts Ajo payment behaviour into a TradeScore credit identity, then unlocks KovaCredit loans with no app download required.",
+    tagline: "WhatsApp-native financial platform for Nigeria's informal economy. Converts Ajo payment behaviour into a TradeScore credit identity, then unlocks KovaCredit loans with no app download required.",
     overview:
-      "Forty million Nigerians participate in Ajo rotating savings groups, market trading, and informal credit networks — financially active but invisible to traditional banks. Kova gives them a credit identity built entirely from payment behaviour. Every contribution recorded through a collector group updates a TradeScore (300–850), and once the score clears tier thresholds, users access KovaCredit loans directly through WhatsApp. No app to download. No bank statement. No collateral. The entire product runs over a phone number.",
+      "Forty million Nigerians participate in Ajo rotating savings groups, market trading, and informal credit networks. They are financially active but invisible to traditional banks. Kova gives them a credit identity built entirely from payment behaviour. Every contribution recorded through a collector group updates a TradeScore (300-850). Once the score clears tier thresholds, users access KovaCredit loans directly through WhatsApp. No app to download. No web portal. No bank statement, payslip, or collateral. The entire product runs over a phone number.",
     objectives: [
       {
+        title: "WhatsApp Onboarding State Machine",
+        description: "Ship a 7-step conversational onboarding flow in five languages (English, Pidgin, Yoruba, Igbo, Hausa) covering language selection, referral codes, role assignment, name capture, and group setup with contribution amount and frequency stored in kobo.",
+      },
+      {
         title: "TradeScore Engine",
-        description: "Build a FICO-scale credit score (300–850) derived from on-time, late, missed, and default payment events — with a full TradeScoreEvent audit log for every delta.",
+        description: "Build a FICO-scale credit score (300-850) with three tiers, defined score deltas (+5 on-time, -10 late, -25 missed, -80 default), and a TradeScoreEvent audit log for every change. user.tradeScore in the DB is the single source of truth.",
       },
       {
         title: "KovaCredit Loan Lifecycle",
-        description: "Implement end-to-end loan operations: eligibility gating by tier, Paystack disbursement, repayment recording, automatic settlement, collector commission unlock, and overdue escalation with severity tiers.",
+        description: "Implement end-to-end loan operations: tier-gated eligibility, Paystack disbursement, repayment recording with on-time/late detection, automatic settlement, 2% collector commission unlock, and overdue escalation with LOW/MEDIUM/HIGH severity tiers.",
       },
       {
-        title: "WhatsApp-First Onboarding",
-        description: "Ship a 7-step conversational onboarding state machine in five languages (English, Pidgin, Yoruba, Igbo, Hausa) with PostgreSQL-persisted state so users can drop off and resume mid-flow.",
-      },
-      {
-        title: "Collector AI Tools",
-        description: "Give collectors natural-language control over their groups via Claude — record payments, add members, send reminders, view collection rates, disburse loans, and manage portfolios without leaving WhatsApp.",
+        title: "Collector AI + Referral Growth",
+        description: "Give collectors natural-language control over groups via Claude (record payments, send reminders, disburse loans, view portfolio). Pair with a referral engine: unique codes, gokova.io/ref/CODE deep links, and referrer notification on a referee's first loan repayment.",
       },
     ],
     methodology: [
       {
         title: "Webhook-First Architecture",
-        description: "Built stateless Express handlers for WhatsApp and Paystack webhooks — each message loads full context from the database on every request, with HMAC signature validation and no in-memory session state that breaks on redeploy.",
+        description: "Built stateless Express handlers for WhatsApp and Paystack webhooks. Each incoming message loads full context from the database on every request: user, onboarding state, last 20 conversation turns. HMAC-SHA256 signature validation. No in-memory session state that breaks on redeploy.",
       },
       {
         title: "Role-Gated AI Tools",
-        description: "Filtered Claude tool definitions by user role before each turn — Collector Leads see loan disbursement tools; End Users see only their own score and loan data. The AI cannot be social-engineered into actions outside a user's role.",
-      },
-      {
-        title: "Dual DB Mode",
-        description: "Built a custom in-memory mock mirroring the Prisma client API exactly. Switching between mock and real Postgres is a single env var, making local development and the 26-test suite instant with no database setup.",
+        description: "Filtered Claude tool definitions by user role before each turn. Collector Leads see loan disbursement and group management tools. End Users see only their own score and loan data. Four roles, four distinct tool sets. The AI cannot be social-engineered into actions outside a user's permissions.",
       },
       {
         title: "Kobo Integer Arithmetic",
-        description: "Stored all monetary values as integers in kobo (₦1 = 100 kobo) across the database and business logic. Conversion to Naira happens only at display time — no floating-point arithmetic anywhere in the money path.",
+        description: "Stored all monetary values as integers in kobo (₦1 = 100 kobo) across the database and business logic. Tier limits: ₦25,000 (Tier 1), ₦100,000 (Tier 2), ₦500,000 (Tier 3). Conversion to Naira happens only at display time. No floating-point arithmetic anywhere in the money path.",
+      },
+      {
+        title: "Dual DB Mode",
+        description: "Built a custom in-memory mock mirroring the Prisma client API exactly. Switching between mock and real Postgres is a single env var (DATABASE_URL). Local development and the 26-test suite run instantly with no database setup required.",
       },
     ],
     sections: [
       {
         title: "Why Webhook-First Beats Batch",
-        body: "WhatsApp and Paystack both deliver events asynchronously — charge.success, transfer.failed, incoming messages. A batch polling model would miss repayment windows, delay collector notifications, and break the real-time trust loop that informal credit networks depend on. The webhook-first design means every payment event triggers immediate score updates, borrower notifications, and referrer rewards within seconds. Each handler is fully self-contained: load user, load onboarding state, load conversation history, act, respond. No session state in memory. Redeploys don't lose context.",
+        body: "WhatsApp and Paystack both deliver events asynchronously: charge.success, transfer.failed, incoming messages. A batch polling model would miss repayment windows, delay collector notifications, and break the real-time trust loop that informal credit networks depend on. The webhook-first design means every payment event triggers immediate score updates, borrower notifications, and referrer rewards within seconds. The Paystack handler already wires charge.success to recordRepayment, transfer.success to confirm disbursement, and transfer.failed to revert loan status. Each WhatsApp handler is fully self-contained: validate signature, extract referral code, getOrCreateUser, run onboarding state machine or Claude agentic loop, respond. Redeploys do not lose context because nothing lives in memory.",
       },
       {
-        title: "TradeScore as Audit Infrastructure",
-        body: "Every score change writes a TradeScoreEvent with scoreBefore, scoreAfter, delta, reason, and reference ID. user.tradeScore in the database is the single source of truth — never computed on the fly. This audit log is the foundation for dispute resolution, regulatory reporting, and the user-facing score history that makes informal credit legible to formal lenders. Tier 1 (300–599) unlocks up to ₦25,000; Tier 2 (600–699) up to ₦100,000; Tier 3 (700+) up to ₦500,000.",
+        title: "MVP 1 Proved the Machine. MVP 2 Makes It Real.",
+        body: "MVP 1 shipped the full loop: onboarding, TradeScore, loans, collector tools, referrals, Paystack webhooks, escalation cron, and observability across ~3,500 lines of code and 26 passing tests. MVP 2 is about real money and real trust. Priority one is Meta app review so any phone number can message the bot, not just test numbers. In parallel: bank account capture and BVN verification via Smile Identity or Mono before any real disbursement. Then real Paystack transfers to borrower accounts, repayment links that close the charge.success loop, loan approval workflow replacing auto-approve, collector vetting before disbursement authority, and a minimal admin dashboard for operations. The architecture is already built for this. MVP 2 is wiring the trust and money layers on top.",
       },
     ],
     problem:
-      "Traditional credit scoring in Nigeria requires formal employment records, bank statements, and collateral — excluding market traders, artisans, and small business owners who transact in cash through informal Ajo networks.",
+      "Traditional credit scoring in Nigeria requires formal employment records, bank statements, and collateral. This excludes market traders, artisans, transport workers, and small business owners who transact in cash through informal Ajo networks.",
     what:
-      "A WhatsApp-native financial platform that converts informal payment behaviour into verifiable credit history. Collectors manage groups through natural-language AI tools. Borrowers build TradeScore from on-time contributions and access tier-gated KovaCredit loans disbursed via Paystack — all without downloading an app.",
+      "A WhatsApp-native financial platform that converts informal payment behaviour into verifiable credit history, then underwrites loans at scale through a network of trusted collectors. Collectors manage groups through natural-language Claude tools. Borrowers build TradeScore from on-time contributions and access tier-gated KovaCredit loans via Paystack. Onboarding, payments, loan applications, and escalation alerts all happen in the same WhatsApp thread.",
     pmAngle:
-      "The product decision that shaped everything: meet users where they already are. WhatsApp isn't a channel choice — it's the product surface. Onboarding, payments, loan applications, collector tools, and escalation alerts all happen in the same conversation thread. Distribution strategy embeds into existing informal workflows instead of asking 40 million people to download something new.",
+      "The product decision that shaped everything: meet users where they already are. WhatsApp is not a channel choice. It is the product surface. Distribution embeds into existing informal workflows instead of asking 40 million people to download something new. MVP 2 sequencing reflects the same logic: Meta app review and BVN verification block everything downstream, so those run in parallel before real money moves.",
     outcome:
-      "MVP 1 shipped: ~3,500 lines of code, 26 passing tests, 10 Prisma models on Railway PostgreSQL, 5-language onboarding, and a full loan lifecycle from application to settlement running entirely over WhatsApp.",
+      "MVP 1 shipped and live at gokova.io: 10 Prisma models on Railway PostgreSQL, 5-language onboarding, 4 user roles with distinct tool access, full loan lifecycle from application to settlement, and 26 automated tests covering loan lifecycle, referral linking, TradeScore gating, escalations, and collector portfolio.",
     features: [
-      "TradeScore engine (300–850) with full audit trail per score change",
-      "KovaCredit loan lifecycle with Paystack disbursement and repayment",
-      "5-language WhatsApp onboarding state machine with resume support",
-      "Claude agentic loop with role-gated tools and 20-turn conversation history",
-      "Referral growth engine with deep-linked WhatsApp codes (gokova.io/ref/CODE)",
-      "Paystack webhooks for charge.success, transfer.success, and transfer.failed",
-      "Collector tools: record payments, send reminders, view portfolio via natural language",
-      "Daily escalation cron with automatic score penalties for overdue loans",
+      "7-step WhatsApp onboarding in 5 languages with PostgreSQL-persisted resume support",
+      "TradeScore engine (300-850) with TradeScoreEvent audit trail per score change",
+      "KovaCredit loan lifecycle: eligibility, disbursement, repayment, settlement, commission unlock",
+      "Referral growth engine with gokova.io/ref/CODE deep links and enumeration-safe redirects",
+      "Claude agentic loop with role-gated tools, 20-turn history, and WhatsApp-formatted output",
+      "Collector tools via natural language: payments, reminders, group summary, portfolio, commissions",
+      "Paystack webhooks: charge.success, transfer.success, transfer.failed",
+      "Outbound notifications with 3-attempt retry, exponential backoff, and deduplication",
+      "Daily escalation cron with score penalties and collector WhatsApp alerts",
+      "Structured logging, in-memory metrics, and DailyMetric snapshots every 5 minutes",
     ],
     stack: ["Node.js", "Express", "PostgreSQL", "Prisma", "Claude API", "WhatsApp Cloud API", "Paystack", "Railway"],
     github: "https://github.com/Omodunjo11/Kova-Bot",
