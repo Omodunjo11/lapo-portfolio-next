@@ -28,11 +28,11 @@ const statusConfig = {
 
 const tickerItems = [
   { text: "Claude API", highlight: true }, { text: "0→1 Products" },
-  { text: "RAG Systems", highlight: true }, { text: "TypeScript" },
-  { text: "LLM Evaluation", highlight: true }, { text: "Python" },
+  { text: "TradeScore", highlight: true }, { text: "TypeScript" },
+  { text: "LLM Abstention", highlight: true }, { text: "Python" },
   { text: "Regulatory AI", highlight: true }, { text: "Next.js" },
-  { text: "Signal Intelligence", highlight: true }, { text: "Prisma" },
-  { text: "Role-Aware AI", highlight: true }, { text: "Google Drive API" },
+  { text: "Webhook-First", highlight: true }, { text: "Prisma" },
+  { text: "WhatsApp Credit", highlight: true }, { text: "Paystack" },
 ]
 
 const langColors: Record<string, string> = {
@@ -93,7 +93,7 @@ export default function ProjectsPage() {
             animation: "fadeUp .7s .7s ease both",
           }}
         >
-          Every project here started with a real problem, a team drowning in meeting transcripts, a compliance team missing regulatory signals, a chatbot that couldn&apos;t tell a founder from an analyst. I found the gap, designed the solution, and built the thing.
+          Every project here started with a real problem: forty million Nigerians with no credit file, a compliance team missing regulatory drift in live disclosures, a sales team losing call intelligence in Drive folders. I found the gap, designed the solution, and built the thing.
         </p>
       </div>
 
@@ -130,7 +130,7 @@ export default function ProjectsPage() {
               <p style={{ fontSize: 13, color: "var(--mid)", lineHeight: 1.9 }}>
                 Across these projects, I&apos;ve worked the full AI product surface:{" "}
                 <strong style={{ color: "var(--ink)" }}>defining the use case</strong>,{" "}
-                <strong style={{ color: "var(--ink)" }}>architecting the system</strong> (retrieval, context management, role-aware prompting),{" "}
+                <strong style={{ color: "var(--ink)" }}>architecting the system</strong> (retrieval, webhook pipelines, credit underwriting),{" "}
                 <strong style={{ color: "var(--ink)" }}>shipping the interface</strong>, and{" "}
                 <strong style={{ color: "var(--ink)" }}>measuring reliability</strong> in regulated environments where silent failures are liabilities.
               </p>
@@ -150,7 +150,7 @@ export default function ProjectsPage() {
           <div className="grid-4col" style={{ margin: "0 clamp(16px,6vw,48px)" }}>
             {[
               { icon: "🧩", title: "Product Definition", desc: "I find the real problem under the stated one. Every project here started from a workflow gap, not a feature request. I write specs, define success metrics, and kill bad ideas before they become bad code." },
-              { icon: "⚙️", title: "Technical Depth", desc: "LLM context windows, retrieval pipelines, role-aware prompting, async message queues, I understand the stack well enough to call out engineering tradeoffs in a design review, not just in a post-mortem." },
+              { icon: "⚙️", title: "Technical Depth", desc: "LLM context windows, retrieval pipelines, webhook architectures, credit scoring systems. I understand the stack well enough to call out engineering tradeoffs in a design review, not just in a post-mortem." },
               { icon: "📐", title: "Ship Velocity", desc: "All of this was built outside a big org. No platform team, no infra support. That forces ruthless prioritisation and an allergy to scope creep. I know what a v1 needs to be and what it can be later." },
               { icon: "🏛️", title: "Regulated Domains", desc: "Fintech, compliance, and enterprise AI are my home turf. I understand why a CISO blocks an LLM rollout and what it takes to make an AI product trustworthy enough to deploy inside a bank or regulator." },
             ].map((cap) => (

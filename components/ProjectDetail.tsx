@@ -77,15 +77,21 @@ export default function ProjectDetail({ project, prev, next }: Props) {
       <div className="grid-detail pad-section">
         <div style={{ display: "flex", flexDirection: "column", gap: 56 }}>
 
+          {/* The Problem */}
+          <div>
+            <SectionHeader num="01" label="The Problem" />
+            <p style={{ fontSize: 14, lineHeight: 1.95, color: "var(--mid)" }}>{project.problem}</p>
+          </div>
+
           {/* Overview */}
           <div>
-            <SectionHeader num="01" label="Overview" />
+            <SectionHeader num="02" label="Overview" />
             <p style={{ fontSize: 14, lineHeight: 1.95, color: "var(--mid)" }}>{project.overview}</p>
           </div>
 
           {/* Key Objectives */}
           <div>
-            <SectionHeader num="02" label="Key Objectives" />
+            <SectionHeader num="03" label="Key Objectives" />
             <ol style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 20 }}>
               {project.objectives.map((obj, i) => (
                 <li key={i} style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
@@ -101,7 +107,7 @@ export default function ProjectDetail({ project, prev, next }: Props) {
 
           {/* Methodology */}
           <div>
-            <SectionHeader num="03" label="Methodology" />
+            <SectionHeader num="04" label="Methodology" />
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 18 }}>
               {project.methodology.map((item, i) => (
                 <li key={i} style={{ display: "flex", gap: 14, alignItems: "flex-start", paddingLeft: 4 }}>
@@ -118,7 +124,7 @@ export default function ProjectDetail({ project, prev, next }: Props) {
           {/* Optional deep-dive sections */}
           {project.sections && project.sections.map((sec, i) => (
             <div key={i}>
-              <SectionHeader num={String(i + 4).padStart(2, "0")} label={sec.title} />
+              <SectionHeader num={String(i + 5).padStart(2, "0")} label={sec.title} />
               <p style={{ fontSize: 14, lineHeight: 1.95, color: "var(--mid)" }}>{sec.body}</p>
             </div>
           ))}

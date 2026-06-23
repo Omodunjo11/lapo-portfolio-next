@@ -28,236 +28,80 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "kinage-gtm",
-    name: "Kinage GTM",
-    role: "GTM Engineering · CRM Enrichment & ICP Pipeline",
-    year: "2026",
-    lang: "TypeScript",
-    category: ["fullstack", "automation"],
-    tagline: "The backend GTM layer that keeps HubSpot honest — webhook-triggered Clay enrichment, Claude ICP classification, and a live CRM activity feed built for a team that runs on signal.",
-    overview:
-      "A CRM is only as good as its data, and most CRM data is stale. Contacts get created from a form fill or an import and then sit untouched while the company evolves, the role changes, and the ICP fit shifts. Kinage GTM is the enrichment and classification layer that fixes this — triggering Clay enrichment on every new contact event, running Claude AI ICP classification on the enriched record, and surfacing the results in a live CRM activity feed. It's not a sales tool; it's the infrastructure that makes the sales tool accurate.",
-    objectives: [
-      {
-        title: "Webhook-Triggered Enrichment",
-        description: "Build a webhook receiver that fires a Clay enrichment job on each new HubSpot contact creation or update event, ensuring every record is enriched automatically without manual intervention.",
-      },
-      {
-        title: "Claude ICP Classification",
-        description: "Run Claude AI classification on each enriched contact record to assign an ICP score based on company stage, role, industry, and signal source overlap — stored back as a HubSpot property.",
-      },
-      {
-        title: "HAL Signal Source Matching",
-        description: "Cross-reference HubSpot contacts against HAL signal sources to identify which contacts are already appearing in the signal feed, surfacing the overlap as a high-priority contact segment.",
-      },
-      {
-        title: "CRM Activity Feed",
-        description: "Build a real-time activity log that captures every enrichment, ICP assignment, new contact, and record update as a timestamped event — giving the team a live view of CRM state without opening HubSpot.",
-      },
-    ],
-    methodology: [
-      {
-        title: "Webhook Architecture",
-        description: "Designed the HubSpot webhook handler with idempotency keys and deduplication logic so the same contact event never triggers duplicate enrichment runs or conflicting ICP assignments.",
-      },
-      {
-        title: "Enrichment Schema Design",
-        description: "Defined the Clay enrichment output schema before building the integration — specifying exactly which fields map back to HubSpot properties and in what format, to avoid data model drift.",
-      },
-      {
-        title: "ICP Classification Prompt Engineering",
-        description: "Built and iterated the Claude ICP classification prompt against a set of known-good and known-bad contacts before enabling it in production, calibrating confidence thresholds to the team's definition of fit.",
-      },
-      {
-        title: "Activity Feed Design",
-        description: "Modelled the activity feed event schema to support filtering by event type (enriched, ICP assigned, new contact, updated) without requiring separate API calls per filter — one feed, all event types.",
-      },
-    ],
-    sections: [
-      {
-        title: "Why Webhook-First Matters",
-        body: "Batch enrichment jobs run on a schedule and are always stale by the time they finish. Webhook-first enrichment means every new contact is enriched within seconds of creation, before anyone has a chance to act on an incomplete record. The tradeoff is complexity in the deduplication layer — HubSpot webhooks are not guaranteed-exactly-once, so the enrichment handler has to be idempotent. That's the engineering work that makes the product promise ('every contact is enriched') actually true.",
-      },
-      {
-        title: "The ICP Classification Loop",
-        body: "ICP classification isn't a one-time operation. As a contact's HubSpot record gets updated — role change, company funding event, new LinkedIn data from Clay — the classification should be re-evaluated. Kinage GTM treats ICP assignment as an event that can be triggered by any enrichment update, not just initial contact creation. The CRM activity feed captures every re-classification, so the team can see when a contact moved from 'not ICP' to 'ICP fit' and act on the change rather than missing it in a static list.",
-      },
-    ],
-    problem:
-      "HubSpot contacts were being created from imports and form fills and then sitting with stale, incomplete data. No enrichment was running automatically, ICP fit was being assessed manually, and the team had no live view of what the CRM was doing.",
-    what:
-      "A TypeScript GTM backend that triggers Clay enrichment on each HubSpot webhook event, runs Claude AI ICP classification on the enriched record, cross-references contacts against HAL signal sources, and surfaces everything in a live CRM activity feed. 37 contacts enriched via webhook today; 38 ICP-classified out of 500 total.",
-    pmAngle:
-      "The key product decision was making enrichment event-driven rather than scheduled. Scheduled jobs produce a CRM that's accurate once a week. Webhook-triggered enrichment produces a CRM that's accurate within seconds. That architectural choice has a real cost in deduplication complexity, and it was worth making.",
-    outcome:
-      "Automatic enrichment and ICP classification on every new HubSpot contact, with a live activity feed the team can trust to reflect current CRM state.",
-    features: [
-      "Webhook-triggered Clay enrichment on every HubSpot contact event",
-      "Claude AI ICP classification on enriched contact records",
-      "HAL signal source matching against HubSpot contact list",
-      "Live CRM activity feed: enriched, ICP assigned, new contacts, updated",
-      "Deduplication and idempotency handling for webhook delivery",
-      "Deployed and live on Vercel",
-    ],
-    stack: ["TypeScript", "Next.js", "Clay", "HubSpot API", "Claude API", "Vercel"],
-    github: "https://github.com/Omodunjo11/kinage-gtm",
-    live: "https://kinage-gtm.vercel.app",
-    featured: true,
-    status: "live" as const,
-  },
-  {
-    slug: "kinage-intelligence",
-    name: "Kinage Intelligence",
-    role: "AI Product · Signal Intelligence & GTM Platform",
-    year: "2026",
-    lang: "TypeScript",
-    category: ["ai", "fullstack"],
-    tagline: "Full-stack intelligence platform — signal feed, contact pipeline, and live CRM activity in one interface, powered by HAL signal sources, Clay enrichment, and Claude AI.",
-    overview:
-      "Kinage Intelligence started as a signal classification dashboard and grew into a full GTM intelligence platform at kinagehal.com. The core problem didn't change — raw signal noise had to become structured, actionable intelligence — but the scope expanded as it became clear that surfacing signals wasn't enough. You also need to know who to act on, how enriched their data is, whether they fit your ICP, and whether your CRM reflects any of that. The platform now covers all three layers: a real-time signal feed, a contact pipeline that syncs HubSpot with Clay enrichment and Claude AI classification, and a live CRM activity feed showing every enrichment, ICP assignment, and contact update as it happens.",
-    objectives: [
-      {
-        title: "Signal Ingestion Pipeline",
-        description: "Build a multi-source ingestion system that pulls from HAL signal sources, news APIs, and RSS feeds into a unified data model, classifying and ranking signals before they surface in the feed.",
-      },
-      {
-        title: "Contact Pipeline with ICP Classification",
-        description: "Build a contact pipeline that syncs HubSpot contacts (500+), cross-references them against HAL signal sources (152), and runs Claude AI classification to identify which contacts fit the ICP.",
-      },
-      {
-        title: "Clay Enrichment via Webhook",
-        description: "Integrate Clay to enrich HubSpot contacts on a webhook-triggered basis — each enrichment event fires automatically and writes structured data back to the CRM without manual intervention.",
-      },
-      {
-        title: "Live CRM Activity Feed",
-        description: "Build a real-time activity view that shows every HubSpot update — enrichments, ICP assignments, new contacts, and record modifications — so the team has a live pulse on CRM state.",
-      },
-    ],
-    methodology: [
-      {
-        title: "Signal Taxonomy First",
-        description: "Defined what counts as a signal, how it should be ranked, and what 'relevant' means to an analyst before writing any ingestion code. The data model came from that work, not the other way around.",
-      },
-      {
-        title: "Contact Pipeline Architecture",
-        description: "Designed the schema for how a HAL signal source maps to a HubSpot contact record before building the sync. Deduplication, LinkedIn matching, and ICP scoring were modelled first.",
-      },
-      {
-        title: "Clay + Claude Enrichment Design",
-        description: "Structured Clay enrichment as a webhook-triggered event that fires on each new contact import, with Claude AI running ICP classification on the enriched record and writing the result back to HubSpot.",
-      },
-      {
-        title: "Deployment to Production Domain",
-        description: "Shipped from Vercel preview to a custom production domain (kinagehal.com), with environment-controlled source configuration so signal sources and CRM settings can be toggled without code changes.",
-      },
-    ],
-    sections: [
-      {
-        title: "The Three-Layer Platform Architecture",
-        body: "Kinage Intelligence is now three connected layers in one interface. The Signal Feed layer classifies and ranks market signals from 152+ HAL sources into a filterable, trust-weighted feed. The Contact Pipeline layer maps those signals to real contacts in HubSpot, enriching each via Clay and scoring them against the ICP using Claude. The CRM Activity layer surfaces every downstream event — enrichments, ICP assignments, contact updates — as they happen via webhook. Each layer can be used independently, but the real value is the chain: a signal fires, a contact is enriched, an ICP score is assigned, and the activity log captures the full trail.",
-      },
-      {
-        title: "ICP Classification Design",
-        body: "ICP classification runs as part of the Clay enrichment flow. After Clay writes enriched company and role data to a contact record, Claude evaluates the contact against the Kinage ICP definition — company stage, role seniority, industry vertical, and signal source overlap — and assigns a classification. Of 500 HubSpot contacts, 38 have been ICP-classified so far (8% enrichment rate), with 152 identified via HAL signal sources. The classification is stored as a HubSpot property and drives downstream filtering in both the Contact Pipeline and CRM Activity views.",
-      },
-    ],
-    problem:
-      "Surfacing market signals wasn't enough — the team also needed to know which contacts to act on, whether their CRM data was accurate, and whether each contact fit the ICP. Three disconnected tools were handling three parts of one workflow.",
-    what:
-      "A full-stack intelligence platform at kinagehal.com with three integrated views: a real-time signal feed ranked by relevance and source trust, a contact pipeline that syncs 500+ HubSpot contacts against HAL signal sources with Clay enrichment and Claude AI ICP classification, and a live CRM activity feed showing enrichments, ICP assignments, and record updates via webhook.",
-    pmAngle:
-      "The platform expanded from a signal dashboard because I traced the full analyst workflow: signals surface a company, but the next question is always 'who do we contact and do they fit our ICP?' I designed the contact pipeline and CRM activity layer to answer that question without leaving the interface.",
-    outcome:
-      "A single platform covering the full intelligence-to-outreach loop — from raw signal classification to enriched, ICP-scored contacts with a live CRM activity trail.",
-    features: [
-      "Real-time signal feed from 152+ HAL signal sources",
-      "Contact pipeline: 500 HubSpot contacts synced and searchable",
-      "Clay enrichment via webhook — 37 contacts enriched today",
-      "Claude AI ICP classification on enriched contact records",
-      "Live CRM activity feed: enrichments, ICP assignments, new contacts",
-      "Deployed on custom production domain (kinagehal.com)",
-    ],
-    stack: ["Next.js", "TypeScript", "HubSpot API", "Clay", "Claude API", "Vercel"],
-    github: "https://github.com/Omodunjo11/kinage-intelligence",
-    live: "https://kinagehal.com",
-    featured: true,
-    status: "live" as const,
-  },
-  {
     slug: "kova-bot",
     name: "Kova",
     role: "Co-Founder · WhatsApp-Native Credit Infrastructure",
     year: "2025",
     lang: "JavaScript",
     category: ["ai", "fullstack"],
-    tagline: "WhatsApp-native financial platform for Nigeria's informal economy. Converts Ajo payment behaviour into a TradeScore credit identity, then unlocks KovaCredit loans with no app download required.",
+    tagline: "WhatsApp credit platform for Nigeria's informal economy. Builds a TradeScore from real payment behaviour, underwrites through a credit ladder, and lends via collectors who already know the borrower.",
     overview:
-      "Forty million Nigerians participate in Ajo rotating savings groups, market trading, and informal credit networks. They are financially active but invisible to traditional banks. Kova gives them a credit identity built entirely from payment behaviour. Every contribution recorded through a collector group updates a TradeScore (300-850). Once the score clears tier thresholds, users access KovaCredit loans directly through WhatsApp. No app to download. No web portal. No bank statement, payslip, or collateral. The entire product runs over a phone number.",
+      "Forty million Nigerians run their financial lives through Ajo savings groups, market trading, and informal credit networks. Banks cannot score them because the data lives in cash and WhatsApp, not bank statements. Kova is the credit layer on top of that reality: a WhatsApp-native platform where market traders, artisans, and transport workers build a TradeScore (300-850) from observed payments, pass a consent-based KYC flow, and access tiered KovaCredit loans without downloading an app. The score is built from five components (identity, capacity, behaviour, social trust, penalties). The credit ladder, not the score alone, controls risk: first loan is always capped at ₦10,000 regardless of score, growing only after each successful repayment. Collectors vouch for members they know personally, mirroring how informal lending actually works.",
     objectives: [
       {
-        title: "WhatsApp Onboarding State Machine",
-        description: "Ship a 7-step conversational onboarding flow in five languages (English, Pidgin, Yoruba, Igbo, Hausa) covering language selection, referral codes, role assignment, name capture, and group setup with contribution amount and frequency stored in kobo.",
+        title: "Five-Component TradeScore",
+        description: "Replace flat score deltas with five stored components: Identity (+150 max, BVN/NIN/verification), Capacity (+120 max, self-report capped at +50, bank statement up to +70), Behaviour (+250 max, on-time payments and settled loans), Social (+130 max, group standing, collector vouch, referrals), and Penalties. KYC and self-report alone cannot exceed 650. Single recomputeTradeScore(userId) function logs every change to TradeScoreEvent.",
       },
       {
-        title: "TradeScore Engine",
-        description: "Build a FICO-scale credit score (300-850) with three tiers, defined score deltas (+5 on-time, -10 late, -25 missed, -80 default), and a TradeScoreEvent audit log for every change. user.tradeScore in the DB is the single source of truth.",
+        title: "Credit Ladder + Affordability Cap",
+        description: "Loan limits follow completed loans, not score alone: ₦10k first loan, then ₦25k, ₦50k, ₦100k, then tier ceiling. Default resets to the bottom and freezes access. Final offer is min(tier ceiling, ladder limit, 50% of monthly income). Borrower sees why the number is what it is in plain language.",
       },
       {
-        title: "KovaCredit Loan Lifecycle",
-        description: "Implement end-to-end loan operations: tier-gated eligibility, Paystack disbursement, repayment recording with on-time/late detection, automatic settlement, 2% collector commission unlock, and overdue escalation with LOW/MEDIUM/HIGH severity tiers.",
+        title: "KYC + Starter Loan Hook",
+        description: "9-step WhatsApp KYC after NDPR consent: occupation, tenure, income band, bank account, prior loan history, BVN (encrypted), bank statement intent. On completion, recompute score and immediately offer a ₦5k-₦10k starter loan if eligible. VERIFY, ACCEPT, and PLAN commands wired into conversation flow.",
       },
       {
-        title: "Collector AI + Referral Growth",
-        description: "Give collectors natural-language control over groups via Claude (record payments, send reminders, disburse loans, view portfolio). Pair with a referral engine: unique codes, gokova.io/ref/CODE deep links, and referrer notification on a referee's first loan repayment.",
+        title: "Vouch Mechanic + Risk Flags",
+        description: "Collectors with score 550+ and a settled loan can vouch for up to 5 members (+60 to +100 to member's social component). Broken vouch costs collector -40 and reduces vouch power. RiskFlag model captures duplicate BVN, velocity patterns, max-loan-on-first-request, and collectors with 3+ broken vouches.",
       },
     ],
     methodology: [
       {
+        title: "Credit Ladder as Risk Control",
+        description: "Designed lending limits around completedLoanCount, not tier alone. A high score on day one still gets ₦10,000. Behavioural data from small, successful loans feeds the score before larger exposure. Default restructure via PLAN splits overdue loans into two payments with a recovery path instead of permanent punishment.",
+      },
+      {
+        title: "No Dead-End Conversations",
+        description: "Every state has a forward path. Not eligible yet means VERIFY, get a collector vouch, or start paying into a group. Post-KYC triggers immediate eligibility check. Post-repayment celebrates the ladder unlock. Replaced refusal-with-tips dead ends with concrete next actions.",
+      },
+      {
         title: "Webhook-First Architecture",
-        description: "Built stateless Express handlers for WhatsApp and Paystack webhooks. Each incoming message loads full context from the database on every request: user, onboarding state, last 20 conversation turns. HMAC-SHA256 signature validation. No in-memory session state that breaks on redeploy.",
+        description: "Stateless Express handlers for WhatsApp and Paystack. Each message loads user, onboarding state, and last 20 conversation turns from PostgreSQL. HMAC-SHA256 validation. Paystack charge.success, transfer.success, and transfer.failed wired to repayment, disbursement, and revert flows.",
       },
       {
-        title: "Role-Gated AI Tools",
-        description: "Filtered Claude tool definitions by user role before each turn. Collector Leads see loan disbursement and group management tools. End Users see only their own score and loan data. Four roles, four distinct tool sets. The AI cannot be social-engineered into actions outside a user's permissions.",
-      },
-      {
-        title: "Kobo Integer Arithmetic",
-        description: "Stored all monetary values as integers in kobo (₦1 = 100 kobo) across the database and business logic. Tier limits: ₦25,000 (Tier 1), ₦100,000 (Tier 2), ₦500,000 (Tier 3). Conversion to Naira happens only at display time. No floating-point arithmetic anywhere in the money path.",
-      },
-      {
-        title: "Dual DB Mode",
-        description: "Built a custom in-memory mock mirroring the Prisma client API exactly. Switching between mock and real Postgres is a single env var (DATABASE_URL). Local development and the 26-test suite run instantly with no database setup required.",
+        title: "Dual DB Mode + Test Coverage",
+        description: "In-memory Prisma mock for instant local dev. 38 automated tests covering scoring components, credit ladder, affordability cap, KYC flow, vouch honour/break, risk flags, and full loan lifecycle. All passing against mock before Railway deploy.",
       },
     ],
     sections: [
       {
-        title: "Why Webhook-First Beats Batch",
-        body: "WhatsApp and Paystack both deliver events asynchronously: charge.success, transfer.failed, incoming messages. A batch polling model would miss repayment windows, delay collector notifications, and break the real-time trust loop that informal credit networks depend on. The webhook-first design means every payment event triggers immediate score updates, borrower notifications, and referrer rewards within seconds. The Paystack handler already wires charge.success to recordRepayment, transfer.success to confirm disbursement, and transfer.failed to revert loan status. Each WhatsApp handler is fully self-contained: validate signature, extract referral code, getOrCreateUser, run onboarding state machine or Claude agentic loop, respond. Redeploys do not lose context because nothing lives in memory.",
+        title: "Three Rules That Govern the Whole System",
+        body: "Self-reported data gives small boosts only. It is easy to lie about and never unlocks a meaningful loan on its own. Verified data and observed behaviour give the real lift: BVN, bank statements, collector vouches, and on-time payments through Kova. The credit ladder, not the score, is the real risk control. A first loan is always tiny regardless of score. It grows only after each successful repayment. Never dead-end a conversation. If someone cannot get a loan yet, always offer the next concrete step: verify, get a vouch, or take a starter loan.",
       },
       {
-        title: "MVP 1 Proved the Machine. MVP 2 Makes It Real.",
-        body: "MVP 1 shipped the full loop: onboarding, TradeScore, loans, collector tools, referrals, Paystack webhooks, escalation cron, and observability across ~3,500 lines of code and 26 passing tests. MVP 2 is about real money and real trust. Priority one is Meta app review so any phone number can message the bot, not just test numbers. In parallel: bank account capture and BVN verification via Smile Identity or Mono before any real disbursement. Then real Paystack transfers to borrower accounts, repayment links that close the charge.success loop, loan approval workflow replacing auto-approve, collector vetting before disbursement authority, and a minimal admin dashboard for operations. The architecture is already built for this. MVP 2 is wiring the trust and money layers on top.",
+        title: "Cold Start: How a New Borrower Gets Their First Loan",
+        body: "A brand-new user has no behavioural history, so the system cannot lend blind. The cold-start path mirrors informal Ajo: a collector who knows them personally vouches (+60 to +100 on social component, collector stakes reputation with -40 penalty if the member defaults), or the borrower completes KYC and accepts a ₦5k-₦10k starter loan at the bottom of the ladder. KYC alone caps at 650 without verified income or real payment behaviour. After the first on-time repayment, completedLoanCount increments, the behaviour component grows, and the next loan unlocks at ₦25,000. The conversion moment is immediate: KYC done, eligibility checked, starter loan offered in the same WhatsApp session.",
       },
     ],
     problem:
-      "Traditional credit scoring in Nigeria requires formal employment records, bank statements, and collateral. This excludes market traders, artisans, transport workers, and small business owners who transact in cash through informal Ajo networks.",
+      "Market traders, artisans, and transport workers in Nigeria are financially active but credit-invisible. Banks need bank statements and collateral. Informal Ajo networks already extend credit based on personal trust, but that trust does not travel. Kova converts observed payment behaviour and collector relationships into a portable credit identity, starting small and growing only as repayment proves out.",
     what:
-      "A WhatsApp-native financial platform that converts informal payment behaviour into verifiable credit history, then underwrites loans at scale through a network of trusted collectors. Collectors manage groups through natural-language Claude tools. Borrowers build TradeScore from on-time contributions and access tier-gated KovaCredit loans via Paystack. Onboarding, payments, loan applications, and escalation alerts all happen in the same WhatsApp thread.",
+      "A WhatsApp-native credit platform I co-founded: five-component TradeScore, credit ladder underwriting, NDPR-compliant KYC over chat, collector vouch mechanic, Claude-powered collector tools, Paystack loan lifecycle, and risk flag capture. Built for the 40+ million Nigerians who already run their money through groups and messaging apps, not bank portals.",
     pmAngle:
-      "The product decision that shaped everything: meet users where they already are. WhatsApp is not a channel choice. It is the product surface. Distribution embeds into existing informal workflows instead of asking 40 million people to download something new. MVP 2 sequencing reflects the same logic: Meta app review and BVN verification block everything downstream, so those run in parallel before real money moves.",
+      "The hardest product problem was cold start: how do you score someone with no history without lending blind? The answer was not a better algorithm. It was designing the credit ladder (tiny first loan, grow on proof), the vouch mechanic (collector stakes their reputation), and conversation flows that never dead-end. Risk control lives in the ladder and affordability cap, not in hoping the score is right on day one.",
     outcome:
-      "MVP 1 shipped and live at gokova.io: 10 Prisma models on Railway PostgreSQL, 5-language onboarding, 4 user roles with distinct tool access, full loan lifecycle from application to settlement, and 26 automated tests covering loan lifecycle, referral linking, TradeScore gating, escalations, and collector portfolio.",
+      "38 passing tests, Vouch and RiskFlag models shipped, five-component scoring live on Railway PostgreSQL at gokova.io.",
     features: [
-      "7-step WhatsApp onboarding in 5 languages with PostgreSQL-persisted resume support",
-      "TradeScore engine (300-850) with TradeScoreEvent audit trail per score change",
-      "KovaCredit loan lifecycle: eligibility, disbursement, repayment, settlement, commission unlock",
-      "Referral growth engine with gokova.io/ref/CODE deep links and enumeration-safe redirects",
-      "Claude agentic loop with role-gated tools, 20-turn history, and WhatsApp-formatted output",
-      "Collector tools via natural language: payments, reminders, group summary, portfolio, commissions",
-      "Paystack webhooks: charge.success, transfer.success, transfer.failed",
-      "Outbound notifications with 3-attempt retry, exponential backoff, and deduplication",
-      "Daily escalation cron with score penalties and collector WhatsApp alerts",
-      "Structured logging, in-memory metrics, and DailyMetric snapshots every 5 minutes",
+      "Five-component TradeScore: identity, capacity, behaviour, social, penalties (300-850)",
+      "Credit ladder: ₦10k → ₦25k → ₦50k → ₦100k → tier ceiling by completed loans",
+      "Affordability cap: max loan is 50% of stated or verified monthly income",
+      "9-step WhatsApp KYC with NDPR consent, encrypted BVN, starter loan on completion",
+      "Collector vouch mechanic: +60 to +100 boost, -40 penalty on broken vouch, 5 active max",
+      "Conversation commands: VERIFY (KYC), ACCEPT (starter loan), PLAN (overdue restructure)",
+      "RiskFlag capture: duplicate BVN, velocity, max-first-request, broken vouch patterns",
+      "Claude agentic loop with role-gated tools and WhatsApp-formatted output",
+      "Paystack webhooks, referral engine, daily escalation cron, 5-language onboarding",
+      "38 automated tests, dual DB mode, deployed on Railway",
     ],
     stack: ["Node.js", "Express", "PostgreSQL", "Prisma", "Claude API", "WhatsApp Cloud API", "Paystack", "Railway"],
     github: "https://github.com/Omodunjo11/Kova-Bot",
@@ -266,76 +110,157 @@ export const projects: Project[] = [
     status: "live" as const,
   },
   {
-    slug: "glean-regulatory",
-    name: "Glean Regulatory",
-    role: "AI Product · Compliance Decision Infrastructure",
+    slug: "gtm-intelligence-platform",
+    name: "GTM Intelligence Platform",
+    role: "AI Product · Enterprise Signal & CRM Infrastructure",
     year: "2026",
     lang: "TypeScript",
     category: ["ai", "fullstack"],
-    tagline: "AI-assisted anomaly detection and risk classification for regulated institutions, surfacing what matters, suppressing what doesn't, with defensible audit trails.",
+    tagline: "Full-stack GTM intelligence: signal feed, webhook CRM enrichment, ICP classification, and live activity monitoring in one platform built for regulated enterprise sales teams.",
     overview:
-      "Compliance teams at financial institutions operate in an environment where missing a single regulatory update can trigger audit findings, fines, or enforcement action. Yet the current workflow at most institutions is a patchwork of email alerts, manual document review, and ad hoc searches across dozens of regulatory sources. The signal-to-noise ratio is brutal. Glean Regulatory is a purpose-built intelligence platform that tracks, surfaces, and prioritises regulatory changes for compliance analysts, designed around the compliance workflow, not a generic news aggregator.",
+      "Enterprise GTM teams drown in signal noise, stale CRM data, and manual ICP assessment. This platform closes the loop in one interface: a real-time signal feed ranked by source trust, a contact pipeline that syncs HubSpot with webhook-triggered Clay enrichment and Claude ICP classification, a Python AI backend with contract-first API design, event-driven analyst notifications, and a live CRM activity feed. Built as forward-deployed product work inside a regulated financial services client environment.",
     objectives: [
       {
-        title: "Multi-Source Tracking",
-        description: "Aggregate regulatory updates across SEC, CFPB, OCC, FINRA, and targeted state-level sources into a single normalised feed.",
+        title: "Signal Ingestion + Taxonomy",
+        description: "Ingest from 150+ signal sources, news APIs, and RSS feeds. Define signal tiers and ranking logic before writing ingestion code so the feed reflects analyst workflow, not raw data structure.",
       },
       {
-        title: "Compliance Workflow Integration",
-        description: "Design the interface around what compliance analysts actually do with regulatory updates, triage, assign, annotate, escalate, not just surface them.",
+        title: "Webhook CRM Enrichment Pipeline",
+        description: "Trigger Clay enrichment on every HubSpot contact event with idempotent webhook handlers. Run Claude ICP classification on enriched records and write results back as CRM properties.",
       },
       {
-        title: "Priority Ranking",
-        description: "Develop a relevance scoring model that weights updates by proximity to the institution's product lines, recency, and enforcement history context.",
+        title: "Decoupled AI Backend",
+        description: "Separate Python classification layer from Next.js frontend via versioned API contracts. Pydantic-validated responses so prompt changes ship without frontend redeploys.",
       },
       {
-        title: "Audit Readiness",
-        description: "Build action logging so every triage decision is timestamped and attributable, giving compliance teams a defensible record of their review process.",
+        title: "Analyst Notifications + Activity Feed",
+        description: "Event-driven notification routing filtered by interrupt criteria analysts defined in workflow research. Live activity feed captures enrichments, ICP re-classifications, and contact updates in one stream.",
       },
     ],
     methodology: [
       {
-        title: "Domain Research",
-        description: "Mapped the compliance analyst workflow through structured interviews, identifying the five highest-friction points in the current manual process.",
+        title: "Webhook-First Enrichment",
+        description: "Chose event-driven enrichment over batch jobs. Every new contact enriched within seconds. Built deduplication because HubSpot webhooks are not exactly-once.",
       },
       {
-        title: "Source Taxonomy",
-        description: "Catalogued 23 regulatory sources by jurisdiction, publication frequency, and relevance to the target institutions, then prioritised ingestion by analyst-reported impact.",
+        title: "ICP Re-Classification Loop",
+        description: "ICP assignment retriggers on any enrichment update, not just contact creation. Activity feed captures when a contact moves from not-ICP to ICP-fit so the team acts on the change.",
       },
       {
-        title: "UI Prototyping",
-        description: "Built low-fidelity wireframes tested with three compliance analysts before writing production UI, validating triage flow, filter logic, and notification thresholds.",
+        title: "Contract-First AI Layer",
+        description: "Defined request/response schemas before building frontend or backend. Modular classification per signal type with independent prompt and scoring logic.",
       },
       {
-        title: "Deployment",
-        description: "Shipped as a Next.js application on Vercel with environment-controlled source configuration, enabling institution-specific source sets without code changes.",
+        title: "Interrupt Criteria Design",
+        description: "Notification filtering rules came from analyst workflow research: what signal characteristics justify pulling someone out of their current work. Relevance over volume.",
       },
     ],
     sections: [
       {
-        title: "Relevance Scoring Model",
-        body: "Not all regulatory updates are equal, and showing a compliance analyst 200 updates of equal weight is no better than showing them nothing. The relevance model scores updates across three axes: product proximity (does this update affect our specific product category?), recency weight (how close to effective date?), and enforcement signal (does this source have a history of subsequent enforcement action?). The composite score drives visual prioritisation and notification thresholds.",
+        title: "Why Webhook-First Beats Batch",
+        body: "Batch enrichment is accurate once a week. Webhook enrichment is accurate within seconds. The product promise is every contact is enriched before anyone acts on an incomplete record. That requires idempotent handlers, deduplication logic, and accepting the engineering complexity of event-driven pipelines. For a GTM team running on signal speed, stale CRM data is not a minor inconvenience. It is a competitive disadvantage.",
       },
       {
-        title: "Why This Isn't Just a News Aggregator",
-        body: "The difference between a regulatory intelligence platform and a news aggregator is workflow integration. A news aggregator tells you what happened. Glean Regulatory tells you what to do about it, by surfacing the right update to the right analyst, attaching it to the relevant product line, and tracking whether it was acted on. The product is the workflow, not just the feed.",
+        title: "Three Layers, One Workflow",
+        body: "Signal Feed classifies and ranks market signals into a filterable feed. Contact Pipeline maps signals to HubSpot contacts, enriches via Clay, scores ICP fit via Claude. CRM Activity surfaces every downstream event as it happens. Notifications route only what earns an interrupt. The value is the chain: signal fires, contact enriched, ICP assigned, analyst notified, activity logged. Each layer works alone but the platform earns its keep when they connect.",
       },
     ],
     problem:
-      "Compliance teams at financial institutions miss regulatory changes because the signal is buried in dense documents scattered across dozens of sources. The workflow was manual, slow, and brittle, the exact conditions where a missed update becomes a liability.",
+      "Enterprise GTM teams were running signal monitoring, CRM enrichment, and ICP assessment as three disconnected workflows across separate tools. Signals surfaced companies but not who to contact. CRM data went stale within days. Nobody had a live view of what the CRM was doing.",
     what:
-      "A Next.js regulatory intelligence platform that surfaces, tracks, and prioritises regulatory updates for compliance analysts. Designed around the actual compliance workflow, not a developer console or a generic feed, but a tool that fits into how analysts actually operate.",
+      "A full-stack GTM intelligence platform: signal feed, HubSpot contact pipeline with webhook Clay enrichment, Claude ICP classification, Python AI backend with API contracts, event-driven analyst notifications, and live CRM activity monitoring. Shipped to production on Vercel.",
     pmAngle:
-      "I shadowed the compliance workflow before writing a spec. The product decisions, what to surface, how to rank it, what actions to expose, came from understanding what 'relevant' means inside a regulated institution. That research is what separates this from a generic news aggregator.",
+      "I traced the full analyst workflow before expanding scope. Surfacing a signal is step one. The product question is always who do we contact and do they fit our ICP? The platform architecture follows that sequence, not the other way around.",
     outcome:
-      "A purpose-built intelligence layer for compliance teams, designed to surface what matters and suppress what doesn't.",
+      "500+ HubSpot contacts synced, 150+ signal sources ingested, production deployment on custom domain with webhook enrichment live.",
     features: [
-      "Regulatory update tracking across multiple sources",
-      "Analyst-first UI designed around the compliance workflow",
-      "Priority and recency ranking for regulatory changes",
-      "Full-stack Next.js with live deployment",
+      "Real-time signal feed with trust-weighted ranking",
+      "Webhook-triggered Clay enrichment on HubSpot events",
+      "Claude ICP classification with re-classification on enrichment updates",
+      "Python AI backend with Pydantic-validated API contracts",
+      "Event-driven analyst notifications with interrupt filtering",
+      "Live CRM activity feed with event-type filtering",
     ],
-    stack: ["Next.js", "TypeScript", "Vercel", "Regulatory Data APIs"],
+    stack: ["Next.js", "TypeScript", "Python", "HubSpot API", "Clay", "Claude API", "Vercel"],
+    github: "https://github.com/Omodunjo11/kinage-intelligence",
+    live: "https://kinage-intelligence.vercel.app",
+    featured: true,
+    status: "live" as const,
+  },
+  {
+    slug: "regulatory-compliance-cockpit",
+    name: "Regulatory Compliance Cockpit",
+    role: "AI Product · RegTech Compliance Operations",
+    year: "2026",
+    lang: "TypeScript",
+    category: ["ai", "fullstack"],
+    tagline: "Mission control for compliance officers: detect regulatory drift in live disclosures, triage violations, and drive remediation before a regulator does.",
+    overview:
+      "Regulatory drift is when a legal disclosure template, fee schedule, or customer notice gets quietly edited in ways that violate CFPB, RESPA, TILA, ECOA, or CAN-SPAM obligations. These silent changes can expose a firm to multi-million dollar enforcement actions. This prototype answers one question: how do you detect the moment a compliance obligation is no longer satisfied, surface it to the right owner, and drive resolution before a regulator does? Built as a full-product SaaS prototype with 6+ views, mock enforcement scenarios, and production-quality UX on Next.js 16.",
+    objectives: [
+      {
+        title: "Live Risk Cockpit",
+        description: "Surface the highest-severity open compliance event in real time with exposure estimate, SLA breach status, assigned owner, and evidence gaps in a single command view.",
+      },
+      {
+        title: "Obligation Traceability Graph",
+        description: "Trace the chain Regulation to Obligation to Asset to Owner so compliance officers see exactly why a drift event is a violation, not just that something changed.",
+      },
+      {
+        title: "Monitoring + Response Workspace",
+        description: "Real-time alert feed from scanning disclosure templates across source systems (CMS, e-signature, email platforms) with per-event remediation: assign owner, attach evidence, run checklist, track resolution.",
+      },
+      {
+        title: "Exam Simulation + Market Intel",
+        description: "Simulate regulator audit readiness against current documentation. Surface peer enforcement actions for the same violation type currently open internally.",
+      },
+    ],
+    methodology: [
+      {
+        title: "Workflow-First UI Design",
+        description: "Mapped compliance officer triage flow before building views: cockpit banner, expandable events feed, breakdown deep-dive, response workspace. Context-driven drawer system keeps officers in flow without page navigation.",
+      },
+      {
+        title: "Regulatory Citation Modelling",
+        description: "Modelled real regulatory citations with accurate obligation structures and enforcement scenarios in mock data. Fragility signals flag obligations that have failed multiple times as structural root causes.",
+      },
+      {
+        title: "Business Unit Risk Scoring",
+        description: "Per-business-unit risk scorecards with delta trending and top risk driver attribution so leadership sees concentration, not just individual events.",
+      },
+      {
+        title: "AI-Era Compliance Gap",
+        description: "Designed around the emerging obligation to keep AI model disclosures current with model versions as lenders deploy AI-driven credit decisions and adverse action notices.",
+      },
+    ],
+    sections: [
+      {
+        title: "Why This Is Not a News Aggregator",
+        body: "A news aggregator tells you what happened. This cockpit tells you what to do about it: which obligation is violated, which asset drifted, who owns remediation, whether evidence exists, and whether peer firms were fined for the same issue. The product is the workflow from detection to resolution, not the feed of regulatory updates.",
+      },
+      {
+        title: "The Obligation Graph",
+        body: "Every compliance event traces through Regulation to Obligation to Asset to Owner. When a disclosure template in Salesforce CMS drifts from its approved version, the system shows the specific regulatory citation, the obligation text, the template diff, and the responsible owner. Compliance officers do not hunt through documents. They act on structured violations with evidence packs attached.",
+      },
+    ],
+    problem:
+      "Compliance teams at financial institutions miss regulatory drift because disclosure templates, fee schedules, and customer notices change silently across CMS, e-signature, and email systems. A missed obligation can become a multi-million dollar enforcement action.",
+    what:
+      "A regulatory compliance intelligence cockpit prototype: live risk banner, compliance events feed, obligation graph, monitoring feed, business unit risk scores, peer enforcement intelligence, fragility signals, exam simulation, and per-event response workspace. Six views, mock-data-driven, production UX.",
+    pmAngle:
+      "I designed around the compliance officer's actual triage loop, not a developer console. The drawer-based deep-dive keeps officers in context. Exam simulation and peer enforcement intel answer the question every officer asks after a violation surfaces: how bad could this get?",
+    outcome:
+      "Full-product RegTech prototype with 6+ views, obligation traceability graph, and live deployment on Vercel.",
+    features: [
+      "Live risk banner with exposure estimate and SLA breach status",
+      "Compliance events feed with regulation citation and customer impact",
+      "Obligation graph: Regulation to Obligation to Asset to Owner",
+      "Real-time monitoring feed across CMS, e-signature, and email sources",
+      "Business unit risk scorecards with delta trending",
+      "Peer enforcement intelligence and fragility signals",
+      "Exam simulation and per-event response workspace with evidence packs",
+    ],
+    stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel"],
     github: "https://github.com/Omodunjo11/Glean-Regulatory-Updated",
     live: "https://glean-regulatory-updated.vercel.app",
     featured: true,
@@ -344,75 +269,76 @@ export const projects: Project[] = [
   {
     slug: "transcript-intelligence",
     name: "Transcript Intelligence",
-    role: "AI Automation · Structured Knowledge Extraction Pipeline",
+    role: "AI Automation · Sales Intelligence Pipeline",
     year: "2026",
     lang: "Python",
     category: ["ai", "automation"],
-    tagline: "Automated knowledge extraction pipeline, schema-constrained LLM orchestration that converts raw meeting transcripts into structured, actionable intelligence.",
+    tagline: "Production AI pipeline that turns sales call transcripts into structured CRM records within minutes of a call ending, zero manual steps.",
     overview:
-      "The average knowledge worker spends 4+ hours a week in meetings and captures almost nothing actionable from them. Meeting notes, when they exist, are scattered across Drive folders with inconsistent structure, no tagging, and no follow-through. Insights stay trapped in transcripts nobody re-reads. This project builds a fully automated pipeline that converts raw meeting transcripts into structured intelligence documents, without any manual step between recording and output.",
+      "A B2B fintech startup in elder care financial management was running discovery calls with daily money managers and elder care professionals, a specialized high-trust buyer segment. Auto-generated meeting transcripts piled up in Google Drive with no systematic extraction of pain points, commitments, or follow-ups. I built a production pipeline that watches Drive for new transcripts, analyzes each with Claude or GPT-4.1, extracts structured intelligence, writes formatted summaries back to Drive, and syncs records to Fibery as CRM-quality call summaries.",
     objectives: [
       {
-        title: "Automated Trigger",
-        description: "Watch a Google Drive folder for new transcript files and trigger the analysis pipeline automatically on each new upload, no human initiation required.",
+        title: "End-to-End Automation",
+        description: "Drive folder watcher triggers analysis on each new transcript automatically. No human initiation. Idempotent processed-files tracking prevents duplicate runs.",
       },
       {
-        title: "Structured Output Schema",
-        description: "Design a document schema that captures what teams actually need to act on: key insights, decisions made, pain points raised, and next steps with owners.",
+        title: "Schema-Constrained Extraction",
+        description: "Structured prompt extracts three intelligence types on every call: insights, pain points, and next steps. Regex-based section parser handles model output format with fallback for empty sections.",
       },
       {
-        title: "LLM Constraint Design",
-        description: "Constrain Claude to produce the defined output schema reliably, not allow it to summarise in whatever format felt natural to the model.",
+        title: "Dual-Provider LLM",
+        description: "Config-switchable between Claude Sonnet and GPT-4.1 via single env flag. Both providers retry 3x with exponential backoff. Token usage logged per run for cost tracking.",
       },
       {
-        title: "Drive Integration",
-        description: "Write the structured output back to Drive as a formatted Google Doc, in the same folder structure as the source transcript, with consistent naming.",
+        title: "Fibery GTM Sync",
+        description: "Custom HTTP client against Fibery commands and documents APIs pushes structured call data to GTM workspace. Handles Token and Bearer auth fallback for rich-text fields.",
       },
     ],
     methodology: [
       {
-        title: "Schema Design First",
-        description: "Before writing any prompt engineering, defined the output schema by asking: what does a team need from a meeting summary to actually act on it within 24 hours?",
+        title: "Schema Before Prompt",
+        description: "Defined what the sales team needs from a call summary to act within 24 hours before writing any prompt engineering. LLM constrained to that format, not left to summarize freely.",
+      },
+      {
+        title: "Production Reliability",
+        description: "Idempotent file tracking, retry-with-backoff on LLM calls, filename regex filtering, local-folder dev mode without Google OAuth, and pytest suite for parsing and DOCX extraction.",
       },
       {
         title: "Drive API Integration",
-        description: "Implemented a Google Drive folder watcher using the Drive Changes API, with file type filtering to avoid triggering on non-transcript uploads.",
+        description: "Polls Drive for new files, downloads via native Google Docs export or DOCX, writes formatted output back with consistent section ordering and heading hierarchy.",
       },
       {
-        title: "Claude Prompt Engineering",
-        description: "Engineered a structured output prompt that forces JSON-compatible section extraction, tested across 40 historical transcripts before production deployment.",
-      },
-      {
-        title: "Output Formatting",
-        description: "Used the Google Docs API to write structured summaries with heading hierarchy, bold key terms, and consistent section ordering matching the schema.",
+        title: "Domain-Specific Prompting",
+        description: "Prompt engineered for elder care fintech discovery conversations in a high-trust buyer segment, not generic meeting summaries.",
       },
     ],
     sections: [
       {
         title: "Why Schema-First Matters",
-        body: "The natural instinct is to prompt the LLM to 'summarise this meeting' and let it decide what to include. That produces summaries that feel thorough but are nearly impossible to act on, because each summary is structured differently and prioritises different things. The schema-first approach means every output answers the same questions in the same order: What was decided? What pain points came up? Who owns what next step? Teams can scan it in 90 seconds.",
+        body: "Prompting the model to summarize a meeting produces output that feels thorough but is impossible to act on because every summary is structured differently. The schema-first approach means every output answers the same questions in the same order: What insights emerged? What pain points came up? Who owns what next step? Sales teams scan it in 90 seconds and Fibery gets a consistent record.",
       },
       {
-        title: "Handling Transcript Quality Variance",
-        body: "Meeting transcripts vary widely in quality, some are clean Zoom auto-transcripts, others are noisy Otter.ai files with speaker attribution errors and filler words. The preprocessing step normalises these before passing to Claude: strip filler patterns, fix speaker attribution where possible, and chunk long transcripts to stay within context limits while preserving logical meeting segments.",
+        title: "Built for Unattended Operation",
+        body: "This was not a demo. The sales team had to rely on outputs in Fibery without checking whether the pipeline ran. That meant idempotent processing, structured logging, dual-provider failover, and local dev mode for offline testing. Production AI automation fails when the happy path works but edge cases silently drop files.",
       },
     ],
     problem:
-      "Meeting notes were scattered across Drive folders with no consistency, no structure, and no follow-through. Insights stayed trapped in transcripts nobody re-read.",
+      "Sales discovery call transcripts were piling up in Google Drive with no structured extraction. Pain points, commitments, and follow-ups were getting lost between the call ending and the CRM being updated.",
     what:
-      "A Python pipeline that watches a Google Drive folder for new meeting transcripts. Each new file triggers a Claude AI analysis that produces a structured summary: key insights, pain points raised, decisions made, and next steps, written back to Drive as a formatted document automatically.",
+      "A Python pipeline connecting Google Drive to Claude/GPT-4.1 to Fibery. Watches for new transcripts, extracts insights/pain points/next steps, writes formatted Google Docs, and syncs structured records to a GTM workspace with zero manual steps.",
     pmAngle:
-      "I designed the output schema before touching the Claude prompt. What does the team actually need from a meeting summary to act on it? That question drove the structure. The LLM was constrained to produce that format, not left to generate whatever felt natural.",
+      "I designed the output schema from the sales team's actual workflow, not from what the LLM naturally produces. The pipeline is only as valuable as the structure it enforces on unstructured conversation data.",
     outcome:
-      "Eliminated the manual meeting-notes process entirely. Structured intelligence is available in Drive within minutes of a meeting ending.",
+      "Production pipeline running unattended with dual LLM providers, Fibery sync, and idempotent Drive processing.",
     features: [
-      "Google Drive folder watcher, triggers on new transcript files",
-      "Claude AI analysis with structured output schema",
-      "Automatic extraction of insights, pain points, and next steps",
-      "Formatted document written back to Drive",
-      "Output schema designed from analyst workflow, not LLM defaults",
+      "Google Drive folder watcher with regex filename filtering",
+      "Claude Sonnet + GPT-4.1 with config-switchable provider",
+      "Structured extraction: insights, pain points, next steps",
+      "Formatted Google Doc output written back to Drive",
+      "Fibery GTM workspace sync via custom API client",
+      "Idempotent processing, retry-with-backoff, local dev mode, pytest suite",
     ],
-    stack: ["Python", "Claude API", "Google Drive API", "Google Docs API"],
+    stack: ["Python", "Claude API", "OpenAI API", "Google Drive API", "Fibery API", "pytest"],
     github: "https://github.com/Omodunjo11/Kinage-Transcript-Tool",
     featured: true,
     status: "live" as const,
@@ -420,77 +346,77 @@ export const projects: Project[] = [
   {
     slug: "llm-reliability",
     name: "LLM System Reliability",
-    role: "AI Infrastructure · Evaluation & Drift Detection",
+    role: "AI Engineering · RAG Trust Layer",
     year: "2026",
     lang: "Python",
     category: ["ai", "systems"],
-    tagline: "LLM evaluation framework for regulated environments, drift detection, regression harnesses, and failure-mode classification calibrated to compliance-grade tolerances.",
+    tagline: "Hand-rolled RAG pipeline from scratch: grounded retrieval, confidence scoring, and graceful abstention when evidence is insufficient.",
     overview:
-      "In regulated environments, finance, healthcare, legal, a silent LLM failure isn't just a product bug. It's a compliance incident. Most AI teams catch model drift in post-mortems, after a user reports something wrong. This project builds the tooling to catch it before it reaches users: a Python toolkit for measuring LLM reliability in production, covering drift detection across model updates, regression testing harnesses, and failure mode classification with severity scoring calibrated to regulated-industry tolerances.",
+      "LLMs confidently hallucinate when they lack reliable source material. Most teams bolt on LangChain and hope for the best. This project implements the three reliability primitives of a production LLM pipeline from scratch with zero ML framework dependency: grounded retrieval over authoritative documents, confidence scoring before generation, and explicit abstention when confidence falls below threshold. An engineering study in when an AI system should say I do not know.",
     objectives: [
       {
-        title: "Drift Monitoring",
-        description: "Build detection tooling that flags statistically significant changes in model output behaviour across software updates, prompt changes, or underlying model version switches.",
+        title: "Grounded Retrieval",
+        description: "Keyword search over a curated document corpus. Generation only proceeds from retrieved, authoritative content, not model memory.",
       },
       {
-        title: "Regression Test Harnesses",
-        description: "Create reproducible evaluation harnesses that run on every deployment and catch regressions against a curated set of high-stakes queries.",
+        title: "Confidence Scoring + Abstention Gate",
+        description: "Score confidence as min(1.0, len(results) x 0.4). Below 0.5 threshold, refuse to answer rather than guess. The abstention gate is a core production reliability requirement.",
       },
       {
-        title: "Failure Mode Classification",
-        description: "Develop a taxonomy of LLM failure types, hallucination, refusal drift, confidence miscalibration, format degradation, with severity scores calibrated to regulated industry impact.",
+        title: "Conditional Generation",
+        description: "When confidence clears threshold, synthesize answer strictly from retrieved documents via a dedicated generation module.",
       },
       {
-        title: "Audit-Friendly Reporting",
-        description: "Produce structured, timestamped reliability reports that can be included in compliance documentation and model governance reviews.",
+        title: "Faithfulness Evaluation",
+        description: "Measure answer-to-context word overlap as a faithfulness score. Demonstrates awareness of hallucination detection without external eval frameworks.",
       },
     ],
     methodology: [
       {
-        title: "Failure Mode Research",
-        description: "Catalogued 18 distinct LLM failure patterns from production incident logs and academic literature, then ranked by severity in regulated environments.",
+        title: "Modular Pipeline Design",
+        description: "Four independent modules: retrieval.py, abstention.py, generation.py, evaluation.py. Each swappable without breaking the pipeline. Any retrieval backend (vector DB, BM25, hybrid) can slot in later.",
       },
       {
-        title: "Baseline Capture",
-        description: "Built tooling to snapshot model behaviour across a standardised prompt battery at each deployment, creating the baseline against which drift is measured.",
+        title: "No Framework Dependency",
+        description: "Pure Python stdlib plus JSON document store. Built to prove understanding of the trust layer, not to call LangChain wrappers.",
       },
       {
-        title: "Statistical Drift Detection",
-        description: "Implemented drift detection using output distribution comparison across prompt categories, flagging shifts above configurable significance thresholds.",
+        title: "Confidence Calibration",
+        description: "Tuned abstention threshold against sample queries where insufficient evidence should produce refusal, not confident wrong answers.",
       },
       {
-        title: "Severity Calibration",
-        description: "Worked backwards from compliance incident definitions to assign severity scores, a confidence miscalibration in a legal context scores higher than the same failure in a consumer setting.",
+        title: "Faithfulness as Proxy Metric",
+        description: "Word-overlap faithfulness score between generated answer and retrieved context as a lightweight hallucination detector for the prototype stage.",
       },
     ],
     sections: [
       {
-        title: "What 'Reliability' Means in Regulated Contexts",
-        body: "Consumer AI reliability is usually measured by user satisfaction. Regulated industry reliability is measured by whether the output would survive regulatory scrutiny. Those are very different standards. A model that confidently answers 'no adverse events found' when it actually hallucinated a clean record isn't just unhelpful, it's a liability. The severity scoring in this toolkit is calibrated to that standard, not to CSAT metrics.",
+        title: "When Should an AI Say I Do Not Know",
+        body: "Consumer AI optimizes for helpfulness. Production AI in regulated contexts must optimize for correctness under uncertainty. The abstention gate is the difference between a system that admits insufficient evidence and one that fabricates an answer with full confidence. This project makes that gate explicit, measurable, and configurable rather than buried inside a framework default.",
       },
       {
-        title: "The Regression Test Design",
-        body: "The regression harness is built around 'golden queries', a curated set of prompts where the correct output is known and agreed upon by domain experts. On each deployment, the harness re-runs every golden query and diffs outputs against the stored baseline. Changes above a semantic similarity threshold trigger a review gate. The golden query set is version-controlled and treated as a first-class product artifact.",
+        title: "The Pipeline",
+        body: "User query enters retrieval.py for keyword search over sample_docs.json. abstention.py scores confidence from result count. Below 0.5, the system abstains. Above 0.5, generation.py synthesizes from retrieved docs only. evaluation.py computes faithfulness as word overlap between answer and context divided by answer length. Each stage is independently testable and replaceable.",
       },
     ],
     problem:
-      "In regulated environments, a silent LLM failure isn't just a product bug, it's a compliance issue. Most teams catch drift in post-mortems. I built tooling to catch it before it hits users.",
+      "Production LLM deployments fail when models answer confidently without sufficient evidence. Most teams discover this in post-mortems, not at design time.",
     what:
-      "A Python toolkit for measuring and improving reliability in production LLM systems. Covers drift monitoring across model updates, evaluation harnesses for regression testing, and failure mode analysis, with particular focus on the kinds of silent failures that matter most in regulated industries.",
+      "A minimal hand-rolled RAG system in Python: retrieval, confidence estimation, conditional generation, and faithfulness evaluation. No LangChain. Four swappable modules proving the trust layer above the model.",
     pmAngle:
-      "This is a product reliability problem wearing engineering clothes. I designed the evaluation criteria from user impact backward, not from what the model metrics made easy to measure, but from what a failure would actually cost a compliance officer or a financial analyst.",
+      "I built this from scratch because specifying RAG systems for regulated clients requires understanding what happens when retrieval returns nothing. The abstention gate is a product decision disguised as an engineering detail.",
     outcome:
-      "A practical reliability layer that surfaces LLM degradation before it becomes a user-facing or compliance problem.",
+      "Complete four-stage RAG pipeline with abstention gate and faithfulness evaluator, zero framework dependencies.",
     features: [
-      "Drift monitoring across model versions and updates",
-      "Evaluation harnesses for regression testing",
-      "Failure mode classification with severity scoring",
-      "Designed for regulated-industry failure tolerances",
-      "Audit-friendly logging and reporting",
+      "Keyword retrieval over curated document corpus",
+      "Confidence scoring with configurable abstention threshold",
+      "Conditional generation from retrieved context only",
+      "Faithfulness evaluator measuring answer-to-context overlap",
+      "Modular architecture: retrieval, abstention, generation, evaluation",
     ],
-    stack: ["Python", "LLM Evaluation", "MLOps", "Drift Detection"],
+    stack: ["Python", "RAG", "Retrieval", "Abstention", "Evaluation"],
     github: "https://github.com/Omodunjo11/llm-system-reliability",
-    status: "live" as const,
+    status: "built" as const,
   },
   {
     slug: "ai-retrieval-core",
@@ -555,7 +481,7 @@ export const projects: Project[] = [
     pmAngle:
       "An AI PM who understands retrieval latency makes better calls when the engineering team says 'this approach won't scale.' I built this not to be an infrastructure engineer but to earn credibility in those conversations, and to know when to push back.",
     outcome:
-      "First-principles understanding of the performance tradeoffs in retrieval systems that informs every RAG product decision I make.",
+      "Benchmarked flat vs IVF search across 10K-1M vectors with concrete sub-10ms latency thresholds at 1536d.",
     features: [
       "Vector similarity search implementation in C++",
       "Index construction and query routing from scratch",
@@ -565,76 +491,6 @@ export const projects: Project[] = [
     stack: ["C++", "Vector Search", "Indexing", "Retrieval Systems"],
     github: "https://github.com/Omodunjo11/ai-retrieval-core-cpp",
     status: "built" as const,
-  },
-  {
-    slug: "kinage-ai-layer",
-    name: "Kinage AI Layer",
-    role: "AI Backend · Decoupled Intelligence Orchestration",
-    year: "2026",
-    lang: "Python",
-    category: ["ai", "automation"],
-    tagline: "Decoupled AI orchestration layer, contract-first API design separating intelligence reasoning from product interface for independent deployment and iteration.",
-    overview:
-      "As the Kinage Intelligence dashboard grew in complexity, it became clear that coupling AI reasoning logic to the frontend code would create a maintenance problem, any prompt change or model update would require frontend deployment, and any UI iteration would risk breaking AI behaviour. The Kinage AI Layer is the Python backend that decouples the intelligence and reasoning layer from the product interface, exposing clean API contracts so each can evolve independently.",
-    objectives: [
-      {
-        title: "Separation of Concerns",
-        description: "Design a clean API boundary between the AI reasoning layer and the frontend dashboard, so each team can iterate independently without cross-system breakages.",
-      },
-      {
-        title: "Signal Classification Pipeline",
-        description: "Build the intelligence pipeline that ingests raw data, classifies signals by type and relevance, and returns structured output matching the dashboard's data contract.",
-      },
-      {
-        title: "API Contract Design",
-        description: "Define and version the API contract before either layer is built, establishing the shared interface that prevents frontend-backend coupling.",
-      },
-      {
-        title: "Independent Deployment",
-        description: "Structure the layer for independent deployment, so AI model updates, prompt changes, and classification logic improvements ship without touching the frontend.",
-      },
-    ],
-    methodology: [
-      {
-        title: "Contract-First Design",
-        description: "Defined the API contract (request schema, response schema, error states) in a shared spec document before writing either the Python backend or the Next.js frontend.",
-      },
-      {
-        title: "Classification Architecture",
-        description: "Built a modular classification pipeline where each signal type (market news, company mention, thematic shift) runs through a dedicated classification module with its own prompt and scoring logic.",
-      },
-      {
-        title: "Output Schema Validation",
-        description: "Implemented Pydantic models for all API responses, ensuring that the AI layer never returns unstructured output and that contract violations are caught at the boundary, not in the UI.",
-      },
-      {
-        title: "Versioning Strategy",
-        description: "Designed the API versioning scheme to allow breaking changes in AI classification logic without requiring simultaneous frontend updates.",
-      },
-    ],
-    sections: [
-      {
-        title: "Why the Separation Matters",
-        body: "In a coupled system, changing 'how we classify a market signal' requires touching the frontend, re-testing the UI, and coordinating a joint deployment. In a decoupled system, the classification logic is a backend concern, the frontend only cares that the API contract is honoured. As the AI landscape shifts (better models, cheaper inference, new classification approaches), the decoupled architecture means we can upgrade the intelligence layer without a product freeze.",
-      },
-    ],
-    problem:
-      "The Kinage Intelligence dashboard needed a clean separation between the AI reasoning layer and the product interface, so each could evolve independently without breaking the other.",
-    what:
-      "The Python AI backbone for the Kinage platform. Handles the intelligence and reasoning layer between raw data ingestion and the structured outputs the dashboard surfaces. Exposes clean API contracts so the frontend product can consume structured intelligence without coupling to the AI implementation.",
-    pmAngle:
-      "I designed the API contract between this layer and the frontend before either was built. Clean separation of concerns is a product architecture decision as much as an engineering one, it determines how fast the team can move independently on each side.",
-    outcome:
-      "A modular AI layer that lets the Kinage intelligence dashboard evolve its UI without touching the reasoning logic, and vice versa.",
-    features: [
-      "Python AI reasoning layer with clean API contracts",
-      "Signal processing and classification pipeline",
-      "Structured output schema matching dashboard requirements",
-      "Decoupled from frontend for independent deployment",
-    ],
-    stack: ["Python", "AI / ML", "REST API", "Signal Processing"],
-    github: "https://github.com/Omodunjo11/Kinage-AL-",
-    status: "live" as const,
   },
   {
     slug: "incident-command",
@@ -695,7 +551,7 @@ export const projects: Project[] = [
     pmAngle:
       "Built from real incident post-mortems. The UX decisions came from watching how coordination actually breaks down under pressure, not from copying a project management template. The interface is opinionated because incidents don't benefit from optionality.",
     outcome:
-      "Faster mean-time-to-resolution by cutting the coordination overhead that compounds every incident.",
+      "Opinionated incident UI built from 14 post-mortems, validated in tabletop simulations with the engineering team.",
     features: [
       "Centralised command interface for live incidents",
       "Decision owner tracking with timestamp logging",
@@ -765,7 +621,7 @@ export const projects: Project[] = [
     pmAngle:
       "The most useful output from this project wasn't the assistant itself, it was clarity on where agentic AI earns trust and what guardrails actually need to look like in practice. That understanding directly shapes how I evaluate and spec agentic AI products.",
     outcome:
-      "Hands-on intuition about agentic AI failure modes that no amount of reading about it can replace.",
+      "90-day failure log produced a trust-scoring framework mapping action categories to autonomy levels.",
     features: [
       "Task orchestration across personal and professional workflows",
       "Context-aware response generation",
@@ -775,76 +631,6 @@ export const projects: Project[] = [
     stack: ["Python", "Claude API", "AI Agents", "Automation"],
     github: "https://github.com/Omodunjo11/Personal-Assistant-",
     status: "built" as const,
-  },
-  {
-    slug: "kinage-notifications",
-    name: "Kinage Notifications",
-    role: "Platform · Event-Driven Messaging",
-    year: "2026",
-    lang: "JavaScript",
-    category: ["fullstack", "automation"],
-    tagline: "The right signal, to the right analyst, at the right time.",
-    overview:
-      "Notification systems fail in one of two ways: they send too much and train users to ignore everything, or they send too little and miss the events that matter. The Kinage notification layer was designed to walk that line, delivering only the signals that warrant an analyst's attention while suppressing the ambient noise that would otherwise cause alert fatigue and adoption drop-off.",
-    objectives: [
-      {
-        title: "Event-Driven Architecture",
-        description: "Build a real-time notification delivery system on an event-driven backbone, so analyst alerts fire within seconds of a signal being classified, not on a polling schedule.",
-      },
-      {
-        title: "Multi-Channel Routing",
-        description: "Route notifications across email, in-app, and push channels based on signal priority and analyst preference, with channel fallback logic for high-priority signals.",
-      },
-      {
-        title: "Filtering Logic",
-        description: "Design the filtering rules that determine what earns an interrupt, calibrated to analyst-reported importance thresholds from the workflow research phase.",
-      },
-      {
-        title: "Feed Integration",
-        description: "Integrate tightly with the Kinage Intelligence feed so notification content matches exactly what the analyst will see when they open the dashboard.",
-      },
-    ],
-    methodology: [
-      {
-        title: "Interrupt Criteria Design",
-        description: "Worked with analysts to define the specific signal characteristics that warrant pulling someone out of their current work, building explicit criteria rather than a general 'high priority' flag.",
-      },
-      {
-        title: "Event Architecture",
-        description: "Implemented an event bus that the Intelligence feed publishes to on each new signal classification, with subscriber logic for each notification channel.",
-      },
-      {
-        title: "Channel Preference System",
-        description: "Built an analyst preference layer that overrides default routing, allowing each analyst to tune channel and threshold settings without affecting platform-wide behaviour.",
-      },
-      {
-        title: "Adoption Monitoring",
-        description: "Instrumented notification open rates and action rates per channel and signal type, using these to iteratively tighten the filtering criteria toward optimal alert volume.",
-      },
-    ],
-    sections: [
-      {
-        title: "The Alert Fatigue Problem",
-        body: "Alert fatigue is not a volume problem, it's a relevance problem. Analysts don't stop reading notifications because there are too many; they stop because too many don't matter. The filtering criteria design is therefore the core product work in this project. The engineering of reliable delivery is table stakes. The product work is deciding what earns a notification in the first place, and that decision has to come from analyst workflow research, not from defaulting to 'notify on everything' and letting users manage their own noise.",
-      },
-    ],
-    problem:
-      "Too many notifications kill adoption. Too few kill trust. The Kinage platform needed a notification layer that respected both sides of that tension.",
-    what:
-      "Real-time notification delivery across the Kinage platform. Handles multi-channel alert routing and event-driven messaging so analysts receive the signals that matter without being buried in noise.",
-    pmAngle:
-      "The notification filtering logic is a product decision. I designed the rules around what earns an interrupt, when does a signal justify pulling an analyst out of what they're doing? That question drove the architecture.",
-    outcome:
-      "Analysts get signals that warrant their attention, delivered at the right time, without alert fatigue.",
-    features: [
-      "Multi-channel notification routing",
-      "Event-driven architecture for real-time delivery",
-      "Analyst-tuned filtering to reduce noise",
-      "Integration with Kinage Intelligence feed",
-    ],
-    stack: ["JavaScript", "Event-Driven", "Real-Time", "Notifications API"],
-    github: "https://github.com/Omodunjo11/Kinage-Notifications",
-    status: "live" as const,
   },
   {
     slug: "mailgun-push",
@@ -905,7 +691,7 @@ export const projects: Project[] = [
     pmAngle:
       "Silent notification failures are invisible to most product metrics until a user complains. I designed observability into this from the start, not as an afterthought.",
     outcome:
-      "Reliable multi-channel message delivery with visibility into failures before users report them.",
+      "Delivery lifecycle tracking with bounce handling and dead-letter queue for messages exceeding retry budget.",
     features: [
       "Mailgun integration for transactional email",
       "Push notification delivery across channels",
