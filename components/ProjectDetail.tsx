@@ -2,6 +2,16 @@
 import Link from "next/link"
 import type { Project } from "@/lib/projects"
 
+function repoLabel(github: string) {
+  try {
+    const parts = new URL(github).pathname.replace(/^\//, "").split("/")
+    if (parts.length >= 2 && parts[1]) return `${parts[0]}/${parts[1]}`
+  } catch {
+    /* ignore */
+  }
+  return "Repository"
+}
+
 type Props = {
   project: Project
   prev?: Pick<Project, "slug" | "name">
@@ -50,14 +60,24 @@ export default function ProjectDetail({ project, prev, next }: Props) {
               </div>
             ))}
             <div style={{ background: "var(--paper)", padding: "14px 18px", display: "flex", flexDirection: "column", gap: 8 }}>
-              <Link
-                href={project.github} target="_blank" rel="noopener"
-                style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", border: "1px solid var(--border)", padding: "8px 14px", borderRadius: 2, textAlign: "center", transition: "all .2s", display: "block" }}
-                onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.color = "var(--paper)"; e.currentTarget.style.borderColor = "var(--ink)" }}
-                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "inherit"; e.currentTarget.style.borderColor = "var(--border)" }}
-              >
-                GitHub ↗
-              </Link>
+              {project.githubPrivate ? (
+                <div
+                  style={{ fontSize: 9, letterSpacing: ".08em", border: "1px solid var(--border)", padding: "8px 14px", borderRadius: 2, textAlign: "center", color: "var(--mid)", lineHeight: 1.5 }}
+                  title="Source code is private. Available for review on request."
+                >
+                  <span style={{ display: "block", color: "var(--terra)", marginBottom: 4 }}>Private repo</span>
+                  {repoLabel(project.github)}
+                </div>
+              ) : (
+                <Link
+                  href={project.github} target="_blank" rel="noopener"
+                  style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", border: "1px solid var(--border)", padding: "8px 14px", borderRadius: 2, textAlign: "center", transition: "all .2s", display: "block" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.color = "var(--paper)"; e.currentTarget.style.borderColor = "var(--ink)" }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "inherit"; e.currentTarget.style.borderColor = "var(--border)" }}
+                >
+                  GitHub ↗
+                </Link>
+              )}
               {project.live && (
                 <Link
                   href={project.live} target="_blank" rel="noopener"
@@ -168,14 +188,25 @@ export default function ProjectDetail({ project, prev, next }: Props) {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            <Link
-              href={project.github} target="_blank" rel="noopener"
-              style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 18px", border: "1px solid var(--border)", borderRadius: 2, fontSize: 12, transition: "all .25s" }}
-              onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.color = "var(--paper)"; e.currentTarget.style.borderColor = "var(--ink)" }}
-              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "inherit"; e.currentTarget.style.borderColor = "var(--border)" }}
-            >
-              <span>View on GitHub</span><span>↗</span>
-            </Link>
+            {project.githubPrivate ? (
+              <div
+                style={{ padding: "14px 18px", border: "1px solid var(--border)", borderRadius: 2, fontSize: 12, color: "var(--mid)", lineHeight: 1.55 }}
+                title="Source code is private. Available for review on request."
+              >
+                <div style={{ fontSize: 9, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 6 }}>Private repository</div>
+                <div style={{ fontWeight: 600, color: "var(--ink)", marginBottom: 4 }}>{repoLabel(project.github)}</div>
+                <div style={{ fontSize: 11 }}>Code available on request for recruiters and hiring teams.</div>
+              </div>
+            ) : (
+              <Link
+                href={project.github} target="_blank" rel="noopener"
+                style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 18px", border: "1px solid var(--border)", borderRadius: 2, fontSize: 12, transition: "all .25s" }}
+                onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.color = "var(--paper)"; e.currentTarget.style.borderColor = "var(--ink)" }}
+                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "inherit"; e.currentTarget.style.borderColor = "var(--border)" }}
+              >
+                <span>View on GitHub</span><span>↗</span>
+              </Link>
+            )}
             {project.live && (
               <Link
                 href={project.live} target="_blank" rel="noopener"

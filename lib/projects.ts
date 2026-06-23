@@ -21,6 +21,7 @@ export type Project = {
   features: string[]
   stack: string[]
   github: string
+  githubPrivate?: boolean
   live?: string
   featured?: boolean
   status: "live" | "building" | "built"
@@ -104,6 +105,7 @@ export const projects: Project[] = [
     ],
     stack: ["Node.js", "Express", "PostgreSQL", "Prisma", "Claude API", "WhatsApp Cloud API", "Paystack", "Railway"],
     github: "https://github.com/Omodunjo11/Kova-Bot",
+    githubPrivate: true,
     live: "https://gokova.io",
     featured: true,
     status: "live" as const,
@@ -181,7 +183,8 @@ export const projects: Project[] = [
       "Live activity feed across enrichment and classification events",
     ],
     stack: ["Next.js", "TypeScript", "Python", "CRM APIs", "Claude API", "Vercel"],
-    github: "https://github.com/Omodunjo11",
+    github: "https://github.com/Omodunjo11/kinage-gtm",
+    githubPrivate: true,
     featured: true,
     status: "live" as const,
   },
