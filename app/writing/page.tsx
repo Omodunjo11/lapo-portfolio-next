@@ -27,6 +27,9 @@ export default function WritingPage() {
         <p style={{ fontSize: 13, color: "var(--muted)", maxWidth: 560, lineHeight: 1.85, animation: "fadeUp .7s .7s ease both" }}>
           Writing is where I process what I cannot yet systematise. Identity, economics, belonging, burnout, the things that don&apos;t fit neatly into a pitch deck or a product spec.
         </p>
+        <p style={{ fontSize: 11, color: "var(--terra)", marginTop: 14, letterSpacing: ".06em", animation: "fadeUp .7s .85s ease both" }}>
+          New essays on Medium — follow for updates as they publish.
+        </p>
       </div>
 
       {/* Why I write */}
@@ -57,7 +60,7 @@ export default function WritingPage() {
               <Link href={essay.url} target="_blank" rel="noopener">
                 <div
                   style={{ background: "var(--paper)", padding: "40px 36px", height: "100%", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", transition: "background .25s", borderTop: "2px solid transparent" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(186,230,253,.28)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
                   onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.borderTopColor = "transparent" }}
                 >
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
@@ -79,7 +82,7 @@ export default function WritingPage() {
         <Reveal>
           <div
             style={{ marginTop: 1, background: "var(--bg2)", padding: "40px 48px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 40, transition: "background .3s", borderTop: "1px solid var(--border)" }}
-            onMouseEnter={e => (e.currentTarget.style.background = "#e5dfd3")}
+            onMouseEnter={e => (e.currentTarget.style.background = "rgba(186,230,253,.28)")}
             onMouseLeave={e => (e.currentTarget.style.background = "var(--bg2)")}
           >
             <div>
@@ -112,7 +115,7 @@ export default function WritingPage() {
         <Reveal delay={0.1}>
           <div
             className="grid-pub" style={{ border: "1px solid var(--border)", padding: "40px 44px", transition: "background .2s", borderRadius: 2 }}
-            onMouseEnter={e => (e.currentTarget.style.background = "rgba(196,98,45,.03)")}
+            onMouseEnter={e => (e.currentTarget.style.background = "rgba(186,230,253,.28)")}
             onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
           >
             <div>

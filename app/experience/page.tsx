@@ -2,6 +2,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import Reveal from "@/components/Reveal"
+import { ROLE_TITLE } from "@/lib/site"
 
 const tabs = [
   { key: "experience", label: "Experience" },
@@ -214,13 +215,16 @@ export default function ExperiencePage() {
       <div style={{ padding: "clamp(40px,8vh,64px) clamp(16px,6vw,48px) 40px", borderBottom: "1px solid var(--border)" }}>
         <p style={{ fontSize: 9, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 18, display: "flex", alignItems: "center", gap: 10, animation: "fadeUp .7s .3s ease both" }}>
           <span style={{ width: 20, height: 1, background: "var(--terra)", display: "inline-block" }} />
-          FDE Product Manager · Production AI Systems · Enterprise Platforms · Forward-Deployed Products
+          FDE Product Manager · {ROLE_TITLE}
         </p>
         <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 40, flexWrap: "wrap" }}>
           <div>
             <h1 style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(32px,5vw,56px)", fontWeight: 900, lineHeight: .95, letterSpacing: "-.03em", animation: "fadeUp .8s .45s ease both" }}>
               Onaolapo <em style={{ color: "var(--terra)", fontStyle: "italic" }}>Odunjo</em>
             </h1>
+            <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 8, animation: "fadeUp .6s .55s ease both" }}>
+              Also known as Lapo Odunjo and Michael Odunjo
+            </p>
             <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 12, animation: "fadeUp .6s .6s ease both" }}>
               New York, NY · odunjoonaolapo@gmail.com · +1-646-421-3781
             </p>
@@ -250,7 +254,7 @@ export default function ExperiencePage() {
               padding: "20px 24px", background: "transparent",
               color: activeTab === tab.key ? "var(--terra)" : "var(--muted)",
               borderBottom: activeTab === tab.key ? "2px solid var(--terra)" : "2px solid transparent",
-              cursor: "none", transition: "color .2s, border-color .2s",
+              cursor: "pointer", transition: "color .2s, border-color .2s",
               marginBottom: -1,
             }}
             onMouseEnter={e => (e.currentTarget.style.color = "var(--terra)")}

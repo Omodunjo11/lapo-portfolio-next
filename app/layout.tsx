@@ -1,8 +1,17 @@
 import type { Metadata } from "next"
 import { Playfair_Display, DM_Mono, Syne } from "next/font/google"
+import {
+  CANONICAL_NAME,
+  LEGAL_NAME,
+  ROLE_TITLE,
+  SEO_DESCRIPTION,
+  SEO_KEYWORDS,
+  SITE_URL,
+} from "@/lib/site"
 import "./globals.css"
 import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
+import StructuredData from "@/components/StructuredData"
 import Cursor from "@/components/Cursor"
 import KonamiCode from "@/components/KonamiCode"
 import SkyBackground from "@/components/SkyBackground"
@@ -30,22 +39,35 @@ const syne = Syne({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://lapo-portfolio-next.vercel.app"),
-  title: "Lapo Odunjo · AI Systems Builder",
-  description: "Staff TPM building production AI systems for regulated industries. Kinage · Amazon · TD Bank · Capital One · Wharton MBA.",
+  metadataBase: new URL(SITE_URL),
+  title: { default: `${CANONICAL_NAME} · ${ROLE_TITLE}`, template: `%s · ${CANONICAL_NAME}` },
+  description: SEO_DESCRIPTION,
+  keywords: SEO_KEYWORDS,
+  authors: [{ name: LEGAL_NAME, url: SITE_URL }],
+  creator: CANONICAL_NAME,
+  publisher: CANONICAL_NAME,
+  applicationName: CANONICAL_NAME,
+  alternates: { canonical: SITE_URL },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   openGraph: {
-    title: "Lapo Odunjo · AI Systems Builder",
-    description: "Staff TPM building production AI systems for regulated industries. LLM evaluation, agentic workflows, enterprise data platforms.",
-    url: "https://lapo-portfolio-next.vercel.app",
-    siteName: "Lapo Odunjo",
-    images: [{ url: "/images/IMG_3437.jpg", width: 1200, height: 630, alt: "Lapo Odunjo" }],
-    type: "website",
+    title: `${CANONICAL_NAME} · ${ROLE_TITLE}`,
+    description: SEO_DESCRIPTION,
+    url: SITE_URL,
+    siteName: CANONICAL_NAME,
+    locale: "en_US",
+    type: "profile",
+    firstName: "Onaolapo",
+    lastName: "Odunjo",
+    username: "lapoodunjo",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lapo Odunjo · AI Systems Builder",
-    description: "Staff TPM building production AI systems for regulated industries.",
-    images: ["/images/IMG_3437.jpg"],
+    title: `${CANONICAL_NAME} · ${ROLE_TITLE}`,
+    description: SEO_DESCRIPTION,
+  },
+  other: {
+    "profile:first_name": "Onaolapo",
+    "profile:last_name": "Odunjo",
   },
 }
 
@@ -53,6 +75,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${playfair.variable} ${dmMono.variable} ${syne.variable}`}>
       <body style={{ fontFamily: "var(--font-dm-mono), monospace" }}>
+        <StructuredData />
         <SkyBackground />
         <Cursor />
         <KonamiCode />

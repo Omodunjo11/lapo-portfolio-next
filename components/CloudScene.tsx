@@ -1,5 +1,6 @@
 "use client"
 import Link from "next/link"
+import { CANONICAL_NAME, INTENT_CTA, PROFILE_LINKS, ROLE_TITLE } from "@/lib/site"
 
 /* ─────────────────────────────────────────────
    CloudScene
@@ -190,7 +191,7 @@ export default function CloudScene() {
             color: "white",
             textShadow: "0 2px 32px rgba(3,105,161,0.5), 0 1px 4px rgba(3,105,161,0.3)",
           }}>
-            Lapo Odunjo.
+            {CANONICAL_NAME}.
           </h1>
           <p style={{
             fontFamily: "var(--font-playfair),serif",
@@ -200,9 +201,71 @@ export default function CloudScene() {
             marginTop: 12,
             textShadow: "0 1px 12px rgba(3,105,161,0.4)",
             letterSpacing: ".01em",
+            maxWidth: 640,
+            marginLeft: "auto",
+            marginRight: "auto",
+            lineHeight: 1.45,
           }}>
-            AI PM focused on trust systems, decision infrastructure, and human-in-the-loop design.
+            {ROLE_TITLE}
           </p>
+          <p style={{
+            fontFamily: "var(--font-dm-mono),monospace",
+            fontSize: "clamp(9px,1.2vw,11px)",
+            letterSpacing: ".1em",
+            color: "rgba(253,230,138,0.95)",
+            marginTop: 16,
+            textShadow: "0 1px 8px rgba(3,105,161,0.35)",
+            maxWidth: 560,
+            marginLeft: "auto",
+            marginRight: "auto",
+            lineHeight: 1.6,
+          }}>
+            {INTENT_CTA}
+          </p>
+          <div style={{
+            display: "flex",
+            gap: 10,
+            justifyContent: "center",
+            flexWrap: "wrap",
+            marginTop: 22,
+          }}>
+            <Link
+              href="/#contact"
+              style={{
+                fontFamily: "var(--font-syne),sans-serif",
+                fontSize: 9,
+                fontWeight: 700,
+                letterSpacing: ".12em",
+                textTransform: "uppercase",
+                background: "var(--gold)",
+                color: "var(--ink)",
+                padding: "10px 20px",
+                borderRadius: 2,
+                transition: "background .25s",
+              }}
+            >
+              Start a conversation
+            </Link>
+            <Link
+              href={PROFILE_LINKS.resume}
+              target="_blank"
+              rel="noopener"
+              style={{
+                fontFamily: "var(--font-syne),sans-serif",
+                fontSize: 9,
+                fontWeight: 700,
+                letterSpacing: ".12em",
+                textTransform: "uppercase",
+                border: "1px solid rgba(255,255,255,0.35)",
+                color: "rgba(255,255,255,0.92)",
+                padding: "10px 20px",
+                borderRadius: 2,
+                transition: "all .25s",
+              }}
+            >
+              Resume ↓
+            </Link>
+          </div>
         </div>
 
         {/* ══════════════════════════════════════

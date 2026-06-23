@@ -1,8 +1,9 @@
 import type { Metadata } from "next"
+import { CANONICAL_NAME, LEGAL_NAME } from "@/lib/site"
 
 export const metadata: Metadata = {
-  title: "Writing · Lapo Odunjo",
-  description: "Essays on identity, economics, AI governance, diaspora, and building products from the African continent. Published on Medium.",
+  title: `Writing · ${CANONICAL_NAME}`,
+  description: `Essays by ${LEGAL_NAME} (${CANONICAL_NAME}) on identity, economics, diaspora, and AI. Published on Medium by Onaolapo Odunjo.`,
 }
 
 export default function WritingLayout({ children }: { children: React.ReactNode }) {

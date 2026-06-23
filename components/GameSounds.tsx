@@ -3,6 +3,10 @@ import { useEffect, useState, useRef, useCallback } from "react"
 
 type OscType = OscillatorType
 
+function prefersReducedMotion() {
+  return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+}
+
 function note(
   ctx: AudioContext,
   freq: number,
@@ -68,7 +72,7 @@ export default function GameSounds() {
   }, [])
 
   useEffect(() => {
-    if (muted) return
+    if (muted || prefersReducedMotion()) return
 
     const onHover = (e: MouseEvent) => {
       const el = (e.target as HTMLElement).closest("a, button")

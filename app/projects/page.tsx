@@ -144,7 +144,7 @@ export default function ProjectsPage() {
         <div style={{ padding: "0 0 48px" }}>
           <div style={{ padding: "clamp(32px,7vh,56px) clamp(16px,6vw,48px) 32px", display: "flex", alignItems: "center", gap: 18 }}>
             <span style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>◆</span>
-            <span style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>What I bring to an AI PM role</span>
+            <span style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>What I bring to AI product roles</span>
             <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
           </div>
           <div className="grid-4col" style={{ margin: "0 clamp(16px,6vw,48px)" }}>
