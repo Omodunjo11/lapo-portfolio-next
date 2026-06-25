@@ -35,71 +35,67 @@ export const projects: Project[] = [
     year: "2025",
     lang: "JavaScript",
     category: ["ai", "fullstack"],
-    tagline: "WhatsApp credit platform for Nigeria's informal economy. Builds credit identity from payment behaviour, underwrites through progressive lending, and routes trust through collectors who already know the borrower.",
+    tagline: "WhatsApp credit platform for Nigeria's informal economy. Builds credit identity from observed payment behaviour and underwrites through progressive lending.",
     overview:
-      "Forty million Nigerians run their financial lives through Ajo savings groups, market trading, and informal credit networks. Banks cannot score them because the data lives in cash and WhatsApp, not bank statements. Kova is the credit layer on top of that reality: a WhatsApp-native platform where market traders, artisans, and transport workers build a TradeScore from observed payments, complete consent-based verification over chat, and access tiered loans without downloading an app. Scoring blends identity, capacity, behaviour, and social trust. Progressive lending limits exposure on early loans. Collectors vouch for members they know personally, mirroring how informal lending actually works.",
+      "Forty million Nigerians run their financial lives through Ajo savings groups, market trading, and informal credit networks. Banks cannot score them because the data lives in cash and WhatsApp, not bank statements. Kova is the credit layer on top of that reality: a WhatsApp-native platform where market traders, artisans, and transport workers build a TradeScore from observed payments, complete consent-based verification over chat, and access tiered loans without downloading an app.",
     objectives: [
       {
         title: "Multi-Signal TradeScore",
-        description: "Build a composite credit score from separate stored components: identity verification, income capacity, observed payment behaviour, and social trust signals. Self-reported data contributes modestly; verified data and real behaviour drive the score over time. Every change is logged for audit.",
+        description: "Build a composite credit score from multiple verified signal types. Behaviour and verification data accumulate over time to establish a borrower's credit identity. Every change is logged for audit.",
       },
       {
         title: "Progressive Lending Controls",
-        description: "Cap early loan exposure regardless of score. Loan limits grow only after successful repayments. Affordability checks prevent offers above what a borrower can reasonably repay. Defaults reset access until resolved.",
+        description: "Calibrate lending limits to borrower history and demonstrated capacity. Affordability checks run on every loan offer. Access scales with repayment track record.",
       },
       {
         title: "WhatsApp Verification Flow",
-        description: "Run consent-first KYC over chat: occupation, income, banking context, and identity signals captured one step at a time. On completion, recompute eligibility and offer a small starter loan when appropriate, in the same conversation.",
+        description: "Run consent-first verification over chat, capturing identity and capacity signals in a single session. Recompute eligibility on completion and offer credit where appropriate, without requiring an app.",
       },
       {
         title: "Collector Vouching + Risk Monitoring",
-        description: "Let established collectors vouch for new members, with reputation at stake if the member defaults. Flag suspicious patterns such as duplicate identity signals, unusual velocity, and broken vouch track records for review.",
+        description: "Let established collectors vouch for new members, with their standing in the system at stake. Automated risk monitoring flags activity warranting human review.",
       },
     ],
     methodology: [
       {
-        title: "Ladder-First Underwriting",
-        description: "Designed risk controls around repayment history, not score alone. Small first loans generate behavioural data before larger exposure. Recovery paths exist for overdue borrowers instead of permanent lockout.",
+        title: "Behaviour-First Underwriting",
+        description: "Designed risk controls around demonstrated behaviour rather than score alone. Initial access is conservative; it expands as repayment history accumulates. Recovery paths exist for overdue borrowers.",
       },
       {
         title: "No Dead-End Conversations",
-        description: "Every eligibility state offers a forward path: verify, get a vouch, join a group, or accept a starter loan. Replaced refusal-without-next-step flows with concrete actions that change the outcome.",
+        description: "Every eligibility state offers a concrete forward path. Replaced refusal-without-next-step flows with actions that change the outcome.",
       },
       {
         title: "Webhook-First Architecture",
-        description: "Stateless handlers for messaging and payments. Each incoming event loads full user context from the database. Signature validation on inbound webhooks. No in-memory session state that breaks on redeploy.",
+        description: "Stateless handlers for messaging and payments. Signature validation on all inbound webhooks. No in-memory session state that breaks on redeploy.",
       },
       {
         title: "Test-Driven Core Logic",
-        description: "Automated test suite covering scoring, lending eligibility, verification flow, vouch honour and break paths, risk flags, and full loan lifecycle before production deploy.",
+        description: "Automated test suite covering core logic, eligibility, and full loan lifecycle before production deploy.",
       },
     ],
     sections: [
       {
-        title: "Three Rules That Govern the Whole System",
-        body: "Self-reported data gives modest boosts only. It is easy to misrepresent and never unlocks meaningful credit on its own. Verified data and observed behaviour give the real lift: identity checks, payment history, collector vouches, and on-time contributions through the platform. Progressive lending, not the score alone, is the real risk control. Early loans stay small regardless of score. They grow only after repayment proves out. Never dead-end a conversation. If someone cannot borrow yet, always offer the next concrete step.",
-      },
-      {
-        title: "Cold Start: How a New Borrower Gets Their First Loan",
-        body: "A brand-new user has no behavioural history, so the system cannot lend blind. The cold-start path mirrors informal Ajo: a trusted collector vouches for someone they know personally, with the collector's reputation on the line, or the borrower completes verification and accepts a small starter loan at the bottom of the ladder. After the first on-time repayment, behavioural data starts to accumulate and larger access unlocks gradually. The conversion moment happens in the same WhatsApp session: verify, check eligibility, offer if ready.",
+        title: "The Cold Start Problem",
+        body: "A brand-new borrower has no behavioural history, so the system cannot lend blind. Kova's cold-start design solves this without requiring collateral or formal documentation — the same WhatsApp session that establishes identity can also establish initial eligibility.",
       },
     ],
     problem:
-      "Market traders, artisans, and transport workers in Nigeria are financially active but credit-invisible. Banks need bank statements and collateral. Informal Ajo networks already extend credit based on personal trust, but that trust does not travel. Kova converts observed payment behaviour and collector relationships into a portable credit identity, starting small and growing only as repayment proves out.",
+      "Market traders, artisans, and transport workers in Nigeria are financially active but credit-invisible. Banks need bank statements and collateral. Informal Ajo networks already extend credit based on personal trust, but that trust does not travel. Kova converts that trust and payment behaviour into a portable credit identity.",
     what:
       "A WhatsApp-native credit platform I co-founded: composite TradeScore, progressive lending, consent-based KYC over chat, collector vouching, AI-assisted collector tools, and payment-integrated loan lifecycle. Built for Nigerians who already run their money through groups and messaging apps, not bank portals.",
     pmAngle:
-      "The hardest product problem was cold start: how do you score someone with no history without lending blind? The answer was not a better algorithm. It was designing progressive lending, the vouch mechanic, and conversation flows that never dead-end. Risk control lives in lending limits and affordability, not in hoping the score is right on day one.",
+      "The hardest product problem was cold start: how do you score someone with no history without lending blind? The answer was not a better algorithm — it was product design that creates the conditions for trust to accumulate before significant exposure is required.",
     outcome:
-      "Full scoring and lending loop shipped with automated test coverage across scoring, lending eligibility, verification flow, vouch honour and break paths, risk flags, and full loan lifecycle. Live at gokova.io.",
+      "Full scoring and lending loop shipped with automated test coverage. Live at gokova.io.",
     features: [
-      "Composite TradeScore from identity, capacity, behaviour, and social trust",
-      "Progressive lending limits that grow with successful repayment history",
+      "Composite credit score from multiple verified signal types",
+      "Progressive lending limits tied to repayment track record",
       "Affordability checks on every loan offer",
-      "Consent-first WhatsApp verification with starter loan on completion",
-      "Collector vouch mechanic with reputation stake on defaults",
+      "Consent-first verification with credit offer on completion",
+      "Collector vouching mechanic with standing at stake",
       "Conversation flows with clear next steps at every eligibility state",
-      "Risk monitoring for duplicate identity and suspicious patterns",
+      "Risk monitoring for suspicious activity",
       "AI-assisted collector tools with role-gated permissions",
       "Payment webhooks, referral growth, multi-language onboarding",
     ],
