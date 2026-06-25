@@ -91,7 +91,7 @@ export const projects: Project[] = [
     pmAngle:
       "The hardest product problem was cold start: how do you score someone with no history without lending blind? The answer was not a better algorithm. It was designing progressive lending, the vouch mechanic, and conversation flows that never dead-end. Risk control lives in lending limits and affordability, not in hoping the score is right on day one.",
     outcome:
-      "Full scoring and lending loop shipped with automated test coverage, live at gokova.io.",
+      "Full scoring and lending loop shipped with automated test coverage across scoring, lending eligibility, verification flow, vouch honour and break paths, risk flags, and full loan lifecycle. Live at gokova.io.",
     features: [
       "Composite TradeScore from identity, capacity, behaviour, and social trust",
       "Progressive lending limits that grow with successful repayment history",
