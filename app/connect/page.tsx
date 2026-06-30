@@ -2,6 +2,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import Reveal from "@/components/Reveal"
+import PageHero from "@/components/PageHero"
 import { CONTACT_EMAIL, PROFILE_LINKS } from "@/lib/site"
 
 const openTo = [
@@ -26,16 +27,17 @@ const openTo = [
 export default function ConnectPage() {
   return (
     <>
-      <div className="page-hero page-hero--ink">
-        <p className="page-hero-eyebrow page-hero-eyebrow--light">Connect</p>
-        <h1 className="page-hero-title page-hero-title--light">
-          Start a<br />
-          <em>conversation.</em>
-        </h1>
-        <p className="page-hero-desc page-hero-desc--light">
-          AI systems in regulated industries. Private markets across Africa.
-          Role conversations, design partnerships, and building in production.
-        </p>
+      <PageHero
+        variant="ink"
+        eyebrow="Connect"
+        title={
+          <>
+            Start a<br />
+            <em>conversation.</em>
+          </>
+        }
+        description="AI systems in regulated industries. Private markets across Africa. Role conversations, design partnerships, and building in production."
+      >
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 28 }}>
           <Link
             href={`mailto:${CONTACT_EMAIL}?subject=AI%20PM%20conversation`}
@@ -47,7 +49,7 @@ export default function ConnectPage() {
             Resume ↗
           </Link>
         </div>
-      </div>
+      </PageHero>
 
       {/* Currently open to */}
       <section className="page-section page-section--bordered">
@@ -106,8 +108,8 @@ export default function ConnectPage() {
                 travel and shipping cycles.
               </p>
               <div style={{ marginTop: 28, display: "flex", gap: 10, flexWrap: "wrap" }}>
-                <Link href={`mailto:${CONTACT_EMAIL}?subject=AI%20PM%20conversation`} className="btn btn--filled">
-                  Email me →
+                <Link href={PROFILE_LINKS.linkedin} target="_blank" rel="noopener noreferrer me" className="btn btn--outline">
+                  LinkedIn →
                 </Link>
                 <Link href={PROFILE_LINKS.resume} target="_blank" rel="noopener" className="btn btn--outline">
                   Download resume ↗

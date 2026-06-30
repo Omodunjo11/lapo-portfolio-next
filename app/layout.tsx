@@ -12,6 +12,7 @@ import "./globals.css"
 import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
 import StructuredData from "@/components/StructuredData"
+import SkipLink from "@/components/SkipLink"
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -71,9 +72,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${playfair.variable} ${dmMono.variable} ${syne.variable}`}>
       <body style={{ fontFamily: "var(--font-dm-mono), monospace" }}>
+        <SkipLink />
+        <noscript>
+          <style>{`.reveal { opacity: 1 !important; transform: none !important; }`}</style>
+        </noscript>
         <StructuredData />
         <Nav />
-        <main style={{ paddingTop: 57 }}>{children}</main>
+        <main id="main-content" style={{ paddingTop: 57 }}>
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

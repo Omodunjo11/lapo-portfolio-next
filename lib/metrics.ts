@@ -1,5 +1,12 @@
+import { projects } from "./projects"
+
 /** Total shipped products (portfolio + additional builds not listed individually). */
 export const PORTFOLIO_BUILD_COUNT = 11
+
+/** Case studies documented in the portfolio archive. */
+export const PORTFOLIO_CASE_STUDY_COUNT = projects.length
+
+export const PORTFOLIO_BUILD_FOOTNOTE = `${PORTFOLIO_BUILD_COUNT} production builds · ${PORTFOLIO_CASE_STUDY_COUNT} documented case studies`
 
 /** Homepage proof metrics — sourced from experience page, verified figures only. */
 export const PROOF_METRICS = [
@@ -25,6 +32,6 @@ export const PROOF_METRICS = [
   },
   {
     metric: String(PORTFOLIO_BUILD_COUNT),
-    label: "AI products shipped end-to-end",
+    label: `AI products shipped · ${PORTFOLIO_CASE_STUDY_COUNT} case studies documented`,
   },
 ]

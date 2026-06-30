@@ -2,6 +2,7 @@
 import Link from "next/link"
 import Ticker from "@/components/Ticker"
 import Reveal from "@/components/Reveal"
+import PageHero from "@/components/PageHero"
 import { essays } from "@/lib/writing"
 
 const tickerItems = [
@@ -15,25 +16,23 @@ const tickerItems = [
 export default function WritingPage() {
   return (
     <>
-      {/* Hero */}
-      <div style={{ minHeight: "40vh", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "80px 48px 60px", borderBottom: "1px solid var(--border)" }}>
-        <p style={{ fontSize: 9, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 18, display: "flex", alignItems: "center", gap: 10, animation: "fadeUp .7s .4s ease both" }}>
-          <span style={{ width: 20, height: 1, background: "var(--terra)", display: "inline-block" }} />
-          Essays · Medium · Thinking Out Loud
-        </p>
-        <h1 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "clamp(40px,6vw,76px)", fontWeight: 900, lineHeight: .92, letterSpacing: "-.03em", marginBottom: 20, animation: "fadeUp .8s .55s ease both" }}>
-          I think in essays,<br /><em style={{ color: "var(--terra)", fontStyle: "italic" }}>not bullet points.</em>
-        </h1>
-        <p style={{ fontSize: 13, color: "var(--muted)", maxWidth: 560, lineHeight: 1.85, animation: "fadeUp .7s .7s ease both" }}>
-          Writing is where I process what I cannot yet systematise. Identity, economics, belonging, burnout, the things that don&apos;t fit neatly into a pitch deck or a product spec.
-        </p>
+      <PageHero
+        eyebrow="Essays · Medium · Thinking Out Loud"
+        title={
+          <>
+            I think in essays,<br />
+            <em>not bullet points.</em>
+          </>
+        }
+        description="Writing is where I process what I cannot yet systematise. Identity, economics, belonging, burnout, the things that don&apos;t fit neatly into a pitch deck or a product spec."
+      >
         <p style={{ fontSize: 11, color: "var(--terra)", marginTop: 14, letterSpacing: ".06em", animation: "fadeUp .7s .85s ease both" }}>
           New essays on Medium — follow for updates as they publish.
         </p>
-      </div>
+      </PageHero>
 
       {/* Why I write */}
-      <div style={{ borderBottom: "1px solid var(--border)", padding: "48px 48px", display: "grid", gridTemplateColumns: "1fr 2fr", gap: 64, alignItems: "start" }}>
+      <div className="grid-1-2 pad-section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div>
           <div style={{ fontSize: 9, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 12 }}>Why I write</div>
           <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(18px,2vw,24px)", fontWeight: 700, lineHeight: 1.2 }}>
@@ -81,9 +80,8 @@ export default function WritingPage() {
         {/* Medium CTA */}
         <Reveal>
           <div
-            style={{ marginTop: 1, background: "var(--bg2)", padding: "40px 48px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 40, transition: "background .3s", borderTop: "1px solid var(--border)" }}
-            onMouseEnter={e => (e.currentTarget.style.background = "rgba(186,230,253,.28)")}
-            onMouseLeave={e => (e.currentTarget.style.background = "var(--bg2)")}
+            className="github-band"
+            style={{ marginTop: 1, background: "var(--bg2)", padding: "40px 48px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 40, borderTop: "1px solid var(--border)" }}
           >
             <div>
               <div style={{ fontSize: 8, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 8 }}>Medium</div>
@@ -92,10 +90,10 @@ export default function WritingPage() {
             </div>
             <Link
               href="https://medium.com/@odunjoonaolapo"
-              target="_blank" rel="noopener"
-              style={{ display: "inline-flex", alignItems: "center", gap: 9, fontFamily: "var(--font-syne),sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", background: "var(--ink)", color: "var(--paper)", padding: "13px 26px", borderRadius: 2, whiteSpace: "nowrap", flexShrink: 0, transition: "background .25s, transform .2s" }}
-              onMouseEnter={e => { e.currentTarget.style.background = "var(--terra)"; e.currentTarget.style.transform = "translateY(-2px)" }}
-              onMouseLeave={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.transform = "translateY(0)" }}
+              target="_blank"
+              rel="noopener"
+              className="btn btn--filled"
+              style={{ flexShrink: 0 }}
             >
               All Essays ↗
             </Link>

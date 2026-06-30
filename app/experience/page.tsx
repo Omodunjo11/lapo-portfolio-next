@@ -2,7 +2,8 @@
 import { useState } from "react"
 import Link from "next/link"
 import Reveal from "@/components/Reveal"
-import { CONTACT_EMAIL, PROFILE_LINKS, ROLE_TITLE } from "@/lib/site"
+import PageHero from "@/components/PageHero"
+import { CONTACT_EMAIL, KINAGE_TAGLINE, PROFILE_LINKS, ROLE_TITLE } from "@/lib/site"
 
 const tabs = [
   { key: "experience", label: "Experience" },
@@ -19,7 +20,7 @@ const jobs = [
     period: "2025 – Present",
     tag: "Current",
     tagColor: "var(--terra)",
-    summary: "Design and deploy production agentic systems for regulated healthcare and fintech clients: map live operator workflows, make model and infrastructure tradeoffs, ship compound AI architectures with engineers, and drive adoption from launch through operator trust.",
+    summary: `${KINAGE_TAGLINE.charAt(0).toUpperCase()}${KINAGE_TAGLINE.slice(1)}: map live operator workflows, make model and infrastructure tradeoffs, ship compound AI architectures with engineers, and drive adoption from launch through operator trust.`,
     bullets: [
       "Raised internal movement completion 34% → 72% at multi-site hospital systems: embedded with clinical and ops teams to map intake-to-discharge handoff failures, co-designed agent-assisted workflows with engineers, then owned adoption post-launch by running weekly override reviews, iterating prompts and routing, and tightening escalation paths until usage held.",
       "Improved precision 22% → 50% and cut false positives 60% → 15% for a top 10 U.S. bank compliance team (~$600K annual savings): embedded 2+ days/week with fraud and risk analysts, translated live SOPs and policy boundaries into model requirements and eval cases, shipped compound agents with confidence gating and mandatory human review.",
@@ -259,42 +260,25 @@ export default function ExperiencePage() {
 
   return (
     <>
-      {/* Hero */}
-      <div style={{ padding: "clamp(40px,8vh,64px) clamp(16px,6vw,48px) 40px", borderBottom: "1px solid var(--border)" }}>
-        <p style={{ fontSize: 9, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 18, display: "flex", alignItems: "center", gap: 10, animation: "fadeUp .7s .3s ease both" }}>
-          <span style={{ width: 20, height: 1, background: "var(--terra)", display: "inline-block" }} />
-          FDE Product Manager · {ROLE_TITLE}
-        </p>
-        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 40, flexWrap: "wrap" }}>
-          <div>
-            <h1 style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(32px,5vw,56px)", fontWeight: 900, lineHeight: .95, letterSpacing: "-.03em", animation: "fadeUp .8s .45s ease both" }}>
-              Onaolapo <em style={{ color: "var(--terra)", fontStyle: "italic" }}>Odunjo</em>
-            </h1>
-            <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 8, animation: "fadeUp .6s .55s ease both" }}>
-              Onaolapo Michael (Lapo) Odunjo — Lapo is short for Onaolapo
-            </p>
-            <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 12, animation: "fadeUp .6s .6s ease both" }}>
-              New York, NY · {CONTACT_EMAIL} · +1-646-421-3781
-            </p>
-          </div>
-          <Link
-            href={PROFILE_LINKS.resume}
-            target="_blank"
-            rel="noopener"
-            style={{ display: "inline-flex", alignItems: "center", gap: 9, fontFamily: "var(--font-syne),sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", background: "var(--terra)", color: "var(--paper)", padding: "13px 26px", borderRadius: 2, transition: "background .25s, transform .2s", animation: "fadeUp .6s .7s ease both", whiteSpace: "nowrap" }}
-            onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.transform = "translateY(-2px)" }}
-            onMouseLeave={e => { e.currentTarget.style.background = "var(--terra)"; e.currentTarget.style.transform = "translateY(0)" }}
-          >
+      <PageHero size="compact" eyebrow={`FDE Product Manager · ${ROLE_TITLE}`} title={<>Onaolapo <em>Odunjo</em></>}>
+        <p className="page-hero-meta">Onaolapo Michael (Lapo) Odunjo — Lapo is short for Onaolapo</p>
+        <p className="page-hero-meta">New York, NY · {CONTACT_EMAIL} · +1-646-421-3781</p>
+        <div className="page-hero-toolbar">
+          <div />
+          <Link href={PROFILE_LINKS.resume} target="_blank" rel="noopener" className="btn btn--terra">
             ↓ Download Resume
           </Link>
         </div>
-      </div>
+      </PageHero>
 
       {/* Tabs */}
-      <div className="exp-tabs" style={{ borderBottom: "1px solid var(--border)", display: "flex", gap: 0, overflowX: "auto" }}>
+      <div className="exp-tabs" role="tablist" aria-label="Experience sections" style={{ borderBottom: "1px solid var(--border)", display: "flex", gap: 0, overflowX: "auto" }}>
         {tabs.map(tab => (
           <button
             key={tab.key}
+            type="button"
+            role="tab"
+            aria-selected={activeTab === tab.key}
             onClick={() => setActiveTab(tab.key)}
             style={{
               fontFamily: "var(--font-syne),sans-serif", fontSize: 10, fontWeight: 700,
@@ -398,7 +382,7 @@ export default function ExperiencePage() {
         {/* ── EDUCATION ── */}
         {activeTab === "education" && (
           <div style={{ padding: "clamp(24px,6vw,48px) clamp(16px,6vw,48px) 0" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 1, background: "var(--border)", marginBottom: 56 }}>
+            <div className="grid-3col" style={{ marginBottom: 56 }}>
               {education.map((edu, i) => (
                 <Reveal key={edu.school} delay={i * 0.1}>
                   <div className="interactive-surface interactive-surface--accent-top" style={{ background: "var(--paper)", padding: "36px 28px" }}>
@@ -464,11 +448,9 @@ export default function ExperiencePage() {
                   <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Download the complete resume</div>
                   <p style={{ fontSize: 11, color: "var(--muted)" }}>AI systems, private markets, leadership, publications, consolidated. Last updated 2026.</p>
                 </div>
-                <Link href={PROFILE_LINKS.resume} target="_blank" rel="noopener"
-                  style={{ display: "inline-flex", alignItems: "center", gap: 9, fontFamily: "var(--font-syne),sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", background: "var(--terra)", color: "var(--paper)", padding: "13px 26px", borderRadius: 2, whiteSpace: "nowrap", flexShrink: 0, transition: "background .25s, transform .2s" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.transform = "translateY(-2px)" }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "var(--terra)"; e.currentTarget.style.transform = "translateY(0)" }}
-                >↓ Download PDF</Link>
+                <Link href={PROFILE_LINKS.resume} target="_blank" rel="noopener" className="btn btn--terra" style={{ flexShrink: 0 }}>
+                  ↓ Download PDF
+                </Link>
               </div>
             </Reveal>
           </div>

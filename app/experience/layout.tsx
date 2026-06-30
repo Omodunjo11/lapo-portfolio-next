@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
-import { CANONICAL_NAME, LEGAL_NAME, SITE_URL } from "@/lib/site"
+import { CANONICAL_NAME, KINAGE_TAGLINE, LEGAL_NAME, SITE_URL } from "@/lib/site"
 
 const title = `Experience · ${CANONICAL_NAME}`
-const description = `${LEGAL_NAME} — Forward Deployed PM at Kinage, Amazon, TD Bank, Capital One. Wharton MBA. 10+ years shipping AI and data products in regulated industries.`
+const description = `${LEGAL_NAME} — Forward Deployed PM at Kinage (${KINAGE_TAGLINE}). Amazon, TD Bank, Capital One. Wharton MBA. 13+ years shipping AI and data products in regulated industries.`
 
 export const metadata: Metadata = {
   title,

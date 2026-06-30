@@ -17,11 +17,15 @@ export const NAME_ALIASES = [
 
 export const ROLE_TITLE = "AI Product · Trust Systems & Regulated Infrastructure"
 
+/** Consistent Kinage positioning — FDE PM for regulated clients, not a single product SKU. */
+export const KINAGE_TAGLINE =
+  "forward-deployed production AI for regulated healthcare and fintech clients"
+
 export const ROLE_META =
-  "AI product leader building production trust systems for regulated industries. Kinage · KOVA · Amazon · TD Bank · Wharton MBA."
+  `AI product leader building production trust systems for regulated industries. Kinage (${KINAGE_TAGLINE}). KOVA · Amazon · TD Bank · Wharton MBA.`
 
 export const SEO_DESCRIPTION =
-  "Onaolapo Michael (Lapo) Odunjo — AI product leader building trust systems for regulated industries. Kinage, KOVA, Amazon, TD Bank, Wharton MBA."
+  `Onaolapo Michael (Lapo) Odunjo — AI product leader building trust systems for regulated industries. Kinage: ${KINAGE_TAGLINE}. KOVA, Amazon, TD Bank, Wharton MBA.`
 
 export const SEO_KEYWORDS = [
   ...NAME_ALIASES,

@@ -2,7 +2,8 @@
 import Image from "next/image"
 import Link from "next/link"
 import Reveal from "@/components/Reveal"
-import { CANONICAL_NAME, IDENTITY_LINE, PROFILE_LINKS } from "@/lib/site"
+import PageHero from "@/components/PageHero"
+import { CANONICAL_NAME, IDENTITY_LINE, KINAGE_TAGLINE, PROFILE_LINKS } from "@/lib/site"
 
 const stops = [
   {
@@ -98,17 +99,16 @@ const reading = [
 export default function AboutPage() {
   return (
     <>
-      <div className="page-hero">
-        <p className="page-hero-eyebrow">01 · About</p>
-        <h1 className="page-hero-title">
-          Lagos. Bradford. NYC.<br />
-          <em>Same question everywhere.</em>
-        </h1>
-        <p className="page-hero-desc">
-          Where is the real problem, and what would actually help? That thread runs through
-          chemical engineering, product, AI, private capital, and the regulated systems I ship today.
-        </p>
-      </div>
+      <PageHero
+        eyebrow="01 · About"
+        title={
+          <>
+            Lagos. Bradford. NYC.<br />
+            <em>Same question everywhere.</em>
+          </>
+        }
+        description="Where is the real problem, and what would actually help? That thread runs through chemical engineering, product, AI, private capital, and the regulated systems I ship today."
+      />
 
       {/* Bio */}
       <section className="page-section">
@@ -143,7 +143,7 @@ export default function AboutPage() {
                 and practical judgment about when to automate and when not to.
               </p>
               <p className="body-text">
-                I graduated from Wharton with my MBA in May 2026, while shipping Kinage, an AI market intelligence platform, in production.
+                I graduated from Wharton with my MBA in May 2026, while shipping Kinage — {KINAGE_TAGLINE} — in production.
                 The path from chemical engineering to product to AI to private capital looks random from the outside.
                 It is not. Each step chased a harder version of the same problem: systems that fail quietly in production.
               </p>

@@ -22,7 +22,7 @@ export default function Footer() {
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-          <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 13, color: "var(--ink)", letterSpacing: "-.01em" }}>
+          <span className="footer-brand">
             {CANONICAL_NAME}
           </span>
           <span style={{ fontSize: 9, color: "var(--muted)", letterSpacing: ".06em" }}>
@@ -30,15 +30,7 @@ export default function Footer() {
           </span>
         </div>
 
-        <span
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontStyle: "italic",
-            fontSize: 12,
-            color: "var(--muted)",
-            letterSpacing: ".02em",
-          }}
-        >
+        <span className="footer-motto">
           Ad astra per aspera.
         </span>
 

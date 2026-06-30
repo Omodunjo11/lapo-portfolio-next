@@ -1,3 +1,5 @@
+import { SITE_URL } from "./site"
+
 export type Objective = { title: string; description: string }
 export type MethodItem = { title: string; description: string }
 export type Section = { title: string; body: string }
@@ -173,7 +175,7 @@ export const projects: Project[] = [
     pmAngle:
       "I traced the full analyst workflow before expanding scope. Surfacing a signal is step one. The product question is always who do we contact and do they fit our criteria? The platform architecture follows that sequence.",
     outcome:
-      "Production deployment with multi-source signal ingestion, automated enrichment, and live CRM activity monitoring. GTM stack cost reduced ~$215K annually; precision improved 22%→50% on analyst classification workflows.",
+      "Production deployment with multi-source signal ingestion, automated enrichment, and live CRM activity monitoring. ~$215K annual GTM stack cost reduction (Kinage · regulated financial services client).",
     features: [
       "Ranked signal feed with source trust weighting",
       "Event-driven contact enrichment on CRM changes",
@@ -251,7 +253,7 @@ export const projects: Project[] = [
     pmAngle:
       "I designed around the compliance officer's actual triage loop, not a developer console. The drawer-based deep-dive keeps officers in context. Exam simulation and peer enforcement intel answer the question every officer asks after a violation surfaces: how bad could this get?",
     outcome:
-      "Full-product RegTech prototype with 6+ views, obligation traceability graph, and live deployment on Vercel. Same compliance domain as Kinage bank work: 22%→50% precision and ~$600K annual savings at a top-10 U.S. bank.",
+      "Full-product RegTech prototype with 6+ views, obligation traceability graph, and live deployment on Vercel. Workflow patterns informed by Kinage bank compliance work (22%→50% precision, ~$600K annual savings at a top-10 U.S. bank) — this repo is a standalone prototype, not the production Kinage system.",
     features: [
       "Live risk banner with exposure estimate and SLA breach status",
       "Compliance events feed with regulation citation and customer impact",
@@ -264,7 +266,7 @@ export const projects: Project[] = [
     stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Salesforce CMS", "Framer Motion", "Vercel"],
     github: "https://github.com/Omodunjo11/regulatory-compliance-cockpit",
     githubPrivate: true,
-    live: "https://glean-regulatory-updated.vercel.app",
+    live: `${SITE_URL}/demo/regulatory`,
     featured: true,
     status: "live" as const,
   },

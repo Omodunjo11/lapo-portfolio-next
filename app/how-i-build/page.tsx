@@ -1,5 +1,6 @@
 "use client"
 import Link from "next/link"
+import PageHero from "@/components/PageHero"
 
 const SECTION_STYLE = {
   padding: "64px clamp(20px,6vw,80px)",
@@ -122,36 +123,24 @@ const principleProof: Record<string, { href: string; label: string }> = {
 
 export default function HowIBuild() {
   return (
-    <main style={{ background: "var(--paper)", minHeight: "100vh" }}>
+    <div style={{ background: "var(--paper)", minHeight: "100vh" }}>
 
-      {/* ── Hero ── */}
-      <div style={{
-        ...SECTION_STYLE,
-        paddingTop: "clamp(80px,12vh,140px)",
-        borderBottom: "1px solid var(--border)",
-        maxWidth: 900,
-      }}>
-        <div style={TAG_STYLE}>Product Philosophy</div>
-        <h1 style={{
-          fontFamily: "var(--font-playfair),serif",
-          fontWeight: 900,
-          fontSize: "clamp(36px,6vw,72px)",
-          letterSpacing: "-.03em",
-          lineHeight: .95,
-          color: "var(--ink)",
-          marginBottom: 28,
-          marginTop: 0,
-        }}>
-          How I Build<br />
-          <em style={{ color: "var(--terra)", fontStyle: "italic" }}>AI Products.</em>
-        </h1>
-        <p style={{ ...BODY_STYLE, fontSize: "clamp(15px,1.6vw,18px)", marginBottom: 32 }}>
-          Eleven principles from building production AI systems, on systems thinking, retrieval quality, confidence routing, evaluation, and the version strategy most teams get backwards.
-        </p>
-        <p style={{ ...BODY_STYLE, color: "var(--muted)", fontSize: 13 }}>
+      <PageHero
+        narrow
+        size="compact"
+        eyebrow="Product Philosophy"
+        title={
+          <>
+            How I Build<br />
+            <em>AI Products.</em>
+          </>
+        }
+        description="Eleven principles from building production AI systems, on systems thinking, retrieval quality, confidence routing, evaluation, and the version strategy most teams get backwards."
+      >
+        <p className="page-hero-desc" style={{ marginTop: 16 }}>
           These are not best practices borrowed from a framework. They come from shipping AI in regulated financial environments, watching systems fail in production, running evals, and rebuilding with better constraints. The through-line: the real product is not the model. The real product is the decision system around it.
         </p>
-      </div>
+      </PageHero>
 
       {/* ── Principles ── */}
       {principles.map((p, i) => (
@@ -260,35 +249,15 @@ export default function HowIBuild() {
           See the systems I&apos;ve actually built, or start a conversation.
         </p>
         <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-          <Link href="/projects"
-            style={{
-              fontFamily: "var(--font-syne),sans-serif",
-              fontSize: 10, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase",
-              background: "var(--terra)", color: "white",
-              padding: "14px 32px", borderRadius: 2,
-              textDecoration: "none", transition: "background .2s",
-            }}
-            onMouseEnter={e => (e.currentTarget.style.background = "var(--ink)")}
-            onMouseLeave={e => (e.currentTarget.style.background = "var(--terra)")}
-          >
+          <Link href="/projects" className="btn btn--terra">
             View Projects →
           </Link>
-          <Link href="/connect"
-            style={{
-              fontFamily: "var(--font-syne),sans-serif",
-              fontSize: 10, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase",
-              border: "1px solid var(--border)", color: "var(--ink)",
-              padding: "14px 32px", borderRadius: 2,
-              textDecoration: "none", transition: "all .2s",
-            }}
-            onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.color = "white" }}
-            onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--ink)" }}
-          >
+          <Link href="/connect" className="btn btn--outline">
             Start a Conversation →
           </Link>
         </div>
       </div>
 
-    </main>
+    </div>
   )
 }

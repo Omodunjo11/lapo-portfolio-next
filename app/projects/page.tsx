@@ -4,9 +4,10 @@ import Link from "next/link"
 import Image from "next/image"
 import Ticker from "@/components/Ticker"
 import Reveal from "@/components/Reveal"
+import PageHero from "@/components/PageHero"
 import { projects, featuredProjects } from "@/lib/projects"
 import { PROJECT_HERO_IMAGES } from "@/lib/project-images"
-import { PORTFOLIO_BUILD_COUNT } from "@/lib/metrics"
+import { PORTFOLIO_BUILD_COUNT, PORTFOLIO_BUILD_FOOTNOTE, PORTFOLIO_CASE_STUDY_COUNT } from "@/lib/metrics"
 import { PROFILE_LINKS } from "@/lib/site"
 
 const filters = [
@@ -64,47 +65,17 @@ export default function ProjectsPage() {
 
   return (
     <>
-      {/* Hero */}
-      <div
-        style={{
-          minHeight: "42vh",
-          display: "flex", flexDirection: "column", justifyContent: "flex-end",
-          padding: "clamp(48px,10vh,80px) clamp(16px,6vw,48px) 48px",
-          borderBottom: "1px solid var(--border)",
-        }}
-      >
-        <p
-          style={{
-            fontSize: 9, letterSpacing: ".22em", textTransform: "uppercase",
-            color: "var(--terra)", marginBottom: 18,
-            display: "flex", alignItems: "center", gap: 10,
-            animation: "fadeUp .7s .4s ease both",
-          }}
-        >
-          <span style={{ width: 20, height: 1, background: "var(--terra)", display: "inline-block" }} />
-          Product · AI Systems · Built from Scratch
-        </p>
-        <h1
-          style={{
-            fontFamily: "var(--font-playfair), serif",
-            fontSize: "clamp(40px, 6vw, 76px)",
-            fontWeight: 900, lineHeight: .92, letterSpacing: "-.03em",
-            marginBottom: 20,
-            animation: "fadeUp .8s .55s ease both",
-          }}
-        >
-          I don&apos;t just spec it.<br />
-          <em style={{ color: "var(--terra)", fontStyle: "italic" }}>I ship it.</em>
-        </h1>
-        <p
-          style={{
-            fontSize: 13, color: "var(--muted)", maxWidth: 560, lineHeight: 1.85,
-            animation: "fadeUp .7s .7s ease both",
-          }}
-        >
-          Every project here started with a real problem: forty million Nigerians with no credit file, a compliance team missing regulatory drift in live disclosures, a sales team losing call intelligence in Drive folders. I found the gap, designed the solution, and built the thing.
-        </p>
-      </div>
+      <PageHero
+        size="tall"
+        eyebrow="Product · AI Systems · Built from Scratch"
+        title={
+          <>
+            I don&apos;t just spec it.<br />
+            <em>I ship it.</em>
+          </>
+        }
+        description="Every project here started with a real problem: forty million Nigerians with no credit file, a compliance team missing regulatory drift in live disclosures, a sales team losing call intelligence in Drive folders. I found the gap, designed the solution, and built the thing."
+      />
 
       {/* Stats strip */}
       <div style={{ borderBottom: "1px solid var(--border)", background: "var(--bg2)" }}>
@@ -127,6 +98,21 @@ export default function ProjectsPage() {
             </div>
           ))}
         </div>
+        <p
+          style={{
+            padding: "10px clamp(16px,6vw,48px) 14px",
+            fontSize: 10,
+            color: "var(--muted)",
+            lineHeight: 1.7,
+            borderTop: "1px solid var(--border)",
+          }}
+        >
+          {PORTFOLIO_BUILD_FOOTNOTE} on this page
+          {PORTFOLIO_BUILD_COUNT > PORTFOLIO_CASE_STUDY_COUNT
+            ? ` · ${PORTFOLIO_BUILD_COUNT - PORTFOLIO_CASE_STUDY_COUNT} additional production systems shipped without separate write-ups`
+            : ""}
+          .
+        </p>
       </div>
 
       <Ticker items={tickerItems} />
@@ -251,6 +237,8 @@ export default function ProjectsPage() {
               {filters.map((f) => (
                 <button
                   key={f.key}
+                  type="button"
+                  aria-pressed={active === f.key}
                   onClick={() => setActive(f.key)}
                   style={{
                     fontSize: 8, letterSpacing: ".1em", textTransform: "uppercase",
@@ -276,6 +264,8 @@ export default function ProjectsPage() {
                 return (
                   <button
                     key={f.key}
+                    type="button"
+                    aria-pressed={isActive}
                     onClick={() => setStatusActive(f.key)}
                     style={{
                       fontSize: 8, letterSpacing: ".1em",
@@ -353,15 +343,14 @@ export default function ProjectsPage() {
       {/* GitHub band */}
       <Reveal>
         <div
+          className="github-band"
           style={{
             margin: "0 clamp(16px,6vw,48px) 80px",
             border: "1px solid var(--border)", borderRadius: 2,
             padding: "36px 44px",
             display: "flex", alignItems: "center", justifyContent: "space-between", gap: 40,
-            background: "var(--bg2)", transition: "background .3s",
+            background: "var(--bg2)",
           }}
-          onMouseEnter={e => (e.currentTarget.style.background = "#e5dfd3")}
-          onMouseLeave={e => (e.currentTarget.style.background = "var(--bg2)")}
         >
           <div>
             <div style={{ fontSize: 8, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 8 }}>Open Source</div>
@@ -372,17 +361,8 @@ export default function ProjectsPage() {
             href={PROFILE_LINKS.github}
             target="_blank"
             rel="noopener"
-            style={{
-              display: "inline-flex", alignItems: "center", gap: 9,
-              fontFamily: "var(--font-syne),sans-serif", fontSize: 10, fontWeight: 700,
-              letterSpacing: ".1em", textTransform: "uppercase",
-              background: "var(--ink)", color: "var(--paper)",
-              padding: "13px 26px", borderRadius: 2,
-              whiteSpace: "nowrap", flexShrink: 0,
-              transition: "background .25s, transform .2s",
-            }}
-            onMouseEnter={e => { e.currentTarget.style.background = "var(--terra)"; e.currentTarget.style.transform = "translateY(-2px)" }}
-            onMouseLeave={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.transform = "translateY(0)" }}
+            className="btn btn--filled"
+            style={{ whiteSpace: "nowrap", flexShrink: 0 }}
           >
             View GitHub ↗
           </Link>

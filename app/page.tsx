@@ -3,7 +3,7 @@ import Link from "next/link"
 import Reveal from "@/components/Reveal"
 import CloudScene from "@/components/CloudScene"
 import { PROFILE_LINKS } from "@/lib/site"
-import { PORTFOLIO_BUILD_COUNT, PROOF_METRICS } from "@/lib/metrics"
+import { PORTFOLIO_BUILD_COUNT, PORTFOLIO_BUILD_FOOTNOTE, PROOF_METRICS } from "@/lib/metrics"
 
 const navPanels = [
   {
@@ -18,7 +18,7 @@ const navPanels = [
     label: "Projects",
     href: "/projects",
     headline: `${PORTFOLIO_BUILD_COUNT} AI products shipped end-to-end.`,
-    desc: "Full breakdowns — featured builds and the full archive — of what I built, how, and why.",
+    desc: `${PORTFOLIO_BUILD_FOOTNOTE} — full breakdowns of what I built, how, and why.`,
   },
   {
     number: "03",
@@ -111,7 +111,7 @@ export default function Home() {
                 <Reveal key={panel.href} delay={i * 0.05}>
                   <Link
                     href={panel.href}
-                    className="interactive-surface"
+                    className="interactive-surface interactive-surface--accent-top"
                     style={{
                       display: "block",
                       background: "var(--paper)",

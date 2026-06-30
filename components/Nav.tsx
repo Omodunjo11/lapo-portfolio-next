@@ -34,7 +34,7 @@ export default function Nav() {
           animation: "navIn .6s .2s cubic-bezier(.16,1,.3,1) forwards",
         }}
       >
-        <Link href="/" style={{ fontFamily: "'Syne', sans-serif", fontWeight: 800, fontSize: 15, letterSpacing: "-.02em" }}>
+        <Link href="/" className="nav-brand">
           L·O
         </Link>
 
@@ -62,12 +62,7 @@ export default function Nav() {
             )
           })}
           <li>
-            <Link
-              href="/connect"
-              style={{ background: "var(--ink)", color: "var(--paper)", padding: "7px 18px", borderRadius: 2, fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", transition: "background .25s", display: "inline-block" }}
-              onMouseEnter={e => (e.currentTarget.style.background = "var(--terra)")}
-              onMouseLeave={e => (e.currentTarget.style.background = "var(--ink)")}
-            >
+            <Link href="/connect" className="btn btn--filled btn--sm">
               Let&apos;s Talk
             </Link>
           </li>
@@ -124,7 +119,7 @@ export default function Nav() {
           <Link
             href="/connect"
             onClick={() => setOpen(false)}
-            style={{ display: "block", marginTop: 16, background: "var(--ink)", color: "var(--paper)", padding: "12px 18px", borderRadius: 2, fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", textAlign: "center" }}
+            className="btn btn--filled btn--sm btn--block"
           >
             Let&apos;s Talk
           </Link>
