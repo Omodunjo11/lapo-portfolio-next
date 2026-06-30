@@ -69,14 +69,25 @@ export default function ConnectPage() {
                   <p style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.75 }}>{item.desc}</p>
                 </div>
               ))}
-              <div style={{ position: "relative", overflow: "hidden", minHeight: 180 }}>
-                <Image
-                  src="/images/photo-cocktails.jpg"
-                  alt="Lapo Odunjo"
-                  fill
-                  style={{ objectFit: "cover", objectPosition: "center 30%" }}
-                  sizes="(max-width: 768px) 100vw, 280px"
-                />
+              <div style={{
+                background: "var(--ink)",
+                padding: "28px 24px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                minHeight: 180,
+              }}>
+                <div style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".18em", textTransform: "uppercase", color: "rgba(248,250,252,0.4)" }}>
+                  Africa AI Leaders Fellowship
+                </div>
+                <div>
+                  <div style={{ fontFamily: "var(--font-playfair),serif", fontStyle: "italic", fontSize: 15, color: "var(--paper)", lineHeight: 1.5, marginBottom: 14 }}>
+                    &ldquo;Ford Foundation &amp; Mastercard backed — building AI capacity across Africa.&rdquo;
+                  </div>
+                  <div style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)" }}>
+                    Co-Founding CEO · 2024 – Present
+                  </div>
+                </div>
               </div>
             </div>
           </div>
