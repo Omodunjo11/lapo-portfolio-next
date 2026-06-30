@@ -174,7 +174,7 @@ const leadership = [
 ]
 
 const education = [
-  { year: "2024 – 2026", school: "The Wharton School, University of Pennsylvania", location: "Philadelphia, PA", degree: "MBA, Finance & Strategic Management", note: "Trailblazer Fellowship (50% merit) · President, Wharton Graduate Association ($6M P&L, 1,700+ students) · VP, Wharton Tech Club Conferences · Co-CEO, Africa AI Leaders Fellowship" },
+  { year: "2024 – May 2026", school: "The Wharton School, University of Pennsylvania", location: "Philadelphia, PA", degree: "MBA, Finance & Strategic Management", note: "Trailblazer Fellowship (50% merit) · President, Wharton Graduate Association ($6M P&L, 1,700+ students) · VP, Wharton Tech Club Conferences · Co-CEO, Africa AI Leaders Fellowship" },
   { year: "2021 – 2023", school: "Columbia University", location: "New York, NY", degree: "M.S., Chemical Engineering", note: "Full merit scholarship, 21 of 5,000+ applicants · GPA 3.8 · Peer-reviewed ACS Applied Energy Materials publication" },
   { year: "2015 – 2020", school: "University of Bradford", location: "Bradford, UK", degree: "B.Eng., Chemical Engineering", note: "Bradford Dean Award, full-ride · GPA 3.7" },
 ]
@@ -223,7 +223,7 @@ export default function ExperiencePage() {
               Onaolapo <em style={{ color: "var(--terra)", fontStyle: "italic" }}>Odunjo</em>
             </h1>
             <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 8, animation: "fadeUp .6s .55s ease both" }}>
-              Also known as Lapo Odunjo and Michael Odunjo
+              Onaolapo Michael (Lapo) Odunjo — Lapo is short for Onaolapo
             </p>
             <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 12, animation: "fadeUp .6s .6s ease both" }}>
               New York, NY · odunjoonaolapo@gmail.com · +1-646-421-3781
@@ -422,7 +422,7 @@ export default function ExperiencePage() {
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                       {sg.items.map(item => (
                         <span key={item}
-                          style={{ fontSize: 10, color: "var(--ink)", border: "1px solid var(--border)", padding: "4px 10px", borderRadius: 2, transition: "all .2s", cursor: "none" }}
+                          style={{ fontSize: 10, color: "var(--ink)", border: "1px solid var(--border)", padding: "4px 10px", borderRadius: 2, transition: "all .2s", cursor: "default" }}
                           onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.color = "var(--paper)"; e.currentTarget.style.borderColor = "var(--ink)" }}
                           onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--ink)"; e.currentTarget.style.borderColor = "var(--border)" }}
                         >{item}</span>

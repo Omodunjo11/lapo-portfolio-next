@@ -21,7 +21,7 @@ export const ROLE_META =
   "AI product leader building production trust systems for regulated industries. Kinage · KOVA · Amazon · TD Bank · Wharton MBA."
 
 export const SEO_DESCRIPTION =
-  "Lapo Odunjo (Onaolapo Michael Odunjo) — AI product leader building trust systems for regulated industries. Also known as Onaolapo Odunjo and Michael Odunjo. Kinage, KOVA, Amazon, TD Bank, Wharton MBA."
+  "Onaolapo Michael (Lapo) Odunjo — AI product leader building trust systems for regulated industries. Co-Founding CEO, Africa AI Leaders Fellowship. Kinage, KOVA, Amazon, TD Bank, Wharton MBA."
 
 export const SEO_KEYWORDS = [
   ...NAME_ALIASES,
@@ -37,7 +37,7 @@ export const SEO_KEYWORDS = [
 ]
 
 export const INTENT_CTA =
-  "Building Kinage & KOVA · Open to Staff AI PM roles & regulated-AI design partners"
+  "Building Kinage & KOVA · Open to AI Strategist, Deployment Strategist, and AI PM roles"
 
 export const CONTACT_EMAIL = "odunjoonaolapo@gmail.com"
 

@@ -38,7 +38,7 @@ const stops = [
   {
     city: "Philadelphia",
     region: "Pennsylvania",
-    note: "Wharton MBA. Shipped Kinage in production while writing papers. Did not sleep enough.",
+    note: "Wharton MBA, graduated May 2026. Shipped Kinage in production while writing papers. Did not sleep enough.",
   },
   {
     city: "New York",

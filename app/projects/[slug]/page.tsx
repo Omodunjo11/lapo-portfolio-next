@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation"
 import { getProject, projects } from "@/lib/projects"
+import { CANONICAL_NAME, SITE_URL } from "@/lib/site"
 import ProjectDetail from "@/components/ProjectDetail"
 
 export async function generateStaticParams() {
@@ -9,7 +10,30 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const project = getProject(slug)
-  return { title: project ? `${project.name}, Lapo Odunjo` : "Project Not Found" }
+  if (!project) return { title: "Project Not Found" }
+
+  const title = `${project.name} · ${CANONICAL_NAME}`
+  const description = project.tagline
+
+  return {
+    title,
+    description,
+    alternates: { canonical: `${SITE_URL}/projects/${slug}` },
+    openGraph: {
+      title,
+      description,
+      url: `${SITE_URL}/projects/${slug}`,
+      siteName: CANONICAL_NAME,
+      locale: "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      creator: "@Modunjo",
+    },
+  }
 }
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
