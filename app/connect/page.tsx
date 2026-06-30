@@ -7,7 +7,7 @@ import { CONTACT_EMAIL, PROFILE_LINKS } from "@/lib/site"
 const openTo = [
   {
     role: "AI Strategist",
-    desc: "Helping organisations define where AI actually creates leverage — not where it sounds impressive.",
+    desc: "Helping organizations define where AI actually creates leverage — not where it sounds impressive.",
   },
   {
     role: "Deployment Strategist",
@@ -34,8 +34,19 @@ export default function ConnectPage() {
         </h1>
         <p className="page-hero-desc page-hero-desc--light">
           AI systems in regulated industries. Private markets across Africa.
-          Anything that does not fit a clean slide deck — those are my favourite conversations.
+          Role conversations, design partnerships, and building in production.
         </p>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 28 }}>
+          <Link
+            href={`mailto:${CONTACT_EMAIL}?subject=AI%20PM%20conversation`}
+            className="hero-cta-primary"
+          >
+            Email me →
+          </Link>
+          <Link href={PROFILE_LINKS.resume} target="_blank" rel="noopener" className="hero-cta-secondary">
+            Resume ↗
+          </Link>
+        </div>
       </div>
 
       {/* Currently open to */}
@@ -63,7 +74,7 @@ export default function ConnectPage() {
                   src="/images/photo-cocktails.jpg"
                   alt="Lapo Odunjo"
                   fill
-                  style={{ objectFit: "cover", objectPosition: "center top" }}
+                  style={{ objectFit: "cover", objectPosition: "center 30%" }}
                   sizes="(max-width: 768px) 100vw, 280px"
                 />
               </div>
@@ -83,7 +94,10 @@ export default function ConnectPage() {
                 AI product and regulated infrastructure. I read everything — response time varies with
                 travel and shipping cycles.
               </p>
-              <div style={{ marginTop: 28 }}>
+              <div style={{ marginTop: 28, display: "flex", gap: 10, flexWrap: "wrap" }}>
+                <Link href={`mailto:${CONTACT_EMAIL}?subject=AI%20PM%20conversation`} className="btn btn--filled">
+                  Email me →
+                </Link>
                 <Link href={PROFILE_LINKS.resume} target="_blank" rel="noopener" className="btn btn--outline">
                   Download resume ↗
                 </Link>
