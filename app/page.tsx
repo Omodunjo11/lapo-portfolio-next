@@ -22,7 +22,7 @@ const navPanels = [
     number: "01",
     label: "About",
     href: "/about",
-    headline: "Lagos to NYC. Same question everywhere.",
+    headline: "Lagos. Bradford. NYC. Same question everywhere.",
     desc: "Who I am, how I think, and what drives the work.",
   },
   {

@@ -57,7 +57,7 @@ export default function AboutPage() {
       <div className="page-hero">
         <p className="page-hero-eyebrow">01 · About</p>
         <h1 className="page-hero-title">
-          Lagos to NYC.<br />
+          Lagos. Bradford. NYC.<br />
           <em>Same question everywhere.</em>
         </h1>
         <p className="page-hero-desc">
@@ -90,10 +90,9 @@ export default function AboutPage() {
           <Reveal delay={0.1}>
             <div className="about-right">
               <p className="body-text">
-                I go by Lapo. Lagos is where I grew up, Bradford is where I studied chemical engineering,
-                and New York is where I live and build now. The stops in between — Philadelphia for my Wharton MBA,
-                stints across banking and tech — were each their own version of arriving somewhere unfamiliar
-                and learning how the system actually works versus how it is supposed to.
+                I go by Lapo. Lagos, Bradford, Ghana, Atlanta, New Haven, New York, Philadelphia, New York.
+                Eight cities, one thread: arrive somewhere unfamiliar, learn how the system actually works
+                versus how it is supposed to, find your footing, move again.
               </p>
               <p className="body-text">
                 Today I build AI systems for regulated industries, environments where trust matters and the cost
