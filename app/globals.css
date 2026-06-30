@@ -210,7 +210,7 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
 .grid-4col      { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); }
 .grid-about     { display: grid; grid-template-columns: 1fr 2fr; gap: 0; align-items: start; }
 .grid-contact   { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
-.grid-photo     { display: grid; grid-template-columns: 1fr 1fr; min-height: 460px; border-top: 1px solid var(--border); }
+.grid-photo     { display: grid; grid-template-columns: 1fr 1fr; min-height: 300px; border-top: 1px solid var(--border); }
 .grid-photo--landscape { min-height: clamp(380px, 42vh, 520px); }
 
 .photo-break-img {
@@ -372,8 +372,8 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
 .metrics-bar {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(20px, 3vw, 40px) clamp(16px, 4vw, 48px);
-  padding: clamp(24px, 4vw, 32px) clamp(16px, 5vw, 64px);
+  gap: 14px clamp(12px, 3vw, 32px);
+  padding: 14px clamp(16px, 4vw, 48px);
   background: var(--ink);
   border-bottom: 1px solid rgba(255,255,255,0.08);
 }
@@ -382,25 +382,26 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 6px;
+  gap: 3px;
   min-width: 0;
 }
 
 .metric-value {
-  font-family: var(--font-playfair), serif;
-  font-weight: 900;
-  font-size: clamp(22px, 2.8vw, 34px);
+  font-family: var(--font-syne), sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: -.01em;
   color: var(--paper);
-  line-height: 1;
+  line-height: 1.1;
 }
 
 .metric-label {
   font-family: var(--font-dm-mono), monospace;
-  font-size: clamp(8px, 0.95vw, 10px);
-  letter-spacing: .05em;
-  color: rgba(148,163,184,0.92);
-  line-height: 1.45;
-  max-width: 220px;
+  font-size: 8px;
+  letter-spacing: .03em;
+  color: rgba(148,163,184,0.82);
+  line-height: 1.35;
+  max-width: 200px;
 }
 
 .ticker-bar {
@@ -739,26 +740,38 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
   gap: clamp(32px, 5vw, 48px);
 }
 
+.perspective-intro {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(20px, 3vw, 32px);
+  max-width: 62ch;
+}
+
 .perspective-hero {
-  margin: 0;
-  width: 100%;
+  flex: 0 0 auto;
+  margin: 4px 0 0;
+  width: 132px;
 }
 
 .perspective-landscape-img {
-  width: 100%;
+  width: 132px;
+  max-height: 88px;
   height: auto;
   display: block;
-  border-radius: 4px;
+  object-fit: contain;
+  object-position: left top;
+  border-radius: 3px;
   border: 1px solid var(--border);
 }
 
 .perspective-caption {
   font-family: var(--font-dm-mono), monospace;
-  font-size: 9px;
-  letter-spacing: .12em;
+  font-size: 7px;
+  letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-top: 10px;
+  margin-top: 6px;
+  line-height: 1.35;
 }
 
 .perspective-lede {
@@ -767,7 +780,8 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
   line-height: 1.65;
   color: var(--mid);
   margin: 0;
-  max-width: 62ch;
+  flex: 1;
+  min-width: 0;
 }
 
 .perspective-points {
@@ -853,7 +867,7 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
 .photo-break-image {
   overflow: hidden;
   position: relative;
-  min-height: clamp(280px, 38vh, 520px);
+  min-height: clamp(200px, 28vh, 300px);
 }
 
 .photo-break-overlay {
@@ -863,7 +877,7 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
 }
 
 .photo-break-copy {
-  padding: 64px 56px;
+  padding: 40px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1008,7 +1022,7 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
   .grid-pub      { grid-template-columns: 1fr; gap: 16px; }
   .grid-contact  { grid-template-columns: 1fr; gap: 32px; }
   .grid-photo    { grid-template-columns: 1fr; min-height: auto; }
-  .grid-photo > div:first-child { min-height: 260px; position: relative; }
+  .grid-photo > div:first-child { min-height: 200px; position: relative; }
   .grid-stats    { grid-template-columns: 1fr 1fr; }
 
   /* ── Padding/margin reduction ── */
@@ -1038,8 +1052,12 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
   /* ── Proof metrics bar: 2x2 grid on mobile ── */
   .metrics-bar {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    padding: 20px 16px !important;
-    gap: 20px 16px !important;
+    gap: 12px 16px;
+    padding: 12px 16px !important;
+  }
+
+  .metric-label {
+    max-width: none;
   }
 
   /* ── Nav mobile ── */
