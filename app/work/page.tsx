@@ -80,32 +80,36 @@ export default function WorkPage() {
             <div className="section-divider" />
           </div>
 
-          <figure className="perspective-hero">
-            <Image
-              src="/images/photo-landscape.jpg"
-              alt="Tea hills outside Nairobi, Kenya"
-              width={1200}
-              height={900}
-              sizes="(max-width: 768px) 92vw, 520px"
-              quality={85}
-              className="perspective-landscape-img"
-            />
-            <figcaption className="perspective-caption">Nairobi highlands · Kenya</figcaption>
-          </figure>
+          <div className="perspective-layout">
+            <figure className="perspective-hero">
+              <Image
+                src="/images/photo-landscape.jpg"
+                alt="Tea hills outside Nairobi, Kenya"
+                width={1200}
+                height={900}
+                sizes="(max-width: 900px) 92vw, 38vw"
+                quality={85}
+                className="perspective-landscape-img"
+              />
+              <figcaption className="perspective-caption">Nairobi highlands · Kenya</figcaption>
+            </figure>
 
-          <p className="perspective-lede">
-            Most of how I think about product started in Lagos — reading systems when the official story
-            does not match what is happening on the ground. That lens still shows up in the AI work I ship
-            for banks, healthcare, and markets most products never reach.
-          </p>
+            <div className="perspective-copy">
+              <p className="perspective-lede">
+                Most of how I think about product started in Lagos — reading systems when the official story
+                does not match what is happening on the ground. That lens still shows up in the AI work I ship
+                for banks, healthcare, and markets most products never reach.
+              </p>
 
-          <div className="perspective-points">
-            {perspectives.map((item) => (
-              <article key={item.title} className="perspective-point">
-                <h3 className="perspective-title">{item.title}</h3>
-                <p className="perspective-body">{item.body}</p>
-              </article>
-            ))}
+              <div className="perspective-points">
+                {perspectives.map((item) => (
+                  <article key={item.title} className="perspective-point">
+                    <h3 className="perspective-title">{item.title}</h3>
+                    <p className="perspective-body">{item.body}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
