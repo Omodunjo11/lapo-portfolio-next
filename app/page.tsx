@@ -8,13 +8,15 @@ import { PROOF_METRICS } from "@/lib/metrics"
 
 const tickerItems = [
   { text: "AI Product · Regulated Systems", highlight: true },
-  { text: "Lagos → Bradford → NYC → Philly" },
-  { text: "RAG Systems in Production", highlight: true },
-  { text: "LLM Evaluation Frameworks" },
+  { text: "Lagos → Bradford → NYC" },
+  { text: "Africa AI Leaders Fellowship · Co-Founding CEO", highlight: true },
+  { text: "Ford Foundation · Mastercard Backed" },
   { text: "Kinage · KOVA · Building", highlight: true },
-  { text: "Trust Infrastructure" },
+  { text: "RAG Systems in Production" },
   { text: "Agentic Workflows · Production", highlight: true },
-  { text: "Wharton MBA · Completed" },
+  { text: "Wharton MBA · Columbia MS" },
+  { text: "Trust Infrastructure · Regulated AI", highlight: true },
+  { text: "LLM Evaluation Frameworks" },
 ]
 
 const navPanels = [
