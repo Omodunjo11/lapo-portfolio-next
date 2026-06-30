@@ -3,7 +3,7 @@ import { useState } from "react"
 import Link from "next/link"
 import Ticker from "@/components/Ticker"
 import Reveal from "@/components/Reveal"
-import { projects } from "@/lib/projects"
+import { projects, featuredProjects } from "@/lib/projects"
 
 const filters = [
   { key: "all", label: "All" },
@@ -98,6 +98,39 @@ export default function ProjectsPage() {
       </div>
 
       <Ticker items={tickerItems} />
+
+      {/* Featured */}
+      <section style={{ borderBottom: "1px solid var(--border)", padding: "clamp(40px,6vw,64px) clamp(16px,6vw,48px)" }}>
+        <Reveal>
+          <div style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 32 }}>
+            <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>◆</span>
+            <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Featured Builds</span>
+            <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+            <span style={{ fontSize: 10, color: "var(--muted)" }}>Production AI · Regulated Systems</span>
+          </div>
+        </Reveal>
+        <div className="grid-2col">
+          {featuredProjects.map((project, i) => (
+            <Reveal key={project.slug} delay={i * 0.08}>
+              <Link href={`/projects/${project.slug}`} className="project-card">
+                <div className="project-card-top">
+                  <span className="project-lang">{project.lang}</span>
+                  <span className="project-year">{project.year}</span>
+                </div>
+                <div className="project-name">{project.name}</div>
+                <div className="project-role">{project.role}</div>
+                <p className="project-tagline">{project.tagline}</p>
+                <div className="project-stack">
+                  {project.stack.slice(0, 3).map(s => (
+                    <span key={s} className="stack-pill">{s}</span>
+                  ))}
+                </div>
+                <div className="project-cta">Read full breakdown →</div>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
       {/* Narrative */}
       <Reveal>

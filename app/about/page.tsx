@@ -25,24 +25,29 @@ const perspectives = [
 
 const reading = [
   {
-    title: "Seeing Like a State",
-    author: "James C. Scott",
-    note: "On why legible, formal systems so often destroy the informal intelligence they replace. The most useful book I have read for thinking about fintech in Africa.",
+    title: "Berlin",
+    author: "Bea Setton",
+    note: "A novel about arriving somewhere unfamiliar and figuring out who you are in rooms that do not quite fit yet. I keep returning to books about that particular feeling.",
   },
   {
-    title: "Poor Economics",
-    author: "Abhijit Banerjee & Esther Duflo",
-    note: "Rigorous and human at the same time. Changed how I think about designing for people at the economic margin.",
+    title: "Days at the Morisaki Bookshop",
+    author: "Satoshi Yagisawa",
+    note: "Quiet and restorative. A reminder that healing is usually slower and smaller than you expect, and that it happens anyway.",
   },
   {
-    title: "The Entrepreneurial State",
-    author: "Mariana Mazzucato",
-    note: "A corrective for anyone who thinks markets build things from scratch. Useful for thinking about infrastructure and who actually takes the early risk.",
+    title: "Canon",
+    author: "Paige Lewis",
+    note: "Poetry that notices things sideways. I am reading it in transit, which turns out to be the right context.",
   },
   {
-    title: "Thinking, Fast and Slow",
-    author: "Daniel Kahneman",
-    note: "Still the clearest framework I have for understanding why intelligent people make confident wrong decisions — relevant every week in product work.",
+    title: "Impossible Creatures",
+    author: "Katherine Rundell",
+    note: "Pure imagination and craft. I read fiction to remember what it feels like to build a world from scratch, which is closer to product work than most people admit.",
+  },
+  {
+    title: "Team of Teams",
+    author: "Stanley McChrystal",
+    note: "On how complex organizations adapt when hierarchy stops working fast enough. The most useful management book I have read for thinking about AI systems that need human judgment in the loop.",
   },
 ]
 
@@ -52,7 +57,7 @@ export default function AboutPage() {
       <div className="page-hero">
         <p className="page-hero-eyebrow">01 · About</p>
         <h1 className="page-hero-title">
-          Lagos to Philly.<br />
+          Lagos to NYC.<br />
           <em>Same question everywhere.</em>
         </h1>
         <p className="page-hero-desc">
@@ -85,16 +90,18 @@ export default function AboutPage() {
           <Reveal delay={0.1}>
             <div className="about-right">
               <p className="body-text">
-                I go by Lapo. I grew up in Lagos, studied in Bradford, and found my way through New York and Philadelphia.
-                Every move meant learning a new system and finding my voice in rooms that did not feel familiar at first.
-                That is why I am drawn to products and people in transition.
+                I go by Lapo. Lagos is where I grew up, Bradford is where I studied chemical engineering,
+                and New York is where I live and build now. The stops in between — Philadelphia for my Wharton MBA,
+                stints across banking and tech — were each their own version of arriving somewhere unfamiliar
+                and learning how the system actually works versus how it is supposed to.
               </p>
               <p className="body-text">
-                Today I build AI systems for regulated industries, environments where trust matters and the cost of a wrong answer is real.
-                My work sits at the intersection of product, AI, financial infrastructure, and practical judgment.
+                Today I build AI systems for regulated industries, environments where trust matters and the cost
+                of a wrong answer is real. My work sits at the intersection of product, AI, financial infrastructure,
+                and practical judgment about when to automate and when not to.
               </p>
               <p className="body-text">
-                I recently finished my Wharton MBA while shipping Kinage, an AI market intelligence platform, in production.
+                I finished my Wharton MBA while shipping Kinage, an AI market intelligence platform, in production.
                 The path from chemical engineering to product to AI to private capital looks random from the outside.
                 To me it has always been one question: where is the real problem, and what would actually help?
               </p>
