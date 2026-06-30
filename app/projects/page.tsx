@@ -5,6 +5,8 @@ import Image from "next/image"
 import Ticker from "@/components/Ticker"
 import Reveal from "@/components/Reveal"
 import { projects, featuredProjects } from "@/lib/projects"
+import { PROJECT_HERO_IMAGES } from "@/lib/project-images"
+import { PORTFOLIO_BUILD_COUNT } from "@/lib/metrics"
 import { PROFILE_LINKS } from "@/lib/site"
 
 const filters = [
@@ -45,12 +47,7 @@ const langColors: Record<string, string> = {
 }
 
 // Hero images mapped to featured project slugs
-const featuredImages: Record<string, string> = {
-  "kova-bot": "/images/hero/hero-card-fintech.png",
-  "gtm-intelligence-platform": "/images/hero/hero-card-enterprise.png",
-  "regulatory-compliance-cockpit": "/images/hero/hero-card-fintech.png",
-  "transcript-intelligence": "/images/hero/hero-card-enterprise.png",
-}
+const featuredImages = PROJECT_HERO_IMAGES
 
 export default function ProjectsPage() {
   const [active, setActive] = useState("all")
@@ -118,7 +115,7 @@ export default function ProjectsPage() {
           }}
         >
           {[
-            { label: "Total builds", value: String(projects.length) },
+            { label: "Total builds", value: String(PORTFOLIO_BUILD_COUNT) },
             { label: "Live in production", value: String(liveCount) },
             { label: "Built & shipped", value: String(builtCount) },
             { label: "Primary stack", value: "TypeScript · Python" },
@@ -158,8 +155,7 @@ export default function ProjectsPage() {
                       display: "flex", flexDirection: "column",
                       transition: "background .25s",
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.background = "rgba(196,98,45,.03)")}
-                    onMouseLeave={e => (e.currentTarget.style.background = "var(--paper)")}
+                    className="interactive-surface"
                   >
                     {/* Image header */}
                     {heroImg ? (
@@ -319,8 +315,7 @@ export default function ProjectsPage() {
                       alignItems: "center",
                       transition: "background .2s",
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.background = "rgba(196,98,45,.03)")}
-                    onMouseLeave={e => (e.currentTarget.style.background = "var(--paper)")}
+                    className="interactive-surface"
                   >
                     {/* Left: name + meta */}
                     <div>

@@ -145,7 +145,7 @@ export default function AboutPage() {
               <p className="body-text">
                 I graduated from Wharton with my MBA in May 2026, while shipping Kinage, an AI market intelligence platform, in production.
                 The path from chemical engineering to product to AI to private capital looks random from the outside.
-                To me it has always been one question: where is the real problem, and what would actually help?
+                It is not. Each step chased a harder version of the same problem: systems that fail quietly in production.
               </p>
               <div className="tag-row">
                 {["AI Systems", "Private Markets", "Africa", "Fintech", "Regulated Industries"].map(tag => (

@@ -5,6 +5,12 @@ import { CANONICAL_NAME, INTENT_CTA, PROFILE_LINKS, ROLE_TITLE } from "@/lib/sit
 
 const HEADSHOT = "/images/IMG_3437.jpg"
 
+const HERO_PROOF = [
+  { metric: "22%→50%", detail: "precision · agentic compliance, top-10 U.S. bank" },
+  { metric: "$600K", detail: "estimated annual client savings · Kinage" },
+  { metric: "5K+", detail: "KOVA testers in first two months" },
+] as const
+
 export default function CloudScene() {
   return (
     <section
@@ -29,8 +35,18 @@ export default function CloudScene() {
             <h1 className="hero-title">{CANONICAL_NAME}</h1>
             <p className="hero-subtitle">{ROLE_TITLE}</p>
             <p className="hero-intent">{INTENT_CTA}</p>
+            <ul className="hero-proof-list" aria-label="Selected production outcomes">
+              {HERO_PROOF.map(({ metric, detail }) => (
+                <li key={metric}>
+                  <strong>{metric}</strong> {detail}
+                </li>
+              ))}
+            </ul>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 28 }}>
-              <Link href="/connect" className="hero-cta-primary">
+              <Link href="/projects" className="hero-cta-primary">
+                See the work →
+              </Link>
+              <Link href="/connect" className="hero-cta-secondary">
                 Start a conversation
               </Link>
               <Link href={PROFILE_LINKS.resume} target="_blank" rel="noopener" className="hero-cta-secondary">

@@ -1,3 +1,6 @@
+/** Total shipped products (portfolio + additional builds not listed individually). */
+export const PORTFOLIO_BUILD_COUNT = 11
+
 /** Homepage proof metrics — sourced from experience page, verified figures only. */
 export const PROOF_METRICS = [
   {
@@ -21,7 +24,7 @@ export const PROOF_METRICS = [
     label: "KOVA tester-phase customers · 2 months",
   },
   {
-    metric: "11",
+    metric: String(PORTFOLIO_BUILD_COUNT),
     label: "AI products shipped end-to-end",
   },
 ]

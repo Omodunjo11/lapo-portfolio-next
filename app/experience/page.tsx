@@ -244,9 +244,9 @@ export default function ExperiencePage() {
         </ul>
 
         {"subroles" in job && job.subroles && (
-          <div style={{ marginTop: 24, paddingTop: 20, borderTop: "1px solid var(--border)" }}>
+          <div style={{ marginTop: 20, paddingTop: 16, borderTop: "1px solid var(--border)" }}>
             {job.subroles.map((sr) => (
-              <div key={sr.role} style={{ marginBottom: 12 }}>
+              <div key={sr.role} style={{ display: "flex", gap: 16, alignItems: "flex-start", marginBottom: 12 }}>
                 <div style={{ fontSize: 11, color: "var(--terra)", fontWeight: 600, whiteSpace: "nowrap" }}>{sr.role} · {sr.period}</div>
                 <div style={{ fontSize: 11, color: "var(--muted)", lineHeight: 1.7 }}>{sr.note}</div>
               </div>
@@ -319,49 +319,32 @@ export default function ExperiencePage() {
         {/* ── EXPERIENCE ── */}
         {activeTab === "experience" && (
           <div style={{ padding: "clamp(24px,6vw,48px) clamp(16px,6vw,48px) 0" }}>
-            {jobs.map((job, idx) => (
-              <Reveal key={job.company + job.role} delay={idx * 0.04}>
-                <div style={{ borderBottom: "1px solid var(--border)", paddingBottom: 48, marginBottom: 48 }}>
-                  <div className="grid-exp-row" style={{ marginBottom: 20 }}>
-                    <div>
-                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8, flexWrap: "wrap" }}>
-                        <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 18, fontWeight: 800 }}>{job.company}</div>
-                        <span style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", color: job.tagColor, border: `1px solid ${job.tagColor}30`, padding: "2px 8px", borderRadius: 2 }}>{job.tag}</span>
-                      </div>
-                      <div style={{ fontSize: 13, color: "var(--terra)", fontWeight: 600, marginBottom: 4 }}>{job.role}</div>
-                      <div style={{ fontSize: 11, color: "var(--muted)" }}>{job.location} · {job.period}</div>
-                    </div>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "flex-end", maxWidth: 300 }}>
-                      {job.stack.map(s => (
-                        <span key={s} style={{ fontSize: 8, background: "rgba(201,168,76,.12)", color: "#7a6020", padding: "3px 8px", borderRadius: 2 }}>{s}</span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <p style={{ fontSize: 13, color: "var(--mid)", lineHeight: 1.8, marginBottom: 20, fontStyle: "italic", borderLeft: "2px solid var(--border)", paddingLeft: 16 }}>{job.summary}</p>
-
-                  <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 12 }}>
-                    {job.bullets.map((b, i) => (
-                      <li key={i} style={{ fontSize: 12, color: "var(--mid)", lineHeight: 1.8, display: "flex", gap: 12, alignItems: "flex-start" }}>
-                        <span style={{ color: "var(--terra)", fontSize: 8, marginTop: 5, flexShrink: 0 }}>▸</span>
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {job.subroles && (
-                    <div style={{ marginTop: 20, paddingTop: 16, borderTop: "1px solid var(--border)" }}>
-                      {job.subroles.map(sr => (
-                        <div key={sr.role} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
-                          <div style={{ fontSize: 11, color: "var(--terra)", fontWeight: 600, whiteSpace: "nowrap" }}>{sr.role} · {sr.period}</div>
-                          <div style={{ fontSize: 11, color: "var(--muted)", lineHeight: 1.7 }}>{sr.note}</div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </Reveal>
-            ))}
+            {primaryJobs.map((job, idx) => renderJob(job, idx))}
+            {earlierJobs.length > 0 && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setShowEarlier((open) => !open)}
+                  style={{
+                    fontFamily: "var(--font-syne),sans-serif",
+                    fontSize: 10,
+                    fontWeight: 700,
+                    letterSpacing: ".1em",
+                    textTransform: "uppercase",
+                    border: "1px solid var(--border)",
+                    background: "var(--bg2)",
+                    color: "var(--mid)",
+                    padding: "12px 20px",
+                    borderRadius: 2,
+                    cursor: "pointer",
+                    marginBottom: showEarlier ? 32 : 0,
+                  }}
+                >
+                  {showEarlier ? "Hide earlier career ↑" : `Show earlier career (${earlierJobs.length} roles) ↓`}
+                </button>
+                {showEarlier && earlierJobs.map((job, idx) => renderJob(job, idx))}
+              </>
+            )}
           </div>
         )}
 
@@ -455,7 +438,7 @@ export default function ExperiencePage() {
                 <Reveal key={sg.title} delay={i * 0.06}>
                   <div style={{ background: "var(--paper)", padding: "28px 26px" }}>
                     <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 16 }}>{sg.title}</div>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: sg.proofLink ? 14 : 0 }}>
                       {sg.items.map(item => (
                         <span key={item}
                           style={{ fontSize: 10, color: "var(--ink)", border: "1px solid var(--border)", padding: "4px 10px", borderRadius: 2, transition: "all .2s", cursor: "default" }}
@@ -464,6 +447,11 @@ export default function ExperiencePage() {
                         >{item}</span>
                       ))}
                     </div>
+                    {sg.proofLink && (
+                      <Link href={sg.proofLink.href} style={{ fontSize: 10, color: "var(--terra)", letterSpacing: ".06em" }}>
+                        {sg.proofLink.label}
+                      </Link>
+                    )}
                   </div>
                 </Reveal>
               ))}

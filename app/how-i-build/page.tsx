@@ -30,7 +30,7 @@ const TAG_STYLE = {
   letterSpacing: ".18em",
   textTransform: "uppercase" as const,
   color: "var(--terra)",
-  border: "1px solid rgba(125,211,252,.6)",
+  border: "1px solid color-mix(in srgb, var(--terra) 35%, transparent)",
   padding: "3px 10px",
   borderRadius: 2,
   display: "inline-block",
@@ -106,9 +106,23 @@ const principles = [
   },
 ]
 
+const principleProof: Record<string, { href: string; label: string }> = {
+  "01": { href: "/projects/gtm-intelligence-platform", label: "GTM Intelligence Platform →" },
+  "02": { href: "/projects/transcript-intelligence", label: "Transcript Intelligence pipeline →" },
+  "03": { href: "/projects/kova-bot", label: "Kova credit infrastructure →" },
+  "04": { href: "/projects/ai-retrieval-core", label: "AI Retrieval Core →" },
+  "05": { href: "/projects/regulatory-compliance-cockpit", label: "Regulatory Compliance Cockpit →" },
+  "06": { href: "/projects/llm-reliability", label: "LLM System Reliability →" },
+  "07": { href: "/projects/llm-reliability", label: "LLM System Reliability →" },
+  "08": { href: "/projects/regulatory-compliance-cockpit", label: "Regulatory Compliance Cockpit →" },
+  "09": { href: "/experience", label: "Kinage metrics on Experience →" },
+  "10": { href: "/projects/kova-bot", label: "Kova version strategy →" },
+  "11": { href: "/projects", label: "All builds and tradeoffs →" },
+}
+
 export default function HowIBuild() {
   return (
-    <main style={{ background: "linear-gradient(180deg, #ede5ec 0%, #f0eaef 15%, var(--paper) 40%)", minHeight: "100vh" }}>
+    <main style={{ background: "var(--paper)", minHeight: "100vh" }}>
 
       {/* ── Hero ── */}
       <div style={{
@@ -147,14 +161,14 @@ export default function HowIBuild() {
           gridTemplateColumns: "clamp(48px,6vw,80px) 1fr",
           gap: "clamp(24px,4vw,56px)",
           alignItems: "start",
-          background: i % 2 === 1 ? "rgba(186,230,253,0.08)" : "var(--paper)",
+          background: i % 2 === 1 ? "var(--bg2)" : "var(--paper)",
         }}>
           {/* Number */}
           <div style={{
             fontFamily: "var(--font-playfair),serif",
             fontWeight: 900,
             fontSize: "clamp(28px,4vw,52px)",
-            color: "rgba(125,211,252,0.4)",
+            color: "color-mix(in srgb, var(--terra) 35%, transparent)",
             lineHeight: 1,
             paddingTop: 4,
           }}>{p.n}</div>
@@ -168,6 +182,21 @@ export default function HowIBuild() {
                 <p key={j} style={{ marginBottom: 16, marginTop: 0 }}>{para}</p>
               ))}
             </div>
+            {principleProof[p.n] && (
+              <Link
+                href={principleProof[p.n].href}
+                style={{
+                  display: "inline-block",
+                  marginTop: 8,
+                  fontSize: 10,
+                  letterSpacing: ".08em",
+                  color: "var(--terra)",
+                  textDecoration: "none",
+                }}
+              >
+                {principleProof[p.n].label}
+              </Link>
+            )}
           </div>
         </div>
       ))}

@@ -91,7 +91,7 @@ export const projects: Project[] = [
     pmAngle:
       "The hardest product problem was cold start: how do you score someone with no history without lending blind? The answer was not a better algorithm. It was designing progressive lending, the vouch mechanic, and conversation flows that never dead-end. Risk control lives in lending limits and affordability, not in hoping the score is right on day one.",
     outcome:
-      "Full scoring and lending loop shipped with automated test coverage, live at gokova.io.",
+      "5K tester-phase customers in the first two months. Full scoring and lending loop shipped with automated test coverage, live at gokova.io.",
     features: [
       "Composite TradeScore from identity, capacity, behaviour, and social trust",
       "Progressive lending limits that grow with successful repayment history",
@@ -173,7 +173,7 @@ export const projects: Project[] = [
     pmAngle:
       "I traced the full analyst workflow before expanding scope. Surfacing a signal is step one. The product question is always who do we contact and do they fit our criteria? The platform architecture follows that sequence.",
     outcome:
-      "Production deployment with multi-source signal ingestion, automated enrichment, and live CRM activity monitoring.",
+      "Production deployment with multi-source signal ingestion, automated enrichment, and live CRM activity monitoring. GTM stack cost reduced ~$215K annually; precision improved 22%→50% on analyst classification workflows.",
     features: [
       "Ranked signal feed with source trust weighting",
       "Event-driven contact enrichment on CRM changes",
@@ -251,7 +251,7 @@ export const projects: Project[] = [
     pmAngle:
       "I designed around the compliance officer's actual triage loop, not a developer console. The drawer-based deep-dive keeps officers in context. Exam simulation and peer enforcement intel answer the question every officer asks after a violation surfaces: how bad could this get?",
     outcome:
-      "Full-product RegTech prototype with 6+ views, obligation traceability graph, and live deployment on Vercel.",
+      "Full-product RegTech prototype with 6+ views, obligation traceability graph, and live deployment on Vercel. Same compliance domain as Kinage bank work: 22%→50% precision and ~$600K annual savings at a top-10 U.S. bank.",
     features: [
       "Live risk banner with exposure estimate and SLA breach status",
       "Compliance events feed with regulation citation and customer impact",
@@ -331,7 +331,7 @@ export const projects: Project[] = [
     pmAngle:
       "I designed the output schema from the sales team's actual workflow, not from what the LLM naturally produces. The pipeline is only as valuable as the structure it enforces on unstructured conversation data.",
     outcome:
-      "Production pipeline running unattended with dual LLM providers, Fibery sync, and idempotent Drive processing.",
+      "Production pipeline running unattended with dual LLM providers, Fibery sync, and idempotent Drive processing. Structured call intelligence synced to CRM with zero manual steps.",
     features: [
       "Google Drive folder watcher with regex filename filtering",
       "Claude Sonnet + GPT-4.1 with config-switchable provider",

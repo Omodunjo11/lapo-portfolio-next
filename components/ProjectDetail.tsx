@@ -1,6 +1,8 @@
 "use client"
 import Link from "next/link"
+import Image from "next/image"
 import type { Project } from "@/lib/projects"
+import { getProjectHeroImage } from "@/lib/project-images"
 import { CONTACT_EMAIL } from "@/lib/site"
 
 function repoLabel(github: string) {
@@ -20,6 +22,8 @@ type Props = {
 }
 
 export default function ProjectDetail({ project, prev, next }: Props) {
+  const heroImage = getProjectHeroImage(project.slug)
+
   return (
     <>
       {/* Back nav */}
@@ -50,6 +54,28 @@ export default function ProjectDetail({ project, prev, next }: Props) {
             <p style={{ fontFamily: "var(--font-playfair), serif", fontStyle: "italic", fontSize: 20, color: "var(--mid)", maxWidth: 560, lineHeight: 1.5, animation: "fadeUp .6s .45s ease both" }}>
               {project.tagline}
             </p>
+            {heroImage && (
+              <div
+                style={{
+                  marginTop: 32,
+                  position: "relative",
+                  height: "clamp(200px, 28vw, 320px)",
+                  borderRadius: 2,
+                  overflow: "hidden",
+                  border: "1px solid var(--border)",
+                  animation: "fadeUp .7s .5s ease both",
+                }}
+              >
+                <Image
+                  src={heroImage}
+                  alt={`${project.name} — product preview`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 720px"
+                  style={{ objectFit: "cover" }}
+                  priority
+                />
+              </div>
+            )}
           </div>
 
           {/* Meta sidebar */}
@@ -104,15 +130,21 @@ export default function ProjectDetail({ project, prev, next }: Props) {
             <p style={{ fontSize: 14, lineHeight: 1.95, color: "var(--mid)" }}>{project.problem}</p>
           </div>
 
+          {/* What I Built */}
+          <div>
+            <SectionHeader num="02" label="What I Built" />
+            <p style={{ fontSize: 14, lineHeight: 1.95, color: "var(--mid)" }}>{project.what}</p>
+          </div>
+
           {/* Overview */}
           <div>
-            <SectionHeader num="02" label="Overview" />
+            <SectionHeader num="03" label="Overview" />
             <p style={{ fontSize: 14, lineHeight: 1.95, color: "var(--mid)" }}>{project.overview}</p>
           </div>
 
           {/* Key Objectives */}
           <div>
-            <SectionHeader num="03" label="Key Objectives" />
+            <SectionHeader num="04" label="Key Objectives" />
             <ol style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 20 }}>
               {project.objectives.map((obj, i) => (
                 <li key={i} style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
@@ -128,7 +160,7 @@ export default function ProjectDetail({ project, prev, next }: Props) {
 
           {/* Methodology */}
           <div>
-            <SectionHeader num="04" label="Methodology" />
+            <SectionHeader num="05" label="Methodology" />
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 18 }}>
               {project.methodology.map((item, i) => (
                 <li key={i} style={{ display: "flex", gap: 14, alignItems: "flex-start", paddingLeft: 4 }}>
@@ -145,7 +177,7 @@ export default function ProjectDetail({ project, prev, next }: Props) {
           {/* Optional deep-dive sections */}
           {project.sections && project.sections.map((sec, i) => (
             <div key={i}>
-              <SectionHeader num={String(i + 5).padStart(2, "0")} label={sec.title} />
+              <SectionHeader num={String(i + 6).padStart(2, "0")} label={sec.title} />
               <p style={{ fontSize: 14, lineHeight: 1.95, color: "var(--mid)" }}>{sec.body}</p>
             </div>
           ))}
