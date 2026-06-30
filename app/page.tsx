@@ -155,8 +155,6 @@ export default function Home() {
                   You learn early to look past the obvious explanation — because the obvious one is almost always wrong.
                   When an AI system keeps failing, or an investment keeps underperforming, the first thing I do is ignore where the pain is showing up.
                 </p>
-              </div>
-              <aside className="perspective-aside">
                 <blockquote className="perspective-quote">
                   The real problem is almost always somewhere else.
                 </blockquote>
@@ -168,7 +166,19 @@ export default function Home() {
                     <li>What it means to build durable systems from the continent inside Western institutions</li>
                   </ul>
                 </div>
-              </aside>
+              </div>
+              <figure className="perspective-media">
+                <Image
+                  src="/images/photo-landscape.jpg"
+                  alt="Tea hills outside Nairobi, Kenya"
+                  width={1200}
+                  height={900}
+                  sizes="(max-width: 900px) 100vw, 42vw"
+                  quality={88}
+                  className="perspective-landscape-img"
+                />
+                <figcaption className="perspective-caption">Nairobi Highlands · Kenya</figcaption>
+              </figure>
             </div>
           </Reveal>
         </section>
@@ -198,20 +208,20 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="grid-photo grid-photo--landscape">
+        <div className="grid-photo">
           <div className="photo-break-image">
             <Image
-              src="/images/photo-landscape.jpg"
-              alt="Tea hills outside Nairobi, Kenya"
+              src="/images/photo-nairobi.jpg"
+              alt="Lapo with friends in Nairobi"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               quality={85}
-              className="photo-break-img"
+              className="photo-break-img photo-break-img--social"
             />
             <div className="photo-break-overlay" />
           </div>
           <div className="photo-break-copy">
-            <p className="photo-break-eyebrow">Nairobi Highlands · Kenya</p>
+            <p className="photo-break-eyebrow">Nairobi · 2025</p>
             <h2 className="photo-break-title">
               Building things that<br />
               <em>actually work.</em>
