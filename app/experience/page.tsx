@@ -27,7 +27,6 @@ const jobs = [
       "Architected nine-node agentic workflow (ingestion, extraction, enrichment, classification, anomaly detection, state management, confidence scoring, policy gating, human review) with Claude/OpenAI APIs and n8n; partnered with forward-deployed engineers on Python/FastAPI and Next.js delivery.",
       "Designed HITL control layer exposing confidence scores, source evidence, escalation paths, and override capture to investigators — made AI outputs explainable, auditable, and subordinate to compliance judgment, not black-box automation.",
       "Designed four-tier GTM intelligence system (Signal Capture → Enrichment → Intelligence → Execution); centralized ICP scoring in Claude-powered governance layer connected to Clay, HeyReach, and HubSpot; reduced GTM stack cost ~$215K annually.",
-      "Hired and managed 14-person contracted team across product, engineering, data operations, and evaluation: set model quality standards, acceptance criteria, and demo-readiness gates; shipped 0→1 platform to production.",
     ],
     stack: ["Claude API", "Python/FastAPI", "Next.js", "n8n", "Make", "HubSpot", "GitHub Actions"],
   },
@@ -133,7 +132,7 @@ const jobs = [
     tagColor: "var(--muted)",
     summary: "Transitioned from QA to product ownership on regulated banking systems within 12 months; promoted to project management within 2 years.",
     bullets: [
-      "Transitioned from QA to product ownership on regulated banking systems within 12 months; promoted to project management within 2 years.",
+      "Promoted from QA to product ownership on regulated banking systems within 12 months; led project management on high-availability reporting and analytics platforms.",
       "Built reporting and analytics systems supporting business decision-making on high-availability platform.",
     ],
     stack: ["Regulated Banking", "QA", "Analytics", "Product Management"],
@@ -177,22 +176,27 @@ const education = [
 const skillGroups = [
   {
     title: "AI/ML Systems",
+    proofLink: { href: "/projects/llm-reliability", label: "LLM Reliability case study →" },
     items: ["AI evaluation infrastructure", "LLM classification", "Prompt engineering", "Structured extraction", "Semantic scoring", "Dataset construction", "Error taxonomy", "Confusion matrix analysis", "Confidence calibration", "False-positive reduction", "Human-in-the-loop review", "ML operationalization"],
   },
   {
     title: "Agentic Workflows & Enterprise Platforms",
+    proofLink: { href: "/projects/gtm-intelligence-platform", label: "GTM Intelligence Platform →" },
     items: ["Claude API logic layers", "Agentic workflow design", "Tool orchestration", "Transcript intelligence", "CRM intelligence pipelines", "System-of-record design", "Workflow state management", "API platforms", "Enterprise data platforms"],
   },
   {
     title: "Data Governance & Compliance",
+    proofLink: { href: "/projects/regulatory-compliance-cockpit", label: "Regulatory Compliance Cockpit →" },
     items: ["Metadata registries", "Canonical data models", "Feature pipelines", "PII classification", "Multi-source ingestion", "Fuzzy matching", "Duplicate detection", "Data governance", "Compliance workflows"],
   },
   {
     title: "Product & Business Strategy",
+    proofLink: { href: "/projects/kova-bot", label: "Kova credit infrastructure →" },
     items: ["0→1 products", "Agentic workflow roadmaps", "Forward-deployed discovery", "Enterprise design partners", "Roadmap sequencing", "Architecture tradeoff analysis", "Cost-to-serve reduction", "Pricing/margin analysis", "Platform operating models", "GTM systems architecture", "EBITDA quantification"],
   },
   {
     title: "Tools",
+    proofLink: { href: "/projects", label: "All builds →" },
     items: ["Python", "SQL", "FastAPI", "Next.js", "Azure Databricks", "Azure Synapse", "Snowflake", "AWS", "OpenAI API", "Claude API", "GitHub Actions", "HubSpot", "Make", "n8n"],
   },
   {
@@ -203,6 +207,55 @@ const skillGroups = [
 
 export default function ExperiencePage() {
   const [activeTab, setActiveTab] = useState("experience")
+  const [showEarlier, setShowEarlier] = useState(false)
+
+  const earlierStartIndex = jobs.findIndex((j) => j.tag === "Earlier")
+  const primaryJobs = earlierStartIndex === -1 ? jobs : jobs.slice(0, earlierStartIndex)
+  const earlierJobs = earlierStartIndex === -1 ? [] : jobs.slice(earlierStartIndex)
+
+  const renderJob = (job: (typeof jobs)[number], idx: number) => (
+    <Reveal key={job.company + job.role} delay={idx * 0.04}>
+      <div style={{ borderBottom: "1px solid var(--border)", paddingBottom: 48, marginBottom: 48 }}>
+        <div className="grid-exp-row" style={{ marginBottom: 20 }}>
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8, flexWrap: "wrap" }}>
+              <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 18, fontWeight: 800 }}>{job.company}</div>
+              <span style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", color: job.tagColor, border: `1px solid ${job.tagColor}30`, padding: "2px 8px", borderRadius: 2 }}>{job.tag}</span>
+            </div>
+            <div style={{ fontSize: 13, color: "var(--terra)", fontWeight: 600, marginBottom: 4 }}>{job.role}</div>
+            <div style={{ fontSize: 11, color: "var(--muted)" }}>{job.location} · {job.period}</div>
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 5, justifyContent: "flex-end", maxWidth: 300 }}>
+            {job.stack.map(s => (
+              <span key={s} style={{ fontSize: 8, background: "rgba(201,168,76,.12)", color: "#7a6020", padding: "3px 8px", borderRadius: 2 }}>{s}</span>
+            ))}
+          </div>
+        </div>
+
+        <p style={{ fontSize: 13, color: "var(--mid)", lineHeight: 1.8, marginBottom: 20, fontStyle: "italic", borderLeft: "2px solid var(--border)", paddingLeft: 16 }}>{job.summary}</p>
+
+        <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 12 }}>
+          {job.bullets.map((b, i) => (
+            <li key={i} style={{ fontSize: 12, color: "var(--mid)", lineHeight: 1.8, display: "flex", gap: 12, alignItems: "flex-start" }}>
+              <span style={{ color: "var(--terra)", fontSize: 8, marginTop: 5, flexShrink: 0 }}>▸</span>
+              {b}
+            </li>
+          ))}
+        </ul>
+
+        {"subroles" in job && job.subroles && (
+          <div style={{ marginTop: 24, paddingTop: 20, borderTop: "1px solid var(--border)" }}>
+            {job.subroles.map((sr) => (
+              <div key={sr.role} style={{ marginBottom: 12 }}>
+                <div style={{ fontSize: 11, color: "var(--terra)", fontWeight: 600, whiteSpace: "nowrap" }}>{sr.role} · {sr.period}</div>
+                <div style={{ fontSize: 11, color: "var(--muted)", lineHeight: 1.7 }}>{sr.note}</div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </Reveal>
+  )
 
   return (
     <>
@@ -318,10 +371,7 @@ export default function ExperiencePage() {
             <div className="grid-3col">
               {leadership.map((item, i) => (
                 <Reveal key={item.org} delay={i * 0.08}>
-                  <div style={{ background: "var(--paper)", padding: "32px 28px", height: "100%", transition: "background .25s", borderTop: "2px solid transparent" }}
-                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
-                    onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.borderTopColor = "transparent" }}
-                  >
+                  <div className="interactive-surface interactive-surface--accent-top" style={{ background: "var(--paper)", padding: "32px 28px", height: "100%" }}>
                     <div style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 10 }}>{item.period}</div>
                     <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 15, fontWeight: 800, marginBottom: 6, lineHeight: 1.25 }}>{item.org}</div>
                     <div style={{ fontSize: 11, color: "var(--terra)", marginBottom: 14 }}>{item.role}</div>
@@ -348,10 +398,7 @@ export default function ExperiencePage() {
                   { name: "Peer-Reviewed Publication", inst: "ACS Applied Energy Materials, 2024" },
                 ].map((a, i) => (
                   <Reveal key={a.name} delay={(i % 2) * 0.08}>
-                    <div style={{ background: "var(--paper)", padding: "22px 26px", display: "flex", gap: 12, alignItems: "flex-start", transition: "background .2s, transform .2s" }}
-                      onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.transform = "translateX(4px)" }}
-                      onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.transform = "translateX(0)" }}
-                    >
+                    <div className="interactive-surface interactive-surface--shift" style={{ background: "var(--paper)", padding: "22px 26px", display: "flex", gap: 12, alignItems: "flex-start", transition: "background .2s, transform .2s" }}>
                       <span style={{ color: "var(--terra)", flexShrink: 0 }}>◆</span>
                       <div>
                         <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 12, fontWeight: 700, marginBottom: 2 }}>{a.name}</div>
@@ -371,10 +418,7 @@ export default function ExperiencePage() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 1, background: "var(--border)", marginBottom: 56 }}>
               {education.map((edu, i) => (
                 <Reveal key={edu.school} delay={i * 0.1}>
-                  <div style={{ background: "var(--paper)", padding: "36px 28px", transition: "background .25s", borderTop: "2px solid transparent" }}
-                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(196,98,45,.03)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
-                    onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.borderTopColor = "transparent" }}
-                  >
+                  <div className="interactive-surface interactive-surface--accent-top" style={{ background: "var(--paper)", padding: "36px 28px" }}>
                     <div style={{ fontSize: 9, letterSpacing: ".12em", color: "var(--terra)", marginBottom: 12 }}>{edu.year}</div>
                     <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: 21, fontWeight: 700, lineHeight: 1.15, marginBottom: 6 }}>{edu.school}</div>
                     <div style={{ fontSize: 11, color: "var(--muted)", marginBottom: 4 }}>{edu.location}</div>
@@ -387,10 +431,7 @@ export default function ExperiencePage() {
 
             {/* ACS publication */}
             <Reveal>
-              <div className="grid-pub" style={{ border: "1px solid var(--border)", padding: "36px 44px", borderRadius: 2, transition: "background .2s" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "rgba(196,98,45,.03)")}
-                onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
-              >
+              <div className="grid-pub interactive-surface" style={{ border: "1px solid var(--border)", padding: "36px 44px", borderRadius: 2 }}>
                 <div>
                   <div style={{ fontSize: 8, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 10 }}>ACS Applied Energy Materials · American Chemical Society · 2024</div>
                   <h3 style={{ fontFamily: "var(--font-playfair),serif", fontSize: 20, fontWeight: 700, marginBottom: 10 }}>Seawater Electrolysis for Hydrogen Production</h3>
