@@ -98,7 +98,7 @@ export default function Home() {
         <div className="grid-about pad-page">
           <Reveal>
             <div className="about-left">
-              <Image src="/images/IMG_3437.jpg" alt={`${CANONICAL_NAME} — Onaolapo Michael Odunjo`} width={400} height={500} sizes="(max-width: 768px) 100vw, 33vw" quality={80} priority style={{ width: "100%", height: "auto", objectFit: "cover", objectPosition: "center top", filter: "grayscale(100%) contrast(1.05)", marginBottom: 24 }} />
+              <Image src="/images/IMG_3436.jpg" alt={`${CANONICAL_NAME} in Philadelphia`} width={400} height={500} sizes="(max-width: 768px) 100vw, 33vw" quality={80} style={{ width: "100%", height: "auto", objectFit: "cover", objectPosition: "center 22%", filter: "saturate(0.88) contrast(1.06) brightness(0.94)", marginBottom: 24 }} />
               <p style={{ fontSize: 10, color: "var(--muted)", lineHeight: 1.65, marginBottom: 16 }}>
                 {IDENTITY_LINE}
               </p>
@@ -262,7 +262,7 @@ export default function Home() {
       {/* ── PHOTO BREAK ── */}
       <div className="grid-photo">
         <div style={{ overflow: "hidden", position: "relative" }}>
-          <Image src="/images/IMG_3436.jpg" alt="Lapo in Philadelphia" fill sizes="(max-width: 768px) 100vw, 50vw" quality={80} style={{ objectFit: "cover", objectPosition: "center 20%", filter: "contrast(1.07) brightness(.88)" }} />
+          <Image src="/images/photo-nairobi.jpg" alt="Lapo with friends in Nairobi" fill sizes="(max-width: 768px) 100vw, 50vw" quality={80} style={{ objectFit: "cover", objectPosition: "center 40%", filter: "contrast(1.05) brightness(0.92)" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg,rgba(56,189,248,.12) 0%,transparent 60%)" }} />
         </div>
         <div style={{ padding: "64px 56px", display: "flex", flexDirection: "column", justifyContent: "center", background: "var(--ink)" }}>
