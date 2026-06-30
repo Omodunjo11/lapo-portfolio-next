@@ -2,7 +2,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import Reveal from "@/components/Reveal"
-import { ROLE_TITLE } from "@/lib/site"
+import { CONTACT_EMAIL, PROFILE_LINKS, ROLE_TITLE } from "@/lib/site"
 
 const tabs = [
   { key: "experience", label: "Experience" },
@@ -14,20 +14,20 @@ const tabs = [
 const jobs = [
   {
     company: "Kinage",
-    location: "Philadelphia, PA",
-    role: "Forward Deployed Product Manager",
+    location: "New York, NY",
+    role: "Forward Deployed Product Manager, AI Strategy",
     period: "2025 – Present",
     tag: "Current",
     tagColor: "var(--terra)",
-    summary: "Lead production AI systems, enterprise deployment, evaluation infrastructure, and GTM automation for regulated financial workflows, including top 10 U.S. bank design partner workflows.",
+    summary: "Design and deploy production agentic systems for regulated healthcare and fintech clients: map live operator workflows, make model and infrastructure tradeoffs, ship compound AI architectures with engineers, and drive adoption from launch through operator trust.",
     bullets: [
-      "Built production agentic workflow embedded inside top 10 U.S. banks: nine-node architecture across ingestion, extraction, enrichment, classification, anomaly detection, state management, confidence scoring, policy gating, and human review using Claude API, OpenAI API, and n8n orchestration.",
-      "Designed AI escalation triage copilot for enterprise support workflows, combining context retrieval, issue classification, recommendation generation, confidence-based routing, and human-in-the-loop review to reduce time-to-resolution and improve decision consistency.",
-      "Defined product strategy for high-trust autonomous agent systems, translating ambiguous regulated workflows into system architecture, acceptance criteria, V1/V2/V3 roadmap sequencing, and human-in-the-loop operating models; produced ~$600K in estimated annual client savings.",
-      "Improved precision 22% → 50% and reduced false positives 60% → 15% through 300+ labeled examples, confusion matrix analysis, and confidence calibration.",
+      "Raised internal movement completion 34% → 72% at multi-site hospital systems: embedded with clinical and ops teams to map intake-to-discharge handoff failures, co-designed agent-assisted workflows with engineers, then owned adoption post-launch by running weekly override reviews, iterating prompts and routing, and tightening escalation paths until usage held.",
+      "Improved precision 22% → 50% and cut false positives 60% → 15% for a top 10 U.S. bank compliance team (~$600K annual savings): embedded 2+ days/week with fraud and risk analysts, translated live SOPs and policy boundaries into model requirements and eval cases, shipped compound agents with confidence gating and mandatory human review.",
+      "Set the AI quality bar governing what went to production — built evaluation infrastructure with 300+ labeled examples across fraud, compliance, and financial exploitation risk categories; established confusion-matrix benchmarks, precision/recall thresholds, and online eval from analyst overrides as hard promotion gates.",
+      "Architected nine-node agentic workflow (ingestion, extraction, enrichment, classification, anomaly detection, state management, confidence scoring, policy gating, human review) with Claude/OpenAI APIs and n8n; partnered with forward-deployed engineers on Python/FastAPI and Next.js delivery.",
+      "Designed HITL control layer exposing confidence scores, source evidence, escalation paths, and override capture to investigators — made AI outputs explainable, auditable, and subordinate to compliance judgment, not black-box automation.",
       "Designed four-tier GTM intelligence system (Signal Capture → Enrichment → Intelligence → Execution); centralized ICP scoring in Claude-powered governance layer connected to Clay, HeyReach, and HubSpot; reduced GTM stack cost ~$215K annually.",
-      "Embedded two days/week with top 10 U.S. bank's risk and compliance team as enterprise design partner, translating live analyst workflows, edge cases, and decision criteria into model requirements, eval cases, and product acceptance thresholds.",
-      "Hired and managed 14-person contracted team across engineering, data ops, and evaluation; defined all specs and acceptance criteria; shipped Python/FastAPI backend and Next.js frontend from 0 to production.",
+      "Hired and managed 14-person contracted team across product, engineering, data operations, and evaluation: set model quality standards, acceptance criteria, and demo-readiness gates; shipped 0→1 platform to production.",
     ],
     stack: ["Claude API", "Python/FastAPI", "Next.js", "n8n", "Make", "HubSpot", "GitHub Actions"],
   },
@@ -106,7 +106,8 @@ const jobs = [
     tagColor: "var(--muted)",
     summary: "Owned delivery for $14M Fortune 10 mobile banking engagement generating $15M revenue within three months of launch.",
     bullets: [
-      "Translated enterprise requirements into technical specifications, managed stakeholder expectations across client organization, coordinated cross-functional delivery.",
+      "Led ML and data product delivery for Fortune 10 and enterprise clients including Apple and Chick-fil-A: owned $14M engagement and coordinated cross-functional delivery teams across engineering, design, and QA.",
+      "Managed client-facing delivery teams across distributed stakeholder groups: set timelines, acceptance criteria, and escalation paths for regulated and mobile product delivery.",
     ],
     stack: ["Mobile Banking", "Enterprise Delivery"],
   },
@@ -194,7 +195,7 @@ const skillGroups = [
   },
   {
     title: "Product & Business Strategy",
-    items: ["0→1 products", "Agentic workflow roadmaps", "Forward-deployed discovery", "Enterprise design partners", "Roadmap sequencing", "Architecture tradeoff analysis", "Cost-to-serve reduction", "GTM systems architecture", "EBITDA quantification"],
+    items: ["0→1 products", "Agentic workflow roadmaps", "Forward-deployed discovery", "Enterprise design partners", "Roadmap sequencing", "Architecture tradeoff analysis", "Cost-to-serve reduction", "Pricing/margin analysis", "Platform operating models", "GTM systems architecture", "EBITDA quantification"],
   },
   {
     title: "Tools",
@@ -226,11 +227,11 @@ export default function ExperiencePage() {
               Onaolapo Michael (Lapo) Odunjo — Lapo is short for Onaolapo
             </p>
             <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 12, animation: "fadeUp .6s .6s ease both" }}>
-              New York, NY · odunjoonaolapo@gmail.com · +1-646-421-3781
+              New York, NY · {CONTACT_EMAIL} · +1-646-421-3781
             </p>
           </div>
           <Link
-            href="/resume.pdf"
+            href={PROFILE_LINKS.resume}
             target="_blank"
             rel="noopener"
             style={{ display: "inline-flex", alignItems: "center", gap: 9, fontFamily: "var(--font-syne),sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", background: "var(--terra)", color: "var(--paper)", padding: "13px 26px", borderRadius: 2, transition: "background .25s, transform .2s", animation: "fadeUp .6s .7s ease both", whiteSpace: "nowrap" }}
@@ -440,7 +441,7 @@ export default function ExperiencePage() {
                   <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Download the complete resume</div>
                   <p style={{ fontSize: 11, color: "var(--muted)" }}>AI systems, private markets, leadership, publications, consolidated. Last updated 2026.</p>
                 </div>
-                <Link href="/resume.pdf" target="_blank" rel="noopener"
+                <Link href={PROFILE_LINKS.resume} target="_blank" rel="noopener"
                   style={{ display: "inline-flex", alignItems: "center", gap: 9, fontFamily: "var(--font-syne),sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", background: "var(--terra)", color: "var(--paper)", padding: "13px 26px", borderRadius: 2, whiteSpace: "nowrap", flexShrink: 0, transition: "background .25s, transform .2s" }}
                   onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.transform = "translateY(-2px)" }}
                   onMouseLeave={e => { e.currentTarget.style.background = "var(--terra)"; e.currentTarget.style.transform = "translateY(0)" }}
