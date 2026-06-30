@@ -58,6 +58,15 @@ export default function ConnectPage() {
                   <p style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.75 }}>{item.desc}</p>
                 </div>
               ))}
+              <div style={{ position: "relative", overflow: "hidden", minHeight: 180 }}>
+                <Image
+                  src="/images/photo-cocktails.jpg"
+                  alt="Lapo Odunjo"
+                  fill
+                  style={{ objectFit: "cover", objectPosition: "center top" }}
+                  sizes="(max-width: 768px) 100vw, 280px"
+                />
+              </div>
             </div>
           </div>
         </Reveal>
