@@ -4,8 +4,8 @@ import { usePathname } from "next/navigation"
 import { useState } from "react"
 
 const links = [
-  { href: "/#about", label: "Story" },
-  { href: "/#work", label: "Build" },
+  { href: "/#about", label: "About" },
+  { href: "/#work", label: "Work" },
   { href: "/projects", label: "Projects" },
   { href: "/experience", label: "Experience" },
   { href: "/how-i-build", label: "How I Build" },
@@ -32,7 +32,7 @@ export default function Nav() {
           background: "rgba(248,250,252,0.82)",
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
-          borderBottom: "1px solid rgba(125,211,252,0.25)",
+          borderBottom: "1px solid var(--border)",
           transform: "translateY(-100%)",
           animation: "navIn .6s .2s cubic-bezier(.16,1,.3,1) forwards",
         }}

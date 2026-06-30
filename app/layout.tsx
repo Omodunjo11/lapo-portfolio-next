@@ -12,12 +12,6 @@ import "./globals.css"
 import Nav from "@/components/Nav"
 import Footer from "@/components/Footer"
 import StructuredData from "@/components/StructuredData"
-import Cursor from "@/components/Cursor"
-import KonamiCode from "@/components/KonamiCode"
-import SkyBackground from "@/components/SkyBackground"
-import AchievementToast from "@/components/AchievementToast"
-import GameSounds from "@/components/GameSounds"
-import ContinueScreen from "@/components/ContinueScreen"
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -76,12 +70,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${playfair.variable} ${dmMono.variable} ${syne.variable}`}>
       <body style={{ fontFamily: "var(--font-dm-mono), monospace" }}>
         <StructuredData />
-        <SkyBackground />
-        <Cursor />
-        <KonamiCode />
-        <AchievementToast />
-        <GameSounds />
-        <ContinueScreen />
         <Nav />
         <main style={{ paddingTop: 57 }}>{children}</main>
         <Footer />

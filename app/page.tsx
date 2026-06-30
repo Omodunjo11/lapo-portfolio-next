@@ -16,12 +16,11 @@ const tickerItems = [
   { text: "Agentic Workflows · Production", highlight: true }, { text: "Lagos Raised · World Shaped" },
 ]
 
-const SH = ({ n, t, game }: { n: string; t: string; game?: string }) => (
+const SH = ({ n, t }: { n: string; t: string }) => (
   <div style={{ padding: "clamp(40px,8vh,64px) clamp(20px,6vw,48px) 36px" }}>
     <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 6 }}>
       {n && <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".22em", color: "var(--terra)" }}>{n}</span>}
       <h2 style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(28px,3.5vw,44px)", fontWeight: 900, letterSpacing: "-.02em", lineHeight: 1, margin: 0 }}>{t}</h2>
-      {game && <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".14em", color: "var(--muted)", marginLeft: 4, opacity: 0.6 }}>{'// '}{game}</span>}
     </div>
     <div style={{ width: 40, height: 2, background: "var(--terra)", marginTop: 10 }} />
   </div>
@@ -39,7 +38,7 @@ export default function Home() {
         background: "rgba(255,255,255,0.72)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
-        borderBottom: "1px solid rgba(125,211,252,0.3)",
+        borderBottom: "1px solid var(--border)",
         padding: "20px clamp(16px,5vw,64px)",
         display: "flex",
         alignItems: "center",
@@ -78,7 +77,6 @@ export default function Home() {
       <div id="status-bar" style={{ borderBottom: "1px solid var(--border)", background: "var(--ink)", padding: "10px clamp(16px,4vw,48px)", display: "flex", alignItems: "center", gap: 24, flexWrap: "wrap", overflow: "hidden" }}>
         <span style={{ fontSize: 8, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--terra)", flexShrink: 0 }}>◆ Currently</span>
         {[
-          { label: "Playing", value: "Civilization VII" },
           { label: "Building", value: "Kinage in Prod" },
           { label: "Reading", value: "Team of Teams" },
           { label: "Completed", value: "Wharton MBA" },
@@ -96,7 +94,7 @@ export default function Home() {
 
       {/* ── ABOUT ── */}
       <section id="about" style={{ padding: "72px 0 80px" }}>
-        <Reveal><SH n="01" t="About" game="character profile" /></Reveal>
+        <Reveal><SH n="01" t="About" /></Reveal>
         <div className="grid-about pad-page">
           <Reveal>
             <div className="about-left">
@@ -134,7 +132,6 @@ export default function Home() {
             <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
               <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>02</span>
               <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Featured Projects</span>
-              <span style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".12em", color: "var(--muted)", opacity: 0.55 }}>{'// quest log'}</span>
               <div style={{ width: 120, height: 1, background: "var(--border)" }} />
             </div>
             <Link href="/projects" style={{ fontSize: 9, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)" }}>View All →</Link>
@@ -146,7 +143,7 @@ export default function Home() {
               <Link href={`/projects/${project.slug}`}>
                 <div
                   style={{ background: "var(--paper)", padding: "36px 32px", height: "100%", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", transition: "background .25s", borderTop: "2px solid transparent" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(186,230,253,.28)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "var(--bg2)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
                   onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.borderTopColor = "transparent" }}
                 >
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
@@ -154,10 +151,10 @@ export default function Home() {
                     <span style={{ fontSize: 9, color: "var(--muted)" }}>{project.year}</span>
                   </div>
                   <div style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 18, fontWeight: 800, marginBottom: 8, lineHeight: 1.2 }}>{project.name}</div>
-                  <div style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", color: "#A78BFA", marginBottom: 16 }}>{project.role}</div>
+                  <div style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 16 }}>{project.role}</div>
                   <p style={{ fontSize: 13, lineHeight: 1.85, color: "var(--mid)", flex: 1, marginBottom: 24 }}>{project.tagline}</p>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 20 }}>
-                    {project.stack.slice(0, 3).map(s => <span key={s} style={{ fontSize: 8, background: "rgba(167,139,250,.15)", color: "#A78BFA", padding: "3px 8px", borderRadius: 2 }}>{s}</span>)}
+                    {project.stack.slice(0, 3).map(s => <span key={s} style={{ fontSize: 8, background: "var(--bg2)", color: "var(--mid)", padding: "3px 8px", borderRadius: 2 }}>{s}</span>)}
                   </div>
                   <div style={{ fontSize: 10, color: "var(--terra)", letterSpacing: ".1em" }}>Read full breakdown →</div>
                 </div>
@@ -194,7 +191,7 @@ export default function Home() {
 
       {/* ── THE LONGER VERSION ── */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "72px 0 80px" }}>
-        <Reveal><SH n="03" t="Story" game="extended lore" /></Reveal>
+        <Reveal><SH n="03" t="Story" /></Reveal>
         <div className="grid-3col" style={{ margin: "0 clamp(16px,6vw,48px)" }}>
           {[
             {
@@ -216,7 +213,7 @@ export default function Home() {
             <Reveal key={card.name} delay={i * 0.07}>
               <div
                 style={{ background: "var(--paper)", padding: "32px 28px", height: "100%", transition: "background .25s", position: "relative" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "rgba(186,230,253,.28)")}
+                onMouseEnter={e => (e.currentTarget.style.background = "var(--bg2)")}
                 onMouseLeave={e => (e.currentTarget.style.background = "var(--paper)")}
               >
                 <div style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", border: "1px solid rgba(125,211,252,.6)", padding: "3px 9px", borderRadius: 2, display: "inline-block", marginBottom: 14 }}>{card.label}</div>
@@ -248,7 +245,7 @@ export default function Home() {
               <Link href={essay.url} target="_blank" rel="noopener">
                 <div
                   style={{ background: "var(--paper)", padding: "32px 28px", height: "100%", display: "flex", flexDirection: "column", transition: "background .25s", borderTop: "2px solid transparent" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(186,230,253,.28)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "var(--bg2)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
                   onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.borderTopColor = "transparent" }}
                 >
                   <div style={{ fontSize: 8, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 12 }}>{essay.category}</div>
