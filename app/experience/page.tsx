@@ -28,7 +28,7 @@ const jobs = [
       "Designed HITL control layer exposing confidence scores, source evidence, escalation paths, and override capture to investigators — made AI outputs explainable, auditable, and subordinate to compliance judgment, not black-box automation.",
       "Designed four-tier GTM intelligence system (Signal Capture → Enrichment → Intelligence → Execution); centralized ICP scoring in Claude-powered governance layer connected to Clay, HeyReach, and HubSpot; reduced GTM stack cost ~$215K annually.",
     ],
-    stack: ["Claude API", "Python/FastAPI", "Next.js", "n8n", "Make", "HubSpot", "GitHub Actions"],
+    stack: ["Claude API", "OpenAI API", "Python/FastAPI", "Next.js", "TypeScript", "Clay", "HeyReach", "HubSpot", "n8n", "Make", "GitHub Actions"],
   },
   {
     company: "KOVA",
@@ -43,7 +43,7 @@ const jobs = [
       "Reached 5K tester-phase customers in first two months by designing distribution strategy that embeds into existing WhatsApp workflows instead of requiring app downloads.",
       "Created upstream data layer from informal trust networks that banks and lenders can underwrite against.",
     ],
-    stack: ["WhatsApp API", "NLP", "Python", "Credit Infrastructure"],
+    stack: ["WhatsApp Cloud API", "PostgreSQL", "Prisma", "Paystack", "Claude API", "Node.js", "Express"],
   },
   {
     company: "Amazon",
@@ -58,7 +58,7 @@ const jobs = [
       "Shipped ML-driven targeting framework for subscription personalization and retention, partnering with data science to define behavioral segments, measurement approach, and incremental lift analysis.",
       "Aligned 8 cross-functional stakeholder teams — Data Science, Engineering, Marketing, Finance, and Legal — on targeting framework scope, success metrics, and launch criteria; presented roadmap to VP-level leadership.",
     ],
-    stack: ["ML Targeting", "Behavioral Segmentation", "A/B Testing", "Cohort Analysis"],
+    stack: ["AWS", "ML Targeting", "Behavioral Segmentation", "A/B Testing", "Cohort Analysis"],
   },
   {
     company: "TD Bank",
@@ -197,7 +197,7 @@ const skillGroups = [
   {
     title: "Tools",
     proofLink: { href: "/projects", label: "All builds →" },
-    items: ["Python", "SQL", "FastAPI", "Next.js", "Azure Databricks", "Azure Synapse", "Snowflake", "AWS", "OpenAI API", "Claude API", "GitHub Actions", "HubSpot", "Make", "n8n"],
+    items: ["Python", "SQL", "FastAPI", "Next.js", "Azure Databricks", "Azure Synapse", "Snowflake", "AWS", "OpenAI API", "Claude API", "GitHub Actions", "HubSpot", "Clay", "HeyReach", "Make", "n8n"],
   },
   {
     title: "Certifications & Languages",
