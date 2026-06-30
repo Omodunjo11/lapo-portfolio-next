@@ -2,6 +2,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
+import BrandMark from "@/components/BrandMark"
 
 const links = [
   { href: "/about", label: "About" },
@@ -35,7 +36,7 @@ export default function Nav() {
         }}
       >
         <Link href="/" className="nav-brand">
-          L·O
+          <BrandMark />
         </Link>
 
         {/* Desktop links */}
