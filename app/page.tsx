@@ -5,6 +5,7 @@ import Reveal from "@/components/Reveal"
 import CloudScene from "@/components/CloudScene"
 import { PROFILE_LINKS } from "@/lib/site"
 import { PROOF_METRICS } from "@/lib/metrics"
+import { projects } from "@/lib/projects"
 
 const tickerItems = [
   { text: "AI Product · Regulated Systems", highlight: true },
@@ -31,7 +32,7 @@ const navPanels = [
     number: "02",
     label: "Projects",
     href: "/projects",
-    headline: "Eleven products shipped end-to-end.",
+    headline: `${projects.length} products shipped end-to-end.`,
     desc: "Full breakdowns — featured builds and the full archive — of what I built, how, and why.",
   },
   {

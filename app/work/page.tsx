@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
 import Reveal from "@/components/Reveal"
-import { featuredProjects } from "@/lib/projects"
+import { featuredProjects, projects } from "@/lib/projects"
 import { PROFILE_LINKS } from "@/lib/site"
 
 export default function WorkPage() {
@@ -53,7 +53,7 @@ export default function WorkPage() {
         </div>
         <Reveal>
           <div className="cta-row">
-            <Link href="/projects" className="btn btn--outline">See all 11 projects →</Link>
+            <Link href="/projects" className="btn btn--outline">See all {projects.length} projects →</Link>
             <Link href={PROFILE_LINKS.github} target="_blank" rel="noopener noreferrer me" className="btn btn--filled">
               Build Archive on GitHub ↗
             </Link>

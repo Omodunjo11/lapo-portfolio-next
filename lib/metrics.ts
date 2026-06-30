@@ -1,3 +1,5 @@
+import { projects } from "./projects"
+
 /** Homepage proof metrics — sourced from experience page, verified figures only. */
 export const PROOF_METRICS = [
   {
@@ -21,7 +23,7 @@ export const PROOF_METRICS = [
     label: "Records modeled across AI systems",
   },
   {
-    metric: "11",
+    metric: String(projects.length),
     label: "AI products shipped end-to-end",
   },
-] as const
+]
