@@ -44,6 +44,8 @@ export const PROFILE_LINKS = {
   linkedin: "https://www.linkedin.com/in/onaolapomichaelodunjo",
   github: "https://github.com/Omodunjo11",
   medium: "https://medium.com/@odunjoonaolapo",
+  twitter: "https://twitter.com/Modunjo",
+  instagram: "https://www.instagram.com/alaye_omodunjo",
   goodreads: "https://www.goodreads.com/review/list/57964479",
   email: `mailto:${CONTACT_EMAIL}`,
   resume: `${SITE_URL}/resume.pdf`,
@@ -53,6 +55,8 @@ export const SAME_AS_PROFILES = [
   PROFILE_LINKS.linkedin,
   PROFILE_LINKS.github,
   PROFILE_LINKS.medium,
+  PROFILE_LINKS.twitter,
+  PROFILE_LINKS.instagram,
   PROFILE_LINKS.goodreads,
 ] as const
 

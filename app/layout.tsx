@@ -58,6 +58,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${CANONICAL_NAME} · ${ROLE_TITLE}`,
     description: SEO_DESCRIPTION,
+    creator: "@Modunjo",
+    site: "@Modunjo",
   },
   other: {
     "profile:first_name": "Onaolapo",

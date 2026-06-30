@@ -81,6 +81,8 @@ export default function ConnectPage() {
                 { label: "LinkedIn", value: "onaolapomichaelodunjo", href: PROFILE_LINKS.linkedin },
                 { label: "GitHub", value: "Omodunjo11", href: PROFILE_LINKS.github },
                 { label: "Medium", value: "@odunjoonaolapo", href: PROFILE_LINKS.medium },
+                { label: "Twitter / X", value: "@Modunjo", href: PROFILE_LINKS.twitter },
+                { label: "Instagram", value: "@alaye_omodunjo", href: PROFILE_LINKS.instagram },
               ].map(({ label, value, href }) => (
                 <Link
                   key={label}
