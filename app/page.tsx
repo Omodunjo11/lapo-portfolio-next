@@ -146,22 +146,29 @@ export default function Home() {
         <section id="perspective" className="page-section page-section--bordered">
           <Reveal><SH n="03" t="Perspective" /></Reveal>
           <Reveal>
-            <div className="perspective-card pad-page">
-              <p className="perspective-label">What shaped the lens</p>
-              <h3 className="perspective-title">The thing Lagos actually taught me</h3>
-              <div className="perspective-body">
+            <div className="perspective-grid pad-page">
+              <div className="perspective-main">
+                <p className="perspective-label">What shaped the lens</p>
+                <h3 className="perspective-title">The thing Lagos actually taught me</h3>
                 <p className="body-text">
                   Lagos moves fast and nothing is ever quite what it looks like on the surface.
                   You learn early to look past the obvious explanation — because the obvious one is almost always wrong.
                   When an AI system keeps failing, or an investment keeps underperforming, the first thing I do is ignore where the pain is showing up.
-                  The real problem is almost always somewhere else.
-                </p>
-                <p className="body-text">
-                  Right now I keep returning to three questions: whether informal financial systems in West Africa are more sophisticated than they look,
-                  whether AI governance in regulated institutions is a product problem or a political one,
-                  and what it means to build durable systems from the continent inside Western institutions without losing the thread back home.
                 </p>
               </div>
+              <aside className="perspective-aside">
+                <blockquote className="perspective-quote">
+                  The real problem is almost always somewhere else.
+                </blockquote>
+                <div className="perspective-questions">
+                  <p className="perspective-questions-label">What I keep returning to</p>
+                  <ul className="perspective-questions-list">
+                    <li>Whether informal financial systems in West Africa are more sophisticated than they look</li>
+                    <li>Whether AI governance in regulated institutions is a product or political problem</li>
+                    <li>What it means to build durable systems from the continent inside Western institutions</li>
+                  </ul>
+                </div>
+              </aside>
             </div>
           </Reveal>
         </section>
