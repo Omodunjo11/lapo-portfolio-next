@@ -33,7 +33,7 @@ const jobs = [
   },
   {
     company: "KOVA",
-    location: "Philadelphia, PA",
+    location: "New York, NY",
     role: "Co-Founder, AI Credit Infrastructure",
     period: "2025 – Present",
     tag: "Founder",
@@ -157,7 +157,7 @@ const leadership = [
   {
     org: "Wharton Graduate Association",
     role: "President",
-    period: "2024 – Present",
+    period: "2024 – May 2026",
     note: "Lead student government with $6M annual budget across 20+ teams serving 1,700+ MBA students; primary liaison to Wharton administration on policy and programming.",
   },
   {

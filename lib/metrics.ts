@@ -1,10 +1,8 @@
-import { projects } from "./projects"
-
 /** Homepage proof metrics — sourced from experience page, verified figures only. */
 export const PROOF_METRICS = [
   {
     metric: "$500M+",
-    label: "Enterprise data platform scoped · TD Bank",
+    label: "Enterprise data platform · TD Bank",
   },
   {
     metric: "$148M",
@@ -15,15 +13,15 @@ export const PROOF_METRICS = [
     label: "Enterprise API platform · Capital One",
   },
   {
-    metric: "$80M+",
-    label: "Platform value from adoption · Capital One",
+    metric: "$600K",
+    label: "Annual savings, top 10 U.S. bank · Kinage",
   },
   {
-    metric: "2B+",
-    label: "Records modeled across AI systems",
+    metric: "5K+",
+    label: "KOVA tester-phase customers · 2 months",
   },
   {
-    metric: String(projects.length),
+    metric: "11",
     label: "AI products shipped end-to-end",
   },
 ]

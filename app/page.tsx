@@ -5,19 +5,18 @@ import Reveal from "@/components/Reveal"
 import CloudScene from "@/components/CloudScene"
 import { PROFILE_LINKS } from "@/lib/site"
 import { PROOF_METRICS } from "@/lib/metrics"
-import { projects } from "@/lib/projects"
 
 const tickerItems = [
   { text: "AI Product · Regulated Systems", highlight: true },
   { text: "Lagos → Bradford → NYC" },
-  { text: "Kinage · Production AI Systems", highlight: true },
-  { text: "KOVA · Informal Credit Infrastructure" },
-  { text: "Kinage · KOVA · Building", highlight: true },
-  { text: "RAG Systems in Production" },
-  { text: "Agentic Workflows · Production", highlight: true },
-  { text: "Wharton MBA · Columbia MS" },
+  { text: "Africa AI Leaders Fellowship · Co-Founding CEO", highlight: true },
+  { text: "Ford Foundation · Mastercard Backed" },
+  { text: "Kinage · KOVA · Building in Production", highlight: true },
+  { text: "RAG · Confidence Routing · Eval Infrastructure" },
+  { text: "Agentic Workflows · Healthcare · Fintech", highlight: true },
+  { text: "Wharton MBA · Columbia MS Engineering" },
   { text: "Trust Infrastructure · Regulated AI", highlight: true },
-  { text: "LLM Evaluation Frameworks" },
+  { text: "LLM Evaluation · 300+ Labeled Examples" },
 ]
 
 const navPanels = [
@@ -32,14 +31,14 @@ const navPanels = [
     number: "02",
     label: "Projects",
     href: "/projects",
-    headline: `${projects.length} products shipped end-to-end.`,
+    headline: "11 AI products shipped end-to-end.",
     desc: "Full breakdowns — featured builds and the full archive — of what I built, how, and why.",
   },
   {
     number: "03",
     label: "Experience",
     href: "/experience",
-    headline: "Amazon · TD Bank · Capital One · Wharton.",
+    headline: "Kinage · Amazon · TD Bank · Capital One.",
     desc: "The full timeline of roles, education, and what I learned in each.",
   },
   {

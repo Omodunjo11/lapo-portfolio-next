@@ -213,7 +213,7 @@ export default function HowIBuild() {
             color: "rgba(186,230,253,.4)",
             marginTop: 40,
           }}>
-            These are the essays I&apos;m writing. If any of these are live, they&apos;ll be in Writing ↗
+            More on each of these in Writing ↗ — essays on identity, economics, and AI systems.
           </p>
         </div>
       </div>
@@ -239,7 +239,7 @@ export default function HowIBuild() {
               padding: "14px 32px", borderRadius: 2,
               textDecoration: "none", transition: "background .2s",
             }}
-            onMouseEnter={e => (e.currentTarget.style.background = "#0284C7")}
+            onMouseEnter={e => (e.currentTarget.style.background = "var(--ink)")}
             onMouseLeave={e => (e.currentTarget.style.background = "var(--terra)")}
           >
             View Projects →

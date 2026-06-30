@@ -117,7 +117,7 @@ export default function AboutPage() {
             <div className="about-left">
               <Image
                 src="/images/IMG_3436.jpg"
-                alt={`${CANONICAL_NAME} in Philadelphia`}
+                alt={`${CANONICAL_NAME} — Onaolapo Michael (Lapo) Odunjo`}
                 width={400}
                 height={500}
                 sizes="(max-width: 768px) 100vw, 33vw"
@@ -143,7 +143,7 @@ export default function AboutPage() {
                 and practical judgment about when to automate and when not to.
               </p>
               <p className="body-text">
-                I finished my Wharton MBA while shipping Kinage, an AI market intelligence platform, in production.
+                I graduated from Wharton with my MBA in May 2026, while shipping Kinage, an AI market intelligence platform, in production.
                 The path from chemical engineering to product to AI to private capital looks random from the outside.
                 To me it has always been one question: where is the real problem, and what would actually help?
               </p>
