@@ -20,12 +20,8 @@ export default function HomeFeaturedWork() {
         <Reveal>
           <div className="section-header-row" style={{ marginBottom: 36, padding: 0 }}>
             <div>
-              <p style={{ fontSize: 9, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 12 }}>
-                Selected work
-              </p>
-              <h2 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 700, lineHeight: 1.15, maxWidth: 520 }}>
-                The proof behind the headline.
-              </h2>
+              <p className="home-section-eyebrow">Selected work</p>
+              <h2 className="home-section-title">The proof behind the headline.</h2>
             </div>
             <Link href="/projects" className="btn btn--outline btn--sm" style={{ flexShrink: 0 }}>
               All {PORTFOLIO_BUILD_COUNT} builds →
@@ -66,20 +62,6 @@ export default function HomeFeaturedWork() {
             )
           })}
         </div>
-
-        <Reveal delay={0.2}>
-          <p className="home-secondary-links">
-            <Link href="/about">About</Link>
-            <span aria-hidden>·</span>
-            <Link href="/experience">Experience</Link>
-            <span aria-hidden>·</span>
-            <Link href="/how-i-build">How I Build</Link>
-            <span aria-hidden>·</span>
-            <Link href="/writing">Writing</Link>
-            <span aria-hidden>·</span>
-            <Link href="/connect">Connect</Link>
-          </p>
-        </Reveal>
       </div>
     </section>
   )
