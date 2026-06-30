@@ -428,11 +428,13 @@ export default function AboutPage() {
       {/* Photo strip */}
       <section className="page-section page-section--bordered">
         <Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 1, background: "var(--border)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px,1fr))", gap: 1, background: "var(--border)" }}>
             {[
               { src: "/images/photo-wharton-study.png", alt: "Wharton study session, Philadelphia" },
               { src: "/images/photo-tuxedos.jpg", alt: "Formal event, New York" },
+              { src: "/images/photo-blacktie.jpg", alt: "Black tie, New York" },
               { src: "/images/photo-dinner.jpg", alt: "Dinner, New York" },
+              { src: "/images/photo-cocktails.jpg", alt: "Cocktails, New York" },
             ].map((photo) => (
               <div key={photo.src} style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden" }}>
                 <Image
