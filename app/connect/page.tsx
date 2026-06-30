@@ -16,6 +16,10 @@ const openTo = [
     role: "AI Product Manager",
     desc: "0→1 and 1→N. Building trust systems, evaluation frameworks, and the product layer around LLMs.",
   },
+  {
+    role: "Chief of Staff",
+    desc: "Strategy, operations, and AI-native execution for founders and executives who need someone who can think and build.",
+  },
 ]
 
 export default function ConnectPage() {
