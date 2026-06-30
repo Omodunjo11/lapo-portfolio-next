@@ -21,7 +21,7 @@ export const ROLE_META =
   "AI product leader building production trust systems for regulated industries. Kinage · KOVA · Amazon · TD Bank · Wharton MBA."
 
 export const SEO_DESCRIPTION =
-  "Onaolapo Michael (Lapo) Odunjo — AI product leader building trust systems for regulated industries. Co-Founding CEO, Africa AI Leaders Fellowship. Kinage, KOVA, Amazon, TD Bank, Wharton MBA."
+  "Onaolapo Michael (Lapo) Odunjo — AI product leader building trust systems for regulated industries. Kinage, KOVA, Amazon, TD Bank, Wharton MBA."
 
 export const SEO_KEYWORDS = [
   ...NAME_ALIASES,

@@ -155,12 +155,6 @@ const jobs = [
 
 const leadership = [
   {
-    org: "Africa AI Leaders Fellowship (AAILF)",
-    role: "Co-Founding CEO",
-    period: "2024 – Present",
-    note: "Ford Foundation and Mastercard-backed initiative building AI governance capacity across African policymaking ecosystem.",
-  },
-  {
     org: "Wharton Graduate Association",
     role: "President",
     period: "2024 – Present",
@@ -175,7 +169,7 @@ const leadership = [
 ]
 
 const education = [
-  { year: "2024 – May 2026", school: "The Wharton School, University of Pennsylvania", location: "Philadelphia, PA", degree: "MBA, Finance & Strategic Management", note: "Trailblazer Fellowship (50% merit) · President, Wharton Graduate Association ($6M P&L, 1,700+ students) · VP, Wharton Tech Club Conferences · Co-CEO, Africa AI Leaders Fellowship" },
+  { year: "2024 – May 2026", school: "The Wharton School, University of Pennsylvania", location: "Philadelphia, PA", degree: "MBA, Finance & Strategic Management", note: "Trailblazer Fellowship (50% merit) · President, Wharton Graduate Association ($6M P&L, 1,700+ students) · VP, Wharton Tech Club Conferences" },
   { year: "2021 – 2023", school: "Columbia University", location: "New York, NY", degree: "M.S., Chemical Engineering", note: "Full merit scholarship, 21 of 5,000+ applicants · GPA 3.8 · Peer-reviewed ACS Applied Energy Materials publication" },
   { year: "2015 – 2020", school: "University of Bradford", location: "Bradford, UK", degree: "B.Eng., Chemical Engineering", note: "Bradford Dean Award, full-ride · GPA 3.7" },
 ]

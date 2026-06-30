@@ -10,8 +10,8 @@ import { projects } from "@/lib/projects"
 const tickerItems = [
   { text: "AI Product · Regulated Systems", highlight: true },
   { text: "Lagos → Bradford → NYC" },
-  { text: "Africa AI Leaders Fellowship · Co-Founding CEO", highlight: true },
-  { text: "Ford Foundation · Mastercard Backed" },
+  { text: "Kinage · Production AI Systems", highlight: true },
+  { text: "KOVA · Informal Credit Infrastructure" },
   { text: "Kinage · KOVA · Building", highlight: true },
   { text: "RAG Systems in Production" },
   { text: "Agentic Workflows · Production", highlight: true },
