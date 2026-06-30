@@ -31,7 +31,7 @@ const navPanels = [
     number: "02",
     label: "Projects",
     href: "/projects",
-    headline: "Nine products shipped end-to-end.",
+    headline: "Eleven products shipped end-to-end.",
     desc: "Full breakdowns — featured builds and the full archive — of what I built, how, and why.",
   },
   {

@@ -53,7 +53,7 @@ export default function WorkPage() {
         </div>
         <Reveal>
           <div className="cta-row">
-            <Link href="/projects" className="btn btn--outline">See all 9 projects →</Link>
+            <Link href="/projects" className="btn btn--outline">See all 11 projects →</Link>
             <Link href={PROFILE_LINKS.github} target="_blank" rel="noopener noreferrer me" className="btn btn--filled">
               Build Archive on GitHub ↗
             </Link>
