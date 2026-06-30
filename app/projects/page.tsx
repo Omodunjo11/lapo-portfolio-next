@@ -5,6 +5,7 @@ import Image from "next/image"
 import Ticker from "@/components/Ticker"
 import Reveal from "@/components/Reveal"
 import { projects, featuredProjects } from "@/lib/projects"
+import { PROFILE_LINKS } from "@/lib/site"
 
 const filters = [
   { key: "all", label: "All" },
@@ -17,7 +18,6 @@ const filters = [
 const statusFilters = [
   { key: "all", label: "All" },
   { key: "live", label: "● Live" },
-  { key: "building", label: "◐ Building" },
   { key: "built", label: "◇ Built" },
 ]
 
@@ -48,7 +48,8 @@ const langColors: Record<string, string> = {
 const featuredImages: Record<string, string> = {
   "kova-bot": "/images/hero/hero-card-fintech.png",
   "gtm-intelligence-platform": "/images/hero/hero-card-enterprise.png",
-  "regulatory-compliance-cockpit": "/images/hero/hero-card-healthcare.png",
+  "regulatory-compliance-cockpit": "/images/hero/hero-card-fintech.png",
+  "transcript-intelligence": "/images/hero/hero-card-enterprise.png",
 }
 
 export default function ProjectsPage() {
@@ -62,7 +63,7 @@ export default function ProjectsPage() {
   )
 
   const liveCount = projects.filter(p => p.status === "live").length
-  const buildingCount = projects.filter(p => p.status === "building").length
+  const builtCount = projects.filter(p => p.status === "built").length
 
   return (
     <>
@@ -117,9 +118,9 @@ export default function ProjectsPage() {
           }}
         >
           {[
-            { label: "Total builds", value: "11" },
+            { label: "Total builds", value: String(projects.length) },
             { label: "Live in production", value: String(liveCount) },
-            { label: "In progress", value: String(buildingCount) },
+            { label: "Built & shipped", value: String(builtCount) },
             { label: "Primary stack", value: "TypeScript · Python" },
             { label: "Domains", value: "Fintech · Enterprise · AI" },
           ].map(({ label, value }) => (
@@ -370,10 +371,10 @@ export default function ProjectsPage() {
           <div>
             <div style={{ fontSize: 8, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 8 }}>Open Source</div>
             <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: 22, fontWeight: 700, marginBottom: 6 }}>See everything on GitHub</div>
-            <p style={{ fontSize: 11, color: "var(--muted)", maxWidth: 420 }}>All projects are public. Code, commits, and context — no gatekeeping.</p>
+            <p style={{ fontSize: 11, color: "var(--muted)", maxWidth: 420 }}>Open builds and case studies on GitHub. Enterprise repos available on request for recruiters and hiring teams.</p>
           </div>
           <Link
-            href="https://github.com/Omodunjo11"
+            href={PROFILE_LINKS.github}
             target="_blank"
             rel="noopener"
             style={{

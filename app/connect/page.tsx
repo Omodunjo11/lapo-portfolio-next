@@ -83,6 +83,7 @@ export default function ConnectPage() {
                 { label: "Medium", value: "@odunjoonaolapo", href: PROFILE_LINKS.medium },
                 { label: "Twitter / X", value: "@Modunjo", href: PROFILE_LINKS.twitter },
                 { label: "Instagram", value: "@alaye_omodunjo", href: PROFILE_LINKS.instagram },
+                { label: "Goodreads", value: "Reading list", href: PROFILE_LINKS.goodreads },
               ].map(({ label, value, href }) => (
                 <Link
                   key={label}

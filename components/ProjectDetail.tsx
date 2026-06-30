@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link"
 import type { Project } from "@/lib/projects"
+import { CONTACT_EMAIL } from "@/lib/site"
 
 function repoLabel(github: string) {
   try {
@@ -197,8 +198,8 @@ export default function ProjectDetail({ project, prev, next }: Props) {
                 <div style={{ fontWeight: 600, color: "var(--ink)", marginBottom: 4 }}>{repoLabel(project.github)}</div>
                 <div style={{ fontSize: 11 }}>
                   Code available on request for recruiters and hiring teams. Email{" "}
-                  <a href="mailto:odunjoonaolapo@gmail.com?subject=GitHub%20repo%20access%20request" style={{ color: "var(--terra)", textDecoration: "underline" }}>
-                    odunjoonaolapo@gmail.com
+                  <a href={`mailto:${CONTACT_EMAIL}?subject=GitHub%20repo%20access%20request`} style={{ color: "var(--terra)", textDecoration: "underline" }}>
+                    {CONTACT_EMAIL}
                   </a>{" "}
                   with your GitHub username.
                 </div>

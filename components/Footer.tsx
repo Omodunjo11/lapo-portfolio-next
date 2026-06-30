@@ -50,6 +50,7 @@ export default function Footer() {
             { label: "Medium", href: PROFILE_LINKS.medium },
             { label: "Twitter", href: PROFILE_LINKS.twitter },
             { label: "Instagram", href: PROFILE_LINKS.instagram },
+            { label: "Goodreads", href: PROFILE_LINKS.goodreads },
           ].map(({ label, href }) => (
             <Link
               key={label}

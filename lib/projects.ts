@@ -186,7 +186,7 @@ export const projects: Project[] = [
     github: "https://github.com/Omodunjo11/enterprise-gtm-platform",
     githubPrivate: true,
     featured: true,
-    status: "live" as const,
+    status: "built" as const,
   },
   {
     slug: "regulatory-compliance-cockpit",
@@ -344,7 +344,7 @@ export const projects: Project[] = [
     github: "https://github.com/Omodunjo11/transcript-intelligence-pipeline",
     githubPrivate: true,
     featured: true,
-    status: "live" as const,
+    status: "built" as const,
   },
   {
     slug: "llm-reliability",
@@ -703,7 +703,7 @@ export const projects: Project[] = [
     ],
     stack: ["JavaScript", "Mailgun API", "Push Notifications"],
     github: "https://github.com/Omodunjo11/Mailgun-Push",
-    status: "live" as const,
+    status: "built" as const,
   },
 ]
 

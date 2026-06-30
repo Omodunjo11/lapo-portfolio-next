@@ -1,8 +1,9 @@
 import type { Metadata } from "next"
+import { projects } from "@/lib/projects"
 import { CANONICAL_NAME, LEGAL_NAME, SITE_URL } from "@/lib/site"
 
 const title = `Projects · ${CANONICAL_NAME}`
-const description = `${LEGAL_NAME} — 11 AI products shipped end-to-end. Fintech credit infrastructure, enterprise compliance AI, GTM automation, and LLM reliability systems. TypeScript, Python, Claude API.`
+const description = `${LEGAL_NAME} — ${projects.length} AI products shipped end-to-end. Fintech credit infrastructure, enterprise compliance AI, GTM automation, and LLM reliability systems. TypeScript, Python, Claude API.`
 
 export const metadata: Metadata = {
   title,

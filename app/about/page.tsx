@@ -273,7 +273,7 @@ export default function AboutPage() {
                 <p className="perspective-lede">
                   Most of how I think about product started in Lagos, reading systems when the official story
                   does not match what is happening on the ground. That lens still shows up in the AI work I ship
-                  for banks, healthcare, and markets most products never reach.
+                  for banks, regulated enterprises, and markets most products never reach.
                 </p>
                 <div className="perspective-points">
                   {perspectives.map((item) => (

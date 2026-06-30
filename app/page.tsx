@@ -99,7 +99,7 @@ export default function Home() {
             </Reveal>
             <Reveal delay={0.1}>
               <p style={{ fontSize: "clamp(14px, 1.5vw, 17px)", color: "var(--mid)", maxWidth: 580, lineHeight: 1.85, marginBottom: 12 }}>
-                I build for the gap between those two statements. Regulated banks, healthcare networks,
+                I build for the gap between those two statements. Regulated banks, enterprise compliance teams,
                 credit infrastructure in markets most products never reach. The cost of a wrong answer
                 is real in these environments, and trust is the actual product.
               </p>
@@ -112,7 +112,7 @@ export default function Home() {
             </Reveal>
             <Reveal delay={0.15}>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                <Link href="/work" className="btn btn--filled">See the work →</Link>
+                <Link href="/projects" className="btn btn--filled">See the work →</Link>
                 <Link href="/about" className="btn btn--outline">About me</Link>
                 <Link href={PROFILE_LINKS.linkedin} target="_blank" rel="noopener noreferrer me" className="btn btn--ghost">LinkedIn ↗</Link>
               </div>
