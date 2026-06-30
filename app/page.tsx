@@ -3,7 +3,7 @@ import Link from "next/link"
 import Ticker from "@/components/Ticker"
 import Reveal from "@/components/Reveal"
 import CloudScene from "@/components/CloudScene"
-import { CANONICAL_NAME, IDENTITY_LINE, PROFILE_LINKS } from "@/lib/site"
+import { PROFILE_LINKS } from "@/lib/site"
 import { PROOF_METRICS } from "@/lib/metrics"
 
 const tickerItems = [
@@ -66,6 +66,7 @@ const navPanels = [
     href: "/connect",
     headline: "Start a conversation.",
     desc: "AI systems in regulated industries. Private markets across Africa. Anything that does not fit a clean slide deck.",
+    span: true,
   },
 ]
 
@@ -87,29 +88,37 @@ export default function Home() {
         <Ticker items={tickerItems} />
 
         <section className="page-section">
-          <div className="pad-page" style={{ paddingTop: "clamp(48px, 6vw, 80px)", paddingBottom: "clamp(48px, 6vw, 80px)" }}>
+          <div className="pad-page" style={{ paddingTop: "clamp(48px, 6vw, 88px)", paddingBottom: "clamp(48px, 6vw, 88px)" }}>
             <Reveal>
-              <p style={{ fontSize: 9, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 20, display: "flex", alignItems: "center", gap: 10 }}>
+              <p style={{ fontSize: 9, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 24, display: "flex", alignItems: "center", gap: 10 }}>
                 <span style={{ width: 20, height: 1, background: "var(--terra)", display: "inline-block" }} />
-                AI Product · Regulated Infrastructure
+                Lagos · Wharton · AI in Regulated Industries
               </p>
             </Reveal>
             <Reveal delay={0.05}>
-              <h1 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "clamp(42px, 6vw, 80px)", fontWeight: 900, lineHeight: 0.94, letterSpacing: "-.03em", marginBottom: 28 }}>
-                {CANONICAL_NAME}.<br />
-                <em style={{ color: "var(--terra)" }}>Building things that actually work.</em>
+              <h1 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "clamp(38px, 5.5vw, 72px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-.03em", marginBottom: 32, maxWidth: 720 }}>
+                Most AI demos are impressive.<br />
+                <em style={{ color: "var(--terra)" }}>Most AI in production is quietly broken.</em>
               </h1>
             </Reveal>
             <Reveal delay={0.1}>
-              <p style={{ fontSize: "clamp(14px, 1.6vw, 17px)", color: "var(--mid)", maxWidth: 560, lineHeight: 1.8, marginBottom: 36 }}>
-                I build AI systems for regulated industries — banks, healthcare, and markets most products never reach.
-                The work sits at the intersection of product, trust, and practical judgment.
+              <p style={{ fontSize: "clamp(14px, 1.5vw, 17px)", color: "var(--mid)", maxWidth: 580, lineHeight: 1.85, marginBottom: 12 }}>
+                I build for the gap between those two statements. Regulated banks, healthcare networks,
+                credit infrastructure in markets most products never reach. The cost of a wrong answer
+                is real in these environments, and trust is the actual product.
+              </p>
+              <p style={{ fontSize: "clamp(14px, 1.5vw, 17px)", color: "var(--mid)", maxWidth: 580, lineHeight: 1.85, marginBottom: 36 }}>
+                I grew up in Lagos, studied in Bradford, built at Amazon and Capital One,
+                and finished my Wharton MBA while shipping Kinage in production.
+                The thread running through all of it is one question: where is the real problem,
+                and what would actually help?
               </p>
             </Reveal>
             <Reveal delay={0.15}>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                 <Link href="/work" className="btn btn--filled">See the work →</Link>
-                <Link href="/connect" className="btn btn--outline">Get in touch</Link>
+                <Link href="/about" className="btn btn--outline">About me</Link>
+                <Link href={PROFILE_LINKS.linkedin} target="_blank" rel="noopener noreferrer me" className="btn btn--ghost">LinkedIn ↗</Link>
               </div>
             </Reveal>
           </div>
@@ -120,10 +129,19 @@ export default function Home() {
             <Reveal>
               <p style={{ fontSize: 9, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>Explore</p>
             </Reveal>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 1, background: "var(--border)" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1, background: "var(--border)" }}>
               {navPanels.map((panel, i) => (
                 <Reveal key={panel.href} delay={i * 0.05}>
-                  <Link href={panel.href} style={{ display: "block", background: "var(--paper)", padding: "32px 28px", transition: "background .2s", height: "100%" }}
+                  <Link
+                    href={panel.href}
+                    style={{
+                      display: "block",
+                      background: "var(--paper)",
+                      padding: "32px 28px",
+                      transition: "background .2s",
+                      height: "100%",
+                      gridColumn: panel.span ? "span 2" : undefined,
+                    }}
                     onMouseEnter={e => (e.currentTarget.style.background = "var(--bg2)")}
                     onMouseLeave={e => (e.currentTarget.style.background = "var(--paper)")}
                   >
