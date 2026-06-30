@@ -26,7 +26,7 @@ export default function Footer() {
             {CANONICAL_NAME}
           </span>
           <span style={{ fontSize: 9, color: "var(--muted)", letterSpacing: ".06em" }}>
-            © 2026 · Philadelphia, PA
+            © 2026 · New York, NY
           </span>
         </div>
 

@@ -425,14 +425,41 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Photo strip */}
+      <section className="page-section page-section--bordered">
+        <Reveal>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 1, background: "var(--border)" }}>
+            {[
+              { src: "/images/photo-wharton-study.png", alt: "Wharton study session, Philadelphia" },
+              { src: "/images/photo-tuxedos.jpg", alt: "Formal event, New York" },
+              { src: "/images/photo-dinner.jpg", alt: "Dinner, New York" },
+            ].map((photo) => (
+              <div key={photo.src} style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden" }}>
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  quality={80}
+                  style={{ objectFit: "cover", transition: "transform .4s" }}
+                  onMouseEnter={e => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1.03)")}
+                  onMouseLeave={e => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1)")}
+                />
+              </div>
+            ))}
+          </div>
+        </Reveal>
+      </section>
+
       {/* Outside the work */}
       <section className="page-section page-section--bordered">
         <Reveal>
           <div className="pad-page" style={{ paddingTop: "clamp(32px, 4vw, 48px)", paddingBottom: "clamp(32px, 4vw, 48px)" }}>
             <p style={{ fontFamily: "var(--font-playfair), serif", fontStyle: "italic", fontSize: "clamp(16px, 1.8vw, 20px)", color: "var(--mid)", maxWidth: 640, lineHeight: 1.75 }}>
-              Outside the work I follow African football obsessively, read more than I should,
-              and think too hard about why some cities produce disproportionate numbers of people
-              who build things.
+              Outside the work I am a committed Man United fan in difficult times, and a France supporter
+              who thinks Mbappé and Dembélé together is the most exciting forward line in world football.
+              I read more than I should, and think too hard about why some cities produce disproportionate
+              numbers of people who build things.
             </p>
           </div>
         </Reveal>

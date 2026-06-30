@@ -3,6 +3,21 @@ import Link from "next/link"
 import Reveal from "@/components/Reveal"
 import { CONTACT_EMAIL, PROFILE_LINKS } from "@/lib/site"
 
+const openTo = [
+  {
+    role: "AI Strategist",
+    desc: "Helping organisations define where AI actually creates leverage — not where it sounds impressive.",
+  },
+  {
+    role: "Deployment Strategist",
+    desc: "Taking AI from prototype to production in regulated environments where the cost of failure is real.",
+  },
+  {
+    role: "AI Product Manager",
+    desc: "0→1 and 1→N. Building trust systems, evaluation frameworks, and the product layer around LLMs.",
+  },
+]
+
 export default function ConnectPage() {
   return (
     <>
@@ -18,6 +33,32 @@ export default function ConnectPage() {
         </p>
       </div>
 
+      {/* Currently open to */}
+      <section className="page-section page-section--bordered">
+        <Reveal>
+          <div className="pad-page" style={{ paddingTop: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 32 }}>
+              <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>◆</span>
+              <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Currently Open To</span>
+              <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+              <span style={{ fontSize: 8, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--terra)", display: "flex", alignItems: "center", gap: 6 }}>
+                <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--terra)", display: "inline-block" }} />
+                Available
+              </span>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px,1fr))", gap: 1, background: "var(--border)" }}>
+              {openTo.map((item) => (
+                <div key={item.role} style={{ background: "var(--paper)", padding: "28px 24px" }}>
+                  <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: 16, fontWeight: 700, marginBottom: 10 }}>{item.role}</div>
+                  <p style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.75 }}>{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* Contact */}
       <section className="page-section contact-section">
         <Reveal>
           <div className="grid-contact pad-page">
