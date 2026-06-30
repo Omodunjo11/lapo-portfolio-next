@@ -21,15 +21,22 @@ export default function OpenGraphImage() {
           fontFamily: "system-ui, sans-serif",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div
             style={{
-              width: 12,
-              height: 12,
-              borderRadius: "50%",
-              background: "#FDE68A",
+              display: "flex",
+              alignItems: "center",
+              gap: 4,
+              fontSize: 28,
+              fontWeight: 800,
+              color: "#F8FAFC",
+              letterSpacing: "-0.04em",
             }}
-          />
+          >
+            <span>L</span>
+            <div style={{ width: 6, height: 6, background: "#F8FAFC" }} />
+            <span>O</span>
+          </div>
           <span style={{ fontSize: 22, letterSpacing: "0.28em", textTransform: "uppercase", opacity: 0.85 }}>
             {CANONICAL_NAME}
           </span>

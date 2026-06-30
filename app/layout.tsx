@@ -44,6 +44,9 @@ export const metadata: Metadata = {
   applicationName: CANONICAL_NAME,
   alternates: { canonical: SITE_URL },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
+  ...(process.env.GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
+    : {}),
   openGraph: {
     title: `${CANONICAL_NAME} · ${ROLE_TITLE}`,
     description: SEO_DESCRIPTION,

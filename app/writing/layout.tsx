@@ -1,5 +1,8 @@
 import type { Metadata } from "next"
 import { CANONICAL_NAME, LEGAL_NAME, SITE_URL } from "@/lib/site"
+import { essays } from "@/lib/writing"
+import { writingItemListSchema } from "@/lib/structured-data"
+import JsonLd from "@/components/JsonLd"
 
 const title = `Writing · ${CANONICAL_NAME}`
 const description = `Essays by ${LEGAL_NAME} on identity, economics, diaspora, and the shape of AI in emerging markets. Published on Medium.`
@@ -24,5 +27,10 @@ export const metadata: Metadata = {
 }
 
 export default function WritingLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
+  return (
+    <>
+      <JsonLd data={writingItemListSchema(essays)} />
+      {children}
+    </>
+  )
 }

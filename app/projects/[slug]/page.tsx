@@ -2,6 +2,7 @@ import { notFound } from "next/navigation"
 import { getProject, projects } from "@/lib/projects"
 import { CANONICAL_NAME, SITE_URL } from "@/lib/site"
 import ProjectDetail from "@/components/ProjectDetail"
+import ProjectStructuredData from "@/components/ProjectStructuredData"
 
 export async function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }))
@@ -46,10 +47,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const next = projects[currentIndex + 1]
 
   return (
-    <ProjectDetail
-      project={project}
-      prev={prev ? { slug: prev.slug, name: prev.name } : undefined}
-      next={next ? { slug: next.slug, name: next.name } : undefined}
-    />
+    <>
+      <ProjectStructuredData project={project} />
+      <ProjectDetail
+        project={project}
+        prev={prev ? { slug: prev.slug, name: prev.name } : undefined}
+        next={next ? { slug: next.slug, name: next.name } : undefined}
+      />
+    </>
   )
 }
