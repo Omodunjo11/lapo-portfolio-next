@@ -19,14 +19,7 @@ const tickerItems = [
   { text: "Wharton MBA · Completed" },
 ]
 
-const metrics = [
-  { metric: "$148M", label: "Retention opportunity scoped at Amazon" },
-  { metric: "2B+", label: "Records modeled across AI systems" },
-  { metric: "11", label: "AI products shipped end-to-end" },
-  { metric: "10", label: "African markets · fintech & private capital" },
-]
-
-const SH = ({ n, t }: { n: string; t: string }) => (
+import { PROOF_METRICS } from "@/lib/metrics" = ({ n, t }: { n: string; t: string }) => (
   <div className="section-header">
     <div className="section-header-row">
       {n && <span className="section-number">{n}</span>}
@@ -66,7 +59,7 @@ export default function Home() {
 
       <div className="page-body">
         <div className="metrics-bar">
-          {metrics.map(({ metric, label }) => (
+          {PROOF_METRICS.map(({ metric, label }) => (
             <div key={metric} className="metric-item">
               <span className="metric-value">{metric}</span>
               <span className="metric-label">{label}</span>
