@@ -7,6 +7,7 @@ import CloudScene from "@/components/CloudScene"
 import { featuredProjects } from "@/lib/projects"
 import { essays } from "@/lib/writing"
 import { CANONICAL_NAME, CONTACT_EMAIL, IDENTITY_LINE, PROFILE_LINKS } from "@/lib/site"
+import { PROOF_METRICS } from "@/lib/metrics"
 
 const tickerItems = [
   { text: "AI Product · Regulated Systems", highlight: true },
@@ -19,7 +20,7 @@ const tickerItems = [
   { text: "Wharton MBA · Completed" },
 ]
 
-import { PROOF_METRICS } from "@/lib/metrics" = ({ n, t }: { n: string; t: string }) => (
+const SH = ({ n, t }: { n: string; t: string }) => (
   <div className="section-header">
     <div className="section-header-row">
       {n && <span className="section-number">{n}</span>}
