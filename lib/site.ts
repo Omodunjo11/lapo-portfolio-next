@@ -45,6 +45,8 @@ export const INTENT_CTA =
 
 export const CONTACT_EMAIL = "odunjoonaolapo@gmail.com"
 
+export const CONTACT_PHONE = "+1-646-421-3781"
+
 export const PROFILE_LINKS = {
   linkedin: "https://www.linkedin.com/in/onaolapomichaelodunjo",
   github: "https://github.com/Omodunjo11",
@@ -53,6 +55,7 @@ export const PROFILE_LINKS = {
   instagram: "https://www.instagram.com/alaye_omodunjo",
   goodreads: "https://www.goodreads.com/review/list/57964479",
   email: `mailto:${CONTACT_EMAIL}`,
+  phone: "tel:+16464213781",
   resume: `${SITE_URL}/resume.pdf`,
 } as const
 

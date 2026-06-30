@@ -3,7 +3,7 @@ import Link from "next/link"
 import Image from "next/image"
 import Reveal from "@/components/Reveal"
 import PageHero from "@/components/PageHero"
-import { CONTACT_EMAIL, PROFILE_LINKS } from "@/lib/site"
+import { CONTACT_EMAIL, CONTACT_PHONE, PROFILE_LINKS } from "@/lib/site"
 
 const openTo = [
   {
@@ -128,6 +128,7 @@ export default function ConnectPage() {
             <div className="contact-links">
               {[
                 { label: "Email", value: CONTACT_EMAIL, href: PROFILE_LINKS.email },
+                { label: "Phone", value: CONTACT_PHONE, href: PROFILE_LINKS.phone },
                 { label: "LinkedIn", value: "onaolapomichaelodunjo", href: PROFILE_LINKS.linkedin },
                 { label: "GitHub", value: "Omodunjo11", href: PROFILE_LINKS.github },
                 { label: "Medium", value: "@odunjoonaolapo", href: PROFILE_LINKS.medium },
