@@ -77,7 +77,6 @@ export default function Home() {
       <div id="status-bar" style={{ borderBottom: "1px solid var(--border)", background: "var(--ink)", padding: "10px clamp(16px,4vw,48px)", display: "flex", alignItems: "center", gap: 24, flexWrap: "wrap", overflow: "hidden" }}>
         <span style={{ fontSize: 8, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--terra)", flexShrink: 0 }}>◆ Currently</span>
         {[
-          { label: "Playing", value: "Civilization VII" },
           { label: "Building", value: "Kinage in Prod" },
           { label: "Reading", value: "Team of Teams" },
           { label: "Completed", value: "Wharton MBA" },

@@ -3,24 +3,26 @@ import Image from "next/image"
 import Link from "next/link"
 import { CANONICAL_NAME, INTENT_CTA, PROFILE_LINKS, ROLE_TITLE } from "@/lib/site"
 
+const HEADSHOT = "/images/IMG_3437.jpg"
+
 const FEATURED = [
   {
     href: "/projects/kova-bot",
-    image: "/images/hero/hero-card-fintech.png",
     label: "Kova",
     sub: "WhatsApp credit infrastructure",
+    detail: "Co-founder · informal economy lending",
   },
   {
     href: "/projects/gtm-intelligence-platform",
-    image: "/images/hero/hero-card-enterprise.png",
     label: "Kinage",
     sub: "Enterprise agentic workflows",
+    detail: "Signal monitoring · CRM enrichment",
   },
   {
     href: "/projects/regulatory-compliance-cockpit",
-    image: "/images/hero/hero-card-healthcare.png",
     label: "Regulated AI",
     sub: "Healthcare compliance ops",
+    detail: "Drift detection · violation triage",
   },
 ]
 
@@ -52,7 +54,8 @@ export default function CloudScene() {
         <div className="hero-editorial-grid" aria-hidden />
 
         <div className="hero-editorial-inner">
-          <div className="hero-editorial-copy" style={{ animation: "fadeUp .8s .15s ease both", opacity: 0 }}>
+          <div className="hero-editorial-main">
+            <div className="hero-editorial-copy" style={{ animation: "fadeUp .8s .15s ease both", opacity: 0 }}>
             <p
               style={{
                 fontFamily: "var(--font-dm-mono), monospace",
@@ -112,17 +115,31 @@ export default function CloudScene() {
                 Resume
               </Link>
             </div>
+            </div>
+
+            <div className="hero-editorial-portrait" style={{ animation: "fadeUp .8s .25s ease both", opacity: 0 }}>
+              <div className="hero-portrait-frame">
+                <Image
+                  src={HEADSHOT}
+                  alt={`${CANONICAL_NAME} — professional portrait`}
+                  width={480}
+                  height={600}
+                  sizes="(max-width: 900px) 72vw, 380px"
+                  quality={85}
+                  priority
+                  className="hero-portrait-image"
+                />
+              </div>
+            </div>
           </div>
 
-          <div className="hero-featured-row" style={{ animation: "fadeUp .8s .3s ease both", opacity: 0 }}>
+          <div className="hero-featured-row" style={{ animation: "fadeUp .8s .35s ease both", opacity: 0 }}>
             {FEATURED.map((item) => (
               <Link key={item.href} href={item.href} className="hero-featured-card">
-                <div className="hero-featured-image">
-                  <Image src={item.image} alt={item.label} fill sizes="(max-width: 768px) 100vw, 33vw" style={{ objectFit: "cover" }} priority />
-                </div>
                 <div className="hero-featured-meta">
                   <div className="hero-featured-label">{item.label}</div>
                   <div className="hero-featured-sub">{item.sub}</div>
+                  <div className="hero-featured-detail">{item.detail}</div>
                 </div>
               </Link>
             ))}
