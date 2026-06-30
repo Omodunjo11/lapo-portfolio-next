@@ -211,6 +211,12 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
 .grid-about     { display: grid; grid-template-columns: 1fr 2fr; gap: 0; align-items: start; }
 .grid-contact   { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
 .grid-photo     { display: grid; grid-template-columns: 1fr 1fr; min-height: 460px; border-top: 1px solid var(--border); }
+.grid-photo--landscape { min-height: clamp(380px, 42vh, 520px); }
+
+.photo-break-img {
+  object-fit: cover;
+  object-position: center 38%;
+}
 .grid-stats     { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-top: 1px solid var(--border); }
 .grid-1-2       { display: grid; grid-template-columns: 1fr 2fr; gap: 64px; align-items: start; }
 .grid-detail    { display: grid; grid-template-columns: 2fr 1fr; gap: 64px; align-items: start; }
@@ -810,7 +816,7 @@ body:has(button:hover) #cursor-ring { width: 48px; height: 48px; opacity: .2; }
 .photo-break-image {
   overflow: hidden;
   position: relative;
-  min-height: 260px;
+  min-height: clamp(280px, 38vh, 520px);
 }
 
 .photo-break-overlay {

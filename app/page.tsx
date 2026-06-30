@@ -191,20 +191,20 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="grid-photo">
+        <div className="grid-photo grid-photo--landscape">
           <div className="photo-break-image">
             <Image
-              src="/images/photo-nairobi.jpg"
-              alt="Lapo with friends in Nairobi"
+              src="/images/photo-landscape.jpg"
+              alt="Tea hills outside Nairobi, Kenya"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
-              quality={80}
-              style={{ objectFit: "cover", objectPosition: "center 40%" }}
+              quality={85}
+              className="photo-break-img"
             />
             <div className="photo-break-overlay" />
           </div>
           <div className="photo-break-copy">
-            <p className="photo-break-eyebrow">Nairobi · 2025</p>
+            <p className="photo-break-eyebrow">Nairobi Highlands · Kenya</p>
             <h2 className="photo-break-title">
               Building things that<br />
               <em>actually work.</em>
