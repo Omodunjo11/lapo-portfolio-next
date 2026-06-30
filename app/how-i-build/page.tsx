@@ -244,7 +244,7 @@ export default function HowIBuild() {
           >
             View Projects →
           </Link>
-          <Link href="/#contact"
+          <Link href="/connect"
             style={{
               fontFamily: "var(--font-syne),sans-serif",
               fontSize: 10, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase",

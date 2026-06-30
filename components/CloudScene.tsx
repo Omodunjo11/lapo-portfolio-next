@@ -30,7 +30,7 @@ export default function CloudScene() {
             <p className="hero-subtitle">{ROLE_TITLE}</p>
             <p className="hero-intent">{INTENT_CTA}</p>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 28 }}>
-              <Link href="/#contact" className="hero-cta-primary">
+              <Link href="/connect" className="hero-cta-primary">
                 Start a conversation
               </Link>
               <Link href={PROFILE_LINKS.resume} target="_blank" rel="noopener" className="hero-cta-secondary">

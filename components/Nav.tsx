@@ -4,13 +4,13 @@ import { usePathname } from "next/navigation"
 import { useState } from "react"
 
 const links = [
-  { href: "/#about", label: "About" },
-  { href: "/#work", label: "Work" },
+  { href: "/about", label: "About" },
+  { href: "/work", label: "Work" },
   { href: "/projects", label: "Projects" },
   { href: "/experience", label: "Experience" },
   { href: "/how-i-build", label: "How I Build" },
   { href: "/writing", label: "Writing" },
-  { href: "/#contact", label: "Connect" },
+  { href: "/connect", label: "Connect" },
 ]
 
 export default function Nav() {
@@ -18,9 +18,7 @@ export default function Nav() {
   const [open, setOpen] = useState(false)
 
   const isActive = (href: string) =>
-    (href === "/projects" && pathname.startsWith("/projects")) ||
-    (href === "/experience" && pathname.startsWith("/experience")) ||
-    (href === "/writing" && pathname.startsWith("/writing"))
+    pathname === href || (href !== "/" && pathname.startsWith(`${href}/`))
 
   return (
     <>
@@ -66,7 +64,7 @@ export default function Nav() {
           })}
           <li>
             <Link
-              href="/#contact"
+              href="/connect"
               style={{ background: "var(--ink)", color: "var(--paper)", padding: "7px 18px", borderRadius: 2, fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", transition: "background .25s", display: "inline-block" }}
               onMouseEnter={e => (e.currentTarget.style.background = "var(--terra)")}
               onMouseLeave={e => (e.currentTarget.style.background = "var(--ink)")}
@@ -125,7 +123,7 @@ export default function Nav() {
             </Link>
           ))}
           <Link
-            href="/#contact"
+            href="/connect"
             onClick={() => setOpen(false)}
             style={{ display: "block", marginTop: 16, background: "var(--ink)", color: "var(--paper)", padding: "12px 18px", borderRadius: 2, fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", textAlign: "center" }}
           >

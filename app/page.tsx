@@ -160,26 +160,24 @@ export default function Home() {
           <Reveal><SH n="03" t="Perspective" /></Reveal>
           <Reveal>
             <div className="perspective-wrap pad-page">
-              <div className="perspective-intro">
-                <figure className="perspective-hero">
-                  <Image
-                    src="/images/photo-landscape.jpg"
-                    alt="Tea hills outside Nairobi, Kenya"
-                    width={400}
-                    height={300}
-                    sizes="140px"
-                    quality={80}
-                    className="perspective-landscape-img"
-                  />
-                  <figcaption className="perspective-caption">Nairobi highlands · Kenya</figcaption>
-                </figure>
+              <figure className="perspective-hero">
+                <Image
+                  src="/images/photo-landscape.jpg"
+                  alt="Tea hills outside Nairobi, Kenya"
+                  width={1200}
+                  height={900}
+                  sizes="(max-width: 768px) 92vw, 520px"
+                  quality={85}
+                  className="perspective-landscape-img"
+                />
+                <figcaption className="perspective-caption">Nairobi highlands · Kenya</figcaption>
+              </figure>
 
-                <p className="perspective-lede">
-                  Most of how I think about product started in Lagos — reading systems when the official story
-                  does not match what is happening on the ground. That lens still shows up in the AI work I ship
-                  for banks, healthcare, and markets most products never reach.
-                </p>
-              </div>
+              <p className="perspective-lede">
+                Most of how I think about product started in Lagos — reading systems when the official story
+                does not match what is happening on the ground. That lens still shows up in the AI work I ship
+                for banks, healthcare, and markets most products never reach.
+              </p>
 
               <div className="perspective-points">
                 {perspectives.map((item) => (
