@@ -162,39 +162,135 @@ export default function AboutPage() {
         </Reveal>
       </section>
 
-      {/* Reading */}
+      {/* Reading — Bookshelf */}
       <section className="page-section page-section--bordered">
         <div className="pad-page" style={{ paddingTop: "clamp(40px, 5vw, 64px)", paddingBottom: "clamp(40px, 5vw, 64px)" }}>
           <Reveal>
-            <div className="section-header-inline" style={{ marginBottom: 32 }}>
+            <div className="section-header-inline" style={{ marginBottom: 12 }}>
               <span className="section-number">03</span>
               <span className="section-label">What I Read</span>
               <div className="section-divider" />
             </div>
-            <p style={{ fontSize: 13, color: "var(--muted)", maxWidth: 560, lineHeight: 1.85, marginBottom: 40 }}>
+            <p style={{ fontSize: 13, color: "var(--muted)", maxWidth: 560, lineHeight: 1.85, marginBottom: 48 }}>
               I read across systems, economics, and stories about people building things in the wrong order.
-              These are the books that have stayed with me longest.
             </p>
           </Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 1, background: "var(--border)" }}>
-            {reading.map((book, i) => (
-              <Reveal key={book.title} delay={i * 0.07}>
-                <div style={{ background: "var(--paper)", padding: "28px 24px", height: "100%" }}>
-                  <div style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 10 }}>{book.author}</div>
-                  <div style={{ fontFamily: "var(--font-playfair), serif", fontSize: 16, fontWeight: 700, lineHeight: 1.3, marginBottom: 12 }}>{book.title}</div>
-                  <p style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.75 }}>{book.note}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+
+          {/* Shelf */}
           <Reveal>
-            <div style={{ marginTop: 24 }}>
-              <Link
-                href={PROFILE_LINKS.goodreads}
-                target="_blank"
-                rel="noopener noreferrer me"
-                className="btn btn--outline"
-              >
+            <div style={{ position: "relative", overflowX: "auto", paddingBottom: 24 }}>
+              {/* Books row */}
+              <div style={{ display: "flex", alignItems: "flex-end", gap: 6, minWidth: "fit-content", paddingBottom: 12 }}>
+                {reading.map((book, i) => {
+                  const spineColors = [
+                    { bg: "#1a2744", text: "#a8b8d8" },
+                    { bg: "#5c3317", text: "#e8c89a" },
+                    { bg: "#1f3a2a", text: "#8ec8a0" },
+                    { bg: "#3b1f5c", text: "#c4a8e0" },
+                    { bg: "#2a1f1a", text: "#c8a87a" },
+                  ]
+                  const heights = [220, 190, 240, 200, 210]
+                  const widths = [38, 28, 24, 36, 42]
+                  const col = spineColors[i % spineColors.length]
+                  return (
+                    <div
+                      key={book.title}
+                      title={`${book.title} — ${book.author}`}
+                      style={{
+                        position: "relative",
+                        height: heights[i],
+                        width: widths[i],
+                        background: col.bg,
+                        borderRadius: "2px 2px 0 0",
+                        boxShadow: "inset -3px 0 6px rgba(0,0,0,0.3), 2px 0 4px rgba(0,0,0,0.15)",
+                        cursor: "default",
+                        flexShrink: 0,
+                        transition: "transform .2s",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        overflow: "hidden",
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.transform = "translateY(-8px)")}
+                      onMouseLeave={e => (e.currentTarget.style.transform = "translateY(0)")}
+                    >
+                      {/* Spine text */}
+                      <div style={{
+                        writingMode: "vertical-rl",
+                        transform: "rotate(180deg)",
+                        color: col.text,
+                        padding: "12px 0",
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: 6,
+                      }}>
+                        <span style={{
+                          fontFamily: "var(--font-playfair), serif",
+                          fontSize: 10,
+                          fontWeight: 700,
+                          letterSpacing: ".04em",
+                          lineHeight: 1.2,
+                          textAlign: "center",
+                        }}>{book.title}</span>
+                        <span style={{
+                          fontSize: 7,
+                          letterSpacing: ".1em",
+                          opacity: 0.6,
+                          textTransform: "uppercase",
+                        }}>{book.author.split(" ").pop()}</span>
+                      </div>
+                      {/* Spine highlight */}
+                      <div style={{
+                        position: "absolute",
+                        top: 0, left: 0,
+                        width: 3,
+                        height: "100%",
+                        background: "rgba(255,255,255,0.08)",
+                        borderRadius: "2px 0 0 0",
+                      }} />
+                    </div>
+                  )
+                })}
+              </div>
+              {/* Shelf plank */}
+              <div style={{
+                height: 14,
+                background: "linear-gradient(180deg, #c8a87a 0%, #a07848 40%, #8a6030 100%)",
+                borderRadius: 2,
+                boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+                position: "relative",
+              }}>
+                <div style={{
+                  position: "absolute",
+                  top: 0, left: 0, right: 0,
+                  height: 3,
+                  background: "rgba(255,255,255,0.15)",
+                  borderRadius: "2px 2px 0 0",
+                }} />
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Hover notes */}
+          <Reveal>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 40 }}>
+              {reading.map((book) => (
+                <div key={book.title} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                  <span style={{ fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)", minWidth: 120, paddingTop: 3 }}>{book.author}</span>
+                  <div>
+                    <span style={{ fontFamily: "var(--font-playfair), serif", fontSize: 14, fontWeight: 700, marginRight: 10 }}>{book.title}</span>
+                    <span style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.75 }}>{book.note}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <div style={{ marginTop: 32 }}>
+              <Link href={PROFILE_LINKS.goodreads} target="_blank" rel="noopener noreferrer me" className="btn btn--outline">
                 Full reading list on Goodreads ↗
               </Link>
             </div>
