@@ -1,0 +1,86 @@
+import Image from "next/image"
+import Link from "next/link"
+import Reveal from "@/components/Reveal"
+import { featuredProjects } from "@/lib/projects"
+import { PROJECT_HERO_IMAGES } from "@/lib/project-images"
+import { PORTFOLIO_BUILD_COUNT } from "@/lib/metrics"
+
+const statusLabel = {
+  live: "● Live",
+  building: "◐ Building",
+  built: "◇ Built",
+} as const
+
+export default function HomeFeaturedWork() {
+  const picks = featuredProjects.slice(0, 3)
+
+  return (
+    <section className="page-section page-section--bordered">
+      <div className="pad-page" style={{ paddingTop: "clamp(40px, 5vw, 64px)", paddingBottom: "clamp(40px, 5vw, 64px)" }}>
+        <Reveal>
+          <div className="section-header-row" style={{ marginBottom: 36, padding: 0 }}>
+            <div>
+              <p style={{ fontSize: 9, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 12 }}>
+                Selected work
+              </p>
+              <h2 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 700, lineHeight: 1.15, maxWidth: 520 }}>
+                The proof behind the headline.
+              </h2>
+            </div>
+            <Link href="/projects" className="btn btn--outline btn--sm" style={{ flexShrink: 0 }}>
+              All {PORTFOLIO_BUILD_COUNT} builds →
+            </Link>
+          </div>
+        </Reveal>
+
+        <div className="home-featured-grid">
+          {picks.map((project, i) => {
+            const heroImg = PROJECT_HERO_IMAGES[project.slug]
+            return (
+              <Reveal key={project.slug} delay={i * 0.06}>
+                <Link href={`/projects/${project.slug}`} className="home-featured-card interactive-surface interactive-surface--accent-top">
+                  {heroImg && (
+                    <div className="home-featured-card__image">
+                      <Image
+                        src={heroImg}
+                        alt=""
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        style={{ objectFit: "cover" }}
+                      />
+                      <div className="home-featured-card__image-overlay" />
+                    </div>
+                  )}
+                  <div className="home-featured-card__body">
+                    <div className="home-featured-card__meta">
+                      <span>{statusLabel[project.status]}</span>
+                      <span>{project.year}</span>
+                    </div>
+                    <h3 className="home-featured-card__title">{project.name}</h3>
+                    <p className="home-featured-card__role">{project.role}</p>
+                    <p className="home-featured-card__tagline">{project.tagline}</p>
+                    <p className="home-featured-card__outcome">{project.outcome}</p>
+                  </div>
+                </Link>
+              </Reveal>
+            )
+          })}
+        </div>
+
+        <Reveal delay={0.2}>
+          <p className="home-secondary-links">
+            <Link href="/about">About</Link>
+            <span aria-hidden>·</span>
+            <Link href="/experience">Experience</Link>
+            <span aria-hidden>·</span>
+            <Link href="/how-i-build">How I Build</Link>
+            <span aria-hidden>·</span>
+            <Link href="/writing">Writing</Link>
+            <span aria-hidden>·</span>
+            <Link href="/connect">Connect</Link>
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
