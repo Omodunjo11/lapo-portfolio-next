@@ -3,13 +3,14 @@ export const SITE_URL =
 
 export const CANONICAL_NAME = "Lapo Odunjo"
 
-export const LEGAL_NAME = "Onaolapo Michael Odunjo"
+export const LEGAL_NAME = "Onaolapo Michael (Lapo) Odunjo"
 
 /** All public name variants — used in metadata, schema, and on-page identity. */
 export const NAME_ALIASES = [
   "Lapo Odunjo",
-  "Onaolapo Michael Odunjo",
   "Onaolapo Odunjo",
+  "Onaolapo Michael Odunjo",
+  "Onaolapo Michael (Lapo) Odunjo",
   "Michael Odunjo",
   "Onaolapo M. Odunjo",
 ] as const
@@ -61,4 +62,4 @@ export const SAME_AS_PROFILES = [
 ] as const
 
 export const IDENTITY_LINE =
-  "Onaolapo Michael Odunjo — also known as Lapo Odunjo, Onaolapo Odunjo, and Michael Odunjo"
+  "Onaolapo Michael (Lapo) Odunjo — Lapo is short for Onaolapo"
