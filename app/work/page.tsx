@@ -7,20 +7,20 @@ import { PROFILE_LINKS } from "@/lib/site"
 
 const perspectives = [
   {
-    title: "Look past where the pain shows up",
-    body: "Lagos rewards people who distrust the first explanation. When an AI pipeline or investment thesis keeps failing, I assume the symptom is pointing somewhere else — and ask what the room is reluctant to say out loud.",
+    title: "The symptom is rarely the problem",
+    body: "Lagos taught me to distrust the first explanation. When an AI pipeline or an investment thesis keeps failing, something upstream is usually wrong, something the room is reluctant to say out loud. I have made a habit of asking that question before anything else.",
   },
   {
-    title: "Informal finance is smarter than it looks",
-    body: "Ajo groups and market credit in West Africa look messy on a spreadsheet. They are often more adaptive than the products meant to replace them. The work is not to formalize them fast — it is to formalize them without breaking what already works.",
+    title: "Informal systems encode real intelligence",
+    body: "That skepticism deepened when I looked closely at how credit actually works in West Africa. Ajo groups and market lending look messy on a spreadsheet but they are often more adaptive than the products built to replace them. Understanding what already works before touching it is not just a courtesy. It is how you avoid breaking the thing you came to fix.",
   },
   {
-    title: "Trust beats the model",
-    body: "In regulated institutions, the bottleneck is rarely capability. It is whether a compliance officer, fraud investigator, or analyst will act on what the system says. I design for adoption under scrutiny — not another demo.",
+    title: "The bottleneck is trust, not accuracy",
+    body: "The same lesson shows up inside regulated institutions. The constraint is almost never the model. It is whether a compliance officer, a fraud investigator, or an analyst will act on what the system says. Designing for adoption under scrutiny is a harder problem than improving benchmark numbers, and it is the one that actually matters.",
   },
   {
-    title: "Two lenses, one product",
-    body: "Building from the continent inside Western institutions means holding global rigor and local reality at the same time. The products that last do not ask people to choose between them.",
+    title: "Hold both lenses at once",
+    body: "Working from the continent inside Western institutions means carrying global rigor and local reality at the same time. The products that last do not ask people to choose between them, and neither do I.",
   },
 ]
 
@@ -96,7 +96,7 @@ export default function WorkPage() {
 
             <div className="perspective-copy">
               <p className="perspective-lede">
-                Most of how I think about product started in Lagos — reading systems when the official story
+                Most of how I think about product started in Lagos, reading systems when the official story
                 does not match what is happening on the ground. That lens still shows up in the AI work I ship
                 for banks, healthcare, and markets most products never reach.
               </p>
