@@ -4,6 +4,50 @@ import Link from "next/link"
 import Reveal from "@/components/Reveal"
 import { CANONICAL_NAME, IDENTITY_LINE, PROFILE_LINKS } from "@/lib/site"
 
+const stops = [
+  {
+    city: "Lagos",
+    region: "Nigeria",
+    note: "Where everything started. Reading systems before I had words for it.",
+  },
+  {
+    city: "Bradford",
+    region: "England",
+    note: "Chemical engineering degree. First time being the only one in the room who looked like me.",
+  },
+  {
+    city: "Ghana",
+    region: "West Africa",
+    note: "Pro-bono consulting, 2018–2019. First time doing the work without the title.",
+  },
+  {
+    city: "Atlanta",
+    region: "Georgia",
+    note: "Big Nerd Ranch. Where I stopped being an engineer who could code and started being someone who built things.",
+  },
+  {
+    city: "New Haven + Greensboro",
+    region: "Connecticut + North Carolina",
+    note: "COVID. Remote work. Learning how to build when the city around you has stopped.",
+  },
+  {
+    city: "New York",
+    region: "New York",
+    note: "First time. The city that does not wait for you to be ready.",
+  },
+  {
+    city: "Philadelphia",
+    region: "Pennsylvania",
+    note: "Wharton MBA. Shipped Kinage in production while writing papers. Did not sleep enough.",
+  },
+  {
+    city: "New York",
+    region: "New York",
+    note: "Back. Building now. This is where the work is.",
+    current: true,
+  },
+]
+
 const perspectives = [
   {
     title: "The symptom is rarely the problem",
@@ -90,9 +134,8 @@ export default function AboutPage() {
           <Reveal delay={0.1}>
             <div className="about-right">
               <p className="body-text">
-                I go by Lapo. Lagos, Bradford, Ghana, Atlanta, New Haven, New York, Philadelphia, New York.
-                Eight cities, one thread: arrive somewhere unfamiliar, learn how the system actually works
-                versus how it is supposed to, find your footing, move again.
+                I go by Lapo. Eight cities, one thread: arrive somewhere unfamiliar, learn how the system
+                actually works versus how it is supposed to, find your footing, move again.
               </p>
               <p className="body-text">
                 Today I build AI systems for regulated industries, environments where trust matters and the cost
@@ -118,12 +161,96 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Trajectory */}
+      <section className="page-section page-section--bordered">
+        <div className="pad-page" style={{ paddingTop: "clamp(40px, 5vw, 64px)", paddingBottom: "clamp(40px, 5vw, 64px)" }}>
+          <Reveal>
+            <div className="section-header-inline" style={{ marginBottom: 40 }}>
+              <span className="section-number">02</span>
+              <span className="section-label">The Journey</span>
+              <div className="section-divider" />
+            </div>
+          </Reveal>
+          <div style={{ overflowX: "auto", paddingBottom: 8 }}>
+            <div style={{ display: "flex", gap: 0, minWidth: "fit-content" }}>
+              {stops.map((stop, i) => (
+                <Reveal key={`${stop.city}-${i}`} delay={i * 0.06}>
+                  <div style={{ display: "flex", alignItems: "stretch" }}>
+                    {/* Card */}
+                    <div style={{
+                      width: 180,
+                      padding: "24px 20px",
+                      background: stop.current ? "var(--ink)" : "var(--paper)",
+                      borderTop: `2px solid ${stop.current ? "var(--terra)" : "var(--border)"}`,
+                      borderRight: "1px solid var(--border)",
+                      borderBottom: "1px solid var(--border)",
+                      borderLeft: i === 0 ? "1px solid var(--border)" : "none",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 8,
+                      position: "relative",
+                    }}>
+                      <span style={{
+                        fontFamily: "var(--font-syne), sans-serif",
+                        fontSize: 8,
+                        fontWeight: 700,
+                        letterSpacing: ".2em",
+                        color: stop.current ? "var(--terra)" : "var(--muted)",
+                      }}>
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <div style={{
+                        fontFamily: "var(--font-playfair), serif",
+                        fontSize: 17,
+                        fontWeight: 700,
+                        lineHeight: 1.15,
+                        color: stop.current ? "var(--paper)" : "var(--ink)",
+                      }}>
+                        {stop.city}
+                      </div>
+                      <div style={{
+                        fontSize: 8,
+                        letterSpacing: ".12em",
+                        textTransform: "uppercase",
+                        color: stop.current ? "rgba(248,250,252,0.4)" : "var(--muted)",
+                      }}>
+                        {stop.region}
+                      </div>
+                      <p style={{
+                        fontSize: 11,
+                        lineHeight: 1.7,
+                        color: stop.current ? "rgba(248,250,252,0.65)" : "var(--muted)",
+                        marginTop: 4,
+                        flex: 1,
+                      }}>
+                        {stop.note}
+                      </p>
+                      {stop.current && (
+                        <div style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 6,
+                          marginTop: 4,
+                        }}>
+                          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--terra)", display: "inline-block" }} />
+                          <span style={{ fontSize: 8, letterSpacing: ".12em", color: "var(--terra)", textTransform: "uppercase" }}>Now</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Perspective */}
       <section className="page-section page-section--bordered">
         <Reveal>
           <div className="perspective-wrap pad-page">
             <div className="section-header-inline" style={{ marginBottom: 32 }}>
-              <span className="section-number">02</span>
+              <span className="section-number">03</span>
               <span className="section-label">How I Think</span>
               <div className="section-divider" />
             </div>
@@ -167,7 +294,7 @@ export default function AboutPage() {
         <div className="pad-page" style={{ paddingTop: "clamp(40px, 5vw, 64px)", paddingBottom: "clamp(40px, 5vw, 64px)" }}>
           <Reveal>
             <div className="section-header-inline" style={{ marginBottom: 12 }}>
-              <span className="section-number">03</span>
+              <span className="section-number">04</span>
               <span className="section-label">What I Read</span>
               <div className="section-divider" />
             </div>
