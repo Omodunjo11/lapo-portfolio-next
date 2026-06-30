@@ -1,5 +1,6 @@
 "use client"
 import Link from "next/link"
+import Image from "next/image"
 import Reveal from "@/components/Reveal"
 import { CONTACT_EMAIL, PROFILE_LINKS } from "@/lib/site"
 
@@ -77,6 +78,15 @@ export default function ConnectPage() {
                 <Link href={PROFILE_LINKS.resume} target="_blank" rel="noopener" className="btn btn--outline">
                   Download resume ↗
                 </Link>
+              </div>
+              <div style={{ marginTop: 32, position: "relative", width: "100%", aspectRatio: "4/5", maxWidth: 320, overflow: "hidden" }}>
+                <Image
+                  src="/images/photo-blacktie.jpg"
+                  alt="Lapo Odunjo"
+                  fill
+                  style={{ objectFit: "cover", objectPosition: "center top" }}
+                  sizes="(max-width: 768px) 100vw, 320px"
+                />
               </div>
             </div>
             <div className="contact-links">
