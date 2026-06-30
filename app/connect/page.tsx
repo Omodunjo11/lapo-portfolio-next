@@ -78,14 +78,14 @@ export default function ConnectPage() {
                 minHeight: 180,
               }}>
                 <div style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".18em", textTransform: "uppercase", color: "rgba(248,250,252,0.4)" }}>
-                  Africa AI Leaders Fellowship
+                  New York, NY · Available
                 </div>
                 <div>
-                  <div style={{ fontFamily: "var(--font-playfair),serif", fontStyle: "italic", fontSize: 15, color: "var(--paper)", lineHeight: 1.5, marginBottom: 14 }}>
-                    &ldquo;Ford Foundation &amp; Mastercard backed — building AI capacity across Africa.&rdquo;
+                  <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: "clamp(36px,4vw,52px)", fontWeight: 900, color: "var(--paper)", lineHeight: 1, marginBottom: 10 }}>
+                    22%<span style={{ color: "var(--terra)" }}>→</span>50%
                   </div>
-                  <div style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--terra)" }}>
-                    Co-Founding CEO · 2024 – Present
+                  <div style={{ fontFamily: "var(--font-dm-mono),monospace", fontSize: 8, letterSpacing: ".14em", textTransform: "uppercase", color: "rgba(248,250,252,0.5)", lineHeight: 1.6 }}>
+                    Analyst precision · production AI<br />top 10 U.S. bank
                   </div>
                 </div>
               </div>
