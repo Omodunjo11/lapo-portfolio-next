@@ -1,12 +1,9 @@
 "use client"
-import Image from "next/image"
 import Link from "next/link"
 import Ticker from "@/components/Ticker"
 import Reveal from "@/components/Reveal"
 import CloudScene from "@/components/CloudScene"
-import { featuredProjects } from "@/lib/projects"
-import { essays } from "@/lib/writing"
-import { CANONICAL_NAME, CONTACT_EMAIL, IDENTITY_LINE, PROFILE_LINKS } from "@/lib/site"
+import { CANONICAL_NAME, IDENTITY_LINE, PROFILE_LINKS } from "@/lib/site"
 import { PROOF_METRICS } from "@/lib/metrics"
 
 const tickerItems = [
@@ -20,32 +17,55 @@ const tickerItems = [
   { text: "Wharton MBA · Completed" },
 ]
 
-const SH = ({ n, t }: { n: string; t: string }) => (
-  <div className="section-header">
-    <div className="section-header-row">
-      {n && <span className="section-number">{n}</span>}
-      <h2 className="section-title">{t}</h2>
-    </div>
-    <div className="section-rule" />
-  </div>
-)
-
-const perspectives = [
+const navPanels = [
   {
-    title: "The symptom is rarely the problem",
-    body: "Lagos taught me to distrust the first explanation. When an AI pipeline or an investment thesis keeps failing, something upstream is usually wrong, something the room is reluctant to say out loud. I have made a habit of asking that question before anything else.",
+    number: "01",
+    label: "About",
+    href: "/about",
+    headline: "Lagos to Philly. Same question everywhere.",
+    desc: "Who I am, how I think, and what drives the work.",
   },
   {
-    title: "Informal systems encode real intelligence",
-    body: "That skepticism deepened when I looked closely at how credit actually works in West Africa. Ajo groups and market lending look messy on a spreadsheet but they are often more adaptive than the products built to replace them. Understanding what already works before touching it is not just a courtesy. It is how you avoid breaking the thing you came to fix.",
+    number: "02",
+    label: "Work",
+    href: "/work",
+    headline: "Production AI. Not just demos.",
+    desc: "Featured builds across regulated finance, informal credit, and agentic systems.",
   },
   {
-    title: "The bottleneck is trust, not accuracy",
-    body: "The same lesson shows up inside regulated institutions. The constraint is almost never the model. It is whether a compliance officer, a fraud investigator, or an analyst will act on what the system says. Designing for adoption under scrutiny is a harder problem than improving benchmark numbers, and it is the one that actually matters.",
+    number: "03",
+    label: "Projects",
+    href: "/projects",
+    headline: "Nine products shipped end-to-end.",
+    desc: "Full breakdowns of what I built, how I built it, and why.",
   },
   {
-    title: "Hold both lenses at once",
-    body: "Working from the continent inside Western institutions means carrying global rigor and local reality at the same time. The products that last do not ask people to choose between them, and neither do I.",
+    number: "04",
+    label: "Experience",
+    href: "/experience",
+    headline: "Amazon · TD Bank · Capital One · Wharton.",
+    desc: "The full timeline of roles, education, and what I learned in each.",
+  },
+  {
+    number: "05",
+    label: "How I Build",
+    href: "/how-i-build",
+    headline: "The method behind the product.",
+    desc: "How I approach AI systems, trust, and decisions under uncertainty.",
+  },
+  {
+    number: "06",
+    label: "Writing",
+    href: "/writing",
+    headline: "I think in essays, not bullet points.",
+    desc: "Identity, economics, and the things that do not fit a pitch deck.",
+  },
+  {
+    number: "07",
+    label: "Connect",
+    href: "/connect",
+    headline: "Start a conversation.",
+    desc: "AI systems in regulated industries. Private markets across Africa. Anything that does not fit a clean slide deck.",
   },
 ]
 
@@ -66,241 +86,60 @@ export default function Home() {
 
         <Ticker items={tickerItems} />
 
-        <section id="about" className="page-section">
-          <Reveal><SH n="01" t="About" /></Reveal>
-          <div className="grid-about pad-page">
+        <section className="page-section">
+          <div className="pad-page" style={{ paddingTop: "clamp(48px, 6vw, 80px)", paddingBottom: "clamp(48px, 6vw, 80px)" }}>
             <Reveal>
-              <div className="about-left">
-                <Image
-                  src="/images/IMG_3436.jpg"
-                  alt={`${CANONICAL_NAME} in Philadelphia`}
-                  width={400}
-                  height={500}
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  quality={80}
-                  className="about-photo"
-                />
-                <p className="about-identity">{IDENTITY_LINE}</p>
-                <div className="about-motto">
-                  <div className="about-motto-label">AD ASTRA PER ASPERA</div>
-                  <div className="about-motto-text">To the stars through difficulties.</div>
-                </div>
-              </div>
+              <p style={{ fontSize: 9, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 20, display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ width: 20, height: 1, background: "var(--terra)", display: "inline-block" }} />
+                AI Product · Regulated Infrastructure
+              </p>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h1 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "clamp(42px, 6vw, 80px)", fontWeight: 900, lineHeight: 0.94, letterSpacing: "-.03em", marginBottom: 28 }}>
+                {CANONICAL_NAME}.<br />
+                <em style={{ color: "var(--terra)" }}>Building things that actually work.</em>
+              </h1>
             </Reveal>
             <Reveal delay={0.1}>
-              <div className="about-right">
-                <p className="body-text">
-                  I go by Lapo. I grew up in Lagos, studied in Bradford, and found my way through New York and Philadelphia.
-                  Every move meant learning a new system and finding my voice in rooms that did not feel familiar at first.
-                  That is why I am drawn to products and people in transition.
-                </p>
-                <p className="body-text">
-                  Today I build AI systems for regulated industries — environments where trust matters and the cost of a wrong answer is real.
-                  My work sits at the intersection of product, AI, financial infrastructure, and practical judgment.
-                </p>
-                <p className="body-text">
-                  I recently finished my Wharton MBA while shipping Kinage, an AI market intelligence platform, in production.
-                  The path from chemical engineering to product to AI to private capital looks random from the outside.
-                  To me it has always been one question: where is the real problem, and what would actually help?
-                </p>
-                <div className="tag-row">
-                  {["AI Systems", "Private Markets", "Africa", "Fintech", "Regulated Industries"].map(tag => (
-                    <span key={tag} className="tag">{tag}</span>
-                  ))}
-                </div>
+              <p style={{ fontSize: "clamp(14px, 1.6vw, 17px)", color: "var(--mid)", maxWidth: 560, lineHeight: 1.8, marginBottom: 36 }}>
+                I build AI systems for regulated industries — banks, healthcare, and markets most products never reach.
+                The work sits at the intersection of product, trust, and practical judgment.
+              </p>
+            </Reveal>
+            <Reveal delay={0.15}>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                <Link href="/work" className="btn btn--filled">See the work →</Link>
+                <Link href="/connect" className="btn btn--outline">Get in touch</Link>
               </div>
             </Reveal>
           </div>
         </section>
 
-        <section id="work" className="page-section page-section--bordered">
-          <Reveal>
-            <div className="section-header-bar">
-              <div className="section-header-inline">
-                <span className="section-number">02</span>
-                <span className="section-label">Featured Projects</span>
-                <div className="section-divider" />
-              </div>
-              <Link href="/projects" className="section-link">View All →</Link>
-            </div>
-          </Reveal>
-          <div className="grid-2col pad-page">
-            {featuredProjects.map((project, i) => (
-              <Reveal key={project.slug} delay={i * 0.1}>
-                <Link href={`/projects/${project.slug}`} className="project-card">
-                  <div className="project-card-top">
-                    <span className="project-lang">{project.lang}</span>
-                    <span className="project-year">{project.year}</span>
-                  </div>
-                  <div className="project-name">{project.name}</div>
-                  <div className="project-role">{project.role}</div>
-                  <p className="project-tagline">{project.tagline}</p>
-                  <div className="project-stack">
-                    {project.stack.slice(0, 3).map(s => (
-                      <span key={s} className="stack-pill">{s}</span>
-                    ))}
-                  </div>
-                  <div className="project-cta">Read full breakdown →</div>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-          <Reveal>
-            <div className="cta-row">
-              <Link href="/projects" className="btn btn--outline">See all 9 projects →</Link>
-              <Link href={PROFILE_LINKS.github} target="_blank" rel="noopener noreferrer me" className="btn btn--filled">
-                Build Archive on GitHub ↗
-              </Link>
-              <Link href="/how-i-build" className="btn btn--accent">How I Build AI Products →</Link>
-            </div>
-          </Reveal>
-        </section>
-
-        <section id="perspective" className="page-section page-section--bordered">
-          <Reveal><SH n="03" t="Perspective" /></Reveal>
-          <Reveal>
-            <div className="perspective-wrap pad-page">
-              <div className="perspective-layout">
-                <figure className="perspective-hero">
-                  <Image
-                    src="/images/photo-landscape.jpg"
-                    alt="Tea hills outside Nairobi, Kenya"
-                    width={1200}
-                    height={900}
-                    sizes="(max-width: 900px) 92vw, 38vw"
-                    quality={85}
-                    className="perspective-landscape-img"
-                  />
-                  <figcaption className="perspective-caption">Nairobi highlands · Kenya</figcaption>
-                </figure>
-
-                <div className="perspective-copy">
-                  <p className="perspective-lede">
-                    Most of how I think about product started in Lagos, reading systems when the official story
-                    does not match what is happening on the ground. That lens still shows up in the AI work I ship
-                    for banks, healthcare, and markets most products never reach.
-                  </p>
-
-                  <div className="perspective-points">
-                    {perspectives.map((item) => (
-                      <article key={item.title} className="perspective-point">
-                        <h3 className="perspective-title">{item.title}</h3>
-                        <p className="perspective-body">{item.body}</p>
-                      </article>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        </section>
-
-        <section id="writing" className="page-section page-section--bordered">
-          <Reveal>
-            <div className="section-header-bar">
-              <div className="section-header-inline">
-                <span className="section-number">04</span>
-                <span className="section-label">Thoughts</span>
-                <div className="section-divider" />
-              </div>
-              <Link href="/writing" className="section-link">All Essays →</Link>
-            </div>
-          </Reveal>
-          <div className="grid-2col writing-grid">
-            {essays.slice(0, 2).map((essay, i) => (
-              <Reveal key={essay.slug} delay={i * 0.07}>
-                <Link href={essay.url} target="_blank" rel="noopener" className="essay-card">
-                  <div className="essay-category">{essay.category}</div>
-                  <h3 className="essay-title">{essay.title}</h3>
-                  <p className="essay-desc">{essay.description}</p>
-                  <div className="essay-read">Read →</div>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-        </section>
-
-        <div className="grid-photo">
-          <div className="photo-break-image">
-            <Image
-              src="/images/photo-nairobi.jpg"
-              alt="Lapo with friends in Nairobi"
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              quality={85}
-              className="photo-break-img photo-break-img--social"
-            />
-            <div className="photo-break-overlay" />
-          </div>
-          <div className="photo-break-copy">
-            <p className="photo-break-eyebrow">Nairobi · 2025</p>
-            <h2 className="photo-break-title">
-              Building things that<br />
-              <em>actually work.</em>
-            </h2>
-            <p className="photo-break-text">
-              Not just in demos. In production, under pressure, in regulated environments where it actually matters.
-            </p>
-            <div className="photo-break-actions">
-              <Link href={PROFILE_LINKS.medium} target="_blank" rel="noopener noreferrer me" className="btn btn--gold">
-                Essays on Medium
-              </Link>
-              <Link href={PROFILE_LINKS.email} className="btn btn--ghost">
-                Get In Touch
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        <section className="page-section page-section--bordered page-section--compact">
-          <Reveal>
-            <div className="experience-teaser">
-              <div>
-                <div className="section-label" style={{ marginBottom: 8 }}>Full timeline</div>
-                <div className="experience-title">Experience, education, skills & awards</div>
-                <p className="experience-sub">
-                  Kinage · KOVA · Amazon · TD Bank · Capital One · Wharton · Columbia · City Ventures.
-                </p>
-              </div>
-              <Link href="/experience" className="btn btn--outline">View experience →</Link>
-            </div>
-          </Reveal>
-        </section>
-
-        <section id="contact" className="page-section page-section--bordered contact-section">
-          <Reveal>
-            <div className="grid-contact">
-              <div>
-                <h2 className="contact-title">
-                  Start a conversation.
-                </h2>
-                <p className="contact-desc">
-                  AI systems in regulated industries. Private markets across Africa.
-                  Anything that does not fit a clean slide deck — those are my favourite conversations.
-                </p>
-              </div>
-              <div className="contact-links">
-                {[
-                  { label: "Email", value: CONTACT_EMAIL, href: PROFILE_LINKS.email },
-                  { label: "LinkedIn", value: "onaolapomichaelodunjo", href: PROFILE_LINKS.linkedin },
-                  { label: "GitHub", value: "Omodunjo11", href: PROFILE_LINKS.github },
-                  { label: "Medium", value: "@odunjoonaolapo", href: PROFILE_LINKS.medium },
-                ].map(({ label, value, href }) => (
-                  <Link
-                    key={label}
-                    href={href}
-                    target={href.startsWith("http") ? "_blank" : undefined}
-                    rel={href.startsWith("http") ? "noopener noreferrer me" : undefined}
-                    className="contact-link"
+        <section className="page-section page-section--bordered">
+          <div className="pad-page" style={{ paddingTop: "clamp(40px, 5vw, 64px)", paddingBottom: "clamp(40px, 5vw, 64px)" }}>
+            <Reveal>
+              <p style={{ fontSize: 9, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>Explore</p>
+            </Reveal>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 1, background: "var(--border)" }}>
+              {navPanels.map((panel, i) => (
+                <Reveal key={panel.href} delay={i * 0.05}>
+                  <Link href={panel.href} style={{ display: "block", background: "var(--paper)", padding: "32px 28px", transition: "background .2s", height: "100%" }}
+                    onMouseEnter={e => (e.currentTarget.style.background = "var(--bg2)")}
+                    onMouseLeave={e => (e.currentTarget.style.background = "var(--paper)")}
                   >
-                    <span className="contact-link-label">{label}</span>
-                    <span>{value}</span>
-                    <span>→</span>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}>
+                      <span style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".18em", color: "var(--terra)" }}>{panel.number}</span>
+                      <span style={{ fontSize: 9, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--muted)", fontFamily: "var(--font-syne), sans-serif", fontWeight: 700 }}>{panel.label} →</span>
+                    </div>
+                    <h2 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "clamp(15px, 1.4vw, 17px)", fontWeight: 700, lineHeight: 1.3, marginBottom: 10 }}>
+                      {panel.headline}
+                    </h2>
+                    <p style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.75 }}>{panel.desc}</p>
                   </Link>
-                ))}
-              </div>
+                </Reveal>
+              ))}
             </div>
-          </Reveal>
+          </div>
         </section>
       </div>
     </>
