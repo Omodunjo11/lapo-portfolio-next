@@ -32,24 +32,20 @@ const SH = ({ n, t }: { n: string; t: string }) => (
 
 const perspectives = [
   {
-    label: "On diagnosis",
     title: "Look past where the pain shows up",
-    body: "Lagos taught me to distrust the obvious explanation. When an AI system or investment keeps failing, the symptom is rarely the disease — I start by asking what the room is afraid to name.",
+    body: "Lagos rewards people who distrust the first explanation. When an AI pipeline or investment thesis keeps failing, I assume the symptom is pointing somewhere else — and ask what the room is reluctant to say out loud.",
   },
   {
-    label: "On informal finance",
-    title: "Chaos on a spreadsheet is often sophistication in practice",
-    body: "Ajo groups and market credit in West Africa look informal because banks cannot see them. They are often more adaptive than the products designed to replace them. Formalizing them badly does more harm than leaving them alone.",
+    title: "Informal finance is smarter than it looks",
+    body: "Ajo groups and market credit in West Africa look messy on a spreadsheet. They are often more adaptive than the products meant to replace them. The work is not to formalize them fast — it is to formalize them without breaking what already works.",
   },
   {
-    label: "On regulated AI",
-    title: "Trust is the real bottleneck, not the model",
-    body: "In banks and healthcare, deployment fails when institutions cannot act on a system's output. Governance, workflow ownership, and political cover matter as much as eval scores. I design for adoption under scrutiny, not demos.",
+    title: "Trust beats the model",
+    body: "In regulated institutions, the bottleneck is rarely capability. It is whether a compliance officer, fraud investigator, or analyst will act on what the system says. I design for adoption under scrutiny — not another demo.",
   },
   {
-    label: "On building across borders",
-    title: "Hold global practice and local reality at once",
-    body: "Building from the continent inside Western institutions means refusing to pick one lens. The products that last translate global rigor into contexts where the cost of being wrong is personal, not abstract.",
+    title: "Two lenses, one product",
+    body: "Building from the continent inside Western institutions means holding global rigor and local reality at the same time. The products that last do not ask people to choose between them.",
   },
 ]
 
@@ -163,28 +159,29 @@ export default function Home() {
         <section id="perspective" className="page-section page-section--bordered">
           <Reveal><SH n="03" t="Perspective" /></Reveal>
           <Reveal>
-            <div className="perspective-layout pad-page">
-              <figure className="perspective-media">
+            <div className="perspective-wrap pad-page">
+              <figure className="perspective-hero">
                 <Image
                   src="/images/photo-landscape.jpg"
                   alt="Tea hills outside Nairobi, Kenya"
-                  width={1200}
-                  height={900}
-                  sizes="(max-width: 900px) 100vw, 44vw"
+                  width={1400}
+                  height={1050}
+                  sizes="100vw"
                   quality={88}
                   className="perspective-landscape-img"
-                  priority={false}
                 />
-                <figcaption className="perspective-caption">Nairobi Highlands · Kenya</figcaption>
+                <figcaption className="perspective-caption">Nairobi highlands · Kenya</figcaption>
               </figure>
 
-              <div className="perspective-stack">
-                <p className="perspective-intro">
-                  Four lenses I bring to product work — shaped by Lagos, Wharton, Kinage, KOVA, and years inside regulated institutions.
-                </p>
+              <p className="perspective-lede">
+                Most of how I think about product started in Lagos — reading systems when the official story
+                does not match what is happening on the ground. That lens still shows up in the AI work I ship
+                for banks, healthcare, and markets most products never reach.
+              </p>
+
+              <div className="perspective-points">
                 {perspectives.map((item) => (
-                  <article key={item.label} className="perspective-item">
-                    <p className="perspective-label">{item.label}</p>
+                  <article key={item.title} className="perspective-point">
                     <h3 className="perspective-title">{item.title}</h3>
                     <p className="perspective-body">{item.body}</p>
                   </article>
