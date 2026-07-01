@@ -92,10 +92,4 @@ export const HOME_ALONG_THE_WAY = [
     period: "2024 – 2026",
     note: "Programming for Wharton's largest student-run tech community",
   },
-  {
-    org: "Ford Foundation & Mastercard",
-    role: "Fellowship",
-    period: "2025 – present",
-    note: "Building a fellowship backed by Ford Foundation and Mastercard",
-  },
 ] as const

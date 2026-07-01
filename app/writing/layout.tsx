@@ -4,7 +4,8 @@ import { essays } from "@/lib/writing"
 import { writingItemListSchema } from "@/lib/structured-data"
 import JsonLd from "@/components/JsonLd"
 
-const title = `Writing · ${CANONICAL_NAME}`
+const title = "Writing"
+const socialTitle = `${title} · ${CANONICAL_NAME}`
 const description = `Essays by ${LEGAL_NAME} on identity, economics, diaspora, and the shape of AI in emerging markets. Published on Medium.`
 
 export const metadata: Metadata = {
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
   description,
   alternates: { canonical: `${SITE_URL}/writing` },
   openGraph: {
-    title,
+    title: socialTitle,
     description,
     url: `${SITE_URL}/writing`,
     siteName: CANONICAL_NAME,
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title,
+    title: socialTitle,
     description,
   },
 }

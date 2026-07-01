@@ -1,7 +1,8 @@
 import type { Metadata } from "next"
 import { CANONICAL_NAME, LEGAL_NAME, SITE_URL } from "@/lib/site"
 
-const title = `How I Build AI Products · ${CANONICAL_NAME}`
+const title = "How I Build AI Products"
+const socialTitle = `${title} · ${CANONICAL_NAME}`
 const description = `${LEGAL_NAME}'s principles for building production AI, evaluation-first design, confidence routing, human-in-the-loop escalation, and trust infrastructure for regulated environments.`
 
 export const metadata: Metadata = {
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
   description,
   alternates: { canonical: `${SITE_URL}/how-i-build` },
   openGraph: {
-    title,
+    title: socialTitle,
     description,
     url: `${SITE_URL}/how-i-build`,
     siteName: CANONICAL_NAME,
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title,
+    title: socialTitle,
     description,
   },
 }

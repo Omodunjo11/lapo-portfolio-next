@@ -1,15 +1,16 @@
 import type { Metadata } from "next"
 import { CANONICAL_NAME, KINAGE_TAGLINE, LEGAL_NAME, SITE_URL } from "@/lib/site"
 
-const title = `Experience · ${CANONICAL_NAME}`
-const description = `${LEGAL_NAME}, Forward Deployed PM at Kinage (${KINAGE_TAGLINE}). Amazon, TD Bank, Capital One. Wharton MBA. 13+ years shipping AI and data products in regulated industries.`
+const title = "Experience"
+const socialTitle = `${title} · ${CANONICAL_NAME}`
+const description = `${LEGAL_NAME}, Forward Deployed PM at Kinage (${KINAGE_TAGLINE}). Amazon, TD Bank, Capital One. Wharton MBA. Production AI and regulated fintech product work.`
 
 export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: `${SITE_URL}/experience` },
   openGraph: {
-    title,
+    title: socialTitle,
     description,
     url: `${SITE_URL}/experience`,
     siteName: CANONICAL_NAME,
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title,
+    title: socialTitle,
     description,
   },
 }

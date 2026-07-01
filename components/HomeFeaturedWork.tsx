@@ -3,7 +3,7 @@ import Link from "next/link"
 import Reveal from "@/components/Reveal"
 import { featuredProjects } from "@/lib/projects"
 import { PROJECT_HERO_IMAGES } from "@/lib/project-images"
-import { PORTFOLIO_BUILD_COUNT } from "@/lib/metrics"
+import { PORTFOLIO_HOME_LINK_LABEL } from "@/lib/metrics"
 import { projectRoleLead } from "@/lib/project-display"
 
 const statusLabel = {
@@ -25,7 +25,7 @@ export default function HomeFeaturedWork() {
               <h2 className="home-section-title">The proof behind the headline.</h2>
             </div>
             <Link href="/projects" className="btn btn--outline btn--sm" style={{ flexShrink: 0 }}>
-              All {PORTFOLIO_BUILD_COUNT} builds →
+              All {PORTFOLIO_HOME_LINK_LABEL} →
             </Link>
           </div>
         </Reveal>

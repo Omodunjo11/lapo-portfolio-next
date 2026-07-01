@@ -8,6 +8,9 @@ export const PORTFOLIO_CASE_STUDY_COUNT = projects.length
 
 export const PORTFOLIO_BUILD_FOOTNOTE = `${PORTFOLIO_BUILD_COUNT} production builds · ${PORTFOLIO_CASE_STUDY_COUNT} documented case studies`
 
+/** Homepage / nav CTA — makes the 9 vs 11 distinction explicit. */
+export const PORTFOLIO_HOME_LINK_LABEL = `${PORTFOLIO_CASE_STUDY_COUNT} case studies · ${PORTFOLIO_BUILD_COUNT} builds`
+
 /** Homepage proof metrics, sourced from experience page, verified figures only. */
 export const PROOF_METRICS = [
   {

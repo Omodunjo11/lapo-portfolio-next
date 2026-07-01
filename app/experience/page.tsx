@@ -3,7 +3,7 @@ import { useState } from "react"
 import Link from "next/link"
 import Reveal from "@/components/Reveal"
 import PageHero from "@/components/PageHero"
-import { CONTACT_EMAIL, CONTACT_PHONE, KINAGE_TAGLINE, PROFILE_LINKS, ROLE_TITLE } from "@/lib/site"
+import { CONTACT_EMAIL, KINAGE_TAGLINE, PROFILE_LINKS, ROLE_TITLE } from "@/lib/site"
 
 const tabs = [
   { key: "experience", label: "Experience" },
@@ -262,7 +262,7 @@ export default function ExperiencePage() {
     <>
       <PageHero size="compact" eyebrow={`FDE Product Manager · ${ROLE_TITLE}`} title={<>Onaolapo <em>Odunjo</em></>}>
         <p className="page-hero-meta">Onaolapo Michael (Lapo) Odunjo, Lapo is short for Onaolapo</p>
-        <p className="page-hero-meta">New York, NY · {CONTACT_EMAIL} · {CONTACT_PHONE}</p>
+        <p className="page-hero-meta">New York, NY · {CONTACT_EMAIL}</p>
         <div className="page-hero-toolbar">
           <div />
           <Link href={PROFILE_LINKS.resume} target="_blank" rel="noopener" className="btn btn--terra">

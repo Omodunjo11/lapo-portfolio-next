@@ -190,52 +190,6 @@ export default function HowIBuild() {
         </div>
       ))}
 
-      {/* ── Selected thinking prompts ── */}
-      <div style={{ ...SECTION_STYLE, background: "var(--ink)" }}>
-        <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <div style={{ ...TAG_STYLE, color: "rgba(186,230,253,.7)", borderColor: "rgba(125,211,252,.25)" }}>
-            Selected Product Thinking
-          </div>
-          <h2 style={{ ...H2_STYLE, color: "var(--paper)", marginBottom: 40 }}>
-            Questions I keep coming back to.
-          </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 16 }}>
-            {[
-              "Why object design is the real starting point for AI product development.",
-              "Why confident wrongness is harder to fix than obvious model failures.",
-              "How production user behavior is more honest than any static benchmark.",
-              "Why most AI production incidents are time and state failures, not model failures.",
-              "The case for productive refusal as a first-class product feature.",
-              "Why V1, V2, and V3 require completely different product instincts.",
-            ].map((q, i) => (
-              <div key={i} style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(125,211,252,0.15)",
-                padding: "20px 22px",
-                borderRadius: 2,
-              }}>
-                <div style={{
-                  fontFamily: "var(--font-playfair),serif",
-                  fontStyle: "italic",
-                  fontSize: 14,
-                  lineHeight: 1.6,
-                  color: "rgba(248,250,252,0.85)",
-                }}>&ldquo;{q}&rdquo;</div>
-              </div>
-            ))}
-          </div>
-          <p style={{
-            fontFamily: "var(--font-dm-mono),monospace",
-            fontSize: 9,
-            letterSpacing: ".12em",
-            color: "rgba(186,230,253,.4)",
-            marginTop: 40,
-          }}>
-            More on each of these in Writing ↗, essays on identity, economics, and AI systems.
-          </p>
-        </div>
-      </div>
-
       {/* ── CTA ── */}
       <div style={{
         ...SECTION_STYLE,

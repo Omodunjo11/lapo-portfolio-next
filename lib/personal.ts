@@ -17,7 +17,7 @@ export const PERSONAL_BULLETS = [
   "Will start an argument about which African city is the next Lagos and won't back down",
   "Ran for Wharton Graduate Association President because someone had to, and then actually enjoyed the job",
   "Can debate whether Jollof is better from Lagos or Accra with more conviction than I bring to most business decisions",
-  "Building a Fellowship backed by the Ford Foundation and Mastercard by day, still the guy who reads manga past bedtime by night",
+  "Building a fellowship backed by the Ford Foundation and Mastercard by day, still the guy who reads manga past bedtime by night",
   "Once mapped an entire African credit system before I mapped out where I'd actually be living that year",
 ] as const
 
