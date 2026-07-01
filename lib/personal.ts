@@ -192,18 +192,18 @@ export const ABOUT_SCATTERED_BEATS: ScatteredPhotoBeat[] = [
   {
     id: "off-duty",
     label: "When the laptop closes",
-    note: "Tennis courts, ski falls, plants as coworkers.",
+    note: "Plants take over the kitchen once the laptop shuts. I suck at tennis and skiing, honestly, but I keep showing up to both.",
     photos: [
       {
-        src: "/images/personal/tennis-court-watch.jpg",
-        alt: "Lapo on a tennis court checking his watch between points, racket in hand",
-        caption: "Between sets · court time",
+        src: "/images/personal/kitchen-plants-laptop.png",
+        alt: "Lapo at a kitchen counter with laptop closed, surrounded by houseplants",
+        caption: "Laptop closed · plants on shift",
         variant: "life",
       },
       {
-        src: "/images/personal/tennis-court-back.jpg",
-        alt: "Lapo on a blue tennis court from behind, racket at his side, trees beyond the fence",
-        caption: "Court 12 · no scoreboard",
+        src: "/images/personal/tennis-court-watch.jpg",
+        alt: "Lapo on a tennis court checking his watch between points, racket in hand",
+        caption: "Between sets · still learning",
         variant: "life",
       },
       {
