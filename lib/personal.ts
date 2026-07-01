@@ -65,9 +65,9 @@ export const HOME_LIFE_STRIP: PersonalPhoto[] = [
     variant: "polaroid",
   },
   {
-    src: "/images/personal/columbia-bleach-game.jpg",
-    alt: "Lapo with friends at a Columbia basketball game wearing a Bleach anime shirt",
-    caption: "Bleach shirt, no apologies",
+    src: "/images/personal/tennis-court-watch.jpg",
+    alt: "Lapo on a tennis court checking his watch between points, racket in hand",
+    caption: "Between sets · court time",
     variant: "polaroid",
   },
   {
@@ -192,12 +192,18 @@ export const ABOUT_SCATTERED_BEATS: ScatteredPhotoBeat[] = [
   {
     id: "off-duty",
     label: "When the laptop closes",
-    note: "Bleach shirts, ski falls, plants as coworkers.",
+    note: "Tennis courts, ski falls, plants as coworkers.",
     photos: [
       {
-        src: "/images/personal/columbia-bleach-game.jpg",
-        alt: "Lapo with friends at a Columbia basketball game wearing a Bleach anime shirt",
-        caption: "Bleach shirt, no apologies",
+        src: "/images/personal/tennis-court-watch.jpg",
+        alt: "Lapo on a tennis court checking his watch between points, racket in hand",
+        caption: "Between sets · court time",
+        variant: "life",
+      },
+      {
+        src: "/images/personal/tennis-court-back.jpg",
+        alt: "Lapo on a blue tennis court from behind, racket at his side, trees beyond the fence",
+        caption: "Court 12 · no scoreboard",
         variant: "life",
       },
       {

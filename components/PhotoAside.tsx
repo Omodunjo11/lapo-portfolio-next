@@ -9,7 +9,7 @@ type Props = {
 }
 
 export default function PhotoAside({ beat, showIntro = false, delay = 0 }: Props) {
-  const photos = beat.photos.slice(0, 2)
+  const photos = beat.photos.slice(0, 3)
   if (photos.length === 0) return null
 
   return (
