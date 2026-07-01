@@ -3,9 +3,7 @@ import { useState } from "react"
 import Link from "next/link"
 import Reveal from "@/components/Reveal"
 import PageHero from "@/components/PageHero"
-import PersonalityAccent from "@/components/PersonalityAccent"
 import { CONTACT_EMAIL, CONTACT_PHONE, KINAGE_TAGLINE, PROFILE_LINKS, ROLE_TITLE } from "@/lib/site"
-import { EXPERIENCE_ACCENT_PHOTO } from "@/lib/personal"
 
 const tabs = [
   { key: "experience", label: "Experience" },
@@ -272,10 +270,6 @@ export default function ExperiencePage() {
           </Link>
         </div>
       </PageHero>
-
-      <div className="pad-page" style={{ paddingTop: 24, paddingBottom: 8 }}>
-        <PersonalityAccent photo={EXPERIENCE_ACCENT_PHOTO} align="right" size="sm" delay={0.05} />
-      </div>
 
       {/* Tabs */}
       <div className="exp-tabs" role="tablist" aria-label="Experience sections" style={{ borderBottom: "1px solid var(--border)", display: "flex", gap: 0, overflowX: "auto" }}>

@@ -3,9 +3,7 @@ import Link from "next/link"
 import Ticker from "@/components/Ticker"
 import Reveal from "@/components/Reveal"
 import PageHero from "@/components/PageHero"
-import PersonalityAccent from "@/components/PersonalityAccent"
 import { PROFILE_LINKS } from "@/lib/site"
-import { WRITING_ACCENT_PHOTO } from "@/lib/personal"
 import { essays, getMediumEssays, getOnSiteEssays } from "@/lib/writing"
 
 const tickerItems = [
@@ -93,10 +91,6 @@ export default function WritingPage() {
             The featured essay starts with two Wharton nameplates and ends with a Bleach shirt at a Columbia game. That is the point: the bottleneck was never the model. It is whether real people will stake their judgment on what your system says.
           </p>
         </div>
-      </div>
-
-      <div className="pad-page" style={{ paddingTop: 8, paddingBottom: 24 }}>
-        <PersonalityAccent photo={WRITING_ACCENT_PHOTO} align="right" size="sm" delay={0.04} />
       </div>
 
       <Ticker items={tickerItems} />

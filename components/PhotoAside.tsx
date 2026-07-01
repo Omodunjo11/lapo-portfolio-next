@@ -12,42 +12,40 @@ export default function PhotoAside({ beat, showIntro = false, delay = 0 }: Props
   const photos = beat.photos.slice(0, 2)
   if (photos.length === 0) return null
 
-  const align = beat.align ?? "right"
-
   return (
     <Reveal delay={delay}>
-      <aside
-        className={`photo-aside photo-aside--${align} photo-aside--count-${photos.length}`}
-        data-placement={beat.id}
-      >
-        {showIntro ? <p className="photo-aside__intro">{ABOUT_PHOTOS_INTRO}</p> : null}
-        {beat.label ? <p className="photo-aside__label">{beat.label}</p> : null}
-        {beat.note ? <p className="photo-aside__note">{beat.note}</p> : null}
-        <div className="photo-aside__photos">
-          {photos.map((photo) => (
-            <figure
-              key={photo.src}
-              className="photo-aside__figure"
-            >
-              <div
-                className={`photo-aside__frame${photo.variant === "polaroid" ? " photo-aside__frame--polaroid" : ""}`}
-              >
-                <div className="photo-aside__media">
-                  <Image
-                    src={photo.src}
-                    alt={photo.alt}
-                    fill
-                    sizes="(max-width: 768px) 44vw, 240px"
-                    className="photo-aside__img"
-                    quality={82}
-                  />
+      <aside className="photo-moment-band" data-placement={beat.id}>
+        <div className="pad-page photo-moment-band__inner">
+          {(showIntro || beat.label || beat.note) && (
+            <div className="photo-moment-band__copy">
+              {showIntro ? <p className="photo-moment-band__intro">{ABOUT_PHOTOS_INTRO}</p> : null}
+              {beat.label ? <h3 className="photo-moment-band__title">{beat.label}</h3> : null}
+              {beat.note ? <p className="photo-moment-band__note">{beat.note}</p> : null}
+            </div>
+          )}
+          <div className={`photo-moment-band__photos photo-moment-band__photos--${photos.length}`}>
+            {photos.map((photo) => (
+              <figure key={photo.src} className="photo-moment-band__figure">
+                <div
+                  className={`photo-moment-band__frame${photo.variant === "polaroid" ? " photo-moment-band__frame--polaroid" : ""}`}
+                >
+                  <div className="photo-moment-band__media">
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      sizes="(max-width: 768px) 44vw, 280px"
+                      className="photo-moment-band__img"
+                      quality={82}
+                    />
+                  </div>
                 </div>
-              </div>
-              {photo.caption ? (
-                <figcaption className="photo-aside__caption">{photo.caption}</figcaption>
-              ) : null}
-            </figure>
-          ))}
+                {photo.caption ? (
+                  <figcaption className="photo-moment-band__caption">{photo.caption}</figcaption>
+                ) : null}
+              </figure>
+            ))}
+          </div>
         </div>
       </aside>
     </Reveal>

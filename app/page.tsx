@@ -20,9 +20,11 @@ export default function Home() {
       <div className="page-body">
         <HomeFeaturedWork />
         <HomeCurrently />
-        <div className="pad-page home-scattered-strip">
-          <HomeLifeStrip photos={HOME_LIFE_STRIP} label="Life lately" delay={0.05} compact />
-        </div>
+        <section className="photo-moment-band photo-moment-band--home">
+          <div className="pad-page">
+            <HomeLifeStrip photos={HOME_LIFE_STRIP} label="Life lately" delay={0.05} compact />
+          </div>
+        </section>
         <HomePersonality />
         <HomeThinking />
         <HomeWriting />

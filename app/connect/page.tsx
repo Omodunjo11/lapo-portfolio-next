@@ -1,8 +1,8 @@
 "use client"
 import Link from "next/link"
+import Image from "next/image"
 import Reveal from "@/components/Reveal"
 import PageHero from "@/components/PageHero"
-import PersonalityAccent from "@/components/PersonalityAccent"
 import { CONTACT_EMAIL, CONTACT_PHONE, CONNECT_INTENT, PROFILE_LINKS } from "@/lib/site"
 import { CONNECT_ACCENT_PHOTO } from "@/lib/personal"
 
@@ -57,9 +57,6 @@ export default function ConnectPage() {
         <Reveal>
           <div className="pad-page" style={{ paddingTop: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)" }}>
             <p className="connect-intent">{CONNECT_INTENT}</p>
-            <div className="connect-accent-wrap">
-              <PersonalityAccent photo={CONNECT_ACCENT_PHOTO} align="left" size="sm" delay={0.06} />
-            </div>
             <div style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 32, marginTop: 32 }}>
               <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>◆</span>
               <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Currently Open To</span>
@@ -120,9 +117,21 @@ export default function ConnectPage() {
                   Download resume ↗
                 </Link>
               </div>
-              <div style={{ marginTop: 32, maxWidth: 320 }}>
-                <PersonalityAccent photo={CONNECT_ACCENT_PHOTO} align="left" size="md" />
-              </div>
+              <figure className="contact-photo">
+                <div className="contact-photo__frame">
+                  <Image
+                    src={CONNECT_ACCENT_PHOTO.src}
+                    alt={CONNECT_ACCENT_PHOTO.alt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 280px"
+                    className="contact-photo__img"
+                    quality={82}
+                  />
+                </div>
+                {CONNECT_ACCENT_PHOTO.caption ? (
+                  <figcaption className="contact-photo__caption">{CONNECT_ACCENT_PHOTO.caption}</figcaption>
+                ) : null}
+              </figure>
             </div>
             <div className="contact-links">
               {[

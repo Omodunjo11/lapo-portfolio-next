@@ -111,13 +111,12 @@ export const ABOUT_SCATTERED_BEATS: ScatteredPhotoBeat[] = [
     id: "journey",
     label: "Different rooms, different names",
     note: "Onaolapo on paper, Michael on the desk, Lapo in real life.",
-    align: "right",
     photos: [
       {
-        src: "/images/photo-wharton-study.png",
-        alt: "Wharton study session, Philadelphia",
-        caption: "Papers and production deploys",
-        variant: "candid",
+        src: "/images/personal/wharton-nameplates.jpg",
+        alt: "Lapo holding Wharton nameplates for Onaolapo and Michael Odunjo",
+        caption: "Wharton · two nameplates, one person",
+        variant: "life",
       },
       {
         src: "/images/personal/polaroid-laugh.jpg",
@@ -131,7 +130,6 @@ export const ABOUT_SCATTERED_BEATS: ScatteredPhotoBeat[] = [
     id: "people",
     label: "Usually not alone",
     note: "The work is solo sometimes. The life almost never is.",
-    align: "left",
     photos: [
       {
         src: "/images/personal/tux-lounge-laugh.jpg",
@@ -150,30 +148,18 @@ export const ABOUT_SCATTERED_BEATS: ScatteredPhotoBeat[] = [
   {
     id: "off-duty",
     label: "When the laptop closes",
-    align: "center",
+    note: "Bleach shirts, ski falls, plants as coworkers.",
     photos: [
+      {
+        src: "/images/personal/columbia-bleach-game.jpg",
+        alt: "Lapo with friends at a Columbia basketball game wearing a Bleach anime shirt",
+        caption: "Bleach shirt, no apologies",
+        variant: "life",
+      },
       {
         src: "/images/personal/ski-thumbs-up.jpg",
         alt: "Lapo sitting in snow on skis giving a thumbs up after a fall",
         caption: "Still counts as a run",
-        variant: "life",
-      },
-      {
-        src: "/images/personal/home-plants.jpg",
-        alt: "Lapo at home workspace surrounded by plants",
-        caption: "Plants as coworkers",
-        variant: "candid",
-      },
-    ],
-  },
-  {
-    id: "closing",
-    align: "right",
-    photos: [
-      {
-        src: "/images/personal/candid-polo.jpg",
-        alt: "Lapo in a cream polo, candid playful expression",
-        caption: "Somewhere with good light",
         variant: "life",
       },
     ],
@@ -183,7 +169,6 @@ export const ABOUT_SCATTERED_BEATS: ScatteredPhotoBeat[] = [
 export const ABOUT_JOURNEY_BEAT = ABOUT_SCATTERED_BEATS[0]
 export const ABOUT_PEOPLE_BEAT = ABOUT_SCATTERED_BEATS[1]
 export const ABOUT_OFFDUTY_BEAT = ABOUT_SCATTERED_BEATS[2]
-export const ABOUT_CLOSING_BEAT = ABOUT_SCATTERED_BEATS[3]
 
 /** @deprecated use ABOUT_SCATTERED_BEATS */
 export const ABOUT_LIFE_PHOTOS: PersonalPhoto[] = ABOUT_SCATTERED_BEATS.flatMap((b) => b.photos)

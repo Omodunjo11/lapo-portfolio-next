@@ -9,7 +9,6 @@ import {
   ABOUT_JOURNEY_BEAT,
   ABOUT_OFFDUTY_BEAT,
   ABOUT_PEOPLE_BEAT,
-  ABOUT_CLOSING_BEAT,
   PERSONAL_BLURB,
 } from "@/lib/personal"
 
@@ -251,9 +250,7 @@ export default function AboutPage() {
             </div>
           </div>
 
-        <div className="pad-page" style={{ paddingTop: 32, paddingBottom: 8 }}>
-          <PhotoAside beat={ABOUT_JOURNEY_BEAT} showIntro delay={0.08} />
-        </div>
+        <PhotoAside beat={ABOUT_JOURNEY_BEAT} showIntro delay={0.08} />
         </div>
       </section>
       <section className="page-section page-section--bordered">
@@ -296,11 +293,9 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div style={{ marginTop: 40 }}>
-              <PhotoAside beat={ABOUT_PEOPLE_BEAT} delay={0.1} />
-            </div>
           </div>
         </Reveal>
+        <PhotoAside beat={ABOUT_PEOPLE_BEAT} delay={0.1} />
       </section>
 
       {/* Reading, Bookshelf */}
@@ -429,14 +424,13 @@ export default function AboutPage() {
             </div>
           </Reveal>
 
-          <Reveal>
-            <div style={{ marginTop: 40 }}>
-              <PhotoAside beat={ABOUT_OFFDUTY_BEAT} delay={0.08} />
-            </div>
-          </Reveal>
+        </div>
 
+        <PhotoAside beat={ABOUT_OFFDUTY_BEAT} delay={0.08} />
+
+        <div className="pad-page" style={{ paddingBottom: "clamp(40px, 5vw, 64px)" }}>
           <Reveal>
-            <div style={{ marginTop: 32 }}>
+            <div style={{ marginTop: 8 }}>
               <Link href={PROFILE_LINKS.goodreads} target="_blank" rel="noopener noreferrer me" className="btn btn--outline">
                 Full reading list on Goodreads ↗
               </Link>
@@ -447,8 +441,7 @@ export default function AboutPage() {
 
       <section className="page-section page-section--bordered">
         <div className="pad-page about-closing" style={{ paddingTop: "clamp(32px, 4vw, 48px)", paddingBottom: "clamp(32px, 4vw, 48px)" }}>
-          <PhotoAside beat={ABOUT_CLOSING_BEAT} delay={0.06} />
-          <Reveal delay={0.1}>
+          <Reveal>
             <p className="about-closing__blurb">{PERSONAL_BLURB}</p>
           </Reveal>
         </div>
