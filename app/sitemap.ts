@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next"
 import { projects } from "@/lib/projects"
 import { SITE_URL } from "@/lib/site"
+import { getOnSiteEssays } from "@/lib/writing"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const projectUrls = projects.map((p) => ({
@@ -8,6 +9,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,
+  }))
+
+  const essayUrls = getOnSiteEssays().map((e) => ({
+    url: `${SITE_URL}/writing/${e.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.75,
   }))
 
   return [
@@ -18,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/experience`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/how-i-build`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/writing`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    ...essayUrls,
     ...projectUrls,
   ]
 }

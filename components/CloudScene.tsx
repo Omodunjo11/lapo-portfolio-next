@@ -34,6 +34,10 @@ export default function CloudScene() {
             <p className="hero-eyebrow">AI Product · Regulated Systems</p>
             <h1 className="hero-title">{CANONICAL_NAME}</h1>
             <p className="hero-subtitle">{ROLE_TITLE}</p>
+            <p className="hero-human">
+              I go by Lapo, from Lagos to Bradford to New York. I build AI that has to survive compliance
+              officers, fraud analysts, and hospital nurses, not just demo well.
+            </p>
             <p className="hero-intent">{INTENT_CTA}</p>
             <ul className="hero-proof-list" aria-label="Selected production outcomes">
               {HERO_PROOF.map(({ metric, detail }) => (
@@ -59,7 +63,7 @@ export default function CloudScene() {
             <div className="hero-portrait-frame">
               <Image
                 src={HEADSHOT}
-                alt={`${CANONICAL_NAME} — professional portrait`}
+                alt={`${CANONICAL_NAME}, professional portrait`}
                 width={480}
                 height={600}
                 sizes="(max-width: 900px) 72vw, 380px"

@@ -1,3 +1,5 @@
+import { SITE_URL } from "@/lib/site"
+
 export type Essay = {
   slug: string
   category: string
@@ -5,9 +7,24 @@ export type Essay = {
   description: string
   url: string
   year: string
+  onSite?: boolean
+  readingTime?: string
 }
 
+export const FEATURED_ESSAY_SLUG = "the-bottleneck-was-never-the-model"
+
 export const essays: Essay[] = [
+  {
+    slug: FEATURED_ESSAY_SLUG,
+    category: "Essay · AI & Adoption",
+    title: "The Bottleneck Was Never the Model",
+    description:
+      "Hospital nurses, bank analysts, and the gap between a good model and a system people will actually use. Personal, not a case study.",
+    url: `${SITE_URL}/writing/${FEATURED_ESSAY_SLUG}`,
+    year: "2026",
+    onSite: true,
+    readingTime: "8 min",
+  },
   {
     slug: "life-of-many-lives",
     category: "Essay · Identity",
@@ -41,3 +58,15 @@ export const essays: Essay[] = [
     year: "2024",
   },
 ]
+
+export function getEssay(slug: string): Essay | undefined {
+  return essays.find((e) => e.slug === slug)
+}
+
+export function getOnSiteEssays(): Essay[] {
+  return essays.filter((e) => e.onSite)
+}
+
+export function getMediumEssays(): Essay[] {
+  return essays.filter((e) => !e.onSite)
+}

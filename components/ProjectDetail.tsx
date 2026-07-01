@@ -68,7 +68,7 @@ export default function ProjectDetail({ project, prev, next }: Props) {
               >
                 <Image
                   src={heroImage}
-                  alt={`${project.name} — product preview`}
+                  alt={`${project.name}, product preview`}
                   fill
                   sizes="(max-width: 768px) 100vw, 720px"
                   style={{ objectFit: "cover" }}

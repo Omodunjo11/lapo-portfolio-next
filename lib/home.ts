@@ -26,7 +26,7 @@ export const HOME_CURRENTLY = [
     org: "KOVA",
     role: "Co-Founder · Credit Infrastructure",
     description:
-      "WhatsApp-native credit for Nigeria's informal economy. TradeScore, progressive lending, and collector vouching — 5K testers in the first two months.",
+      "WhatsApp-native credit for Nigeria's informal economy. TradeScore, progressive lending, and collector vouching. 5K testers in the first two months.",
     href: "/projects/kova-bot",
     hrefLabel: "Case study →",
   },
@@ -36,7 +36,7 @@ export const HOME_PRINCIPLES = [
   {
     n: "06",
     tag: "Confidence Routing",
-    title: "Confidence controls what happens next — not just what gets shown.",
+    title: "Confidence controls what happens next, not just what gets shown.",
     href: "/projects/llm-reliability",
   },
   {
@@ -63,6 +63,6 @@ export const HOME_CREDIBILITY = [
 ] as const
 
 export const HOME_QUOTE = {
-  text: "The bottleneck is trust, not accuracy. Designing for adoption under scrutiny is harder than improving benchmark numbers — and it is the one that actually matters.",
+  text: "The bottleneck is trust, not accuracy. Designing for adoption under scrutiny is harder than improving benchmark numbers, and it is the one that actually matters.",
   source: "How I think about regulated AI",
 } as const

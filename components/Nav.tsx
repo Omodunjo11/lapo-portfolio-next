@@ -69,7 +69,7 @@ export default function Nav() {
           </li>
         </ul>
 
-        {/* Hamburger — visible only on mobile via CSS */}
+        {/* Hamburger, visible only on mobile via CSS */}
         <button
           className="nav-hamburger"
           aria-label="Toggle menu"

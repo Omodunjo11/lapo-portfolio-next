@@ -3,7 +3,7 @@ import { PORTFOLIO_BUILD_FOOTNOTE } from "@/lib/metrics"
 import { CANONICAL_NAME, LEGAL_NAME, SITE_URL } from "@/lib/site"
 
 const title = `Projects · ${CANONICAL_NAME}`
-const description = `${LEGAL_NAME} — ${PORTFOLIO_BUILD_FOOTNOTE}. Fintech credit infrastructure, enterprise compliance AI, GTM automation, and LLM reliability systems. TypeScript, Python, Claude API.`
+const description = `${LEGAL_NAME}, ${PORTFOLIO_BUILD_FOOTNOTE}. Fintech credit infrastructure, enterprise compliance AI, GTM automation, and LLM reliability systems. TypeScript, Python, Claude API.`
 
 export const metadata: Metadata = {
   title,

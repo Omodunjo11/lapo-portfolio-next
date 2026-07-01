@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { CANONICAL_NAME, LEGAL_NAME, SITE_URL } from "@/lib/site"
 
 const title = `How I Build AI Products · ${CANONICAL_NAME}`
-const description = `${LEGAL_NAME}'s principles for building production AI — evaluation-first design, confidence routing, human-in-the-loop escalation, and trust infrastructure for regulated environments.`
+const description = `${LEGAL_NAME}'s principles for building production AI, evaluation-first design, confidence routing, human-in-the-loop escalation, and trust infrastructure for regulated environments.`
 
 export const metadata: Metadata = {
   title,

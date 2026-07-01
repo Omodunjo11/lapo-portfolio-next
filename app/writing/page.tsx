@@ -3,35 +3,79 @@ import Link from "next/link"
 import Ticker from "@/components/Ticker"
 import Reveal from "@/components/Reveal"
 import PageHero from "@/components/PageHero"
-import { essays } from "@/lib/writing"
+import { PROFILE_LINKS } from "@/lib/site"
+import { essays, getMediumEssays, getOnSiteEssays } from "@/lib/writing"
 
 const tickerItems = [
-  { text: "Identity", highlight: true }, { text: "Medium" },
-  { text: "Economics", highlight: true }, { text: "Diaspora" },
-  { text: "Burnout", highlight: true }, { text: "Africa" },
-  { text: "Systems Thinking", highlight: true }, { text: "Essays" },
-  { text: "Lagos", highlight: true }, { text: "Capital" },
+  { text: "Identity", highlight: true }, { text: "Adoption", highlight: true },
+  { text: "Economics" }, { text: "Diaspora", highlight: true },
+  { text: "Burnout" }, { text: "Africa", highlight: true },
+  { text: "Systems Thinking" }, { text: "Essays", highlight: true },
+  { text: "Lagos" }, { text: "Trust", highlight: true },
 ]
 
+function EssayCard({
+  essay,
+  onSite = false,
+}: {
+  essay: (typeof essays)[number]
+  onSite?: boolean
+}) {
+  return (
+    <Link href={essay.url} {...(onSite ? {} : { target: "_blank", rel: "noopener" })}>
+      <div
+        className={`writing-card${onSite ? " writing-card--featured" : ""}`}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.background = onSite ? "rgba(186,230,253,.22)" : "rgba(186,230,253,.28)"
+          e.currentTarget.style.borderTopColor = "var(--terra)"
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = onSite ? "rgba(186,230,253,.1)" : "var(--paper)"
+          e.currentTarget.style.borderTopColor = onSite ? "var(--terra)" : "transparent"
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+          <span style={{ fontSize: 8, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--terra)" }}>
+            {essay.category}
+          </span>
+          <span style={{ fontSize: 9, color: "var(--muted)" }}>
+            {essay.year}
+            {essay.readingTime ? ` · ${essay.readingTime}` : ""}
+          </span>
+        </div>
+        <h2 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "clamp(18px,2vw,22px)", fontWeight: 700, lineHeight: 1.25, marginBottom: 16, flex: 1 }}>
+          {essay.title}
+        </h2>
+        <p style={{ fontSize: 13, color: "var(--mid)", lineHeight: 1.8, marginBottom: 24 }}>{essay.description}</p>
+        <div style={{ fontSize: 10, color: "var(--terra)", letterSpacing: ".1em" }}>
+          {onSite ? "Read on lapoodunjo.com →" : "Read on Medium →"}
+        </div>
+      </div>
+    </Link>
+  )
+}
+
 export default function WritingPage() {
+  const onSite = getOnSiteEssays()
+  const medium = getMediumEssays()
+
   return (
     <>
       <PageHero
-        eyebrow="Essays · Medium · Thinking Out Loud"
+        eyebrow="Essays · Thinking Out Loud"
         title={
           <>
             I think in essays,<br />
             <em>not bullet points.</em>
           </>
         }
-        description="Writing is where I process what I cannot yet systematise. Identity, economics, belonging, burnout, the things that don&apos;t fit neatly into a pitch deck or a product spec."
+        description="Writing is where I process what I cannot yet systematise. Identity, economics, belonging, adoption, the things that don't fit neatly into a pitch deck or a product spec."
       >
         <p style={{ fontSize: 11, color: "var(--terra)", marginTop: 14, letterSpacing: ".06em", animation: "fadeUp .7s .85s ease both" }}>
-          New essays on Medium — follow for updates as they publish.
+          Featured essay on this site · more on Medium
         </p>
       </PageHero>
 
-      {/* Why I write */}
       <div className="grid-1-2 pad-section" style={{ borderBottom: "1px solid var(--border)" }}>
         <div>
           <div style={{ fontSize: 9, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 12 }}>Why I write</div>
@@ -41,43 +85,47 @@ export default function WritingPage() {
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <p style={{ fontSize: 13, lineHeight: 1.9, color: "var(--mid)" }}>
-            Most of my work is about making complex systems legible — to users, to regulators, to teams who have to trust something they cannot fully see. Writing is where I do that for myself first. I write when I have a conviction I have not yet stress-tested, when I notice something that does not fit the standard explanation, or when the same question keeps surfacing across completely different contexts.
+            Most of my work is about making complex systems legible, to users, to regulators, to teams who have to trust something they cannot fully see. Writing is where I do that for myself first.
           </p>
           <p style={{ fontSize: 13, lineHeight: 1.9, color: "var(--mid)" }}>
-            The essays below are mostly about the intersection of systems and people — financial systems, cultural systems, institutional systems, and what happens when someone who grew up outside them has to learn to operate inside them without losing the thread back. Some of it is personal. Some of it is economic. All of it is honest.
+            Some of it is personal. Some of it is economic. One piece is about why hospital nurses and bank analysts override good models, and what that taught me about building AI that survives production.
           </p>
         </div>
       </div>
 
       <Ticker items={tickerItems} />
 
-      {/* Essays grid */}
       <section style={{ padding: "64px 48px 80px" }}>
+        {onSite.length > 0 ? (
+          <div style={{ marginBottom: 48 }}>
+            <Reveal>
+              <p style={{ fontSize: 9, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 16 }}>
+                On this site
+              </p>
+            </Reveal>
+            <div className="grid-2col" style={{ gridTemplateColumns: "1fr" }}>
+              {onSite.map((essay, i) => (
+                <Reveal key={essay.slug} delay={i * 0.08}>
+                  <EssayCard essay={essay} onSite />
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        <Reveal>
+          <p style={{ fontSize: 9, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 16 }}>
+            On Medium
+          </p>
+        </Reveal>
         <div className="grid-2col">
-          {essays.map((essay, i) => (
+          {medium.map((essay, i) => (
             <Reveal key={essay.slug} delay={i * 0.08}>
-              <Link href={essay.url} target="_blank" rel="noopener">
-                <div
-                  style={{ background: "var(--paper)", padding: "40px 36px", height: "100%", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", transition: "background .25s", borderTop: "2px solid transparent" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(186,230,253,.28)"; e.currentTarget.style.borderTopColor = "var(--terra)" }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "var(--paper)"; e.currentTarget.style.borderTopColor = "transparent" }}
-                >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-                    <span style={{ fontSize: 8, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--terra)" }}>{essay.category}</span>
-                    <span style={{ fontSize: 9, color: "var(--muted)" }}>{essay.year}</span>
-                  </div>
-                  <h2 style={{ fontFamily: "var(--font-playfair), serif", fontSize: "clamp(18px,2vw,22px)", fontWeight: 700, lineHeight: 1.25, marginBottom: 16, flex: 1 }}>
-                    {essay.title}
-                  </h2>
-                  <p style={{ fontSize: 13, color: "var(--mid)", lineHeight: 1.8, marginBottom: 24 }}>{essay.description}</p>
-                  <div style={{ fontSize: 10, color: "var(--terra)", letterSpacing: ".1em" }}>Read on Medium →</div>
-                </div>
-              </Link>
+              <EssayCard essay={essay} />
             </Reveal>
           ))}
         </div>
 
-        {/* Medium CTA */}
         <Reveal>
           <div
             className="github-band"
@@ -86,22 +134,15 @@ export default function WritingPage() {
             <div>
               <div style={{ fontSize: 8, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 8 }}>Medium</div>
               <div style={{ fontFamily: "var(--font-playfair),serif", fontSize: 20, fontWeight: 700, marginBottom: 6 }}>More where that came from.</div>
-              <p style={{ fontSize: 11, color: "var(--muted)", maxWidth: 380 }}>All essays published on Medium, the full archive of things I couldn&apos;t stop thinking about.</p>
+              <p style={{ fontSize: 11, color: "var(--muted)", maxWidth: 380 }}>Essays on identity, economics, and diaspora, the full archive of things I couldn&apos;t stop thinking about.</p>
             </div>
-            <Link
-              href="https://medium.com/@odunjoonaolapo"
-              target="_blank"
-              rel="noopener"
-              className="btn btn--filled"
-              style={{ flexShrink: 0 }}
-            >
+            <Link href={PROFILE_LINKS.medium} target="_blank" rel="noopener" className="btn btn--filled" style={{ flexShrink: 0 }}>
               All Essays ↗
             </Link>
           </div>
         </Reveal>
       </section>
 
-      {/* Publication */}
       <section style={{ borderTop: "1px solid var(--border)", padding: "64px 48px 80px" }}>
         <Reveal>
           <div style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 40 }}>
@@ -112,9 +153,10 @@ export default function WritingPage() {
         </Reveal>
         <Reveal delay={0.1}>
           <div
-            className="grid-pub" style={{ border: "1px solid var(--border)", padding: "40px 44px", transition: "background .2s", borderRadius: 2 }}
-            onMouseEnter={e => (e.currentTarget.style.background = "rgba(186,230,253,.28)")}
-            onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+            className="grid-pub"
+            style={{ border: "1px solid var(--border)", padding: "40px 44px", transition: "background .2s", borderRadius: 2 }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(186,230,253,.28)")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
           >
             <div>
               <div style={{ fontSize: 8, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--terra)", marginBottom: 10 }}>
@@ -131,8 +173,8 @@ export default function WritingPage() {
               href="https://pubs.acs.org/doi/abs/10.1021/acsaem.4c00839"
               target="_blank" rel="noopener"
               style={{ fontSize: 9, letterSpacing: ".12em", textTransform: "uppercase", border: "1px solid var(--border)", padding: "12px 22px", borderRadius: 2, whiteSpace: "nowrap", transition: "all .25s" }}
-              onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.color = "var(--paper)"; e.currentTarget.style.borderColor = "var(--ink)" }}
-              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "inherit"; e.currentTarget.style.borderColor = "var(--border)" }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.color = "var(--paper)"; e.currentTarget.style.borderColor = "var(--ink)" }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "inherit"; e.currentTarget.style.borderColor = "var(--border)" }}
             >
               Read Paper →
             </Link>

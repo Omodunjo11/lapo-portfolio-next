@@ -253,7 +253,7 @@ export const projects: Project[] = [
     pmAngle:
       "I designed around the compliance officer's actual triage loop, not a developer console. The drawer-based deep-dive keeps officers in context. Exam simulation and peer enforcement intel answer the question every officer asks after a violation surfaces: how bad could this get?",
     outcome:
-      "Full-product RegTech prototype with 6+ views, obligation traceability graph, and live deployment on Vercel. Workflow patterns informed by Kinage bank compliance work (22%→50% precision, ~$600K annual savings at a top-10 U.S. bank) — this repo is a standalone prototype, not the production Kinage system.",
+      "Full-product RegTech prototype with 6+ views, obligation traceability graph, and live deployment on Vercel. Workflow patterns informed by Kinage bank compliance work (22%→50% precision, ~$600K annual savings at a top-10 U.S. bank), this repo is a standalone prototype, not the production Kinage system.",
     features: [
       "Live risk banner with exposure estimate and SLA breach status",
       "Compliance events feed with regulation citation and customer impact",

@@ -4,6 +4,7 @@ import Link from "next/link"
 import Reveal from "@/components/Reveal"
 import PageHero from "@/components/PageHero"
 import { CANONICAL_NAME, IDENTITY_LINE, KINAGE_TAGLINE, PROFILE_LINKS } from "@/lib/site"
+import { PERSONAL_PHOTOS } from "@/lib/personal"
 
 const stops = [
   {
@@ -117,7 +118,7 @@ export default function AboutPage() {
             <div className="about-left">
               <Image
                 src="/images/IMG_3436.jpg"
-                alt={`${CANONICAL_NAME} — Onaolapo Michael (Lapo) Odunjo`}
+                alt={`${CANONICAL_NAME}, Onaolapo Michael (Lapo) Odunjo`}
                 width={400}
                 height={500}
                 sizes="(max-width: 768px) 100vw, 33vw"
@@ -143,7 +144,7 @@ export default function AboutPage() {
                 and practical judgment about when to automate and when not to.
               </p>
               <p className="body-text">
-                I graduated from Wharton with my MBA in May 2026, while shipping Kinage — {KINAGE_TAGLINE} — in production.
+                I graduated from Wharton with my MBA in May 2026, while shipping Kinage ({KINAGE_TAGLINE}) in production.
                 The path from chemical engineering to product to AI to private capital looks random from the outside.
                 It is not. Each step chased a harder version of the same problem: systems that fail quietly in production.
               </p>
@@ -289,7 +290,7 @@ export default function AboutPage() {
         </Reveal>
       </section>
 
-      {/* Reading — Bookshelf */}
+      {/* Reading, Bookshelf */}
       <section className="page-section page-section--bordered">
         <div className="pad-page" style={{ paddingTop: "clamp(40px, 5vw, 64px)", paddingBottom: "clamp(40px, 5vw, 64px)" }}>
           <Reveal>
@@ -322,7 +323,7 @@ export default function AboutPage() {
                   return (
                     <div
                       key={book.title}
-                      title={`${book.title} — ${book.author}`}
+                      title={`${book.title}, ${book.author}`}
                       style={{
                         position: "relative",
                         height: heights[i],
@@ -430,6 +431,7 @@ export default function AboutPage() {
         <Reveal>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px,1fr))", gap: 1, background: "var(--border)" }}>
             {[
+              ...PERSONAL_PHOTOS.map((p) => ({ src: p.src, alt: p.alt })),
               { src: "/images/photo-wharton-study.png", alt: "Wharton study session, Philadelphia" },
               { src: "/images/photo-tuxedos.jpg", alt: "Formal event, New York" },
               { src: "/images/photo-blacktie.jpg", alt: "Black tie, New York" },

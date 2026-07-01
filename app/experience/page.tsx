@@ -24,9 +24,9 @@ const jobs = [
     bullets: [
       "Raised internal movement completion 34% → 72% at multi-site hospital systems: embedded with clinical and ops teams to map intake-to-discharge handoff failures, co-designed agent-assisted workflows with engineers, then owned adoption post-launch by running weekly override reviews, iterating prompts and routing, and tightening escalation paths until usage held.",
       "Improved precision 22% → 50% and cut false positives 60% → 15% for a top 10 U.S. bank compliance team (~$600K annual savings): embedded 2+ days/week with fraud and risk analysts, translated live SOPs and policy boundaries into model requirements and eval cases, shipped compound agents with confidence gating and mandatory human review.",
-      "Set the AI quality bar governing what went to production — built evaluation infrastructure with 300+ labeled examples across fraud, compliance, and financial exploitation risk categories; established confusion-matrix benchmarks, precision/recall thresholds, and online eval from analyst overrides as hard promotion gates.",
+      "Set the AI quality bar governing what went to production, built evaluation infrastructure with 300+ labeled examples across fraud, compliance, and financial exploitation risk categories; established confusion-matrix benchmarks, precision/recall thresholds, and online eval from analyst overrides as hard promotion gates.",
       "Architected nine-node agentic workflow (ingestion, extraction, enrichment, classification, anomaly detection, state management, confidence scoring, policy gating, human review) with Claude/OpenAI APIs and n8n; partnered with forward-deployed engineers on Python/FastAPI and Next.js delivery.",
-      "Designed HITL control layer exposing confidence scores, source evidence, escalation paths, and override capture to investigators — made AI outputs explainable, auditable, and subordinate to compliance judgment, not black-box automation.",
+      "Designed HITL control layer exposing confidence scores, source evidence, escalation paths, and override capture to investigators, made AI outputs explainable, auditable, and subordinate to compliance judgment, not black-box automation.",
       "Designed four-tier GTM intelligence system (Signal Capture → Enrichment → Intelligence → Execution); centralized ICP scoring in Claude-powered governance layer connected to Clay, HeyReach, and HubSpot; reduced GTM stack cost ~$215K annually.",
     ],
     stack: ["Claude API", "OpenAI API", "Python/FastAPI", "Next.js", "TypeScript", "Clay", "HeyReach", "HubSpot", "n8n", "Make", "GitHub Actions"],
@@ -57,7 +57,7 @@ const jobs = [
     bullets: [
       "Owned product strategy for $148M ARR Prime subscription initiative serving 1.17M+ monthly active users within broader $8.4B business, translating churn analysis into activation, personalization, and lifecycle engagement roadmap.",
       "Shipped ML-driven targeting framework for subscription personalization and retention, partnering with data science to define behavioral segments, measurement approach, and incremental lift analysis.",
-      "Aligned 8 cross-functional stakeholder teams — Data Science, Engineering, Marketing, Finance, and Legal — on targeting framework scope, success metrics, and launch criteria; presented roadmap to VP-level leadership.",
+      "Aligned 8 cross-functional stakeholder teams (Data Science, Engineering, Marketing, Finance, and Legal) on targeting framework scope, success metrics, and launch criteria; presented roadmap to VP-level leadership.",
     ],
     stack: ["AWS", "ML Targeting", "Behavioral Segmentation", "A/B Testing", "Cohort Analysis"],
   },
@@ -261,7 +261,7 @@ export default function ExperiencePage() {
   return (
     <>
       <PageHero size="compact" eyebrow={`FDE Product Manager · ${ROLE_TITLE}`} title={<>Onaolapo <em>Odunjo</em></>}>
-        <p className="page-hero-meta">Onaolapo Michael (Lapo) Odunjo — Lapo is short for Onaolapo</p>
+        <p className="page-hero-meta">Onaolapo Michael (Lapo) Odunjo, Lapo is short for Onaolapo</p>
         <p className="page-hero-meta">New York, NY · {CONTACT_EMAIL} · {CONTACT_PHONE}</p>
         <div className="page-hero-toolbar">
           <div />

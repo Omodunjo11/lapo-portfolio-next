@@ -3,12 +3,12 @@ import Link from "next/link"
 import Image from "next/image"
 import Reveal from "@/components/Reveal"
 import PageHero from "@/components/PageHero"
-import { CONTACT_EMAIL, CONTACT_PHONE, PROFILE_LINKS } from "@/lib/site"
+import { CONTACT_EMAIL, CONTACT_PHONE, CONNECT_INTENT, PROFILE_LINKS } from "@/lib/site"
 
 const openTo = [
   {
     role: "AI Strategist",
-    desc: "Helping organizations define where AI actually creates leverage — not where it sounds impressive.",
+    desc: "Helping organizations define where AI actually creates leverage, not where it sounds impressive.",
   },
   {
     role: "Deployment Strategist",
@@ -55,7 +55,8 @@ export default function ConnectPage() {
       <section className="page-section page-section--bordered">
         <Reveal>
           <div className="pad-page" style={{ paddingTop: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 32 }}>
+            <p className="connect-intent">{CONNECT_INTENT}</p>
+            <div style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 32, marginTop: 40 }}>
               <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>◆</span>
               <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Currently Open To</span>
               <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
@@ -104,7 +105,7 @@ export default function ConnectPage() {
               <h2 className="contact-title">Ways to reach me</h2>
               <p className="contact-desc">
                 Best for role conversations, design partnerships, or anything at the intersection of
-                AI product and regulated infrastructure. I read everything — response time varies with
+                AI product and regulated infrastructure. I read everything, response time varies with
                 travel and shipping cycles.
               </p>
               <div style={{ marginTop: 28, display: "flex", gap: 10, flexWrap: "wrap" }}>

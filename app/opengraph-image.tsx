@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og"
 import { CANONICAL_NAME, LEGAL_NAME, ROLE_TITLE } from "@/lib/site"
 
-export const alt = `${CANONICAL_NAME} — Onaolapo Michael Odunjo · AI Product`
+export const alt = `${CANONICAL_NAME}, Onaolapo Michael Odunjo · AI Product`
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 

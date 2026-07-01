@@ -49,7 +49,7 @@ const principles = [
     n: "02",
     tag: "Workflow First",
     title: "Stop thinking in features. Start thinking in workflows.",
-    body: "When someone says we need an AI tool, the wrong instinct is to jump to model selection. The right instinct is to ask: what enters the system? What needs to be cleaned? What context is missing? What decision needs to be made? Who trusts the output? What happens when the system is unsure? What feedback improves the next version?\n\nThat workflow lens applies everywhere — fraud detection, sales enablement, legal review, compliance, credit infrastructure. The reusable architecture is almost always the same: Ingest, Retrieve, Analyze, Recommend, Escalate or Execute, Learn. Once you can see that pattern, you can design around it. Once you can design around it, you can build something that works outside a controlled demo environment.",
+    body: "When someone says we need an AI tool, the wrong instinct is to jump to model selection. The right instinct is to ask: what enters the system? What needs to be cleaned? What context is missing? What decision needs to be made? Who trusts the output? What happens when the system is unsure? What feedback improves the next version?\n\nThat workflow lens applies everywhere, fraud detection, sales enablement, legal review, compliance, credit infrastructure. The reusable architecture is almost always the same: Ingest, Retrieve, Analyze, Recommend, Escalate or Execute, Learn. Once you can see that pattern, you can design around it. Once you can design around it, you can build something that works outside a controlled demo environment.",
   },
   {
     n: "03",
@@ -91,7 +91,7 @@ const principles = [
     n: "09",
     tag: "Evaluation",
     title: "Accuracy is not enough. The metric depends on the cost of being wrong.",
-    body: "Real AI evaluation is business-specific. A legal contract system cares deeply about false negatives — a missed clause creates liability. A fraud system cares about precision — too many false alarms destroy analyst trust and investigation throughput. A churn system cares about retained revenue and whether users actually changed behavior. The severity of the error determines the evaluation criteria, not the other way around.\n\nBeyond accuracy: retrieval relevance, confidence calibration, override rate, edit rate, acceptance rate, time saved, escalation rate, downstream business outcome. And online evaluation often beats static benchmarks. When users accept, edit, or override AI output, they are generating the most honest signal about system quality. At Kinage, analyst corrections moved precision from 22% to 50%. That feedback loop was the product.",
+    body: "Real AI evaluation is business-specific. A legal contract system cares deeply about false negatives, a missed clause creates liability. A fraud system cares about precision, too many false alarms destroy analyst trust and investigation throughput. A churn system cares about retained revenue and whether users actually changed behavior. The severity of the error determines the evaluation criteria, not the other way around.\n\nBeyond accuracy: retrieval relevance, confidence calibration, override rate, edit rate, acceptance rate, time saved, escalation rate, downstream business outcome. And online evaluation often beats static benchmarks. When users accept, edit, or override AI output, they are generating the most honest signal about system quality. At Kinage, analyst corrections moved precision from 22% to 50%. That feedback loop was the product.",
   },
   {
     n: "10",
@@ -231,7 +231,7 @@ export default function HowIBuild() {
             color: "rgba(186,230,253,.4)",
             marginTop: 40,
           }}>
-            More on each of these in Writing ↗ — essays on identity, economics, and AI systems.
+            More on each of these in Writing ↗, essays on identity, economics, and AI systems.
           </p>
         </div>
       </div>

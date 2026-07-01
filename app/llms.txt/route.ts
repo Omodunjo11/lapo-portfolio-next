@@ -8,10 +8,10 @@ export function GET() {
 
   const body = `# ${CANONICAL_NAME}
 
-> ${LEGAL_NAME} — ${ROLE_TITLE}
+> ${LEGAL_NAME}, ${ROLE_TITLE}
 
 ## About
-${LEGAL_NAME} (Lapo Odunjo) builds production AI trust systems for regulated industries — healthcare, fintech, and enterprise compliance. Forward Deployed PM at Kinage. Co-founder of KOVA. Previously Amazon, TD Bank, Capital One. Wharton MBA.
+${LEGAL_NAME} (Lapo Odunjo) builds production AI trust systems for regulated industries, healthcare, fintech, and enterprise compliance. Forward Deployed PM at Kinage. Co-founder of KOVA. Previously Amazon, TD Bank, Capital One. Wharton MBA.
 
 ## Site
 - Homepage: ${SITE_URL}

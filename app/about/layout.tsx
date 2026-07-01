@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { CANONICAL_NAME, LEGAL_NAME, SITE_URL } from "@/lib/site"
 
 const title = `About · ${CANONICAL_NAME}`
-const description = `${LEGAL_NAME} — Lagos to New York. Chemical engineer turned AI product manager. Wharton MBA. Building AI systems that work in production.`
+const description = `${LEGAL_NAME}, Lagos to New York. Chemical engineer turned AI product manager. Wharton MBA. Building AI systems that work in production.`
 
 export const metadata: Metadata = {
   title,
