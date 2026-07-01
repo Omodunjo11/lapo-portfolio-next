@@ -9,7 +9,6 @@ import {
   ABOUT_JOURNEY_BEAT,
   ABOUT_OFFDUTY_BEAT,
   ABOUT_PEOPLE_BEAT,
-  PERSONAL_BLURB,
 } from "@/lib/personal"
 
 const stops = [
@@ -307,65 +306,24 @@ export default function AboutPage() {
               <span className="section-label">What I Read</span>
               <div className="section-divider" />
             </div>
-            <p style={{ fontSize: 13, color: "var(--muted)", maxWidth: 560, lineHeight: 1.85, marginBottom: 48 }}>
+            <p className="reading-intro">
               I read across systems, economics, and stories about people building things in the wrong order.
             </p>
           </Reveal>
 
-          <div className="reading-block">
-            <Reveal>
-              <div className="reading-shelf" aria-hidden="true">
-                <div className="reading-shelf__books">
-                  {reading.map((book, i) => {
-                    const spineColors = [
-                      { bg: "#1a2744", text: "#a8b8d8" },
-                      { bg: "#5c3317", text: "#e8c89a" },
-                      { bg: "#1f3a2a", text: "#8ec8a0" },
-                      { bg: "#3b1f5c", text: "#c4a8e0" },
-                      { bg: "#2a1f1a", text: "#c8a87a" },
-                    ]
-                    const heights = [220, 190, 240, 200, 210]
-                    const widths = [38, 28, 24, 36, 42]
-                    const col = spineColors[i % spineColors.length]
-                    return (
-                      <div
-                        key={book.title}
-                        className="reading-shelf__spine"
-                        title={`${book.title}, ${book.author}`}
-                        style={{
-                          height: heights[i],
-                          width: widths[i],
-                          background: col.bg,
-                          color: col.text,
-                        }}
-                      >
-                        <div className="reading-shelf__spine-text">
-                          <span className="reading-shelf__spine-title">{book.title}</span>
-                          <span className="reading-shelf__spine-author">{book.author.split(" ").pop()}</span>
-                        </div>
-                        <div className="reading-shelf__spine-highlight" />
-                      </div>
-                    )
-                  })}
-                </div>
-                <div className="reading-shelf__plank" />
-              </div>
-            </Reveal>
-
-            <Reveal>
-              <div className="reading-list">
-                {reading.map((book) => (
-                  <article key={book.title} className="reading-list__item">
-                    <h3 className="reading-list__heading">
-                      {book.title}
-                      <span className="reading-list__author"> · {book.author}</span>
-                    </h3>
-                    <p className="reading-list__note">{book.note}</p>
-                  </article>
-                ))}
-              </div>
-            </Reveal>
-          </div>
+          <Reveal>
+            <div className="reading-list">
+              {reading.map((book) => (
+                <article key={book.title} className="reading-list__item">
+                  <h3 className="reading-list__heading">
+                    {book.title}
+                    <span className="reading-list__author"> · {book.author}</span>
+                  </h3>
+                  <p className="reading-list__note">{book.note}</p>
+                </article>
+              ))}
+            </div>
+          </Reveal>
 
         </div>
 
@@ -382,13 +340,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="page-section page-section--bordered">
-        <div className="pad-page about-closing" style={{ paddingTop: "clamp(32px, 4vw, 48px)", paddingBottom: "clamp(32px, 4vw, 48px)" }}>
-          <Reveal>
-            <p className="about-closing__blurb">{PERSONAL_BLURB}</p>
-          </Reveal>
-        </div>
-      </section>
     </>
   )
 }
