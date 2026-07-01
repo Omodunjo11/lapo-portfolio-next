@@ -10,6 +10,8 @@ type Props = {
   linkLabel?: string
   delay?: number
   compact?: boolean
+  layout?: "scroll" | "grid"
+  inset?: boolean
 }
 
 export default function HomeLifeStrip({
@@ -19,12 +21,23 @@ export default function HomeLifeStrip({
   linkLabel = "More on About →",
   delay = 0,
   compact = false,
+  layout = "scroll",
+  inset = false,
 }: Props) {
   if (photos.length === 0) return null
 
+  const stripClass = [
+    "home-life-strip",
+    compact && "home-life-strip--compact",
+    layout === "grid" && "home-life-strip--grid",
+    inset && "home-life-strip--inset",
+  ]
+    .filter(Boolean)
+    .join(" ")
+
   return (
     <Reveal delay={delay}>
-      <div className={`home-life-strip${compact ? " home-life-strip--compact" : ""}`}>
+      <div className={stripClass}>
         {(label || linkHref) && (
           <div className="home-life-strip__header">
             {label ? <p className="home-life-strip__label">{label}</p> : <span />}

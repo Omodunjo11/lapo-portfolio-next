@@ -1,12 +1,13 @@
 import Link from "next/link"
 import Reveal from "@/components/Reveal"
+import HomeLifeStrip from "@/components/HomeLifeStrip"
 import {
   GOODREADS_LINK,
   HOME_JOURNEY_PICKS,
+  HOME_LIFE_STRIP,
   HOME_READING_PICKS,
   PERSONAL_BLURB,
   PERSONAL_BULLETS,
-  PERSONAL_INTRO,
 } from "@/lib/personal"
 
 export default function HomePersonality() {
@@ -14,19 +15,25 @@ export default function HomePersonality() {
     <section className="home-personality page-section page-section--bordered">
       <div className="pad-page home-personality__inner">
         <Reveal>
-          <div className="home-personality__copy home-personality__copy--full">
-            <p className="home-section-eyebrow">The person</p>
-            <h2 className="home-section-title">Besides the work.</h2>
-            <p className="home-personality__intro">{PERSONAL_INTRO}</p>
-            <p className="home-personality__blurb">{PERSONAL_BLURB}</p>
-            <ul className="home-personality__bullets">
-              {PERSONAL_BULLETS.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-            <Link href="/about" className="home-personality__link">
-              Full story on About →
-            </Link>
+          <div className="home-personality__layout">
+            <div className="home-personality__copy">
+              <p className="home-section-eyebrow">The person</p>
+              <h2 className="home-section-title">Besides the work.</h2>
+              <p className="home-personality__blurb">{PERSONAL_BLURB}</p>
+              <ul className="home-personality__bullets">
+                {PERSONAL_BULLETS.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+
+            <HomeLifeStrip
+              photos={HOME_LIFE_STRIP}
+              label="Life lately"
+              linkLabel="More on About →"
+              layout="grid"
+              inset
+            />
           </div>
         </Reveal>
 
