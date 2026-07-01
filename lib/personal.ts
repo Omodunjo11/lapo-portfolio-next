@@ -1,6 +1,6 @@
 import { PROFILE_LINKS } from "@/lib/site"
 
-export const PERSONAL_BLURB = `I'm a committed Man United fan in difficult times and a France supporter who thinks Mbappé and Dembélé together is the most exciting forward line in football. I finished Wharton in May 2026 while shipping Kinage in production. I did not sleep enough. I wore a Bleach shirt to a Columbia basketball game, fell over on a ski slope and gave the camera a thumbs up, and still think too hard about why some cities produce disproportionate numbers of people who build things.`
+export const PERSONAL_BLURB = `I'm a committed Man United fan in difficult times and a France supporter who thinks Mbappé, Dembélé, and Olise together is the most exciting forward line in football, with a soft spot for Cherki. I've lived in Lagos, Bradford, New York, Atlanta, and Philadelphia, and I'm still not sure which one actually counts as home. I've been to 36 countries and have strong, unsolicited opinions about airport lounges. I'm already planning a Brazil trip for Carnival 2027, which is either excellent foresight or a sign I have too many group chats, alongside a family trip to Mauritius that's somehow easier to plan than either.`
 
 export const PERSONAL_INTRO =
   "I go by Lapo, from Lagos to Bradford to New York. The work is regulated AI and trust systems; the rest is football, anime, books, plants, and figuring out how to belong in every new city."
@@ -11,6 +11,12 @@ export const PERSONAL_BULLETS = [
   "Still the kid who reads systems before reading the room",
   "Will show up to a basketball game in an Ichigo Kurosaki shirt and mean it",
   "Believes the best product feedback sounds like your friends laughing at you in a library lounge",
+  "Treats the gym like a standing meeting I refuse to cancel",
+  "Will start an argument about which African city is the next Lagos and won't back down",
+  "Ran for Wharton Graduate Association President because someone had to, and then actually enjoyed the job",
+  "Can debate whether Jollof is better from Lagos or Accra with more conviction than I bring to most business decisions",
+  "Building a Fellowship backed by the Ford Foundation and Mastercard by day, still the guy who reads manga past bedtime by night",
+  "Once mapped an entire African credit system before I mapped out where I'd actually be living that year",
 ] as const
 
 export const HOME_READING_PICKS = [
@@ -80,12 +86,6 @@ export const HOME_LIFE_STRIP: PersonalPhoto[] = [
     src: "/images/personal/brick-wall-selfie.jpg",
     alt: "Lapo and a friend smiling in a brick wall selfie",
     caption: "Brick wall · wrong angle, right vibe",
-    variant: "polaroid",
-  },
-  {
-    src: "/images/personal/wharton-grad-crew.jpg",
-    alt: "Lapo in graduation gown with friends and flowers outdoors",
-    caption: "Graduation day · flowers and the crew",
     variant: "polaroid",
   },
   {
@@ -186,6 +186,12 @@ export const ABOUT_SCATTERED_BEATS: ScatteredPhotoBeat[] = [
         caption: "Graduation day · flowers and the crew",
         variant: "life",
         fit: "contain",
+      },
+      {
+        src: "/images/personal/mirror-selfie-crew.jpg",
+        alt: "Large group mirror selfie in a building lobby",
+        caption: "Lobby mirror · everyone in frame",
+        variant: "life",
       },
     ],
   },
