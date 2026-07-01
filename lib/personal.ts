@@ -89,12 +89,6 @@ export const HOME_LIFE_STRIP: PersonalPhoto[] = [
     variant: "polaroid",
   },
   {
-    src: "/images/personal/mirror-selfie-crew.jpg",
-    alt: "Large group mirror selfie in a building lobby",
-    caption: "Lobby mirror · everyone in frame",
-    variant: "polaroid",
-  },
-  {
     src: "/images/personal/couple-brick-building.jpg",
     alt: "Lapo with a partner on a sunny afternoon in front of a brick building",
     caption: "Summer afternoon · no agenda",
