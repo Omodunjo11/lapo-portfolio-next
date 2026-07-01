@@ -180,27 +180,9 @@ export const ABOUT_SCATTERED_BEATS: ScatteredPhotoBeat[] = [
     note: "The work is solo sometimes. The life almost never is.",
     photos: [
       {
-        src: "/images/personal/street-friends-laugh.jpg",
-        alt: "Lapo laughing with a friend on a sunny city street",
-        caption: "Sunny block · couldn't stop laughing",
-        variant: "life",
-      },
-      {
         src: "/images/personal/wharton-grad-crew.jpg",
         alt: "Lapo in graduation gown with friends and flowers outdoors",
         caption: "Graduation day · flowers and the crew",
-        variant: "life",
-      },
-      {
-        src: "/images/personal/tux-lounge-laugh.jpg",
-        alt: "Lapo laughing with a friend in a library lounge, both in tuxedos",
-        caption: "Library lounge · black tie, actual joy",
-        variant: "life",
-      },
-      {
-        src: "/images/personal/mirror-selfie-crew.jpg",
-        alt: "Large group mirror selfie in a building lobby",
-        caption: "Lobby mirror · everyone in frame",
         variant: "life",
       },
     ],
