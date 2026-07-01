@@ -3,27 +3,12 @@ import Link from "next/link"
 import Image from "next/image"
 import Reveal from "@/components/Reveal"
 import PageHero from "@/components/PageHero"
+import ConnectOutreach from "@/components/ConnectOutreach"
 import { CONTACT_EMAIL, CONTACT_PHONE, CONNECT_INTENT, PROFILE_LINKS } from "@/lib/site"
+import { OPEN_TO_ROLES } from "@/lib/positioning"
 import { CONNECT_ACCENT_PHOTO } from "@/lib/personal"
 
-const openTo = [
-  {
-    role: "AI Strategist",
-    desc: "Helping organizations define where AI actually creates leverage, not where it sounds impressive.",
-  },
-  {
-    role: "Deployment Strategist",
-    desc: "Taking AI from prototype to production in regulated environments where the cost of failure is real.",
-  },
-  {
-    role: "AI Product Manager",
-    desc: "0→1 and 1→N. Building trust systems, evaluation frameworks, and the product layer around LLMs.",
-  },
-  {
-    role: "Chief of Staff",
-    desc: "Strategy, operations, and AI-native execution for founders and executives who need someone who can think and build.",
-  },
-]
+const openTo = OPEN_TO_ROLES
 
 export default function ConnectPage() {
   return (
@@ -37,7 +22,7 @@ export default function ConnectPage() {
             <em>conversation.</em>
           </>
         }
-        description="AI systems in regulated industries. Private markets across Africa. Role conversations, design partnerships, and building in production."
+        description="Forward Deployed PM and AI product work in regulated production. Open to FDPM, AI PM, and Staff PM conversations."
       >
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 28 }}>
           <Link
@@ -57,9 +42,10 @@ export default function ConnectPage() {
         <Reveal>
           <div className="pad-page" style={{ paddingTop: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)" }}>
             <p className="connect-intent">{CONNECT_INTENT}</p>
+            <ConnectOutreach />
             <div style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 32, marginTop: 32 }}>
               <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: ".2em", color: "var(--terra)" }}>◆</span>
-              <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Currently Open To</span>
+              <span style={{ fontFamily: "var(--font-syne),sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase" }}>Target roles</span>
               <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
               <span style={{ fontSize: 8, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--terra)", display: "flex", alignItems: "center", gap: 6 }}>
                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--terra)", display: "inline-block" }} />
@@ -105,9 +91,8 @@ export default function ConnectPage() {
             <div>
               <h2 className="contact-title">Ways to reach me</h2>
               <p className="contact-desc">
-                Best for role conversations, design partnerships, or anything at the intersection of
-                AI product and regulated infrastructure. I read everything, response time varies with
-                travel and shipping cycles.
+                Best for FDPM, AI PM, and Staff PM conversations in regulated AI, fintech, and care.
+                Design partnerships welcome. I read everything; response time varies with travel and shipping cycles.
               </p>
               <div style={{ marginTop: 28, display: "flex", gap: 10, flexWrap: "wrap" }}>
                 <Link href={PROFILE_LINKS.linkedin} target="_blank" rel="noopener noreferrer me" className="btn btn--outline">

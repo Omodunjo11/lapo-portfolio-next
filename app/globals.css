@@ -2142,6 +2142,47 @@ a { color: inherit; text-decoration: none; }
   margin: 0;
 }
 
+.connect-outreach {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.connect-outreach__eyebrow {
+  font-size: 9px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin: 0 0 16px;
+}
+
+.connect-outreach__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.connect-outreach__card {
+  padding: 18px 20px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+}
+
+.connect-outreach__label {
+  font-size: 8px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+
+.connect-outreach__copy {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ink);
+  margin: 0;
+}
+
 .writing-card {
   background: var(--paper);
   padding: 40px 36px;
@@ -2857,6 +2898,7 @@ a { color: inherit; text-decoration: none; }
   .home-journey-picks__grid { grid-template-columns: 1fr 1fr; }
   .home-along__grid { grid-template-columns: 1fr; }
   .home-shelf__rotation-grid { grid-template-columns: 1fr; }
+  .connect-outreach__grid { grid-template-columns: 1fr; }
   .home-thinking-layout { grid-template-columns: 1fr; }
   .home-writing__grid { grid-template-columns: 1fr; }
   .home-writing__grid--featured { grid-template-columns: 1fr; }

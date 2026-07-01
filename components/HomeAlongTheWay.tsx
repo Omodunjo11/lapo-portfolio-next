@@ -9,13 +9,8 @@ export default function HomeAlongTheWay() {
         <Reveal>
           <div className="section-header-row" style={{ marginBottom: 28, padding: 0 }}>
             <div>
-              <p className="home-section-eyebrow">
-                <span className="section-symbol" aria-hidden="true">
-                  ⬡
-                </span>{" "}
-                Along the way
-              </p>
-              <h2 className="home-section-title">Side quests with real stakes.</h2>
+              <p className="home-section-eyebrow">Leadership</p>
+              <h2 className="home-section-title">Board and student government, while shipping.</h2>
             </div>
             <Link href="/experience" className="btn btn--outline btn--sm" style={{ flexShrink: 0 }}>
               Full experience →

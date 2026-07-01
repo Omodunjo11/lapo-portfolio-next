@@ -1,3 +1,10 @@
+import {
+  CONNECT_INTENT,
+  HERO_OPERATOR_LINE,
+  ROLE_META as POSITIONING_ROLE_META,
+  TARGET_ROLES,
+} from "@/lib/positioning"
+
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://lapoodunjo.com"
 
@@ -21,11 +28,10 @@ export const ROLE_TITLE = "AI Product · Trust Systems & Regulated Infrastructur
 export const KINAGE_TAGLINE =
   "forward-deployed production AI for regulated healthcare and fintech clients"
 
-export const ROLE_META =
-  `AI product leader building production trust systems for regulated industries. Kinage (${KINAGE_TAGLINE}). KOVA · Amazon · TD Bank · Wharton MBA.`
+export const ROLE_META = POSITIONING_ROLE_META
 
 export const SEO_DESCRIPTION =
-  `Onaolapo Michael (Lapo) Odunjo, AI product leader building trust systems for regulated industries. Kinage: ${KINAGE_TAGLINE}. KOVA, Amazon, TD Bank, Wharton MBA.`
+  `Onaolapo Michael (Lapo) Odunjo, ${POSITIONING_ROLE_META} Open to FDPM, AI PM, and Staff PM roles.`
 
 export const SEO_KEYWORDS = [
   ...NAME_ALIASES,
@@ -34,20 +40,20 @@ export const SEO_KEYWORDS = [
   "Michael Odunjo AI",
   "Onaolapo Odunjo Wharton",
   "AI product manager",
+  "forward deployed PM",
+  "FDPM",
+  "Staff PM AI",
   "regulated AI",
   "Kinage",
   "KOVA",
   "lapoodunjo.com",
 ]
 
-export const INTENT_CTA =
-  "Building Kinage & KOVA · Open to roles where AI has to work in production, and someone has to own adoption."
+export const INTENT_CTA = TARGET_ROLES
 
-export const HERO_HOSPITALITY_LINE =
-  "Portfolio, case studies, and the parts of me that don't fit a deck."
+export const HERO_HOSPITALITY_LINE = HERO_OPERATOR_LINE
 
-export const CONNECT_INTENT =
-  "I'm not looking for the next logo. I'm looking for rooms where the hard problem is getting AI adopted after the pilot ends. That's been Kinage, TD, and the hospital work. If that's what you're solving, I'd like to talk."
+export { CONNECT_INTENT }
 
 export const CONTACT_EMAIL = "odunjoonaolapo@gmail.com"
 

@@ -9,7 +9,7 @@ export default function HomeConnectCta() {
         <Reveal>
           <p className="home-section-eyebrow home-section-eyebrow--light">Connect</p>
           <h2 className="home-connect-cta__title">
-            Let&apos;s talk about what you&apos;re building.
+            FDPM, AI PM, or Staff PM in regulated production?
           </h2>
           <p className="home-connect-cta__intent">{INTENT_CTA}</p>
           <div className="home-connect-cta__actions">

@@ -38,7 +38,7 @@ export default function HomePersonality() {
 
         <Reveal delay={0.12}>
           <div className="home-shelf">
-            <p className="home-shelf__label">Shelf</p>
+            <p className="home-shelf__label">Reading lately</p>
             <div className="home-reading-picks__grid">
               {HOME_READING_PICKS.map((book) => (
                 <div key={book.title} className="home-reading-picks__card">
@@ -70,7 +70,7 @@ export default function HomePersonality() {
         <Reveal delay={0.15}>
           <div className="home-journey-picks">
             <div className="home-journey-picks__header">
-              <p className="home-journey-picks__label">My homes</p>
+              <p className="home-journey-picks__label">Where I&apos;ve landed</p>
               <Link href="/about" className="home-personality__link">
                 Full journey →
               </Link>

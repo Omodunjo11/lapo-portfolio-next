@@ -30,10 +30,7 @@ export default function Footer() {
           </span>
         </div>
 
-        <span className="footer-motto">
-          <span className="footer-symbol" aria-hidden="true">◎</span>
-          Ad astra per aspera.
-        </span>
+        <span className="footer-motto">Ad astra per aspera.</span>
 
         <div style={{ display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap" }}>
           {[
@@ -66,7 +63,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <p className="footer-build">Built by Lapo · case studies ship on Vercel</p>
+      <p className="footer-build">Production AI operator · case studies on Vercel</p>
     </footer>
   )
 }

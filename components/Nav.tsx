@@ -35,7 +35,7 @@ export default function Nav() {
 
         {/* Desktop links */}
         <ul className="nav-links-wrap">
-          {links.map(({ href, label, symbol }) => {
+          {links.map(({ href, label }) => {
             const active = isActive(href)
             return (
               <li key={href}>
@@ -51,7 +51,6 @@ export default function Nav() {
                   onMouseEnter={e => (e.currentTarget.style.color = "var(--terra)")}
                   onMouseLeave={e => (e.currentTarget.style.color = active ? "var(--terra)" : "var(--muted)")}
                 >
-                  <span className="nav-symbol" aria-hidden="true">{symbol}</span>
                   {label}
                 </Link>
               </li>
@@ -95,7 +94,7 @@ export default function Nav() {
           padding: "8px 24px 24px",
           zIndex: 190,
         }}>
-          {links.map(({ href, label, symbol }) => (
+          {links.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
@@ -109,7 +108,6 @@ export default function Nav() {
                 transition: "color .2s",
               }}
             >
-              <span className="nav-symbol" aria-hidden="true">{symbol}</span>
               {label}
             </Link>
           ))}

@@ -31,7 +31,7 @@ export default function CloudScene() {
       <div className="hero-editorial-inner">
         <div className="hero-editorial-main">
           <div className="hero-editorial-copy" style={{ animation: "fadeUp .8s .15s ease both", opacity: 0 }}>
-            <p className="hero-eyebrow">AI Product · Regulated Systems</p>
+            <p className="hero-eyebrow">Forward Deployed PM · Regulated Production</p>
             <h1 className="hero-title">{CANONICAL_NAME}</h1>
             <p className="hero-subtitle">{ROLE_TITLE}</p>
             <p className="hero-human">
