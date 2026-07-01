@@ -4,6 +4,7 @@ import Reveal from "@/components/Reveal"
 import { featuredProjects } from "@/lib/projects"
 import { PROJECT_HERO_IMAGES } from "@/lib/project-images"
 import { PORTFOLIO_BUILD_COUNT } from "@/lib/metrics"
+import { projectRoleLead } from "@/lib/project-display"
 
 const statusLabel = {
   live: "● Live",
@@ -49,11 +50,17 @@ export default function HomeFeaturedWork() {
                   )}
                   <div className="home-featured-card__body">
                     <div className="home-featured-card__meta">
-                      <span>{statusLabel[project.status]}</span>
+                      <span>{projectRoleLead(project.role)}</span>
+                      <span className="home-featured-card__meta-dot" aria-hidden="true">
+                        ·
+                      </span>
                       <span>{project.year}</span>
+                      <span className="home-featured-card__meta-dot" aria-hidden="true">
+                        ·
+                      </span>
+                      <span>{statusLabel[project.status]}</span>
                     </div>
                     <h3 className="home-featured-card__title">{project.name}</h3>
-                    <p className="home-featured-card__role">{project.role}</p>
                     <p className="home-featured-card__tagline">{project.tagline}</p>
                     <p className="home-featured-card__outcome">{project.outcome}</p>
                   </div>

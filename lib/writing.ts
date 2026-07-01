@@ -70,3 +70,9 @@ export function getOnSiteEssays(): Essay[] {
 export function getMediumEssays(): Essay[] {
   return essays.filter((e) => !e.onSite)
 }
+
+/** Topic label for category chips, e.g. "AI & Adoption" from "Essay · AI & Adoption". */
+export function getEssayTopic(category: string): string {
+  const parts = category.split(" · ")
+  return parts.length > 1 ? parts.slice(1).join(" · ") : category
+}

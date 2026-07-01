@@ -31,6 +31,7 @@ export default function Footer() {
         </div>
 
         <span className="footer-motto">
+          <span className="footer-symbol" aria-hidden="true">◎</span>
           Ad astra per aspera.
         </span>
 
@@ -64,6 +65,8 @@ export default function Footer() {
           ))}
         </div>
       </div>
+
+      <p className="footer-build">Built by Lapo · case studies ship on Vercel</p>
     </footer>
   )
 }

@@ -3,6 +3,7 @@ import CloudScene from "@/components/CloudScene"
 import Ticker from "@/components/Ticker"
 import HomeFeaturedWork from "@/components/HomeFeaturedWork"
 import HomeCurrently from "@/components/HomeCurrently"
+import HomeAlongTheWay from "@/components/HomeAlongTheWay"
 import HomePersonality from "@/components/HomePersonality"
 import HomeThinking from "@/components/HomeThinking"
 import HomeWriting from "@/components/HomeWriting"
@@ -18,6 +19,7 @@ export default function Home() {
       <div className="page-body">
         <HomeFeaturedWork />
         <HomeCurrently />
+        <HomeAlongTheWay />
         <HomePersonality />
         <HomeThinking />
         <HomeWriting />

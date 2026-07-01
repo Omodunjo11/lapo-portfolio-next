@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image"
 import Link from "next/link"
-import { CANONICAL_NAME, INTENT_CTA, PROFILE_LINKS, ROLE_TITLE } from "@/lib/site"
+import { CANONICAL_NAME, HERO_HOSPITALITY_LINE, INTENT_CTA, PROFILE_LINKS, ROLE_TITLE } from "@/lib/site"
 
 const HEADSHOT = "/images/IMG_3437.jpg"
 
@@ -39,6 +39,7 @@ export default function CloudScene() {
               officers, fraud analysts, and hospital nurses, not just demo well.
             </p>
             <p className="hero-intent">{INTENT_CTA}</p>
+            <p className="hero-hospitality">{HERO_HOSPITALITY_LINE}</p>
             <ul className="hero-proof-list" aria-label="Selected production outcomes">
               {HERO_PROOF.map(({ metric, detail }) => (
                 <li key={metric}>
@@ -55,6 +56,14 @@ export default function CloudScene() {
               </Link>
               <Link href={PROFILE_LINKS.resume} target="_blank" rel="noopener" className="hero-cta-secondary">
                 Resume
+              </Link>
+            </div>
+            <div className="hero-social">
+              <Link href={PROFILE_LINKS.linkedin} target="_blank" rel="noopener noreferrer me">
+                LinkedIn ↗
+              </Link>
+              <Link href={PROFILE_LINKS.github} target="_blank" rel="noopener noreferrer me">
+                GitHub ↗
               </Link>
             </div>
           </div>

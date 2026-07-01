@@ -43,6 +43,9 @@ export const SEO_KEYWORDS = [
 export const INTENT_CTA =
   "Building Kinage & KOVA · Open to roles where AI has to work in production, and someone has to own adoption."
 
+export const HERO_HOSPITALITY_LINE =
+  "Portfolio, case studies, and the parts of me that don't fit a deck."
+
 export const CONNECT_INTENT =
   "I'm not looking for the next logo. I'm looking for rooms where the hard problem is getting AI adopted after the pilot ends. That's been Kinage, TD, and the hospital work. If that's what you're solving, I'd like to talk."
 

@@ -3,15 +3,9 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 import BrandMark from "@/components/BrandMark"
+import { NAV_LINKS } from "@/lib/nav"
 
-const links = [
-  { href: "/about", label: "About" },
-  { href: "/projects", label: "Projects" },
-  { href: "/experience", label: "Experience" },
-  { href: "/how-i-build", label: "How I Build" },
-  { href: "/writing", label: "Writing" },
-  { href: "/connect", label: "Connect" },
-]
+const links = NAV_LINKS
 
 export default function Nav() {
   const pathname = usePathname()
@@ -41,7 +35,7 @@ export default function Nav() {
 
         {/* Desktop links */}
         <ul className="nav-links-wrap">
-          {links.map(({ href, label }) => {
+          {links.map(({ href, label, symbol }) => {
             const active = isActive(href)
             return (
               <li key={href}>
@@ -57,6 +51,7 @@ export default function Nav() {
                   onMouseEnter={e => (e.currentTarget.style.color = "var(--terra)")}
                   onMouseLeave={e => (e.currentTarget.style.color = active ? "var(--terra)" : "var(--muted)")}
                 >
+                  <span className="nav-symbol" aria-hidden="true">{symbol}</span>
                   {label}
                 </Link>
               </li>
@@ -100,7 +95,7 @@ export default function Nav() {
           padding: "8px 24px 24px",
           zIndex: 190,
         }}>
-          {links.map(({ href, label }) => (
+          {links.map(({ href, label, symbol }) => (
             <Link
               key={href}
               href={href}
@@ -114,6 +109,7 @@ export default function Nav() {
                 transition: "color .2s",
               }}
             >
+              <span className="nav-symbol" aria-hidden="true">{symbol}</span>
               {label}
             </Link>
           ))}

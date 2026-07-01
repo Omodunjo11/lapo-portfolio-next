@@ -66,3 +66,36 @@ export const HOME_QUOTE = {
   text: "The bottleneck is trust, not accuracy. Designing for adoption under scrutiny is harder than improving benchmark numbers, and it is the one that actually matters.",
   source: "How I think about regulated AI",
 } as const
+
+export const HOME_ALONG_THE_WAY = [
+  {
+    org: "Wharton Graduate Association",
+    role: "President",
+    period: "2024 – 2026",
+    note: "$6M annual budget · 1,700+ MBA students",
+  },
+  {
+    org: "Goldman Sachs Community Builder Fellow",
+    role: "Governance Strategy Lead",
+    period: "2025",
+    note: "Board governance framework for Philadelphia nonprofit College Together",
+  },
+  {
+    org: "Trailblazer Fellowship",
+    role: "Wharton MBA · 50% merit",
+    period: "2024 – 2026",
+    note: "Merit scholarship, The Wharton School",
+  },
+  {
+    org: "Wharton Tech Club",
+    role: "VP, Conferences",
+    period: "2024 – 2026",
+    note: "Programming for Wharton's largest student-run tech community",
+  },
+  {
+    org: "Ford Foundation & Mastercard",
+    role: "Fellowship",
+    period: "2025 – present",
+    note: "Building a fellowship backed by Ford Foundation and Mastercard",
+  },
+] as const

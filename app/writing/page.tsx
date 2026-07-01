@@ -3,8 +3,9 @@ import Link from "next/link"
 import Ticker from "@/components/Ticker"
 import Reveal from "@/components/Reveal"
 import PageHero from "@/components/PageHero"
+import EssayTopicChip from "@/components/EssayTopicChip"
 import { PROFILE_LINKS } from "@/lib/site"
-import { essays, getMediumEssays, getOnSiteEssays } from "@/lib/writing"
+import { essays, getEssayTopic, getMediumEssays, getOnSiteEssays } from "@/lib/writing"
 
 const tickerItems = [
   { text: "Identity", highlight: true }, { text: "Adoption", highlight: true },
@@ -34,10 +35,8 @@ function EssayCard({
           e.currentTarget.style.borderTopColor = onSite ? "var(--terra)" : "transparent"
         }}
       >
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-          <span style={{ fontSize: 8, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--terra)" }}>
-            {essay.category}
-          </span>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, marginBottom: 20, flexWrap: "wrap" }}>
+          <EssayTopicChip topic={getEssayTopic(essay.category)} />
           <span style={{ fontSize: 9, color: "var(--muted)" }}>
             {essay.year}
             {essay.readingTime ? ` · ${essay.readingTime}` : ""}

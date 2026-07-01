@@ -5,6 +5,8 @@ export const PERSONAL_BLURB = `I'm a committed Man United fan in difficult times
 export const PERSONAL_INTRO =
   "I go by Lapo, from Lagos to Bradford to New York. The work is regulated AI and trust systems; the rest is football, anime, books, plants, and figuring out how to belong in every new city."
 
+export const PERSONAL_BULLETS_VISIBLE_COUNT = 5
+
 export const PERSONAL_BULLETS = [
   "Chemical engineer who became a PM because I kept asking why the system failed after the math was right",
   "Co-founded KOVA because I'd seen how credit actually works in Lagos, not how banks pretend it works",
@@ -17,6 +19,17 @@ export const PERSONAL_BULLETS = [
   "Can debate whether Jollof is better from Lagos or Accra with more conviction than I bring to most business decisions",
   "Building a Fellowship backed by the Ford Foundation and Mastercard by day, still the guy who reads manga past bedtime by night",
   "Once mapped an entire African credit system before I mapped out where I'd actually be living that year",
+] as const
+
+export const HOME_ON_ROTATION = [
+  {
+    title: "Man United matchdays",
+    note: "Committed fan in difficult times — still watching every week.",
+  },
+  {
+    title: "Bleach · manga past bedtime",
+    note: "Still the guy who reads past lights-out, Ichigo shirt optional.",
+  },
 ] as const
 
 export const HOME_READING_PICKS = [
@@ -227,10 +240,10 @@ export const ABOUT_LIFE_PHOTOS: PersonalPhoto[] = ABOUT_SCATTERED_BEATS.flatMap(
 export const PERSONAL_PHOTOS = ABOUT_LIFE_PHOTOS
 
 export const HOME_JOURNEY_PICKS = [
-  { city: "Lagos", note: "Reading systems before I had words for it." },
-  { city: "Bradford", note: "First time being the only one in the room who looked like me." },
-  { city: "Philadelphia", note: "Shipped Kinage in production while writing papers. Did not sleep enough." },
-  { city: "New York", note: "Back. Building now.", current: true },
+  { city: "Lagos", years: "1990s–2014", note: "Reading systems before I had words for it." },
+  { city: "Bradford", years: "2015–2020", note: "First time being the only one in the room who looked like me." },
+  { city: "Philadelphia", years: "2024–2026", note: "Shipped Kinage in production while writing papers. Did not sleep enough." },
+  { city: "New York", years: "2026–present", note: "Back. Building now.", current: true },
 ] as const
 
 /** @deprecated use HOME_LIFE_STRIP */

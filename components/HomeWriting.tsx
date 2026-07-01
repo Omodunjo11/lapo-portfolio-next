@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Reveal from "@/components/Reveal"
-import { FEATURED_ESSAY_SLUG, getEssay, getMediumEssays } from "@/lib/writing"
+import EssayTopicChip from "@/components/EssayTopicChip"
+import { FEATURED_ESSAY_SLUG, getEssay, getEssayTopic, getMediumEssays } from "@/lib/writing"
 
 export default function HomeWriting() {
   const featured = getEssay(FEATURED_ESSAY_SLUG)!
@@ -26,8 +27,10 @@ export default function HomeWriting() {
         <div className="home-writing__grid home-writing__grid--featured">
           <Reveal>
             <Link href={featured.url} className="home-writing__card home-writing__card--featured">
+              <div className="home-writing__chips">
+                <EssayTopicChip topic={getEssayTopic(featured.category)} />
+              </div>
               <div className="home-writing__meta">
-                <span>{featured.category}</span>
                 <span>{featured.year}</span>
                 {featured.readingTime ? <span>{featured.readingTime}</span> : null}
               </div>
@@ -40,8 +43,10 @@ export default function HomeWriting() {
           {mediumPicks.map((essay, i) => (
             <Reveal key={essay.slug} delay={0.08 + i * 0.08}>
               <Link href={essay.url} target="_blank" rel="noopener noreferrer" className="home-writing__card">
+                <div className="home-writing__chips">
+                  <EssayTopicChip topic={getEssayTopic(essay.category)} />
+                </div>
                 <div className="home-writing__meta">
-                  <span>{essay.category}</span>
                   <span>{essay.year}</span>
                 </div>
                 <h3 className="home-writing__title">{essay.title}</h3>
