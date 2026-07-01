@@ -27,14 +27,14 @@ export default function PhotoAside({ beat, showIntro = false, delay = 0 }: Props
             {photos.map((photo) => (
               <figure key={photo.src} className="photo-moment-band__figure">
                 <div
-                  className={`photo-moment-band__frame${photo.variant === "polaroid" ? " photo-moment-band__frame--polaroid" : ""}`}
+                  className={`photo-moment-band__frame${photo.variant === "polaroid" ? " photo-moment-band__frame--polaroid" : ""}${photo.fit === "contain" ? " photo-moment-band__frame--contain" : ""}`}
                 >
                   <div className="photo-moment-band__media">
                     <Image
                       src={photo.src}
                       alt={photo.alt}
                       fill
-                      sizes="(max-width: 768px) 44vw, 280px"
+                      sizes="(max-width: 768px) 92vw, 520px"
                       className="photo-moment-band__img"
                       quality={82}
                     />

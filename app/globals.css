@@ -1021,6 +1021,11 @@ a { color: inherit; text-decoration: none; }
   justify-content: end;
 }
 
+.photo-moment-band__photos--1:has(.photo-moment-band__frame--contain) {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: min(100%, 560px);
+}
+
 .photo-moment-band__photos--2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   max-width: 520px;
@@ -1073,6 +1078,16 @@ a { color: inherit; text-decoration: none; }
 
 .photo-moment-band__img {
   object-fit: cover;
+}
+
+.photo-moment-band__frame--contain {
+  aspect-ratio: 16 / 10;
+  background: var(--bg2);
+}
+
+.photo-moment-band__frame--contain .photo-moment-band__img {
+  object-fit: contain;
+  object-position: center;
 }
 
 .photo-moment-band__caption {
@@ -1244,12 +1259,12 @@ a { color: inherit; text-decoration: none; }
   aspect-ratio: 4 / 5;
 }
 
-/* Polaroid grid: compact 2×2 beside copy */
+/* Polaroid grid: 3×4 beside copy (no horizontal scroll) */
 .home-life-strip--polaroid-grid .home-life-strip__track {
   display: grid;
-  grid-template-columns: repeat(2, var(--life-polaroid-width));
-  gap: 12px;
-  max-width: calc(var(--life-polaroid-width) * 2 + 12px);
+  grid-template-columns: repeat(3, var(--life-polaroid-width));
+  gap: 10px 12px;
+  max-width: calc(var(--life-polaroid-width) * 3 + 24px);
   width: fit-content;
   margin-left: auto;
   overflow: visible;
@@ -2536,8 +2551,8 @@ a { color: inherit; text-decoration: none; }
   .home-personality__layout--single { grid-template-columns: 1fr; }
   .home-life-strip--grid .home-life-strip__track,
   .home-life-strip--polaroid-grid .home-life-strip__track {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-width: min(100%, calc(var(--life-polaroid-width) * 2 + 12px));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: min(100%, calc(var(--life-polaroid-width) * 3 + 24px));
     width: 100%;
     margin-left: 0;
   }
@@ -2672,9 +2687,9 @@ a { color: inherit; text-decoration: none; }
   }
 
   .home-life-strip--polaroid-grid .home-life-strip__track {
-    --life-polaroid-width: min(42vw, 148px);
-    max-width: min(100%, calc(var(--life-polaroid-width) * 2 + 10px));
-    gap: 10px;
+    --life-polaroid-width: min(28vw, 148px);
+    max-width: min(100%, calc(var(--life-polaroid-width) * 3 + 20px));
+    gap: 8px 10px;
   }
 
   .perspective-layout {

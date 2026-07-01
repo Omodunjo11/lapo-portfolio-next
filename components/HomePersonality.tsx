@@ -32,7 +32,7 @@ export default function HomePersonality() {
             photos={HOME_LIFE_STRIP}
             label="Life lately"
             linkLabel="More on About →"
-            layout="scroll"
+            layout="grid"
             polaroid
             inset
             delay={0.06}

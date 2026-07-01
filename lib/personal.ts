@@ -33,6 +33,7 @@ export type PersonalPhoto = {
   alt: string
   caption: string
   variant?: "polaroid" | "candid" | "life"
+  fit?: "cover" | "contain"
 }
 
 /** Single candid beside homepage copy */
@@ -184,6 +185,7 @@ export const ABOUT_SCATTERED_BEATS: ScatteredPhotoBeat[] = [
         alt: "Lapo in graduation gown with friends and flowers outdoors",
         caption: "Graduation day · flowers and the crew",
         variant: "life",
+        fit: "contain",
       },
     ],
   },
