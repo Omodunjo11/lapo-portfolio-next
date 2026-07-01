@@ -4,7 +4,14 @@ import Link from "next/link"
 import Reveal from "@/components/Reveal"
 import PageHero from "@/components/PageHero"
 import { CANONICAL_NAME, IDENTITY_LINE, KINAGE_TAGLINE, PROFILE_LINKS } from "@/lib/site"
-import { ABOUT_LIFE_PHOTOS, PERSONAL_BLURB } from "@/lib/personal"
+import PhotoAside from "@/components/PhotoAside"
+import {
+  ABOUT_JOURNEY_BEAT,
+  ABOUT_OFFDUTY_BEAT,
+  ABOUT_PEOPLE_BEAT,
+  ABOUT_CLOSING_BEAT,
+  PERSONAL_BLURB,
+} from "@/lib/personal"
 
 const stops = [
   {
@@ -243,10 +250,12 @@ export default function AboutPage() {
               ))}
             </div>
           </div>
+
+        <div className="pad-page" style={{ paddingTop: 32, paddingBottom: 8 }}>
+          <PhotoAside beat={ABOUT_JOURNEY_BEAT} showIntro delay={0.08} />
+        </div>
         </div>
       </section>
-
-      {/* Perspective */}
       <section className="page-section page-section--bordered">
         <Reveal>
           <div className="perspective-wrap pad-page">
@@ -285,6 +294,10 @@ export default function AboutPage() {
                   ))}
                 </div>
               </div>
+            </div>
+
+            <div style={{ marginTop: 40 }}>
+              <PhotoAside beat={ABOUT_PEOPLE_BEAT} delay={0.1} />
             </div>
           </div>
         </Reveal>
@@ -417,6 +430,12 @@ export default function AboutPage() {
           </Reveal>
 
           <Reveal>
+            <div style={{ marginTop: 40 }}>
+              <PhotoAside beat={ABOUT_OFFDUTY_BEAT} delay={0.08} />
+            </div>
+          </Reveal>
+
+          <Reveal>
             <div style={{ marginTop: 32 }}>
               <Link href={PROFILE_LINKS.goodreads} target="_blank" rel="noopener noreferrer me" className="btn btn--outline">
                 Full reading list on Goodreads ↗
@@ -426,41 +445,13 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Photo strip */}
       <section className="page-section page-section--bordered">
-        <Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px,1fr))", gap: 1, background: "var(--border)" }}>
-            {[
-              ...ABOUT_LIFE_PHOTOS.map((p) => ({ src: p.src, alt: p.alt })),
-              { src: "/images/photo-wharton-study.png", alt: "Wharton study session, Philadelphia" },
-              { src: "/images/photo-nairobi.jpg", alt: "Nairobi landscape" },
-            ].map((photo) => (
-              <div key={photo.src} style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden" }}>
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  quality={80}
-                  style={{ objectFit: "cover", transition: "transform .4s" }}
-                  onMouseEnter={e => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1.03)")}
-                  onMouseLeave={e => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1)")}
-                />
-              </div>
-            ))}
-          </div>
-        </Reveal>
-      </section>
-
-      {/* Outside the work */}
-      <section className="page-section page-section--bordered">
-        <Reveal>
-          <div className="pad-page" style={{ paddingTop: "clamp(32px, 4vw, 48px)", paddingBottom: "clamp(32px, 4vw, 48px)" }}>
-            <p style={{ fontFamily: "var(--font-playfair), serif", fontStyle: "italic", fontSize: "clamp(16px, 1.8vw, 20px)", color: "var(--mid)", maxWidth: 640, lineHeight: 1.75 }}>
-              {PERSONAL_BLURB}
-            </p>
-          </div>
-        </Reveal>
+        <div className="pad-page about-closing" style={{ paddingTop: "clamp(32px, 4vw, 48px)", paddingBottom: "clamp(32px, 4vw, 48px)" }}>
+          <PhotoAside beat={ABOUT_CLOSING_BEAT} delay={0.06} />
+          <Reveal delay={0.1}>
+            <p className="about-closing__blurb">{PERSONAL_BLURB}</p>
+          </Reveal>
+        </div>
       </section>
     </>
   )
