@@ -33,6 +33,7 @@ export default function HomePersonality() {
               linkLabel="More on About →"
               layout="grid"
               inset
+              polaroid
             />
           </div>
         </Reveal>

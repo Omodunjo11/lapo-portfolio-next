@@ -49,25 +49,25 @@ export const HOME_LIFE_STRIP: PersonalPhoto[] = [
     src: "/images/personal/wharton-nameplates.jpg",
     alt: "Lapo holding Wharton nameplates for Onaolapo and Michael Odunjo",
     caption: "Two nameplates, one person",
-    variant: "life",
+    variant: "polaroid",
   },
   {
     src: "/images/personal/columbia-bleach-game.jpg",
     alt: "Lapo with friends at a Columbia basketball game wearing a Bleach anime shirt",
     caption: "Bleach shirt, no apologies",
-    variant: "life",
+    variant: "polaroid",
   },
   {
     src: "/images/personal/friends-huddle.jpg",
     alt: "Lapo huddled with close friends, laughing",
     caption: "The people who keep you honest",
-    variant: "life",
+    variant: "polaroid",
   },
   {
     src: "/images/personal/pool-tropical.jpg",
     alt: "Lapo walking barefoot by a pool in tropical greenery",
     caption: "Off the grid for a minute",
-    variant: "life",
+    variant: "polaroid",
   },
 ]
 
