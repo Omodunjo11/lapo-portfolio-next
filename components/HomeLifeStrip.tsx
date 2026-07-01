@@ -66,7 +66,7 @@ export default function HomeLifeStrip({
                       src={photo.src}
                       alt={photo.alt}
                       fill
-                      sizes="(max-width: 768px) 42vw, 190px"
+                      sizes="(max-width: 768px) 42vw, 160px"
                       className="home-life-strip__img"
                     />
                   </div>
