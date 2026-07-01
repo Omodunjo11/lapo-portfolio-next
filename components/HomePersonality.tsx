@@ -15,28 +15,26 @@ export default function HomePersonality() {
     <section className="home-personality page-section page-section--bordered">
       <div className="pad-page home-personality__inner">
         <Reveal>
-          <div className="home-personality__layout">
-            <div className="home-personality__copy">
-              <p className="home-section-eyebrow">The person</p>
-              <h2 className="home-section-title">Besides the work.</h2>
-              <p className="home-personality__blurb">{PERSONAL_BLURB}</p>
-              <ul className="home-personality__bullets">
-                {PERSONAL_BULLETS.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-
-            <HomeLifeStrip
-              photos={HOME_LIFE_STRIP}
-              label="Life lately"
-              linkLabel="More on About →"
-              layout="grid"
-              inset
-              polaroid
-            />
+          <div className="home-personality__copy-block">
+            <p className="home-section-eyebrow">The person</p>
+            <h2 className="home-section-title">Besides the work.</h2>
+            <p className="home-personality__blurb">{PERSONAL_BLURB}</p>
+            <ul className="home-personality__bullets">
+              {PERSONAL_BULLETS.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
           </div>
         </Reveal>
+
+        <HomeLifeStrip
+          photos={HOME_LIFE_STRIP}
+          label="Life lately"
+          linkLabel="More on About →"
+          layout="scroll"
+          polaroid
+          delay={0.06}
+        />
 
         <Reveal delay={0.12}>
           <div className="home-reading-picks">

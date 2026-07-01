@@ -43,12 +43,18 @@ export const HOME_PERSONALITY_PHOTO: PersonalPhoto = {
   variant: "polaroid",
 }
 
-/** Four photos max on home; the rest live on other pages */
+/** Life lately: horizontal polaroid scroll on homepage */
 export const HOME_LIFE_STRIP: PersonalPhoto[] = [
   {
     src: "/images/personal/wharton-nameplates.jpg",
     alt: "Lapo holding Wharton nameplates for Onaolapo and Michael Odunjo",
     caption: "Two nameplates, one person",
+    variant: "polaroid",
+  },
+  {
+    src: "/images/personal/wharton-wga-grad.jpg",
+    alt: "Lapo laughing on a rooftop in a suit with Wharton WGA Executive Board stole",
+    caption: "WGA board · Class of 2026",
     variant: "polaroid",
   },
   {
@@ -58,9 +64,45 @@ export const HOME_LIFE_STRIP: PersonalPhoto[] = [
     variant: "polaroid",
   },
   {
+    src: "/images/personal/street-friends-laugh.jpg",
+    alt: "Lapo laughing with a friend on a sunny city street",
+    caption: "Sunny block · couldn't stop laughing",
+    variant: "polaroid",
+  },
+  {
     src: "/images/personal/friends-huddle.jpg",
     alt: "Lapo huddled with close friends, laughing",
     caption: "The people who keep you honest",
+    variant: "polaroid",
+  },
+  {
+    src: "/images/personal/brick-wall-selfie.jpg",
+    alt: "Lapo and a friend smiling in a brick wall selfie",
+    caption: "Brick wall · wrong angle, right vibe",
+    variant: "polaroid",
+  },
+  {
+    src: "/images/personal/wharton-grad-crew.jpg",
+    alt: "Lapo in graduation gown with friends and flowers outdoors",
+    caption: "Graduation day · flowers and the crew",
+    variant: "polaroid",
+  },
+  {
+    src: "/images/personal/mirror-selfie-crew.jpg",
+    alt: "Large group mirror selfie in a building lobby",
+    caption: "Lobby mirror · everyone in frame",
+    variant: "polaroid",
+  },
+  {
+    src: "/images/personal/couple-brick-building.jpg",
+    alt: "Lapo with a partner on a sunny afternoon in front of a brick building",
+    caption: "Summer afternoon · no agenda",
+    variant: "polaroid",
+  },
+  {
+    src: "/images/personal/captain-hat-party.jpg",
+    alt: "Lapo at a party wearing a captain's hat with drinks",
+    caption: "Captain's hat · boat drinks",
     variant: "polaroid",
   },
   {
@@ -119,6 +161,12 @@ export const ABOUT_SCATTERED_BEATS: ScatteredPhotoBeat[] = [
         variant: "life",
       },
       {
+        src: "/images/personal/wharton-wga-grad.jpg",
+        alt: "Lapo on a rooftop with Wharton WGA Executive Board stole",
+        caption: "WGA board · Class of 2026",
+        variant: "life",
+      },
+      {
         src: "/images/personal/polaroid-laugh.jpg",
         alt: "Lapo laughing while working at a laptop",
         caption: "The moment the deploy actually worked",
@@ -132,15 +180,27 @@ export const ABOUT_SCATTERED_BEATS: ScatteredPhotoBeat[] = [
     note: "The work is solo sometimes. The life almost never is.",
     photos: [
       {
+        src: "/images/personal/street-friends-laugh.jpg",
+        alt: "Lapo laughing with a friend on a sunny city street",
+        caption: "Sunny block · couldn't stop laughing",
+        variant: "life",
+      },
+      {
+        src: "/images/personal/wharton-grad-crew.jpg",
+        alt: "Lapo in graduation gown with friends and flowers outdoors",
+        caption: "Graduation day · flowers and the crew",
+        variant: "life",
+      },
+      {
         src: "/images/personal/tux-lounge-laugh.jpg",
         alt: "Lapo laughing with a friend in a library lounge, both in tuxedos",
         caption: "Library lounge · black tie, actual joy",
         variant: "life",
       },
       {
-        src: "/images/personal/group-chesterfield.jpg",
-        alt: "Large group of friends posed on a Chesterfield sofa at a formal event",
-        caption: "The whole crew",
+        src: "/images/personal/mirror-selfie-crew.jpg",
+        alt: "Large group mirror selfie in a building lobby",
+        caption: "Lobby mirror · everyone in frame",
         variant: "life",
       },
     ],

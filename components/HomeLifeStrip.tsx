@@ -35,6 +35,7 @@ export default function HomeLifeStrip({
     compact && "home-life-strip--compact",
     layout === "grid" && "home-life-strip--grid",
     layout === "grid" && usePolaroid && "home-life-strip--polaroid-grid",
+    layout === "scroll" && usePolaroid && "home-life-strip--polaroid-scroll",
     inset && "home-life-strip--inset",
   ]
     .filter(Boolean)
@@ -57,7 +58,7 @@ export default function HomeLifeStrip({
           {photos.map((photo, i) => (
             <figure
               key={photo.src}
-              className={`home-life-strip__card${usePolaroid ? " home-life-strip__card--polaroid" : ""} home-life-strip__card--${i + 1}`}
+              className={`home-life-strip__card${usePolaroid ? " home-life-strip__card--polaroid" : ""} home-life-strip__card--${(i % 4) + 1}`}
             >
               {usePolaroid ? (
                 <div className="home-life-strip__polaroid">
