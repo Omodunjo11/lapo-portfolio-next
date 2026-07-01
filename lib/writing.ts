@@ -19,7 +19,7 @@ export const essays: Essay[] = [
     category: "Essay · AI & Adoption",
     title: "The Bottleneck Was Never the Model",
     description:
-      "Hospital nurses, bank analysts, and the gap between a good model and a system people will actually use. Personal, not a case study.",
+      "Two nameplates, one person, and what hospital nurses taught me about AI adoption. Lagos to Wharton to production deploys.",
     url: `${SITE_URL}/writing/${FEATURED_ESSAY_SLUG}`,
     year: "2026",
     onSite: true,

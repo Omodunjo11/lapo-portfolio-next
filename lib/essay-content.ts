@@ -2,9 +2,20 @@ export type EssayBlock =
   | { type: "p"; text: string }
   | { type: "h2"; text: string }
   | { type: "pull"; text: string }
+  | { type: "figure"; src: string; alt: string; caption: string }
 
 export const ESSAY_CONTENT: Record<string, EssayBlock[]> = {
   "the-bottleneck-was-never-the-model": [
+    {
+      type: "p",
+      text: "At Wharton I once walked into a classroom holding two nameplates: one folded paper tent that said Onaolapo Odunjo, one black desk plate that said Michael Odunjo. Same person. Different rooms expect different versions of you. I thought about that a lot while shipping Kinage in production and writing MBA papers in the same semester. I did not sleep enough. I also did not stop being the kid from Lagos who reads systems before reading the room.",
+    },
+    {
+      type: "figure",
+      src: "/images/personal/wharton-nameplates.jpg",
+      alt: "Lapo holding Wharton nameplates for Onaolapo and Michael Odunjo",
+      caption: "Onaolapo on paper, Michael on the desk, Lapo in real life.",
+    },
     {
       type: "p",
       text: "The first time I watched a hospital nurse ignore an AI recommendation, I assumed the model was wrong. I pulled the logs. I checked the confidence scores. I compared the output to the ground truth the clinical team had agreed on weeks earlier. The model was right. The nurse overrode it anyway, quickly and without drama, the way you dismiss a notification you have learned not to trust.",
@@ -75,7 +86,11 @@ export const ESSAY_CONTENT: Record<string, EssayBlock[]> = {
     },
     {
       type: "p",
-      text: "I am not looking for rooms where AI has to sound impressive in a steering committee deck. I am looking for rooms where the hard problem starts after the pilot: when someone has to own adoption, when overrides are the most honest feedback you will ever get, when the model is good enough and the institution still will not move.",
+      text: "I am not looking for rooms where AI has to sound impressive in a steering committee deck. I am looking for rooms where the hard problem starts after the pilot: when someone has to own adoption, when overrides are the most honest feedback you will ever get, when the model is good enough and the institution still will not move. I want to be the person in the room who can hold both truths: the model is good, and the nurse still will not trust it yet. That is not a failure of engineering. That is the job.",
+    },
+    {
+      type: "p",
+      text: "On weekends I am at a Columbia game in a Bleach shirt, or on a ski slope giving a thumbs up after eating snow, or arguing about whether Dembélé and Mbappé are the most exciting forward line in football. None of that is on the résumé. All of it is why I care whether the systems I build get used by real people in real rooms.",
     },
     {
       type: "pull",

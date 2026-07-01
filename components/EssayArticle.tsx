@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 import type { EssayBlock } from "@/lib/essay-content"
 import type { Essay } from "@/lib/writing"
@@ -37,6 +38,23 @@ export default function EssayArticle({ essay, blocks }: Props) {
               <blockquote key={i} className="essay-article__pull">
                 {block.text}
               </blockquote>
+            )
+          }
+          if (block.type === "figure") {
+            return (
+              <figure key={i} className="essay-article__figure">
+                <div className="essay-article__figure-frame">
+                  <Image
+                    src={block.src}
+                    alt={block.alt}
+                    width={720}
+                    height={540}
+                    sizes="(max-width: 720px) 100vw, 720px"
+                    className="essay-article__figure-img"
+                  />
+                </div>
+                <figcaption className="essay-article__figure-caption">{block.caption}</figcaption>
+              </figure>
             )
           }
           return (

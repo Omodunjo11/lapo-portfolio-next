@@ -14,7 +14,7 @@ export default function HomeWriting() {
             <div>
               <p className="home-section-eyebrow home-section-eyebrow--light">Writing</p>
               <h2 className="home-section-title home-section-title--light">
-                Thinking that hasn&apos;t made it into a product yet.
+                The parts of me that don&apos;t fit a case study.
               </h2>
             </div>
             <Link href="/writing" className="btn btn--ghost btn--sm" style={{ flexShrink: 0 }}>

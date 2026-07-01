@@ -69,10 +69,10 @@ export default function WritingPage() {
             <em>not bullet points.</em>
           </>
         }
-        description="Writing is where I process what I cannot yet systematise. Identity, economics, belonging, adoption, the things that don't fit neatly into a pitch deck or a product spec."
+        description="Writing is where I sound like myself: Lagos kid, Wharton student, PM in production, Man United sufferer. Identity, economics, belonging, adoption. The stuff that does not fit a pitch deck."
       >
         <p style={{ fontSize: 11, color: "var(--terra)", marginTop: 14, letterSpacing: ".06em", animation: "fadeUp .7s .85s ease both" }}>
-          Featured essay on this site · more on Medium
+          One essay lives here. The rest are on Medium.
         </p>
       </PageHero>
 
@@ -85,10 +85,10 @@ export default function WritingPage() {
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <p style={{ fontSize: 13, lineHeight: 1.9, color: "var(--mid)" }}>
-            Most of my work is about making complex systems legible, to users, to regulators, to teams who have to trust something they cannot fully see. Writing is where I do that for myself first.
+            Most of my work is about making complex systems legible, to users, to regulators, to teams who have to trust something they cannot fully see. Writing is where I do that for myself first, usually at 1am, usually with too much football on in the background.
           </p>
           <p style={{ fontSize: 13, lineHeight: 1.9, color: "var(--mid)" }}>
-            Some of it is personal. Some of it is economic. One piece is about why hospital nurses and bank analysts override good models, and what that taught me about building AI that survives production.
+            The featured essay starts with two Wharton nameplates and ends with a Bleach shirt at a Columbia game. That is the point: the bottleneck was never the model. It is whether real people will stake their judgment on what your system says.
           </p>
         </div>
       </div>

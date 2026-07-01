@@ -4,11 +4,12 @@ import Reveal from "@/components/Reveal"
 import {
   GOODREADS_LINK,
   HOME_JOURNEY_PICKS,
+  HOME_LIFE_PHOTOS,
+  HOME_POLAROID_PHOTOS,
   HOME_READING_PICKS,
   PERSONAL_BLURB,
   PERSONAL_BULLETS,
   PERSONAL_INTRO,
-  PERSONAL_PHOTOS,
 } from "@/lib/personal"
 
 export default function HomePersonality() {
@@ -33,11 +34,11 @@ export default function HomePersonality() {
             </div>
           </Reveal>
 
-          <div className="home-personality__gallery">
-            {PERSONAL_PHOTOS.map((photo, i) => (
+          <div className="home-personality__gallery home-personality__gallery--compact">
+            {HOME_POLAROID_PHOTOS.map((photo, i) => (
               <Reveal key={photo.src} delay={0.05 + i * 0.06}>
                 <figure
-                  className={`home-personality__figure home-personality__figure--${photo.variant ?? "candid"} home-personality__figure--${i + 1}`}
+                  className={`home-personality__figure home-personality__figure--${photo.variant ?? "candid"}`}
                 >
                   <div className="home-personality__frame">
                     <Image
@@ -55,6 +56,33 @@ export default function HomePersonality() {
             ))}
           </div>
         </div>
+
+        <Reveal delay={0.1}>
+          <div className="home-life-strip">
+            <div className="home-life-strip__header">
+              <p className="home-life-strip__label">Life lately</p>
+              <Link href="/about" className="home-personality__link">
+                All photos →
+              </Link>
+            </div>
+            <div className="home-life-strip__track">
+              {HOME_LIFE_PHOTOS.map((photo) => (
+                <figure key={photo.src} className="home-life-strip__card">
+                  <div className="home-life-strip__frame">
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      sizes="280px"
+                      className="home-life-strip__img"
+                    />
+                  </div>
+                  <figcaption className="home-life-strip__caption">{photo.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </Reveal>
 
         <Reveal delay={0.12}>
           <div className="home-reading-picks">

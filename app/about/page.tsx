@@ -4,7 +4,7 @@ import Link from "next/link"
 import Reveal from "@/components/Reveal"
 import PageHero from "@/components/PageHero"
 import { CANONICAL_NAME, IDENTITY_LINE, KINAGE_TAGLINE, PROFILE_LINKS } from "@/lib/site"
-import { PERSONAL_PHOTOS } from "@/lib/personal"
+import { ABOUT_LIFE_PHOTOS, PERSONAL_BLURB } from "@/lib/personal"
 
 const stops = [
   {
@@ -431,12 +431,9 @@ export default function AboutPage() {
         <Reveal>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px,1fr))", gap: 1, background: "var(--border)" }}>
             {[
-              ...PERSONAL_PHOTOS.map((p) => ({ src: p.src, alt: p.alt })),
+              ...ABOUT_LIFE_PHOTOS.map((p) => ({ src: p.src, alt: p.alt })),
               { src: "/images/photo-wharton-study.png", alt: "Wharton study session, Philadelphia" },
-              { src: "/images/photo-tuxedos.jpg", alt: "Formal event, New York" },
-              { src: "/images/photo-blacktie.jpg", alt: "Black tie, New York" },
-              { src: "/images/photo-dinner.jpg", alt: "Dinner, New York" },
-              { src: "/images/photo-cocktails.jpg", alt: "Cocktails, New York" },
+              { src: "/images/photo-nairobi.jpg", alt: "Nairobi landscape" },
             ].map((photo) => (
               <div key={photo.src} style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden" }}>
                 <Image
@@ -460,10 +457,7 @@ export default function AboutPage() {
         <Reveal>
           <div className="pad-page" style={{ paddingTop: "clamp(32px, 4vw, 48px)", paddingBottom: "clamp(32px, 4vw, 48px)" }}>
             <p style={{ fontFamily: "var(--font-playfair), serif", fontStyle: "italic", fontSize: "clamp(16px, 1.8vw, 20px)", color: "var(--mid)", maxWidth: 640, lineHeight: 1.75 }}>
-              Outside the work I am a committed Man United fan in difficult times, and a France supporter
-              who thinks Mbappé and Dembélé together is the most exciting forward line in world football.
-              I read more than I should, and think too hard about why some cities produce disproportionate
-              numbers of people who build things.
+              {PERSONAL_BLURB}
             </p>
           </div>
         </Reveal>
