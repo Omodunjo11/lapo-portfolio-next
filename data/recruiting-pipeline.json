@@ -25,6 +25,10 @@
     {
       "companyId": "blue-orange-digital",
       "detail": "Highest-stakes item on the board — decision pending, they know about your competing offer"
+    },
+    {
+      "companyId": "sierra",
+      "detail": "6 days silent since the SF onsite — worth a light check-in with Edith soon"
     }
   ],
   "storyGaps": [
@@ -280,6 +284,72 @@
         "folderUrl": "",
         "prepUrl": "",
         "note": "Found via email scan, Aug 3 — add Drive folder URL"
+      }
+    },
+    {
+      "id": "sierra",
+      "name": "Sierra",
+      "role": "Strategist, Agent Development",
+      "stage": "final",
+      "stageLabel": "Final — onsite done (Jul 28), awaiting decision",
+      "ball": "them",
+      "priority": "P1",
+      "nextAction": "No word since Jul 28 SF onsite (Tina Xia, Niles Lawrence, Eleni Angelidis); nudge Edith if still silent by Aug 6",
+      "due": "2026-08-06",
+      "nudgeDate": "2026-08-06",
+      "lean": null,
+      "contacts": [
+        {
+          "name": "Edith Andersen",
+          "email": "edith@sierra.ai",
+          "role": "Recruiter"
+        },
+        {
+          "name": "Lexie Mitchell",
+          "email": "lexie@sierra.ai",
+          "role": "Recruiting coordinator"
+        }
+      ],
+      "aliases": [
+        "Sierra",
+        "sierra.ai",
+        "Edith Andersen",
+        "Lexie Mitchell"
+      ],
+      "drive": {
+        "folderUrl": "",
+        "prepUrl": "https://docs.google.com/document/d/1UjpnDOgPJeWCeNdKLkFNMg9hCBLuXlej1VReDDbmCms/edit",
+        "note": "Found via email scan, Aug 3 — this is the original Sierra_Interview_Prep_Final doc reused for Foundation Health"
+      }
+    },
+    {
+      "id": "semgrep",
+      "name": "Semgrep",
+      "role": "Unknown (never reached interview)",
+      "stage": "passed",
+      "stageLabel": "Passed — no interview offered",
+      "ball": "them",
+      "priority": "P2",
+      "nextAction": "Closed — confirmed no interview extended",
+      "due": "",
+      "nudgeDate": null,
+      "lean": null,
+      "contacts": [
+        {
+          "name": "Jean Stormes",
+          "email": "jean@semgrep.com",
+          "role": "Recruiting Operations"
+        }
+      ],
+      "aliases": [
+        "Semgrep",
+        "semgrep.com",
+        "Jean Stormes"
+      ],
+      "drive": {
+        "folderUrl": "",
+        "prepUrl": "",
+        "note": "Found via email scan, Aug 3 — archived, no active action needed"
       }
     }
   ],
