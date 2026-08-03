@@ -1,7 +1,14 @@
 import { NextResponse } from "next/server";
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-const isWarRoom = createRouteMatcher(["/war-room(.*)"]);
+const isWarRoomProtected = createRouteMatcher([
+  "/war-room(.*)",
+]);
+
+const isPublicWarRoom = createRouteMatcher([
+  "/war-room/sign-in(.*)",
+  "/war-room/unauthorized",
+]);
 
 const clerkReady =
   Boolean(process.env.CLERK_SECRET_KEY) &&
@@ -9,13 +16,8 @@ const clerkReady =
   !String(process.env.CLERK_SECRET_KEY).includes("placeholder") &&
   !String(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY).includes("placeholder");
 
-const clerkHandler = clerkMiddleware(async (auth, req) => {
-  // Only protect war-room when Clerk is configured
-  if (
-    isWarRoom(req) &&
-    !req.nextUrl.pathname.startsWith("/war-room/sign-in") &&
-    !req.nextUrl.pathname.startsWith("/war-room/unauthorized")
-  ) {
+const handler = clerkMiddleware(async (auth, req) => {
+  if (isWarRoomProtected(req) && !isPublicWarRoom(req)) {
     await auth.protect({
       unauthenticatedUrl: new URL("/war-room/sign-in", req.url).toString(),
     });
@@ -23,18 +25,21 @@ const clerkHandler = clerkMiddleware(async (auth, req) => {
 });
 
 export default function middleware(
-  ...args: Parameters<typeof clerkHandler>
+  ...args: Parameters<typeof handler>
 ) {
   if (!clerkReady) {
     return NextResponse.next();
   }
-  return clerkHandler(...args);
+  return handler(...args);
 }
 
 export const config = {
   matcher: [
-    // Narrow matcher: skip static assets. War-room auth only needs app routes.
+    // Skip Next.js internals and all static files, unless found in search params
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    // Always run for Clerk's auto-proxy path
+    "/__clerk/:path*",
+    // Always run for API routes
     "/(api|trpc)(.*)",
   ],
 };
