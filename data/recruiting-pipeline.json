@@ -21,6 +21,10 @@
     {
       "companyId": "invisible",
       "detail": "Follow-up sent for round 3 — wait for Kate/Derek to reply, nudge Aug 9 if silent"
+    },
+    {
+      "companyId": "blue-orange-digital",
+      "detail": "Highest-stakes item on the board — decision pending, they know about your competing offer"
     }
   ],
   "storyGaps": [
@@ -239,6 +243,43 @@
         "folderUrl": "",
         "prepUrl": "",
         "note": "Add Recruiting Season / Invisible Drive folder URL"
+      }
+    },
+    {
+      "id": "blue-orange-digital",
+      "name": "Blue Orange Digital",
+      "role": "Chief of Staff",
+      "stage": "final",
+      "stageLabel": "Final — decision pending after interview with Rizwan",
+      "ball": "them",
+      "priority": "P0",
+      "nextAction": "Waiting on Catarina's update (said early this week, as of Jul 31); nudge if silent past Aug 5",
+      "due": "2026-08-04",
+      "nudgeDate": "2026-08-05",
+      "lean": null,
+      "contacts": [
+        {
+          "name": "Catarina Valente",
+          "email": "catarina.valente@blueorangedigital.na.teamtailor-mail.com",
+          "role": "Recruiter"
+        },
+        {
+          "name": "Rizwan Yousuf",
+          "email": "rizwan.yousuf@blueorangedigital.na.teamtailor-mail.com",
+          "role": "Interviewer"
+        }
+      ],
+      "aliases": [
+        "Blue Orange Digital",
+        "Blue Orange",
+        "blueorangedigital.com",
+        "Catarina Valente",
+        "Rizwan Yousuf"
+      ],
+      "drive": {
+        "folderUrl": "",
+        "prepUrl": "",
+        "note": "Found via email scan, Aug 3 — add Drive folder URL"
       }
     }
   ],
