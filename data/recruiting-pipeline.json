@@ -20,7 +20,7 @@
     },
     {
       "companyId": "invisible",
-      "detail": "Now in round 3 — follow up with Kate/Derek to confirm details"
+      "detail": "Follow-up sent for round 3 — wait for Kate/Derek to reply, nudge Aug 9 if silent"
     }
   ],
   "storyGaps": [
@@ -205,9 +205,9 @@
       "stageLabel": "3rd round — scheduled",
       "ball": "them",
       "priority": "P1",
-      "nextAction": "Follow up Kate/Derek to confirm round 3 details / prep",
+      "nextAction": "Follow-up sent to Kate/Derek — awaiting reply on round 3 details",
       "due": "2026-08-06",
-      "nudgeDate": "2026-08-06",
+      "nudgeDate": "2026-08-09",
       "lean": 3,
       "contacts": [
         {
