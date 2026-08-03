@@ -1,4 +1,5 @@
-import type { Pipeline } from "./types";
+import type { Company, Pipeline } from "./types";
+import { ARCHIVE_STAGES } from "./types";
 import pipeline from "../../data/recruiting-pipeline.json";
 
 export const FUNNEL_COLUMNS = [
@@ -24,4 +25,25 @@ export function companiesByStage(data: Pipeline) {
     }
   }
   return map;
+}
+
+export function archivedCompanies(data: Pipeline): Company[] {
+  return data.companies.filter((c) =>
+    (ARCHIVE_STAGES as readonly string[]).includes(c.stage)
+  );
+}
+
+export function activeCompanies(data: Pipeline): Company[] {
+  return data.companies.filter(
+    (c) => !(ARCHIVE_STAGES as readonly string[]).includes(c.stage)
+  );
+}
+
+/** Companies whose `due` or `nudgeDate` is today or earlier, among active companies only. */
+export function attentionToday(data: Pipeline, todayISO: string): Company[] {
+  return activeCompanies(data).filter((c) => {
+    const dueFlag = c.due && c.due <= todayISO;
+    const nudgeFlag = c.nudgeDate && c.nudgeDate <= todayISO;
+    return Boolean(dueFlag || nudgeFlag);
+  });
 }

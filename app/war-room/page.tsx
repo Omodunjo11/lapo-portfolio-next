@@ -43,6 +43,8 @@ async function AuthenticatedWarRoom() {
   const { emailAllowed } = await import("@/lib/recruiting/access");
   const {
     companiesByStage,
+    archivedCompanies,
+    attentionToday,
     FUNNEL_COLUMNS,
     getRecruitingPipeline,
   } = await import("@/lib/recruiting/pipeline");
@@ -67,6 +69,11 @@ async function AuthenticatedWarRoom() {
   const upcoming = pipeline.events
     .filter((e) => e.status === "scheduled" && e.start)
     .sort((a, b) => a.start.localeCompare(b.start));
+  const today = new Intl.DateTimeFormat("en-CA", {
+    timeZone: pipeline.timezone || "America/New_York",
+  }).format(new Date());
+  const archived = archivedCompanies(pipeline);
+  const attention = attentionToday(pipeline, today);
 
   return (
     <div className="wr-root">
@@ -97,6 +104,9 @@ async function AuthenticatedWarRoom() {
         upcoming={upcoming}
         companies={pipeline.companies}
         focus={pipeline.focus}
+        archived={archived}
+        attention={attention}
+        today={today}
       />
 
       <p className="wr-foot">

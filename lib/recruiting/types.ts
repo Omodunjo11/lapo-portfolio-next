@@ -24,12 +24,34 @@ export type Company = {
   nudgeDate?: string | null;
   lean?: number | null;
   contacts?: { name: string; email?: string; role?: string }[];
+  aliases?: string[];
+  paths?: {
+    folder?: string;
+    notes?: string;
+    journal?: string;
+  };
   drive?: {
     folderUrl?: string;
     prepUrl?: string;
     note?: string;
   };
 };
+
+/** Stages that are still active in the funnel view. */
+export const ACTIVE_STAGES = [
+  "applied",
+  "first",
+  "second",
+  "third",
+  "fourth",
+  "final",
+  "offered",
+] as const;
+
+/** Stages that fall out of the active funnel but stay on record. */
+export const ARCHIVE_STAGES = ["passed", "ghosted"] as const;
+
+export const EDITABLE_STAGES = [...ACTIVE_STAGES, ...ARCHIVE_STAGES] as const;
 
 export type PipelineEvent = {
   id: string;

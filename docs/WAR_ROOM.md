@@ -28,6 +28,31 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/war-room
 
 **Security:** Never commit a password. If you typed a password in chat, rotate it in Clerk after setup.
 
+## In-app editing (no more hand-editing JSON)
+
+Each card on the board has an **Edit** button — stage, stage label, next
+action, due date, and nudge date can be changed right from `/war-room`. Saving
+commits the updated `data/recruiting-pipeline.json` straight to `main` via
+the GitHub API, which kicks off a normal Vercel deploy — expect ~30-60s
+before the change shows up (refresh the page after that).
+
+Companies marked `passed` or `ghosted` drop out of the active funnel and
+collect in a collapsible **Archived** section at the bottom of the board,
+instead of disappearing. Anything with a `due` or `nudgeDate` on or before
+today surfaces in a red **Needs attention today** banner at the top.
+
+Requires one more env var beyond Clerk's:
+
+```bash
+GITHUB_PIPELINE_TOKEN=github_pat_...
+```
+
+Create a fine-grained GitHub PAT scoped to just this repo
+(`Omodunjo11/lapo-portfolio-next`) with **Contents: Read and write**
+permission, then add it to Vercel → lapo-portfolio-next → Environment
+Variables. Without it, `/api/war-room/pipeline` returns a `commit_failed`
+error and the Edit form's save button will show it inline.
+
 ## Sync pipeline → portfolio
 
 From recruiting-season:
