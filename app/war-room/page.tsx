@@ -40,7 +40,6 @@ export default function WarRoomPage() {
 async function AuthenticatedWarRoom() {
   const { currentUser } = await import("@clerk/nextjs/server");
   const { redirect } = await import("next/navigation");
-  const { UserButton } = await import("@clerk/nextjs");
   const { emailAllowed } = await import("@/lib/recruiting/access");
   const {
     companiesByStage,
@@ -80,7 +79,6 @@ async function AuthenticatedWarRoom() {
         </div>
         <div className="wr-top-right">
           <span className="wr-meta">Updated {pipeline.updated}</span>
-          <UserButton />
         </div>
       </header>
 

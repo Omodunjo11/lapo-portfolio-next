@@ -3333,3 +3333,32 @@ a { color: inherit; text-decoration: none; }
   .wr-root { padding: 24px 14px 60px; }
   .wr-stats { grid-template-columns: repeat(2, 1fr); }
 }
+
+.wr-chrome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(248,250,252,0.9);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.wr-chrome-brand {
+  font-family: var(--font-syne), sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.wr-chrome-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
