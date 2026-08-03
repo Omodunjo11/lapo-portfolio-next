@@ -35,7 +35,7 @@ export default async function WarRoomSignInPage() {
   return (
     <div className="wr-sign">
       <div>
-        <p className="wr-eyebrow">Private</p>
+        <p className="wr-eyebrow">Private · personal only</p>
         <h1 className="wr-title" style={{ marginBottom: 24 }}>
           Recruiting <span>War Room</span>
         </h1>
@@ -43,9 +43,16 @@ export default async function WarRoomSignInPage() {
           routing="path"
           path="/war-room/sign-in"
           forceRedirectUrl="/war-room"
+          // Hide “Don’t have an account? Sign up” — you create users in Clerk dashboard
+          appearance={{
+            elements: {
+              footerAction: { display: "none" },
+            },
+          }}
         />
         <p className="wr-sign-note">
-          Personal login only. Set password in Clerk — never commit it to the repo.
+          Lapo only. Use your personal Gmail user created in Clerk. Work / Kinage
+          accounts are blocked.
         </p>
       </div>
     </div>

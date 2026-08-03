@@ -6,10 +6,6 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-/**
- * Private shell for /war-room only.
- * Public portfolio layout stays unchanged (no Geist, no Sign Up on the main site).
- */
 export default function WarRoomLayout({
   children,
 }: {
@@ -24,7 +20,7 @@ export default function WarRoomLayout({
       {clerkReady ? (
         <header className="wr-chrome">
           <Link href="/war-room" className="wr-chrome-brand">
-            War Room
+            War Room · personal
           </Link>
           <div className="wr-chrome-actions">
             <Show when="signed-out">

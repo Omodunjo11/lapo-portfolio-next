@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { currentUser } from "@clerk/nextjs/server";
+import ForceSignOut from "@/components/war-room/ForceSignOut";
+import { emailAllowed } from "@/lib/recruiting/access";
 
 export const metadata: Metadata = {
   title: "War Room · Unauthorized",
@@ -12,16 +15,18 @@ export default async function UnauthorizedPage() {
     Boolean(process.env.CLERK_SECRET_KEY) &&
     !String(process.env.CLERK_SECRET_KEY).includes("placeholder");
 
-  let SignOut: React.ReactNode = null;
   if (clerkReady) {
-    const { SignOutButton } = await import("@clerk/nextjs");
-    SignOut = (
-      <SignOutButton>
-        <button className="wr-btn" type="button">
-          Sign out
-        </button>
-      </SignOutButton>
-    );
+    const user = await currentUser();
+    const email =
+      user?.primaryEmailAddress?.emailAddress ||
+      user?.emailAddresses?.[0]?.emailAddress ||
+      null;
+    // If someone from Kinage (or any non-allowlisted account) signed in, kick them out.
+    if (user && !emailAllowed(email)) {
+      return (
+        <ForceSignOut reason="Only Lapo's personal account can access this page. Signing out." />
+      );
+    }
   }
 
   return (
@@ -30,12 +35,14 @@ export default async function UnauthorizedPage() {
         <h1 className="wr-title">
           Access <span>denied</span>
         </h1>
-        <p className="wr-sign-note" style={{ maxWidth: 420 }}>
-          This account isn&apos;t on the allowlist. Use the email in{" "}
-          <code>RECRUITING_ALLOWED_EMAILS</code>.
+        <p className="wr-sign-note" style={{ maxWidth: 440 }}>
+          This war room is personal — allowlisted to Lapo&apos;s Gmail only. Kinage
+          / work accounts cannot sign in.
         </p>
         <div style={{ display: "flex", gap: 12, marginTop: 20 }}>
-          {SignOut}
+          <Link href="/war-room/sign-in" className="wr-btn">
+            Sign in
+          </Link>
           <Link href="/" className="wr-btn wr-btn-ghost">
             Home
           </Link>
