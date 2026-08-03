@@ -20,7 +20,7 @@
     },
     {
       "companyId": "invisible",
-      "detail": "Don't chase yet; nudge window opens Aug 6"
+      "detail": "Now in round 3 — follow up with Kate/Derek to confirm details"
     }
   ],
   "storyGaps": [
@@ -201,11 +201,11 @@
       "id": "invisible",
       "name": "Invisible Technologies",
       "role": "Senior Product Manager",
-      "stage": "second",
-      "stageLabel": "2nd done (HM Alex); waiting next round",
+      "stage": "third",
+      "stageLabel": "3rd round — scheduled",
       "ball": "them",
       "priority": "P1",
-      "nextAction": "Follow up Kate/Derek if no reply",
+      "nextAction": "Follow up Kate/Derek to confirm round 3 details / prep",
       "due": "2026-08-06",
       "nudgeDate": "2026-08-06",
       "lean": 3,
@@ -292,16 +292,16 @@
       "blocker": "Waiting on Michal/Alina forward"
     },
     {
-      "id": "evt-invisible-next-unscheduled",
+      "id": "evt-invisible-round3-unscheduled",
       "companyId": "invisible",
       "start": "",
       "end": "",
-      "title": "Invisible — next round (type TBD)",
+      "title": "Invisible — round 3 (time TBD)",
       "with": "TBD",
       "type": "loop",
       "status": "unscheduled",
       "briefPath": null,
-      "blocker": "Waiting on Derek Pages / Kate Alvarico reply"
+      "blocker": "Waiting on Derek Pages / Kate Alvarico to schedule round 3"
     },
     {
       "id": "evt-foundation-jack-2026-08-03",
