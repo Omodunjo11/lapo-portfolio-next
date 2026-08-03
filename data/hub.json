@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "updated": "2026-08-03",
+  "timezone": "America/New_York",
+  "items": [
+    {
+      "id": "habit-workout-streak",
+      "category": "habit",
+      "title": "Daily workout streak",
+      "detail": "Even 20 minutes counts — don't break the chain",
+      "stage": "active",
+      "priority": "P1",
+      "due": null
+    },
+    {
+      "id": "project-hub-generalize",
+      "category": "project",
+      "title": "Generalize board pattern beyond recruiting",
+      "detail": "War room + hub now share git-store.ts — next: shared board UI",
+      "stage": "active",
+      "priority": "P2",
+      "due": null
+    },
+    {
+      "id": "writing-story-bank-post",
+      "category": "writing",
+      "title": "Post on building a story bank for interviews",
+      "stage": "backlog",
+      "priority": "P2",
+      "due": null
+    },
+    {
+      "id": "life-admin-passport",
+      "category": "life-admin",
+      "title": "Check passport expiry",
+      "stage": "backlog",
+      "priority": "P1",
+      "due": null
+    },
+    {
+      "id": "reading-deep-work",
+      "category": "reading",
+      "title": "Deep Work — Cal Newport",
+      "stage": "backlog",
+      "priority": "P2",
+      "due": null
+    }
+  ]
+}
