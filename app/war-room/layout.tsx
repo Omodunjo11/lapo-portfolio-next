@@ -31,6 +31,9 @@ export default function WarRoomLayout({
               </SignInButton>
             </Show>
             <Show when="signed-in">
+              <Link href="/hub" className="wr-btn-ghost">
+                Hub
+              </Link>
               <UserButton />
             </Show>
           </div>
