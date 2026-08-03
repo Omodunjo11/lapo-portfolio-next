@@ -1,26 +1,63 @@
 import type { Metadata } from "next";
-import { currentUser } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
-import { UserButton } from "@clerk/nextjs";
-import { emailAllowed } from "@/lib/recruiting/access";
-import {
-  companiesByStage,
-  FUNNEL_COLUMNS,
-  getRecruitingPipeline,
-} from "@/lib/recruiting/pipeline";
-import WarRoomBoard from "@/components/war-room/WarRoomBoard";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "War Room",
+  title: "War Room · Setup",
   robots: { index: false, follow: false },
 };
 
-export default async function WarRoomPage() {
+export default function WarRoomPage() {
+  const clerkReady =
+    Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) &&
+    Boolean(process.env.CLERK_SECRET_KEY) &&
+    !String(process.env.CLERK_SECRET_KEY).includes("placeholder");
+
+  if (!clerkReady) {
+    return (
+      <div className="wr-sign">
+        <div>
+          <p className="wr-eyebrow">Private</p>
+          <h1 className="wr-title">
+            War Room <span>setup</span>
+          </h1>
+          <p className="wr-sign-note" style={{ maxWidth: 460 }}>
+            Clerk keys are not on Vercel yet. Public site is up. Add{" "}
+            <code>NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY</code> and{" "}
+            <code>CLERK_SECRET_KEY</code>, then redeploy.
+          </p>
+          <Link href="/" className="wr-btn" style={{ display: "inline-block", marginTop: 16 }}>
+            Back home
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // Dynamic import path — real page logic lives in authenticated branch
+  return <AuthenticatedWarRoom />;
+}
+
+async function AuthenticatedWarRoom() {
+  const { currentUser } = await import("@clerk/nextjs/server");
+  const { redirect } = await import("next/navigation");
+  const { UserButton } = await import("@clerk/nextjs");
+  const { emailAllowed } = await import("@/lib/recruiting/access");
+  const {
+    companiesByStage,
+    FUNNEL_COLUMNS,
+    getRecruitingPipeline,
+  } = await import("@/lib/recruiting/pipeline");
+  const WarRoomBoard = (await import("@/components/war-room/WarRoomBoard")).default;
+
   const user = await currentUser();
   const email =
     user?.primaryEmailAddress?.emailAddress ||
     user?.emailAddresses?.[0]?.emailAddress ||
     null;
+
+  if (!user) {
+    redirect("/war-room/sign-in");
+  }
 
   if (!emailAllowed(email)) {
     redirect("/war-room/unauthorized");

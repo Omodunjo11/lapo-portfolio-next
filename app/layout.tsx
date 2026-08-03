@@ -71,19 +71,24 @@ export const metadata: Metadata = {
   },
 };
 
+const clerkReady =
+  Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) &&
+  !String(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY).includes("placeholder");
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <ClerkProvider>
-      <html lang="en" className={`${playfair.variable} ${dmMono.variable} ${syne.variable}`}>
-        <body style={{ fontFamily: "var(--font-dm-mono), monospace" }}>
-          <SkipLink />
-          <noscript>
-            <style>{`.reveal { opacity: 1 !important; transform: none !important; }`}</style>
-          </noscript>
-          <StructuredData />
-          <SiteChrome>{children}</SiteChrome>
-        </body>
-      </html>
-    </ClerkProvider>
+  const body = (
+    <html lang="en" className={`${playfair.variable} ${dmMono.variable} ${syne.variable}`}>
+      <body style={{ fontFamily: "var(--font-dm-mono), monospace" }}>
+        <SkipLink />
+        <noscript>
+          <style>{`.reveal { opacity: 1 !important; transform: none !important; }`}</style>
+        </noscript>
+        <StructuredData />
+        <SiteChrome>{children}</SiteChrome>
+      </body>
+    </html>
   );
+
+  if (!clerkReady) return body;
+  return <ClerkProvider>{body}</ClerkProvider>;
 }
