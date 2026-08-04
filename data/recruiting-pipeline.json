@@ -48,124 +48,45 @@
   ],
   "companies": [
     {
-      "id": "hang-ten",
-      "name": "Hang Ten",
-      "role": "Founding-team / TBD",
-      "stage": "second",
-      "stageLabel": "2nd (accepted flag)",
-      "ball": "them",
+      "id": "blue-orange-digital",
+      "name": "Blue Orange Digital",
+      "role": "Chief of Staff",
+      "stage": "final",
+      "stageLabel": "Final",
+      "ball": "you",
       "priority": "P0",
-      "nextAction": "Wait for Jack Ahn follow-up after housekeeping",
-      "due": null,
-      "nudgeDate": null,
-      "lean": 4,
+      "nextAction": "Attend: Onaolapo Odunjo / Rizwan Yousuf (Blue Orange Digital)",
+      "due": "2026-07-28",
+      "nudgeDate": "2026-08-05",
+      "lean": null,
       "contacts": [
         {
-          "name": "Jack Ahn",
+          "name": "Catarina Valente",
+          "email": "catarina.valente@blueorangedigital.na.teamtailor-mail.com",
+          "role": "Recruiter"
+        },
+        {
+          "name": "Rizwan Yousuf",
+          "email": "rizwan.yousuf@blueorangedigital.na.teamtailor-mail.com",
           "role": "Interviewer"
         }
       ],
       "aliases": [
-        "Hang Ten",
-        "Hang Ten Systems",
-        "hangten.ai",
-        "Jack Ahn"
+        "Blue Orange Digital",
+        "Blue Orange",
+        "blueorangedigital.com",
+        "Catarina Valente",
+        "Rizwan Yousuf"
       ],
-      "paths": {
-        "folder": "Hang Ten",
-        "notes": "Hang Ten/notes.md",
-        "journal": "Hang Ten/decision-journal.md"
-      },
       "drive": {
-        "folderUrl": "https://drive.google.com/drive/folders/12xlBxLYw4ttCiolqWwylQswdyNGlr2IO",
-        "prepUrl": "https://docs.google.com/document/d/1MIq0tBn5wfxJqcGcO3coDdrG_NsP-9TCR3fi_JuwaBQ/edit",
-        "note": "Mapped to Drive folder “Hang Ten”"
-      }
-    },
-    {
-      "id": "regal",
-      "name": "Regal",
-      "role": "Manager, AI Strategy & Deployment",
-      "stage": "second",
-      "stageLabel": "2nd (accepted flag)",
-      "ball": "you",
-      "priority": "P0",
-      "nextAction": "Reply to Kelsey with 3–4 times for Sahil (COO) video call",
-      "due": "2026-08-05",
-      "nudgeDate": null,
-      "lean": 4,
-      "contacts": [
-        {
-          "name": "Kelsey",
-          "email": "kelsey@regalvoice.com",
-          "role": "Recruiting"
-        },
-        {
-          "name": "Sahil Mehta",
-          "role": "COO"
-        },
-        {
-          "name": "Sahil",
-          "role": "Next interviewer"
-        }
-      ],
-      "aliases": [
-        "Regal",
-        "Regal Voice",
-        "regal.ai",
-        "regalvoice.com",
-        "Kelsey"
-      ],
-      "paths": {
-        "folder": "Regal",
-        "notes": "Regal/notes.md",
-        "journal": "Regal/decision-journal.md"
+        "folderUrl": "",
+        "prepUrl": "",
+        "note": "No company Drive folder found in Gmail scan — create Recruiting Season/Blue Orange Digital and paste folderUrl."
       },
-      "drive": {
-        "folderUrl": "https://drive.google.com/drive/folders/1zz0A9CKj2CJvcicO6dOrdgwTeM3fOjf0",
-        "prepUrl": "https://docs.google.com/document/d/1yVUuVFFeaLNZ6nZr7288Sr11ZmCkyfjlo1ZPfYKoo1M/edit",
-        "note": "Mapped to Drive folder “Regal”"
-      }
-    },
-    {
-      "id": "foundation-health",
-      "name": "Foundation Health",
-      "role": "AI / Product Manager",
-      "stage": "first",
-      "stageLabel": "1st done (Jack); Steve not scheduled",
-      "ball": "them",
-      "priority": "P1",
-      "nextAction": "Follow up Jack Leeming to schedule Steve Charette",
-      "due": "2026-08-05",
-      "nudgeDate": "2026-08-05",
-      "lean": 3,
-      "contacts": [
-        {
-          "name": "Jack Leeming",
-          "email": "jack.leeming@foundationhealth.com",
-          "role": "Recruiter"
-        },
-        {
-          "name": "Steve Charette",
-          "role": "Senior Director of Product"
-        }
-      ],
-      "aliases": [
-        "Foundation Health",
-        "foundationhealth.com",
-        "Jack Leeming",
-        "Steve Charette",
-        "PAIGE AI"
-      ],
       "paths": {
-        "folder": "Foundation Health",
-        "notes": "Foundation Health/interview-notes.md",
-        "journal": "Foundation Health/decision-journal.md"
-      },
-      "drive": {
-        "folderUrl": "https://drive.google.com/drive/folders/1C4rZXq5ho87J-YHJEP2eSMTEp4qPXNBB",
-        "prepUrl": "https://docs.google.com/document/d/1G24HcWf3DUyD5c2G264q2DIhDy75SxYH_VCeV_Y7VsQ/edit",
-        "note": "Mapped to Drive folder “Foundation Health”"
+        "folder": "Blue Orange Digital",
+        "notes": "Blue Orange Digital/interview-notes.md",
+        "journal": "Blue Orange Digital/decision-journal.md"
       }
     },
     {
@@ -206,7 +127,122 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1VMTqazpBn2Dni4uqRtkD1NRiRylD7yK9",
         "prepUrl": "https://docs.google.com/document/d/1qqrwcstj98k0L9e67vPpiwCcDA3kdvHUEtXOssBRW2o/edit",
-        "note": "Mapped to Drive folder “Brain Co”"
+        "note": "Canonical living notes Doc - update in place, never create duplicates"
+      }
+    },
+    {
+      "id": "enterpret",
+      "name": "Enterpret",
+      "role": "Chief of Staff",
+      "stage": "first",
+      "stageLabel": "1st (accepted flag)",
+      "ball": "them",
+      "priority": "P1",
+      "nextAction": "Sent Vikram 2026-08-04 asking to schedule first round; wait ~3 biz days then nudge",
+      "due": "2026-08-07",
+      "nudgeDate": "2026-08-07",
+      "lean": null,
+      "contacts": [
+        {
+          "name": "Vikram",
+          "email": "vikram@enterpret.com",
+          "role": "Scheduling / first round"
+        },
+        {
+          "name": "Varun",
+          "role": "Referral / intro"
+        }
+      ],
+      "aliases": [
+        "Enterpret",
+        "enterpret.com",
+        "vikram@enterpret.com"
+      ],
+      "drive": {
+        "folderUrl": "",
+        "prepUrl": "",
+        "note": "Add Drive folder when created"
+      },
+      "paths": {
+        "folder": "Enterpret",
+        "notes": "Enterpret/interview-notes.md",
+        "journal": "Enterpret/decision-journal.md"
+      }
+    },
+    {
+      "id": "foundation-health",
+      "name": "Foundation Health",
+      "role": "AI / Product Manager",
+      "stage": "first",
+      "stageLabel": "1st done (Jack); Steve not scheduled",
+      "ball": "them",
+      "priority": "P1",
+      "nextAction": "Follow up Jack Leeming to schedule Steve Charette",
+      "due": "2026-08-05",
+      "nudgeDate": "2026-08-05",
+      "lean": 3,
+      "contacts": [
+        {
+          "name": "Jack Leeming",
+          "email": "jack.leeming@foundationhealth.com",
+          "role": "Recruiter"
+        },
+        {
+          "name": "Steve Charette",
+          "role": "Senior Director of Product"
+        }
+      ],
+      "aliases": [
+        "Foundation Health",
+        "foundationhealth.com",
+        "Jack Leeming",
+        "Steve Charette",
+        "PAIGE AI"
+      ],
+      "paths": {
+        "folder": "Foundation Health",
+        "notes": "Foundation Health/interview-notes.md",
+        "journal": "Foundation Health/decision-journal.md"
+      },
+      "drive": {
+        "folderUrl": "https://drive.google.com/drive/folders/1C4rZXq5ho87J-YHJEP2eSMTEp4qPXNBB",
+        "prepUrl": "https://docs.google.com/document/d/1G24HcWf3DUyD5c2G264q2DIhDy75SxYH_VCeV_Y7VsQ/edit",
+        "note": "Canonical living prep Doc - update in place, never create duplicates"
+      }
+    },
+    {
+      "id": "hang-ten",
+      "name": "Hang Ten",
+      "role": "Founding-team / TBD",
+      "stage": "second",
+      "stageLabel": "2nd (accepted flag)",
+      "ball": "them",
+      "priority": "P0",
+      "nextAction": "Wait for Jack Ahn follow-up after housekeeping",
+      "due": "2026-08-05",
+      "nudgeDate": null,
+      "lean": 4,
+      "contacts": [
+        {
+          "name": "Jack Ahn",
+          "role": "Interviewer"
+        }
+      ],
+      "aliases": [
+        "Hang Ten",
+        "Hang Ten Systems",
+        "hangten.ai",
+        "Jack Ahn"
+      ],
+      "paths": {
+        "folder": "Hang Ten",
+        "notes": "Hang Ten/notes.md",
+        "journal": "Hang Ten/decision-journal.md"
+      },
+      "drive": {
+        "folderUrl": "https://drive.google.com/drive/folders/12xlBxLYw4ttCiolqWwylQswdyNGlr2IO",
+        "prepUrl": "https://docs.google.com/document/d/1MIq0tBn5wfxJqcGcO3coDdrG_NsP-9TCR3fi_JuwaBQ/edit",
+        "note": "Canonical living notes Doc (Claude-created Aug 4). Update prepUrl only if Doc is intentionally replaced."
       }
     },
     {
@@ -259,40 +295,83 @@
       }
     },
     {
-      "id": "blue-orange-digital",
-      "name": "Blue Orange Digital",
-      "role": "Chief of Staff",
-      "stage": "final",
-      "stageLabel": "Final",
+      "id": "regal",
+      "name": "Regal",
+      "role": "Manager, AI Strategy & Deployment",
+      "stage": "second",
+      "stageLabel": "2nd (accepted flag)",
       "ball": "you",
       "priority": "P0",
-      "nextAction": "Attend: Onaolapo Odunjo / Rizwan Yousuf (Blue Orange Digital)",
-      "due": "2026-07-28",
-      "nudgeDate": "2026-08-05",
-      "lean": null,
+      "nextAction": "Reply to Kelsey with 3–4 times for Sahil (COO) video call",
+      "due": "2026-08-05",
+      "nudgeDate": null,
+      "lean": 4,
       "contacts": [
         {
-          "name": "Catarina Valente",
-          "email": "catarina.valente@blueorangedigital.na.teamtailor-mail.com",
-          "role": "Recruiter"
+          "name": "Kelsey",
+          "email": "kelsey@regalvoice.com",
+          "role": "Recruiting"
         },
         {
-          "name": "Rizwan Yousuf",
-          "email": "rizwan.yousuf@blueorangedigital.na.teamtailor-mail.com",
-          "role": "Interviewer"
+          "name": "Sahil Mehta",
+          "role": "COO"
+        },
+        {
+          "name": "Sahil",
+          "role": "Next interviewer"
         }
       ],
       "aliases": [
-        "Blue Orange Digital",
-        "Blue Orange",
-        "blueorangedigital.com",
-        "Catarina Valente",
-        "Rizwan Yousuf"
+        "Regal",
+        "Regal Voice",
+        "regal.ai",
+        "regalvoice.com",
+        "Kelsey"
+      ],
+      "paths": {
+        "folder": "Regal",
+        "notes": "Regal/notes.md",
+        "journal": "Regal/decision-journal.md"
+      },
+      "drive": {
+        "folderUrl": "https://drive.google.com/drive/folders/1zz0A9CKj2CJvcicO6dOrdgwTeM3fOjf0",
+        "prepUrl": "https://docs.google.com/document/d/1yVUuVFFeaLNZ6nZr7288Sr11ZmCkyfjlo1ZPfYKoo1M/edit",
+        "note": "Canonical living notes + Sahil prep Doc. Update in place only — do not create a second Doc."
+      }
+    },
+    {
+      "id": "semgrep",
+      "name": "Semgrep",
+      "role": "Unknown (never reached interview)",
+      "stage": "passed",
+      "stageLabel": "Passed — no interview offered",
+      "ball": "them",
+      "priority": "P2",
+      "nextAction": "Closed — confirmed no interview extended",
+      "due": "",
+      "nudgeDate": null,
+      "lean": null,
+      "contacts": [
+        {
+          "name": "Jean Stormes",
+          "email": "jean@semgrep.com",
+          "role": "Recruiting Operations"
+        }
+      ],
+      "aliases": [
+        "Semgrep",
+        "semgrep.com",
+        "Jean Stormes"
       ],
       "drive": {
         "folderUrl": "",
         "prepUrl": "",
-        "note": "No company Drive folder found in Gmail scan — create Recruiting Season/Blue Orange Digital and paste folderUrl."
+        "note": "No company Drive folder found in Gmail scan — create Recruiting Season/Semgrep and paste folderUrl."
+      },
+      "paths": {
+        "folder": "Semgrep",
+        "notes": "Semgrep/interview-notes.md",
+        "journal": "Semgrep/decision-journal.md"
       }
     },
     {
@@ -329,98 +408,15 @@
         "folderUrl": "",
         "prepUrl": "https://docs.google.com/document/d/1UjpnDOgPJeWCeNdKLkFNMg9hCBLuXlej1VReDDbmCms/edit",
         "note": "Found via email scan, Aug 3 — this is the original Sierra_Interview_Prep_Final doc reused for Foundation Health | Folder URL not found in mail — create Drive folder and paste."
-      }
-    },
-    {
-      "id": "semgrep",
-      "name": "Semgrep",
-      "role": "Unknown (never reached interview)",
-      "stage": "passed",
-      "stageLabel": "Passed — no interview offered",
-      "ball": "them",
-      "priority": "P2",
-      "nextAction": "Closed — confirmed no interview extended",
-      "due": "",
-      "nudgeDate": null,
-      "lean": null,
-      "contacts": [
-        {
-          "name": "Jean Stormes",
-          "email": "jean@semgrep.com",
-          "role": "Recruiting Operations"
-        }
-      ],
-      "aliases": [
-        "Semgrep",
-        "semgrep.com",
-        "Jean Stormes"
-      ],
-      "drive": {
-        "folderUrl": "",
-        "prepUrl": "",
-        "note": "No company Drive folder found in Gmail scan — create Recruiting Season/Semgrep and paste folderUrl."
-      }
-    },
-    {
-      "id": "enterpret",
-      "name": "Enterpret",
-      "role": "Chief of Staff",
-      "stage": "first",
-      "stageLabel": "1st (accepted flag)",
-      "ball": "them",
-      "priority": "P1",
-      "nextAction": "Sent Vikram 2026-08-04 asking to schedule first round; wait ~3 biz days then nudge",
-      "due": "2026-08-07",
-      "nudgeDate": "2026-08-07",
-      "lean": null,
-      "contacts": [
-        {
-          "name": "Vikram",
-          "email": "vikram@enterpret.com",
-          "role": "Scheduling / first round"
-        },
-        {
-          "name": "Varun",
-          "role": "Referral / intro"
-        }
-      ],
-      "aliases": [
-        "Enterpret",
-        "enterpret.com",
-        "vikram@enterpret.com"
-      ],
-      "drive": {
-        "folderUrl": "",
-        "prepUrl": "",
-        "note": "Add Drive folder when created"
+      },
+      "paths": {
+        "folder": "Sierra",
+        "notes": "Sierra/interview-notes.md",
+        "journal": "Sierra/decision-journal.md"
       }
     }
   ],
   "events": [
-    {
-      "id": "evt-hang-ten-2026-08-04",
-      "companyId": "hang-ten",
-      "start": "2026-08-04T12:30:00-04:00",
-      "end": "2026-08-04T13:00:00-04:00",
-      "title": "Onaolapo Odunjo and Jack Ahn",
-      "with": "Jack Ahn",
-      "type": "founding",
-      "status": "done",
-      "briefPath": "briefs/2026-08-04-hang-ten.md",
-      "blocker": "Rescheduled from Mon Aug 3 7pm (calendar now shows Tue 12:30–1:00pm ET)"
-    },
-    {
-      "id": "evt-regal-2026-08-04",
-      "companyId": "regal",
-      "start": "2026-08-04T13:30:00-04:00",
-      "end": "2026-08-04T14:00:00-04:00",
-      "title": "Phone interview with Kelsey @ Regal!",
-      "with": "Kelsey",
-      "type": "phone",
-      "status": "done",
-      "briefPath": "briefs/2026-08-04-regal.md",
-      "blocker": null
-    },
     {
       "id": "evt-foundation-steve-unscheduled",
       "companyId": "foundation-health",
@@ -458,42 +454,6 @@
       "blocker": "Waiting on Derek Pages / Kate Alvarico to schedule round 3"
     },
     {
-      "id": "evt-foundation-jack-2026-08-03",
-      "companyId": "foundation-health",
-      "start": "2026-08-03T11:30:00-04:00",
-      "end": "2026-08-03T11:45:00-04:00",
-      "title": "Foundation Health — Jack Leeming recruiter",
-      "with": "Jack Leeming",
-      "type": "recruiter",
-      "status": "done",
-      "briefPath": null,
-      "blocker": null
-    },
-    {
-      "id": "evt-brain-recruiter-2026-08-03",
-      "companyId": "brain-co",
-      "start": "2026-08-03T14:00:00-04:00",
-      "end": "2026-08-03T14:30:00-04:00",
-      "title": "Brain Co — recruiter screen",
-      "with": "Michal / Alina",
-      "type": "recruiter",
-      "status": "done",
-      "briefPath": null,
-      "blocker": null
-    },
-    {
-      "id": "evt-invisible-alex-2026-07-29",
-      "companyId": "invisible",
-      "start": "2026-07-29T12:00:00-04:00",
-      "end": "2026-07-29T13:00:00-04:00",
-      "title": "Invisible — HM with Alex Arutyunyants",
-      "with": "Alex Arutyunyants",
-      "type": "hm",
-      "status": "done",
-      "briefPath": null,
-      "blocker": null
-    },
-    {
       "id": "evt-sierra-2026-07-28",
       "companyId": "sierra",
       "start": "2026-07-28T13:15:00-04:00",
@@ -518,15 +478,27 @@
       "blocker": null
     },
     {
-      "id": "evt-invisible-2026-08-07",
+      "id": "evt-invisible-alex-2026-07-29",
       "companyId": "invisible",
-      "start": "2026-08-07T10:30:00-04:00",
-      "end": "2026-08-07T11:00:00-04:00",
-      "title": "Interview with Invisible Technologies",
-      "with": "",
-      "type": "other",
-      "status": "scheduled",
-      "briefPath": "briefs/2026-08-07-invisible.md",
+      "start": "2026-07-29T12:00:00-04:00",
+      "end": "2026-07-29T13:00:00-04:00",
+      "title": "Invisible — HM with Alex Arutyunyants",
+      "with": "Alex Arutyunyants",
+      "type": "hm",
+      "status": "done",
+      "briefPath": null,
+      "blocker": null
+    },
+    {
+      "id": "evt-foundation-jack-2026-08-03",
+      "companyId": "foundation-health",
+      "start": "2026-08-03T11:30:00-04:00",
+      "end": "2026-08-03T11:45:00-04:00",
+      "title": "Foundation Health — Jack Leeming recruiter",
+      "with": "Jack Leeming",
+      "type": "recruiter",
+      "status": "done",
+      "briefPath": null,
       "blocker": null
     },
     {
@@ -539,6 +511,18 @@
       "type": "other",
       "status": "scheduled",
       "briefPath": "briefs/2026-08-03-foundation-health.md",
+      "blocker": null
+    },
+    {
+      "id": "evt-brain-recruiter-2026-08-03",
+      "companyId": "brain-co",
+      "start": "2026-08-03T14:00:00-04:00",
+      "end": "2026-08-03T14:30:00-04:00",
+      "title": "Brain Co — recruiter screen",
+      "with": "Michal / Alina",
+      "type": "recruiter",
+      "status": "done",
+      "briefPath": null,
       "blocker": null
     },
     {
@@ -566,11 +550,47 @@
       "blocker": null
     },
     {
+      "id": "prep-next-regal-2026-08-04",
+      "companyId": "regal",
+      "start": "2026-08-04T12:00:00-04:00",
+      "end": "2026-08-04T12:45:00-04:00",
+      "title": "Next: Sahil @ Regal",
+      "with": "Sahil",
+      "type": "other",
+      "status": "unscheduled",
+      "briefPath": "briefs/next-regal.md",
+      "blocker": "Re: Next Steps | Regal"
+    },
+    {
+      "id": "evt-hang-ten-2026-08-04",
+      "companyId": "hang-ten",
+      "start": "2026-08-04T12:30:00-04:00",
+      "end": "2026-08-04T13:00:00-04:00",
+      "title": "Onaolapo Odunjo and Jack Ahn",
+      "with": "Jack Ahn",
+      "type": "founding",
+      "status": "done",
+      "briefPath": "briefs/2026-08-04-hang-ten.md",
+      "blocker": "Rescheduled from Mon Aug 3 7pm (calendar now shows Tue 12:30–1:00pm ET)"
+    },
+    {
       "id": "evt-regal-kelsey-2026-08-04",
       "companyId": "regal",
       "start": "2026-08-04T13:30:00-04:00",
       "end": "2026-08-04T14:00:00-04:00",
       "title": "Regal — phone with Kelsey",
+      "with": "Kelsey",
+      "type": "phone",
+      "status": "done",
+      "briefPath": "briefs/2026-08-04-regal.md",
+      "blocker": null
+    },
+    {
+      "id": "evt-regal-2026-08-04",
+      "companyId": "regal",
+      "start": "2026-08-04T13:30:00-04:00",
+      "end": "2026-08-04T14:00:00-04:00",
+      "title": "Phone interview with Kelsey @ Regal!",
       "with": "Kelsey",
       "type": "phone",
       "status": "done",
@@ -590,16 +610,16 @@
       "blocker": "Superseded by calendar update → 2026-08-07T10:30:00-04:00"
     },
     {
-      "id": "prep-next-regal-2026-08-04",
-      "companyId": "regal",
-      "start": "2026-08-04T12:00:00-04:00",
-      "end": "2026-08-04T12:45:00-04:00",
-      "title": "Next: Sahil @ Regal",
-      "with": "Sahil",
+      "id": "evt-invisible-2026-08-07",
+      "companyId": "invisible",
+      "start": "2026-08-07T10:30:00-04:00",
+      "end": "2026-08-07T11:00:00-04:00",
+      "title": "Interview with Invisible Technologies",
+      "with": "",
       "type": "other",
-      "status": "unscheduled",
-      "briefPath": "briefs/next-regal.md",
-      "blocker": "Re: Next Steps | Regal"
+      "status": "scheduled",
+      "briefPath": "briefs/2026-08-07-invisible.md",
+      "blocker": null
     }
   ],
   "funnelStages": [
@@ -620,27 +640,27 @@
       "draft": "schedule-confirm"
     },
     {
-      "companyId": "blue-orange-digital",
-      "due": "2026-08-05",
-      "detail": "Nudge Catarina if still silent on Rizwan decision",
-      "draft": "soft-nudge"
-    },
-    {
       "companyId": "invisible",
       "due": "2026-08-06",
       "detail": "Nudge Kate/Derek on remaining rounds + type",
       "draft": "invisible-rounds"
     },
     {
-      "companyId": "sierra",
-      "due": "2026-08-06",
-      "detail": "Light check-in with Edith after Jul 28 onsite silence",
-      "draft": "soft-nudge"
-    },
-    {
       "companyId": "brain-co",
       "due": "2026-08-07",
       "detail": "Nudge Michal/Alina if no HM forward yet",
+      "draft": "soft-nudge"
+    },
+    {
+      "companyId": "blue-orange-digital",
+      "due": "2026-08-05",
+      "detail": "Nudge Catarina if still silent on Rizwan decision",
+      "draft": "soft-nudge"
+    },
+    {
+      "companyId": "sierra",
+      "due": "2026-08-06",
+      "detail": "Light check-in with Edith after Jul 28 onsite silence",
       "draft": "soft-nudge"
     },
     {
