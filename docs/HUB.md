@@ -1,4 +1,4 @@
-# The Hub (private, password-gated)
+# The Hub (private, Clerk-gated)
 
 URL: https://lapoodunjo.com/hub
 
@@ -17,46 +17,20 @@ different file (see `lib/git-store.ts`, shared by both).
 
 It is **not** linked from anywhere on the public site and is `noindex`.
 
-## Auth: password, not Clerk
+## Auth: same session as War Room
 
-Unlike `/war-room`, `/hub` doesn't use Clerk — it's a single shared
-password, hashed and checked server-side, backing a signed session cookie.
-No new accounts, no sign-up flow, nothing tied to your email.
+`/hub` uses the exact same Clerk session and allowlist as `/war-room`
+(`requireRecruitingAccess()` / `emailAllowed()` in `lib/recruiting/access.ts`)
+— no separate password, no separate sign-in. Sign in once on either page and
+both are open; the middleware protects `/hub(.*)` the same way it protects
+`/war-room(.*)`.
 
-Two env vars, on top of the `GITHUB_PIPELINE_TOKEN` you already set up for
-the war room:
+No extra env vars beyond what Clerk already needs
+(`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`) and what the write
+API needs (`GITHUB_PIPELINE_TOKEN` — see `docs/WAR_ROOM.md`).
 
-```bash
-HUB_PASSWORD_HASH=scrypt$...
-HUB_SESSION_SECRET=<random hex string>
-```
-
-**Generate them locally — never paste the plaintext password into chat or a
-commit.** Run this on your machine:
-
-```bash
-node -e "
-const { randomBytes, scryptSync } = require('crypto');
-const password = process.argv[1];
-const salt = randomBytes(16);
-const hash = scryptSync(password, salt, 64);
-console.log('scrypt\$' + salt.toString('hex') + '\$' + hash.toString('hex'));
-" "your-password-here"
-```
-
-Copy the `scrypt$...` output into `HUB_PASSWORD_HASH`. Then generate the
-session secret:
-
-```bash
-node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
-```
-
-Add both to Vercel → lapo-portfolio-next → Environment Variables, then
-redeploy. Until `HUB_PASSWORD_HASH` is set, the login form shows "Hub
-password isn't set up yet" instead of accepting anything.
-
-The session cookie (`hub_auth`) lasts 30 days and is HttpOnly + Secure.
-"Sign out" on the board clears it immediately.
+Cross-links: once signed in, War Room's header has a "Hub" link and Hub's
+header has a "War Room" link, so you don't have to remember both URLs.
 
 ## Notes
 

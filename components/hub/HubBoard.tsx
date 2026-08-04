@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import {
   CATEGORIES,
   CATEGORY_LABELS,
@@ -297,23 +296,10 @@ export default function HubBoard({
   const router = useRouter();
   const refresh = () => router.refresh();
 
-  async function logout() {
-    await fetch("/api/hub/logout", { method: "POST" });
-    router.refresh();
-  }
-
   return (
     <div className="wr-grid">
       <div className="hub-topbar">
         <NewItemForm onChanged={refresh} />
-        <div style={{ display: "flex", gap: 10 }}>
-          <Link href="/war-room" className="wr-btn-ghost">
-            War Room
-          </Link>
-          <button type="button" className="wr-btn-ghost" onClick={logout}>
-            Sign out
-          </button>
-        </div>
       </div>
 
       {attention.length > 0 ? (

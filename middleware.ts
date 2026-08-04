@@ -3,6 +3,7 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 const isWarRoomProtected = createRouteMatcher([
   "/war-room(.*)",
+  "/hub(.*)",
 ]);
 
 const isPublicWarRoom = createRouteMatcher([

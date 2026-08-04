@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
-import { hasHubSession } from "@/lib/security/session";
+import { requireRecruitingAccess } from "@/lib/recruiting/access";
 import { getHubBoard } from "@/lib/hub/board";
 import { commitHubBoard } from "@/lib/hub/store";
 import { CATEGORIES, STAGES, type HubItem } from "@/lib/hub/types";
@@ -50,9 +50,9 @@ function sanitizeFields(input: unknown): EditableFields | null {
 }
 
 async function assertSession() {
-  const ok = await hasHubSession();
-  if (!ok) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  const access = await requireRecruitingAccess();
+  if (!access.ok) {
+    return NextResponse.json({ error: access.reason }, { status: 401 });
   }
   return null;
 }

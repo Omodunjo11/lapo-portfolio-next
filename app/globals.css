@@ -3471,19 +3471,7 @@ a { color: inherit; text-decoration: none; }
   .wr-edit-toggle { margin-left: 0; }
 }
 
-/* ── The Hub (private, password-gated) ── */
-.hub-login-input {
-  display: block;
-  margin-top: 18px;
-  width: 100%;
-  max-width: 280px;
-  font-size: 15px;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  background: var(--paper);
-  color: var(--ink);
-}
+/* ── The Hub (private, Clerk-gated same as War Room) ── */
 
 .hub-topbar {
   display: flex;
