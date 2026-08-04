@@ -26,15 +26,20 @@ export default function Footer() {
             {CANONICAL_NAME}
           </span>
           <span style={{ fontSize: 9, color: "var(--muted)", letterSpacing: ".06em" }}>
-            © 2026 · New York, NY{" "}
-            <Link
-              href="/war-room"
-              aria-label="Private"
-              style={{ color: "inherit", textDecoration: "none" }}
-            >
-              ·
-            </Link>
+            © 2026 · New York, NY
           </span>
+          <Link
+            href="/war-room"
+            aria-label="Private"
+            style={{
+              fontSize: 14,
+              lineHeight: 1,
+              color: "var(--terra)",
+              textDecoration: "none",
+            }}
+          >
+            •
+          </Link>
         </div>
 
         <span className="footer-motto">Ad astra per aspera.</span>
