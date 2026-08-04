@@ -138,10 +138,6 @@ async function AuthenticatedWarRoom() {
         ))}
       </section>
 
-      {comparison ? (
-        <WarRoomComparison comparison={comparison} rows={comparisonRows} />
-      ) : null}
-
       <WarRoomBoard
         columns={[...FUNNEL_COLUMNS]}
         initialCompanies={pipeline.companies}
@@ -156,6 +152,11 @@ async function AuthenticatedWarRoom() {
         recentEvents={pipeline.events.filter(
           (e) => e.status === "scheduled" || e.status === "done"
         )}
+        comparisonSlot={
+          comparison ? (
+            <WarRoomComparison comparison={comparison} rows={comparisonRows} />
+          ) : null
+        }
       />
 
       <p className="wr-foot">
