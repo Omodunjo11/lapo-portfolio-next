@@ -8,7 +8,6 @@ export type ComparisonRow = {
   sizeBand: string;
   size: number;
   potential: number;
-  exit: number;
   fit: number;
   compound: number;
   /** How keen they seem to advance Lapo (1–10). */
@@ -40,14 +39,13 @@ export type RankedComparisonRow = ComparisonRow & {
 
 export function rankScore(r: Pick<
   ComparisonRow,
-  "fit" | "compound" | "excited" | "potential" | "exit" | "size"
+  "fit" | "compound" | "excited" | "potential" | "size"
 >): number {
   return (
     r.fit * 2 +
     r.compound * 2 +
     r.excited +
-    r.potential +
-    r.exit -
+    r.potential -
     Math.max(0, r.size - 7)
   );
 }
