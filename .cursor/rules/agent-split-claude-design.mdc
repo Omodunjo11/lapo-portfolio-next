@@ -1,0 +1,37 @@
+---
+description: Split work with Claude Code — Cursor owns infra; Claude owns UI/UX, design, writing
+alwaysApply: true
+---
+
+# Agent split (this portfolio)
+
+**Claude Code** (terminal / recruiting-season agents): better at UI/UX, visual design, and writing. Prefer handing those surfaces to Claude.
+
+**This Cursor agent:** owns everything else end-to-end — APIs, scan/pipeline, git, deploy, data models, War Room wiring, Claude integration plumbing, bugfixes that are not primarily copy/design.
+
+## When the user asks for copy, design, or UI polish
+
+1. Do **not** freestyle long marketing copy, page redesigns, or visual redesigns yourself if Claude is available for that lane.
+2. Implement structure/plumbing here if needed, then give a **pasteable brief** for Claude Code (goal, files, constraints, acceptance bar).
+3. Wire Claude’s output into the app after they produce it (imports, routes, deploy).
+
+## Claude Code’s lane (examples)
+
+- Page / section copy, tone, headlines, story Bank polish
+- Prep briefs, comparison *memo* language, outreach drafts
+- CSS/layout/visual hierarchy refinements, landing polish, War Room visual polish
+- Design-system-feeling UI iteration
+
+## This agent’s lane (examples)
+
+- `/api/*`, Gmail/Calendar/Drive/scan, pipeline JSON, GitHub commits
+- Auth, env, Vercel, CI, type-safe joins (`companyId`, comparison schema)
+- Canvas sync from JSON when asked; keep Claude Code off `.canvas.tsx` unless user says otherwise
+- Comparison scores *schema* and War Room table wiring (Claude may refresh scored *writing* via `agents/compare.md`)
+
+## Default handoff line to Claude Code
+
+```text
+Cursor owns infra. You own writing + UI/UX/design for this task.
+Constraints: [files / don’t touch]. Deliver: [artifacts]. Stay out of API keys, deploy, and pipeline wiring unless asked.
+```
