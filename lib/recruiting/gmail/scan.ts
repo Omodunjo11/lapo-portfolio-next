@@ -126,12 +126,15 @@ export async function scanInterviewSignals(
     .join(" OR ");
 
   const interviewTerms =
-    '(interview OR interviewer OR "phone screen" OR "hiring manager" OR onsite OR calendly OR "final round" OR "next round" OR "first round" OR "google meet" OR invitation)';
+    '(interview OR interviewer OR "phone screen" OR "hiring manager" OR onsite OR calendly OR "final round" OR "next round" OR "first round" OR "google meet" OR invitation OR NDA OR "non-disclosure" OR "next step" OR "next stage" OR "move forward" OR "moving forward")';
   const sentChaseTerms =
-    '("first round" OR schedule OR scheduled OR "find some time" OR "looking forward" OR calendly OR "attached" OR applied OR resume)';
+    '("first round" OR schedule OR scheduled OR "find some time" OR "looking forward" OR calendly OR "attached" OR applied OR resume OR NDA)';
+  // Tracked company + clear process docs (NDA) even without the word interview.
+  const processTerms =
+    '(NDA OR "non-disclosure" OR "next step" OR "next stage" OR "move forward" OR "moving forward" OR "excited to continue" OR "excited to move")';
 
   // Inbox + Sent (default Gmail search excludes Spam/Trash).
-  const inboxQ = `after:${after} -in:spam -in:trash ((${aliasQuery}) (${interviewTerms}) OR (in:sent (${aliasQuery}) ${sentChaseTerms}))`;
+  const inboxQ = `after:${after} -in:spam -in:trash ((${aliasQuery}) (${interviewTerms} OR ${processTerms}) OR (in:sent (${aliasQuery}) ${sentChaseTerms}))`;
   // Explicit Spam pass — Hang Ten and others have landed here.
   const spamQ = `in:spam after:${after} (${aliasQuery})`;
 

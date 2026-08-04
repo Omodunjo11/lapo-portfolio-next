@@ -95,6 +95,10 @@ War Room can scan your inbox from the site:
 
 Interview signals only (not applications). Matches tracked companies by alias.
 Also searches **Gmail Spam** for tracked-company aliases (Hang Ten has landed there).
+Process mail counts too: **NDA**, “next step/stage”, “move forward” — not only the word “interview”.
+
+Scan cadence: button anytime; site cron once daily ~8am ET. New mail after the last
+scan will not appear until you Scan again (or wait for cron).
 
 Behavior:
 - Calendar high-confidence interviews → write event facts into the pipeline (due / next action). **Does not move funnel stage.**

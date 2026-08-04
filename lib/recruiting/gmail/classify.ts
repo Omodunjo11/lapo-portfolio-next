@@ -33,7 +33,10 @@ export type IngestProposal = {
 type CompanyHit = Company & { noise?: boolean };
 
 const INTERVIEW_RE =
-  /\b(interview|interviewer|phone screen|recruiter screen|hiring manager|hm screen|onsite|on-site|loop|final round|panel|meet(?:ing)? with|zoom|google meet|teams call|calendly|schedule(?:d)? (?:a |an )?(?:call|interview|chat)|upcoming interview|interview confirmation|invitation:?|first round|get .* scheduled|find some time|whenever it works|pointed me|applied through)\b/i;
+  /\b(interview|interviewer|phone screen|recruiter screen|hiring manager|hm screen|onsite|on-site|loop|final round|panel|meet(?:ing)? with|zoom|google meet|teams call|calendly|schedule(?:d)? (?:a |an )?(?:call|interview|chat)|upcoming interview|interview confirmation|invitation:?|first round|get .* scheduled|find some time|whenever it works|pointed me|applied through|nda|non-?disclosure|next step|next stage|move forward|moving forward|continue(?:d)? (?:our |the )?conversation|sign (?:the |this )?(?:attached )?nda)\b/i;
+
+const PROCESS_ADVANCE_RE =
+  /\b(next steps?|next stage|moving forward|move forward|hiring manager|next round|final round|onsite|nda|non-?disclosure|complete (?:the |an )?nda|sign (?:the |this )?(?:attached )?nda|excited to (?:move|continue))\b/i;
 
 const OUTBOUND_CHASE_RE =
   /\b(first round|get .* scheduled|find some time|whenever it works|pointed me|applied through|copying (him|her|them)|attached my resume|would love to find some time)\b/i;
@@ -158,21 +161,28 @@ export function classifyEmail({
   }
 
   if (!isInterviewSignal({ subject, snippet, from, source: "gmail" })) {
+    // Tracked-company NDA / process mail can omit the word "interview" in
+    // subject+snippet. Still treat as process signal.
+    if (company && PROCESS_ADVANCE_RE.test(text)) {
+      return {
+        signal: "advance",
+        confidence: "medium",
+        reason: "process advance (NDA / next stage)",
+      };
+    }
     return {
       signal: "noise",
       confidence: "medium",
       reason: "not interview-related (applications ignored)",
     };
   }
-  if (
-    /next steps|moving forward|hiring manager|next round|final round|onsite/i.test(
-      text
-    )
-  ) {
+  if (PROCESS_ADVANCE_RE.test(text)) {
     return {
       signal: "advance",
       confidence: "medium",
-      reason: "interview advance",
+      reason: /nda|non-?disclosure/i.test(text)
+        ? "NDA / next-stage advance"
+        : "interview advance",
     };
   }
   if (
