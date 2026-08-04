@@ -31,7 +31,14 @@ export function proposalsToFlags(
   const out: InboxFlag[] = [];
 
   for (const p of proposals) {
-    if (!p.companyId || p.signal === "noise" || p.signal === "wait") continue;
+    if (!p.companyId || p.signal === "noise") continue;
+    // Non-spam waits stay quiet; spam waits surface below.
+    if (
+      p.signal === "wait" &&
+      !(p.fromSpam || /\b\[spam\]\b/i.test(p.subject || ""))
+    ) {
+      continue;
+    }
     const company = pipeline.companies.find((c) => c.id === p.companyId);
     if (!company) continue;
     if (
