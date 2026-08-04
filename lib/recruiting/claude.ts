@@ -12,5 +12,5 @@ export function getAnthropic() {
 
 /** Fast enough for scan path; override with ANTHROPIC_PREP_MODEL if needed. */
 export function prepModel() {
-  return process.env.ANTHROPIC_PREP_MODEL?.trim() || "claude-sonnet-4-5-20250929";
+  return process.env.ANTHROPIC_PREP_MODEL?.trim() || "claude-haiku-4-5-20251001";
 }

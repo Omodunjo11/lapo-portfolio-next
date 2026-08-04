@@ -109,7 +109,7 @@ process notes. Short person aliases (e.g. Michal, Kelsey) only match the From he
 scheduled interviews and for **advance** emails (next steps) even before a calendar
 invite exists. Falls back to the static stub if the key is missing or Claude errors.
 Existing rich hand briefs are kept unless a new interviewer name appears.
-Optional: `ANTHROPIC_PREP_MODEL` (default `claude-sonnet-4-5-20250929`).
+Optional: `ANTHROPIC_PREP_MODEL` (default `claude-haiku-4-5-20251001` for scan speed).
 
 Scan cadence: button anytime; Actions ~every 6h; Vercel daily backup.
 
@@ -129,7 +129,7 @@ GMAIL_INGEST_DAYS=7
 CRON_SECRET=long-random-string
 ANTHROPIC_API_KEY=sk-ant-...
 # optional:
-# ANTHROPIC_PREP_MODEL=claude-sonnet-4-5-20250929
+# ANTHROPIC_PREP_MODEL=claude-haiku-4-5-20251001
 ```
 
 Copy client id/secret from `google-client.json` and `refresh_token` from

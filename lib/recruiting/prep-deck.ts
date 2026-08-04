@@ -161,11 +161,14 @@ export async function ensurePrepDecks(
     if (!company) continue;
 
     const existingLocal = localBriefText(event.briefPath);
-    const shouldGen =
-      opts.force || !existingLocal || !isRichBrief(existingLocal);
+    const hasEmail = Boolean(opts.emailByCompany?.[company.id]);
+    // Claude only when we have fresh email context (or force). Otherwise stub.
+    const shouldClaude =
+      opts.force ||
+      (hasEmail && (!existingLocal || !isRichBrief(existingLocal)));
 
     let text = existingLocal || stubPrepDeck(company, event);
-    if (shouldGen) {
+    if (shouldClaude) {
       const gen = await generatePrepDeck({
         company,
         event,
@@ -177,7 +180,7 @@ export async function ensurePrepDecks(
       if (gen.source === "claude") claudeDecks += 1;
     }
 
-    if (!event.briefPath || opts.force || shouldGen) {
+    if (!event.briefPath || opts.force || shouldClaude || !existingLocal) {
       try {
         event.briefPath = writeLocalBrief(company, event, text);
         localBriefs += 1;
@@ -186,11 +189,12 @@ export async function ensurePrepDecks(
       }
     }
 
-    const needsDoc = opts.force || !company.drive?.prepUrl || shouldGen;
+    const needsDoc =
+      opts.force || !company.drive?.prepUrl || shouldClaude;
     if (!needsDoc) continue;
 
     const result = await persistPrepDoc(company, event, text, {
-      overwriteDoc: Boolean(company.drive?.prepUrl) && shouldGen,
+      overwriteDoc: Boolean(company.drive?.prepUrl) && shouldClaude,
     });
     if (result.error) errors.push(result.error);
     if (result.created) createdDocs += 1;
@@ -226,7 +230,7 @@ export async function ensureAdvancePrepDecks(
   advances: IngestProposal[],
   opts: { limit?: number } = {}
 ): Promise<PrepEnsureResult> {
-  const limit = opts.limit ?? 3;
+  const limit = opts.limit ?? 2;
   const errors: string[] = [];
   let createdDocs = 0;
   let updatedDocs = 0;
@@ -293,8 +297,15 @@ export async function ensureAdvancePrepDecks(
 
     const slug = `next-${company.id}`;
     const existingPath = `briefs/${slug}.md`;
+    const legacyNext = join(
+      process.cwd(),
+      "data",
+      "briefs",
+      `next-${company.id}-sahil.md`
+    );
     const existingLocal =
       localBriefText(existingPath) ||
+      (existsSync(legacyNext) ? readFileSync(legacyNext, "utf8") : null) ||
       localBriefText(
         data.events.find(
           (e) => e.companyId === company.id && e.status === "scheduled"

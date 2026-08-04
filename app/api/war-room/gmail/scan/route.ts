@@ -127,7 +127,7 @@ async function runScan(opts: {
     const advances = await ensureAdvancePrepDecks(
       pipeline,
       scan.proposals.filter((p) => p.signal === "advance"),
-      { limit: 3 }
+      { limit: 2 }
     );
     pipeline = advances.pipeline;
 

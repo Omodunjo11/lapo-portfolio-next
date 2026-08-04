@@ -23,7 +23,7 @@ jobs:
           fi
           url="${SCAN_URL:-https://lapoodunjo.com/api/war-room/gmail/scan}"
           echo "Scanning via $url"
-          curl -fsS --max-time 90 \
+          curl -fsS --max-time 240 \
             -H "Authorization: Bearer ${CRON_SECRET}" \
             "$url" | tee /tmp/scan.json
           python3 - <<'PY'
