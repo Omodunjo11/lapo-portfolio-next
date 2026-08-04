@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/war-room/gmail/scan",
-      "schedule": "0 12,15,18,21,0 * * *"
+      "schedule": "0 12 * * *"
     }
   ]
 }

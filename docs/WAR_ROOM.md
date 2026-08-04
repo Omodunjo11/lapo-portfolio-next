@@ -82,7 +82,8 @@ Then `npm run dogfood:pull` and redeploy.
 War Room can scan your inbox from the site:
 
 1. **Scan inbox** button on `/war-room`
-2. **Vercel Cron** every few hours → `GET /api/war-room/gmail/scan`
+2. **Vercel Cron** once daily at 08:00 America/New_York (`0 12 * * *` UTC)
+   — Hobby plan limit. Use **Scan inbox** anytime for a fresh pull.
 
 Interview signals only (not applications). Matches tracked companies by alias.
 
