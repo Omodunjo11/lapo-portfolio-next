@@ -105,6 +105,17 @@ async function AuthenticatedWarRoom() {
                 })}`
               : ""}
           </span>
+          {pipeline.driveRootUrl ? (
+            <a
+              className="wr-btn"
+              href={pipeline.driveRootUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ marginLeft: 12 }}
+            >
+              Drive
+            </a>
+          ) : null}
         </div>
       </header>
 
@@ -129,6 +140,7 @@ async function AuthenticatedWarRoom() {
         initialSuggestions={suggestions}
         gmailReady={gmailConfigured()}
         lastScanAt={inbox.scannedAt || null}
+        driveRootUrl={pipeline.driveRootUrl}
         recentEvents={pipeline.events.filter(
           (e) => e.status === "scheduled" || e.status === "done"
         )}

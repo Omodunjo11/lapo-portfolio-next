@@ -65,7 +65,13 @@ Then commit + deploy the portfolio so Vercel gets the new JSON.
 
 ## Drive links
 
-Edit each company in `recruiting-season/schema/pipeline.json`:
+Root Recruiting Season folder:
+
+```json
+"driveRootUrl": "https://drive.google.com/drive/folders/..."
+```
+
+Optional per-company folders / prep docs in `recruiting-season/schema/pipeline.json`:
 
 ```json
 "drive": {
@@ -75,7 +81,7 @@ Edit each company in `recruiting-season/schema/pipeline.json`:
 }
 ```
 
-Then `npm run dogfood:pull` and redeploy.
+Then `npm run dogfood:pull` and redeploy. War Room cards fall back to `driveRootUrl` when a company has no `folderUrl`.
 
 ## Ingest (Gmail + Calendar in War Room)
 
@@ -124,7 +130,7 @@ marks the event done, and updates next action. Refresh after deploy (~30–60s).
 
 ## Drive links
 
-Paste each company Drive folder URL into `companies[].drive.folderUrl`.
+Root folder is `driveRootUrl` on the pipeline. Paste each company subfolder URL into `companies[].drive.folderUrl` when you have them.
 Gmail scan did not find per-company folders. Known prep docs (e.g. Sierra prep)
 may appear in `prepUrl`.
 

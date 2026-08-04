@@ -60,10 +60,12 @@ function CompanyCard({
   c,
   pending,
   onMove,
+  driveRootUrl,
 }: {
   c: Company;
   pending: boolean;
   onMove: (companyId: string, stage: FunnelStage) => void;
+  driveRootUrl?: string;
 }) {
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -161,13 +163,17 @@ function CompanyCard({
           <a href={c.drive.folderUrl} target="_blank" rel="noopener noreferrer">
             Drive folder
           </a>
+        ) : driveRootUrl ? (
+          <a href={driveRootUrl} target="_blank" rel="noopener noreferrer">
+            Drive root
+          </a>
         ) : null}
         {c.drive?.prepUrl ? (
           <a href={c.drive.prepUrl} target="_blank" rel="noopener noreferrer">
             Prep doc
           </a>
         ) : null}
-        {!c.drive?.folderUrl && !c.drive?.prepUrl ? (
+        {!c.drive?.folderUrl && !c.drive?.prepUrl && !driveRootUrl ? (
           <span className="wr-muted">
             {c.drive?.note || "Add Drive link in pipeline"}
           </span>
@@ -269,6 +275,7 @@ export default function WarRoomBoard({
   gmailReady = false,
   lastScanAt = null,
   recentEvents = [],
+  driveRootUrl,
 }: {
   columns: Col[];
   initialCompanies: Company[];
@@ -282,6 +289,7 @@ export default function WarRoomBoard({
   gmailReady?: boolean;
   lastScanAt?: string | null;
   recentEvents?: PipelineEvent[];
+  driveRootUrl?: string;
 }) {
   const [companies, setCompanies] = useState(initialCompanies);
   const [suggestions, setSuggestions] = useState(initialSuggestions);
@@ -878,6 +886,7 @@ export default function WarRoomBoard({
                     c={c}
                     pending={pending}
                     onMove={move}
+                    driveRootUrl={driveRootUrl}
                   />
                 ))}
               </div>
@@ -891,7 +900,13 @@ export default function WarRoomBoard({
           <summary>Archived ({archived.length})</summary>
           <div className="wr-col-body">
             {archived.map((c) => (
-              <CompanyCard key={c.id} c={c} pending={pending} onMove={move} />
+              <CompanyCard
+                key={c.id}
+                c={c}
+                pending={pending}
+                onMove={move}
+                driveRootUrl={driveRootUrl}
+              />
             ))}
           </div>
         </details>

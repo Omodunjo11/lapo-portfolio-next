@@ -497,7 +497,8 @@
     "fourth",
     "final"
   ],
-  "driveRootNote": "Paste each company Drive folder URL into companies[].drive.folderUrl",
+  "driveRootUrl": "https://drive.google.com/drive/folders/1MjTJoOq24ojbhXcvEbKU_PMcuwLOVw1q",
+  "driveRootNote": "Root Recruiting Season Drive is set. Paste each company subfolder URL into companies[].drive.folderUrl when you have them.",
   "chase": [
     {
       "companyId": "foundation-health",

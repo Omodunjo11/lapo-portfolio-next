@@ -86,5 +86,7 @@ export type Pipeline = {
   }[];
   companies: Company[];
   events: PipelineEvent[];
+  /** Parent Google Drive folder for Recruiting Season (all companies). */
+  driveRootUrl?: string;
   driveRootNote?: string;
 };
