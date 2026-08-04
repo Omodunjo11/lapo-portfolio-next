@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Hub",
@@ -20,6 +21,9 @@ export default function HubPage() {
             The <span>Hub</span>
           </h1>
           <p className="wr-sign-note">Clerk isn&apos;t configured yet — sign in from /war-room first.</p>
+          <Link href="/" className="wr-btn" style={{ display: "inline-block", marginTop: 16 }}>
+            Back home
+          </Link>
         </div>
       </div>
     );

@@ -19,6 +19,9 @@ export default function HubLayout({ children }: { children: React.ReactNode }) {
             Hub · personal
           </Link>
           <div className="wr-chrome-actions">
+            <Link href="/" className="wr-btn-ghost">
+              Home
+            </Link>
             <Show when="signed-out">
               <SignInButton mode="modal">
                 <button type="button" className="wr-btn">
