@@ -159,7 +159,15 @@ export function applyCalendarFacts(
     if (!company) continue;
 
     const eid = `evt-${company.id}-${p.start.slice(0, 10)}`;
-    let event = data.events.find((e) => e.id === eid || e.id === `cal-${p.id}`);
+    // Prefer same calendar id, else same-day id, else any still-scheduled
+    // event for this company (handles reschedules to a new day).
+    let event =
+      data.events.find((e) => e.id === `cal-${p.id}`) ||
+      data.events.find((e) => e.id === eid) ||
+      data.events.find(
+        (e) => e.companyId === company.id && e.status === "scheduled"
+      );
+
     if (!event) {
       event = {
         id: eid,
@@ -175,11 +183,29 @@ export function applyCalendarFacts(
       };
       data.events.push(event);
     } else {
+      // Keep stable id if this is a same-day/calendar match; otherwise
+      // rewrite onto the new-day id and cancel any other scheduled dupes.
+      if (event.id !== eid && event.id !== `cal-${p.id}`) {
+        event.id = eid;
+      }
       event.start = p.start;
       event.end = p.end;
       event.status = "scheduled";
       event.title = p.summary || event.title;
     }
+
+    // Cancel other scheduled events for this company on different times
+    for (const e of data.events) {
+      if (
+        e.companyId === company.id &&
+        e.status === "scheduled" &&
+        e.id !== event.id
+      ) {
+        e.status = "canceled";
+        e.blocker = `Superseded by calendar update → ${p.start}`;
+      }
+    }
+
     company.ball = "you";
     company.nextAction = `Attend: ${event.title}`;
     company.due = p.start.slice(0, 10);

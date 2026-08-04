@@ -129,7 +129,7 @@ export function classifyEmail({
     };
   }
   if (
-    /calendly|schedule a|book a time|availability|interview invite|zoom\.us|meet\.google|interview confirmation|phone interview is confirmed|you.?re invited to an interview/i.test(
+    /calendly|schedule a|book a time|availability|interview invite|zoom\.us|meet\.google|interview confirmation|phone interview is confirmed|you.?re invited to an interview|updated invitation|invitation from an unknown sender|invitation:/i.test(
       text
     )
   ) {
