@@ -1,5 +1,5 @@
 {
-  "scannedAt": "2026-08-04T18:40:35.326Z",
+  "scannedAt": "2026-08-04T19:05:07.042Z",
   "days": 7,
   "gmailMatched": 40,
   "calendarMatched": 9,
@@ -14,6 +14,7 @@
       "snippet": "Thank you, looking forward to it! Le mar. 4 août 2026 à 1:22 PM, Kate Alvarico &lt;kate.alvarico@invisible.email&gt; a écrit : Thanks Lapo! Ranjani mentioned 10:30am ET would work best for her. I&#39;",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
+      "fromSpam": false,
       "signal": "wait",
       "confidence": "low",
       "reason": "interview-adjacent, unclear"
@@ -28,6 +29,7 @@
       "snippet": "Thanks Lapo! Ranjani mentioned 10:30am ET would work best for her. I&#39;ll send you the confirmation email with the invite shortly. :) Regards, Kate Kate Alvarico Talent Acquisition Coordinator •",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
@@ -42,6 +44,7 @@
       "snippet": "Interview with Invisible Technologies Join with Google Meet – Join the Google Meet meeting: https://meet.google.com/mdf-kdin-jcf Join with Google Meet Meeting link meet.google.com/mdf-kdin-jcf Join by",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
@@ -56,6 +59,7 @@
       "snippet": "Hi Lapo, Thanks for your flexibility! We&#39;re pleased to confirm your interview for the Senior Product Manager role with Invisible Technologies. Please see your interview details below: Interview",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
@@ -70,6 +74,7 @@
       "snippet": "Hi Kate, Yes, happy to make the 7th work! Just let me know what time is best for Ranjani and I&#39;ll adjust my schedule accordingly. One small ask, if there&#39;s any way to get confirmation a bit in",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
@@ -84,6 +89,7 @@
       "snippet": "Hi Lapo, Unfortunately, we weren&#39;t able to confirm a time that works for Ranjani within the times you have shared. She&#39;s asking if you have any availability on the 7th? Please let us know.",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
@@ -98,9 +104,25 @@
       "snippet": "Hi Lapo, Apologies for the delay. We&#39;re still waiting to hear back from the interviewer to confirm a time that works for her. However, we&#39;ve followed it up, hoping to hear back later today.",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
+    },
+    {
+      "source": "gmail",
+      "id": "19fcb4f9b1a70ffe",
+      "threadId": "19fcb49cb0659459",
+      "date": "Tue, 4 Aug 2026 01:46:59 -0400",
+      "from": "Lapo Odunjo <odunjoonaolapo@gmail.com> → \"vikram@enterpret.com\" <vikram@enterpret.com> varun@enterpret.com",
+      "subject": "Chief of Staff role, per Varun",
+      "snippet": "Hi Vikram, Varun pointed me your way to get a first round scheduled for the Chief of Staff role, copying him here. I applied through the site, and I&#39;ve attached my resume for convenience. Would",
+      "companyId": "enterpret",
+      "companyName": "Enterpret",
+      "fromSpam": false,
+      "signal": "schedule",
+      "confidence": "medium",
+      "reason": "outbound schedule / first-round chase"
     },
     {
       "source": "gmail",
@@ -112,6 +134,7 @@
       "snippet": "Onaolapo Odunjo and Jack Ahn Join with Google Meet – Event Name Meet Hang Ten Location: This is a Google Meet web conference. You can join this meeting from your computer, tablet, or smartphone. https:",
       "companyId": "hang-ten",
       "companyName": "Hang Ten",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
@@ -126,6 +149,7 @@
       "snippet": "Onaolapo Odunjo and Jack Ahn Join with Google Meet – Event Name Meet Hang Ten Location: This is a Google Meet web conference. You can join this meeting from your computer, tablet, or smartphone. https:",
       "companyId": "hang-ten",
       "companyName": "Hang Ten",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
@@ -140,6 +164,7 @@
       "snippet": "Hello, Thank you for your email. I&#39;m now offline. For urgent concerns, kindly contact hiring-scheduling@invisible.email and your recruiter and they will be able to assist you in scheduling/",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
+      "fromSpam": false,
       "signal": "wait",
       "confidence": "low",
       "reason": "interview-adjacent, unclear"
@@ -154,6 +179,7 @@
       "snippet": "Hi Everyone, Following up on this, hoping to know where the interview is and if any information is need from me. Thank you On Fri, Jul 31, 2026 at 12:29 PM Kate Alvarico &lt;kate.alvarico@invisible.",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
+      "fromSpam": false,
       "signal": "wait",
       "confidence": "low",
       "reason": "interview-adjacent, unclear"
@@ -168,6 +194,7 @@
       "snippet": "Interview with Brain Co. Otter.ai logo The host has not admitted your Notetaker Notetaker tried to join your meeting, Interview with Brain Co. on Mon 8/3 at 14:00PM to record it for you, but the host",
       "companyId": "brain-co",
       "companyName": "Brain Co",
+      "fromSpam": false,
       "signal": "wait",
       "confidence": "low",
       "reason": "interview-adjacent, unclear"
@@ -182,6 +209,7 @@
       "snippet": "Onaolapo Odunjo and Jack Ahn This event isn&#39;t in your calendar yet You haven&#39;t interacted with jack@hangten.ai before. Do you want to automatically add this and future invitations from them to",
       "companyId": "hang-ten",
       "companyName": "Hang Ten",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
@@ -196,6 +224,7 @@
       "snippet": "Phone interview with Kelsey @ Regal! This event isn&#39;t in your calendar yet You haven&#39;t interacted with kelsey@regalvoice.com before. Do you want to automatically add this and future invitations",
       "companyId": "regal",
       "companyName": "Regal",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
@@ -210,6 +239,7 @@
       "snippet": "Hi Onaolapo, You&#39;re confirmed for your phone call on Tue, 8/04/26at 1:30 - 2:00 pm EDT.I will give you a call then. Please confirm this time works by accepting the calendar invite. I&#39;ve also",
       "companyId": "regal",
       "companyName": "Regal",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
@@ -224,6 +254,7 @@
       "snippet": "Onaolapo Odunjo, You have an upcoming interview with Brain Co. for the AI Deployment Lead job! Here are the details. Location: https://meet.google.com/max-yqfw-uva Agenda: Monday, August 3, 2026 11:00",
       "companyId": "brain-co",
       "companyName": "Brain Co",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
@@ -238,6 +269,7 @@
       "snippet": "Hi Onaolapo, Thanks for taking the time to interview with Sierra! We&#39;d love to hear about your experience. Please feel free to share feedback here: https://you.ashbyhq.com/Sierra/survey/10f03958-",
       "companyId": "sierra",
       "companyName": "Sierra",
+      "fromSpam": false,
       "signal": "wait",
       "confidence": "low",
       "reason": "interview-adjacent, unclear"
@@ -252,6 +284,7 @@
       "snippet": "Onaolapo Michael Odunjo and Jack Leeming Join with Google Meet – Event Name 15-minute call Location: This is a Google Meet web conference. You can join this meeting from your computer, tablet, or",
       "companyId": "foundation-health",
       "companyName": "Foundation Health",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
@@ -266,6 +299,7 @@
       "snippet": "Interview with Brain Co. This event isn&#39;t in your calendar yet You haven&#39;t interacted with michal@braincompany.ai before. Do you want to automatically add this and future invitations from them",
       "companyId": "brain-co",
       "companyName": "Brain Co",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
@@ -280,9 +314,25 @@
       "snippet": "Hi Onaolapo, Thanks for sharing your availability! You are confirmed for the following: Agenda: Monday, August 3, 2026 11:00 AM - 11:30 AM (PDT) - Recruiter Screen Alina Kuznetsovski (LinkedIn) https:/",
       "companyId": "brain-co",
       "companyName": "Brain Co",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
+    },
+    {
+      "source": "gmail",
+      "id": "19fba1877f930d28",
+      "threadId": "19fb9ebe8830222e",
+      "date": "Fri, 31 Jul 2026 17:33:13 -0400",
+      "from": "Lapo Odunjo <odunjoonaolapo@gmail.com> → Jean Stormes <jean@semgrep.com>",
+      "subject": "Re: A personal follow-up from our recruiting team",
+      "snippet": "haha thanks, now i remember i didn&#39;t get the interview but appreciate the nice message On Fri, Jul 31, 2026 at 4:44 PM Jean Stormes &lt;jean@semgrep.com&gt; wrote: Hi Onaolapo, My name is Jean, and",
+      "companyId": "semgrep",
+      "companyName": "Semgrep",
+      "fromSpam": false,
+      "signal": "wait",
+      "confidence": "low",
+      "reason": "interview-adjacent, unclear"
     },
     {
       "source": "gmail",
@@ -294,6 +344,7 @@
       "snippet": "No problem at all! I&#39;ve copied in Derek here to confirm the interview rounds and what would this interview be about. :) Regards, Kate Kate Alvarico Talent Acquisition Coordinator • Invisible",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
+      "fromSpam": false,
       "signal": "wait",
       "confidence": "low",
       "reason": "interview-adjacent, unclear"
@@ -308,6 +359,7 @@
       "snippet": "Really do appreciate this, one last question: do you have any information on how many rounds left and also what sort of interview this is, just for my preparation. Le ven. 31 juil. 2026 à 9:23 AM, Kate",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
+      "fromSpam": false,
       "signal": "wait",
       "confidence": "low",
       "reason": "interview-adjacent, unclear"
@@ -322,6 +374,7 @@
       "snippet": "Thanks Lapo! I&#39;ll just confirm a time that works for the interviewer within these and I&#39;ll let you know as soon as I hear back. :) I&#39;ve also added Hafsa here as I will be going offline in a",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
@@ -336,6 +389,7 @@
       "snippet": "Thanks Kate, availability sent and looking forward to it. On Fri, Jul 31, 2026 at 12:04 PM Kate Alvarico &lt;kate.alvarico@invisible.email&gt; wrote: Hi Onaolapo, I hope you&#39;re doing well! I&#39;m",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
@@ -350,6 +404,7 @@
       "snippet": "Hi Onaolapo, I hope you&#39;re doing well! I&#39;m reaching out to coordinate your next interview for the Senior Product Manager role. To help us schedule your interview, please use the link below to",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
+      "fromSpam": false,
       "signal": "wait",
       "confidence": "low",
       "reason": "interview-adjacent, unclear"
@@ -364,6 +419,7 @@
       "snippet": "Hi Catarina, Hope you&#39;re doing well! Wanted to follow up on my interview with Rizwan. I want to be upfront with you: I received an offer from Sierra AI today. Blue Orange is genuinely my top choice",
       "companyId": "blue-orange-digital",
       "companyName": "Blue Orange Digital",
+      "fromSpam": false,
       "signal": "wait",
       "confidence": "low",
       "reason": "interview-adjacent, unclear"
@@ -378,6 +434,7 @@
       "snippet": "Hi Lapo, Thanks for keeping me in the loop! I haven&#39;t connected with the team yet, but I&#39;ll aim to do so soon and circle back with you. Quick question - is there a deadline or timeline you&#39;",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
+      "fromSpam": false,
       "signal": "wait",
       "confidence": "low",
       "reason": "interview-adjacent, unclear"
@@ -392,6 +449,7 @@
       "snippet": "Hi Derek, Hope you&#39;re doing well! Wanted to follow up on my note from yesterday about the interview with Alex. I want to be upfront with you: I received an offer from Sierra Ai today. Invisible is",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
+      "fromSpam": false,
       "signal": "wait",
       "confidence": "low",
       "reason": "interview-adjacent, unclear"
@@ -406,23 +464,10 @@
       "snippet": "Onaolapo Odunjo and Jack Leeming This event isn&#39;t in your calendar yet You haven&#39;t interacted with jack.leeming@foundationhealth.com before. Do you want to automatically add this and future",
       "companyId": "foundation-health",
       "companyName": "Foundation Health",
+      "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
-    },
-    {
-      "source": "gmail",
-      "id": "19fafdcac112d08c",
-      "threadId": "19f1a66f5541d3dd",
-      "date": "Wed, 29 Jul 2026 14:51:42 -0700",
-      "from": "Lapo Odunjo <odunjoonaolapo@gmail.com> → Derek Pages <derek@invisibletech.ai> nancy.vo@invisibletech.ai",
-      "subject": "Re: Hello from Invisible!",
-      "snippet": "Hey Derek! Just spoke with Alex and I think the interview went really well. Hoping for positive next steps, let me know if you need anything else from my end! Le ven. 24 juil. 2026 à 3:55 PM, Derek",
-      "companyId": "invisible",
-      "companyName": "Invisible Technologies",
-      "signal": "advance",
-      "confidence": "medium",
-      "reason": "interview advance"
     },
     {
       "source": "calendar",
