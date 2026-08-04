@@ -50,7 +50,14 @@ async function AuthenticatedWarRoom() {
   const { allSuggestions } = await import("@/lib/recruiting/flags");
   const { getRecruitingInbox } = await import("@/lib/recruiting/inbox-store");
   const { gmailConfigured } = await import("@/lib/recruiting/gmail/client");
+  const {
+    getRecruitingComparison,
+    joinComparison,
+  } = await import("@/lib/recruiting/comparison");
   const WarRoomBoard = (await import("@/components/war-room/WarRoomBoard")).default;
+  const WarRoomComparison = (
+    await import("@/components/war-room/WarRoomComparison")
+  ).default;
 
   const user = await currentUser();
   const email =
@@ -81,6 +88,10 @@ async function AuthenticatedWarRoom() {
     timeZone: pipeline.timezone || "America/New_York",
   }).format(new Date());
   const archived = archivedCompanies(pipeline);
+  const comparison = getRecruitingComparison();
+  const comparisonRows = comparison
+    ? joinComparison(comparison, pipeline.companies)
+    : [];
 
   return (
     <div className="wr-root">
@@ -102,6 +113,7 @@ async function AuthenticatedWarRoom() {
                   minute: "2-digit",
                 })}`
               : ""}
+            {comparison ? ` · Compare ${comparison.updated}` : ""}
           </span>
           {pipeline.driveRootUrl ? (
             <a
@@ -126,6 +138,10 @@ async function AuthenticatedWarRoom() {
         ))}
       </section>
 
+      {comparison ? (
+        <WarRoomComparison comparison={comparison} rows={comparisonRows} />
+      ) : null}
+
       <WarRoomBoard
         columns={[...FUNNEL_COLUMNS]}
         initialCompanies={pipeline.companies}
@@ -143,7 +159,9 @@ async function AuthenticatedWarRoom() {
       />
 
       <p className="wr-foot">
-        Stages only move when you Accept a flag or drag a card.
+        Stages only move when you Accept a flag or drag a card. Comparison scores
+        update when you rebuild comparison — live stage and Drive links join by
+        company id.
       </p>
     </div>
   );

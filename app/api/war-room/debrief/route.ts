@@ -12,6 +12,8 @@ type DebriefBody = {
   eventId?: string;
   companyId: string;
   energy?: number;
+  /** How keen they seemed to advance you (1–5). Feeds comparison Excited. */
+  theirPull?: number;
   stageOutcome?: string;
   whatTheyCareAbout?: string;
   landed?: string;
@@ -78,7 +80,8 @@ export async function POST(req: NextRequest) {
   const md = `# Debrief — ${company.name} — ${today}
 
 **With:** ${withWho}  
-**Energy:** ${body.energy ?? "?"} / 5  
+**Energy (yours):** ${body.energy ?? "?"} / 5  
+**Their excitement / pull:** ${body.theirPull ?? "?"} / 5  
 **Stage outcome:** ${body.stageOutcome || "unclear"}
 
 ## What they care about

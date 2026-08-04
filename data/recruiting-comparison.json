@@ -1,0 +1,131 @@
+{
+  "updated": "2026-08-04",
+  "formula": "Fit×2 + Compound×2 + Excited + Potential + Exit − max(0, Size−7)",
+  "note": "Scores are judgment. Rows link to pipeline companies by companyId. Live stage/prepUrl come from recruiting-pipeline.json at render time.",
+  "memo": {
+    "topDeploy": ["sierra", "hang-ten", "brain-co"],
+    "bestCoS": "blue-orange-digital",
+    "deprioritize": ["enterpret"],
+    "offerPressure": "Blue Orange bird-in-hand CoS momentum vs Sierra compound + decision clock.",
+    "evidence": [
+      "Sierra accept/reject resolves the top slot.",
+      "Hang Ten naming role shape moves Fit ±1–2.",
+      "Debrief their-excitement / stageOutcome updates Excited on next rebuild."
+    ],
+    "summary": "Top deploy: Sierra (high brand + pull at decision), Hang Ten (strong thematic fit + advancing loop; role TBD), Brain Co (title match; lower Excited — evergreen, no urgency). Best CoS: Blue Orange on stage. Deprioritize Enterpret this week."
+  },
+  "rows": [
+    {
+      "companyId": "sierra",
+      "track": "Deploy",
+      "sizeBand": "Growth/late, approx",
+      "size": 6,
+      "potential": 9,
+      "exit": 8,
+      "fit": 8,
+      "compound": 9,
+      "excited": 8,
+      "excitedWhy": "Full onsite done; they own the decision clock — real investment in you, not a courtesy loop.",
+      "why": "Most prestigious brand in pipeline; agent-trust work maps to bank eval/gate proof.",
+      "watch": "No lever left except a clean nudge date; wait without inventing urgency."
+    },
+    {
+      "companyId": "hang-ten",
+      "track": "Deploy",
+      "sizeBand": "Seed, approx",
+      "size": 2,
+      "potential": 7,
+      "exit": 6,
+      "fit": 8,
+      "compound": 9,
+      "excited": 8,
+      "excitedWhy": "Third-round / NDA advance shows they want more time with you; loop is moving.",
+      "why": "Enterprise AI deployment is the product; founding proximity; Sikka/Budhiraja pedigree.",
+      "watch": "Role shape still undefined at round 3 — push for clarity before more prep."
+    },
+    {
+      "companyId": "brain-co",
+      "track": "Deploy",
+      "sizeBand": "Seed, approx",
+      "size": 2,
+      "potential": 8,
+      "exit": 6,
+      "fit": 8,
+      "compound": 9,
+      "excited": 5,
+      "excitedWhy": "Polite HM handoff wait; evergreen multi-hire — process is open, not pursuing hard.",
+      "why": "Title matches compound path; pedigree and gov/MENA bets fit partial-signal judgment.",
+      "watch": "Gov/MENA fit asserted not proven; don’t over-invest until HM surfaces urgency."
+    },
+    {
+      "companyId": "regal",
+      "track": "Deploy",
+      "sizeBand": "Early growth, approx",
+      "size": 4,
+      "potential": 6,
+      "exit": 5,
+      "fit": 8,
+      "compound": 7,
+      "excited": 8,
+      "excitedWhy": "Next round is Sahil (COO) — naming a senior operator is a clear advance signal.",
+      "why": "People-leadership of a launch team maps to Kinage/TD pattern; COO round is serious.",
+      "watch": "Voice-AI CX is narrower; Africa/EM compound weaker than Sierra/Hang Ten/Brain Co."
+    },
+    {
+      "companyId": "foundation-health",
+      "track": "Deploy/PM",
+      "sizeBand": "Series A, approx",
+      "size": 3,
+      "potential": 7,
+      "exit": 6,
+      "fit": 7,
+      "compound": 8,
+      "excited": 4,
+      "excitedWhy": "Steve still not scheduled; mild process drag after first — interest exists, urgency does not.",
+      "why": "Regulated healthcare deployment + forward-deployed PM shape; VP Eng bar is real.",
+      "watch": "Scheduling friction yellow flag; watch if it repeats past this week."
+    },
+    {
+      "companyId": "invisible",
+      "track": "PM",
+      "sizeBand": "Growth/established, approx",
+      "size": 6,
+      "potential": 7,
+      "exit": 6,
+      "fit": 6,
+      "compound": 6,
+      "excited": 7,
+      "excitedWhy": "Final stage = they kept you in; momentum is process-strong more than personally feverish.",
+      "why": "Established AI-ops scale; final stage = least remaining process risk.",
+      "watch": "Generalist Senior PM may under-build the deployment credential you want."
+    },
+    {
+      "companyId": "blue-orange-digital",
+      "track": "CoS",
+      "sizeBand": "Unclear, approx (thin data)",
+      "size": 4,
+      "potential": 5,
+      "exit": 4,
+      "fit": 7,
+      "compound": 4,
+      "excited": 7,
+      "excitedWhy": "Final stage with real momentum — they are deciding, which is pull, not flattery.",
+      "why": "CoS-to-founder pattern matches WGA/Kinage; bird-in-hand risk vs deploy track.",
+      "watch": "Thin business/AI-deployment data inside CoS scope — confirm before over-indexing."
+    },
+    {
+      "companyId": "enterpret",
+      "track": "CoS",
+      "sizeBand": "Seed, approx (thin data)",
+      "size": 2,
+      "potential": 5,
+      "exit": 4,
+      "fit": 7,
+      "compound": 4,
+      "excited": 4,
+      "excitedWhy": "First round still scheduling — early curiosity, not chase energy.",
+      "why": "Founder-proximal CoS; NYC onsite signals real proximity if/when it lands.",
+      "watch": "Deprioritize vs Blue Orange; don’t split CoS attention this week."
+    }
+  ]
+}

@@ -138,6 +138,21 @@ Copy client id/secret from `google-client.json` and `refresh_token` from
 `google-token.json` into Vercel env (Production + Preview). Never commit those files.
 Also set `ANTHROPIC_API_KEY` on Vercel so Scan can LLM-write prep decks.
 
+## Fit comparison (Excited + rank)
+
+`data/recruiting-comparison.json` powers the **Fit comparison** panel on `/war-room`.
+
+- Rows are keyed by `companyId` and **join** to live pipeline cards for stage +
+  Drive prep/folder links (so docs stay current even when scores are dated).
+- Scores do **not** auto-refresh on every Gmail scan. Rebuild when a real trigger
+  fires (stage→final, offer, hard reject, named interviewer change, material
+  role-scope change) via recruiting-season `agents/compare.md`, then copy into
+  `data/recruiting-comparison.json` (or ask Cursor to sync).
+- **Excited (1–10)** = how keen *they* seem to advance you (calendar speed,
+  senior loop, debrief `theirPull`, chase burden). Distinct from `lean` on the
+  company card (your preference) and debrief **Your energy**.
+- Rank: `Fit×2 + Compound×2 + Excited + Potential + Exit − max(0, Size−7)`.
+
 ## Briefs (Now + Next)
 
 Markdown briefs live in `data/briefs/` (synced from recruiting-season). Upcoming
@@ -147,7 +162,9 @@ interview) and a **Next** layer (loop map + prep bank).
 ## Debrief
 
 Use **Debrief** on an upcoming/recent call. Saves `data/debriefs/<company>-<date>.md`,
-marks the event done, and updates next action. Refresh after deploy (~30–60s).
+marks the event done, and updates next action. Capture **Their excitement**
+(1–5) — that becomes input for the next comparison rebuild. Refresh after
+deploy (~30–60s).
 
 ## Chase queue
 

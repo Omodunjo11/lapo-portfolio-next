@@ -308,6 +308,7 @@ export default function WarRoomBoard({
   const [draftOpen, setDraftOpen] = useState<string | null>(null);
   const [debriefForm, setDebriefForm] = useState({
     energy: "4",
+    theirPull: "3",
     stageOutcome: "advancing",
     whatTheyCareAbout: "",
     landed: "",
@@ -554,6 +555,7 @@ export default function WarRoomBoard({
           eventId: debriefFor.id,
           companyId: debriefFor.companyId,
           energy: Number(debriefForm.energy) || undefined,
+          theirPull: Number(debriefForm.theirPull) || undefined,
           stageOutcome: debriefForm.stageOutcome,
           whatTheyCareAbout: debriefForm.whatTheyCareAbout,
           landed: debriefForm.landed,
@@ -797,11 +799,26 @@ export default function WarRoomBoard({
           </p>
           <div className="wr-edit-form">
             <label>
-              Energy
+              Your energy
               <select
                 value={debriefForm.energy}
                 onChange={(e) =>
                   setDebriefForm((f) => ({ ...f, energy: e.target.value }))
+                }
+              >
+                {["1", "2", "3", "4", "5"].map((n) => (
+                  <option key={n} value={n}>
+                    {n}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Their excitement (to advance you)
+              <select
+                value={debriefForm.theirPull}
+                onChange={(e) =>
+                  setDebriefForm((f) => ({ ...f, theirPull: e.target.value }))
                 }
               >
                 {["1", "2", "3", "4", "5"].map((n) => (
