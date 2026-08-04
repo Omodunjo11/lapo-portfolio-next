@@ -21,13 +21,25 @@ function cronAuthorized(req: NextRequest) {
   return req.headers.get("authorization") === `Bearer ${secret}`;
 }
 
-async function commitBriefIfPresent(companyId: string) {
+async function commitBriefIfPresent(companyId: string, briefFiles?: Record<string, string>) {
+  const repoPath = `data/briefs/next-${companyId}.md`;
+  const fromMem = briefFiles?.[repoPath];
+  if (fromMem) {
+    await commitTextFile(
+      repoPath,
+      fromMem,
+      `War room: Claude prep for ${companyId}`
+    );
+    return true;
+  }
   const slug = `next-${companyId}`;
   const abs = join(process.cwd(), "data", "briefs", `${slug}.md`);
-  if (!existsSync(abs)) return false;
+  const tmp = join("/tmp", "recruiting-briefs", `${slug}.md`);
+  const path = existsSync(tmp) ? tmp : existsSync(abs) ? abs : null;
+  if (!path) return false;
   await commitTextFile(
-    `data/briefs/${slug}.md`,
-    readFileSync(abs, "utf8"),
+    repoPath,
+    readFileSync(path, "utf8"),
     `War room: Claude prep for ${companyId}`
   );
   return true;
@@ -91,8 +103,8 @@ export async function POST(req: NextRequest) {
   });
   pipeline = ensured.pipeline;
 
-  if (persist && (ensured.localBriefs > 0 || ensured.createdDocs > 0 || ensured.updatedDocs > 0)) {
-    await commitBriefIfPresent(companyId);
+  if (persist && (ensured.localBriefs > 0 || ensured.createdDocs > 0 || ensured.updatedDocs > 0 || ensured.claudeDecks > 0)) {
+    await commitBriefIfPresent(companyId, ensured.briefFiles);
     await commitPipeline(
       pipeline,
       `War room: Claude prep ${companyId} (${ensured.claudeDecks} llm)`

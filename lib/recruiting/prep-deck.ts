@@ -13,13 +13,23 @@ import type { IngestProposal } from "./gmail/classify";
 import { extractNextInterviewer } from "./gmail/taxonomy";
 import { generatePrepDeck, isRichBrief, stubPrepDeck } from "./prep-llm";
 
+function briefsDir() {
+  // Vercel serverless FS is read-only except /tmp.
+  if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
+    return join("/tmp", "recruiting-briefs");
+  }
+  return join(process.cwd(), "data", "briefs");
+}
+
 function localBriefText(briefPath?: string | null): string | null {
   if (!briefPath) return null;
   const slug = briefPath.split("/").pop()?.replace(/\.md$/i, "");
   if (!slug) return null;
-  const abs = join(process.cwd(), "data", "briefs", `${slug}.md`);
-  if (!existsSync(abs)) return null;
-  return readFileSync(abs, "utf8");
+  for (const dir of [briefsDir(), join(process.cwd(), "data", "briefs")]) {
+    const abs = join(dir, `${slug}.md`);
+    if (existsSync(abs)) return readFileSync(abs, "utf8");
+  }
+  return null;
 }
 
 function deckTitle(company: Company, event: PipelineEvent) {
@@ -33,7 +43,7 @@ function briefSlug(company: Company, event: PipelineEvent) {
   return `${day}-${company.id}`;
 }
 
-/** Persist markdown under data/briefs and return repo-relative path. */
+/** Persist markdown under data/briefs (or /tmp on Vercel) and return repo-relative path. */
 export function writeLocalBrief(
   company: Company,
   event: PipelineEvent,
@@ -41,11 +51,20 @@ export function writeLocalBrief(
   slugOverride?: string
 ): string {
   const slug = slugOverride || briefSlug(company, event);
-  const dir = join(process.cwd(), "data", "briefs");
+  const dir = briefsDir();
   mkdirSync(dir, { recursive: true });
   const abs = join(dir, `${slug}.md`);
   writeFileSync(abs, text.endsWith("\n") ? text : `${text}\n`, "utf8");
   return `briefs/${slug}.md`;
+}
+
+/** Absolute path where a brief slug was last written (repo or /tmp). */
+export function resolveBriefAbs(slug: string): string | null {
+  for (const dir of [briefsDir(), join(process.cwd(), "data", "briefs")]) {
+    const abs = join(dir, `${slug}.md`);
+    if (existsSync(abs)) return abs;
+  }
+  return null;
 }
 
 async function persistPrepDoc(
@@ -109,6 +128,8 @@ export type PrepEnsureResult = {
   localBriefs: number;
   claudeDecks: number;
   errors: string[];
+  /** Fresh markdown keyed by repo path `data/briefs/<slug>.md` for git commit. */
+  briefFiles: Record<string, string>;
 };
 
 /**
@@ -129,6 +150,7 @@ export async function ensurePrepDecks(
   let updatedDocs = 0;
   let localBriefs = 0;
   let claudeDecks = 0;
+  const briefFiles: Record<string, string> = {};
 
   let data: Pipeline = {
     ...pipeline,
@@ -183,6 +205,9 @@ export async function ensurePrepDecks(
     if (!event.briefPath || opts.force || shouldClaude || !existingLocal) {
       try {
         event.briefPath = writeLocalBrief(company, event, text);
+        briefFiles[`data/${event.briefPath}`] = text.endsWith("\n")
+          ? text
+          : `${text}\n`;
         localBriefs += 1;
       } catch (err) {
         errors.push(`local_brief ${company.id}: ${(err as Error).message}`);
@@ -218,6 +243,7 @@ export async function ensurePrepDecks(
     localBriefs,
     claudeDecks,
     errors,
+    briefFiles,
   };
 }
 
@@ -237,6 +263,7 @@ export async function ensureAdvancePrepDecks(
   let localBriefs = 0;
   let claudeDecks = 0;
   let mappedFolders = 0;
+  const briefFiles: Record<string, string> = {};
 
   let data: Pipeline = {
     ...pipeline,
@@ -313,6 +340,7 @@ export async function ensureAdvancePrepDecks(
       );
 
     // Force Claude when we have a fresh advance signal and only a stub/old brief.
+    // NDA / process mail without a named interviewer still regenerates if no next-* brief.
     const force =
       !existingLocal ||
       !isRichBrief(existingLocal) ||
@@ -320,7 +348,7 @@ export async function ensureAdvancePrepDecks(
         ? !new RegExp(who.split(/\s+/)[0] || "NOPE", "i").test(
             existingLocal || ""
           )
-        : false);
+        : !localBriefText(existingPath));
 
     const gen = await generatePrepDeck({
       company,
@@ -333,6 +361,9 @@ export async function ensureAdvancePrepDecks(
 
     try {
       event.briefPath = writeLocalBrief(company, event, gen.text, slug);
+      briefFiles[`data/briefs/${slug}.md`] = gen.text.endsWith("\n")
+        ? gen.text
+        : `${gen.text}\n`;
       localBriefs += 1;
     } catch (err) {
       errors.push(`advance_brief ${company.id}: ${(err as Error).message}`);
@@ -378,5 +409,6 @@ export async function ensureAdvancePrepDecks(
     localBriefs,
     claudeDecks,
     errors,
+    briefFiles,
   };
 }
