@@ -1,5 +1,5 @@
 {
-  "scannedAt": "2026-08-04T21:16:33.478Z",
+  "scannedAt": "2026-08-04T21:24:44.129Z",
   "days": 7,
   "gmailMatched": 75,
   "calendarMatched": 7,
@@ -93,21 +93,6 @@
       "signal": "schedule",
       "confidence": "medium",
       "reason": "interview scheduling"
-    },
-    {
-      "source": "gmail",
-      "id": "19fcca56449d391a",
-      "threadId": "19fcca56449d391a",
-      "date": "Tue, 04 Aug 2026 12:00:00 +0000 (UTC)",
-      "from": "Medium Daily Digest <noreply@medium.com> → odunjoonaolapo@gmail.com",
-      "subject": "System Design Interview: How Would You Send 1 Million Notifications Without Overwhelming Your… | Arvind Kumar",
-      "snippet": "Stories for Onaolapo Michael Odunjo\r\n@odunjoonaolapo (https://medium.com/@odunjoonaolapo?source=email-b781a5413c41-1785827456948-digest.reader-------------------------e57700e5_cf27_4f68_bd19_47c4a7ccdd4f)\r\n·Become a member (https://medium.com/plans?source=email-b781a5413c41-17858",
-      "companyId": "brain-co",
-      "companyName": "Brain Co",
-      "fromSpam": false,
-      "signal": "wait",
-      "confidence": "low",
-      "reason": "interview-adjacent, unclear"
     },
     {
       "source": "gmail",
