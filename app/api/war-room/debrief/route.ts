@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireRecruitingAccess } from "@/lib/recruiting/access";
-import { getRecruitingPipeline } from "@/lib/recruiting/pipeline";
+import { loadWritablePipeline } from "@/lib/recruiting/pipeline";
 import { commitPipeline } from "@/lib/recruiting/store";
 import { commitTextFile } from "@/lib/git-store";
 import type { FunnelStage } from "@/lib/recruiting/types";
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "invalid_body" }, { status: 400 });
   }
 
-  const pipeline = getRecruitingPipeline();
+  const pipeline = await loadWritablePipeline();
   const company = pipeline.companies.find((c) => c.id === body.companyId);
   if (!company) {
     return NextResponse.json({ error: "company_not_found" }, { status: 404 });

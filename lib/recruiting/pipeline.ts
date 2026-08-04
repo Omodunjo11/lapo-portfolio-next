@@ -1,5 +1,6 @@
 import type { Company, Pipeline } from "./types";
 import { ARCHIVE_STAGES } from "./types";
+import { readJsonFileFromGitHub } from "../git-store";
 import pipeline from "../../data/recruiting-pipeline.json";
 
 export const FUNNEL_COLUMNS = [
@@ -11,10 +12,27 @@ export const FUNNEL_COLUMNS = [
   { id: "final", label: "Final" },
 ] as const;
 
-/** Always clone — the JSON import is effectively read-only in Next, and
- *  mutating it in place breaks Accept / move / Edit saves. */
+/** Bundled snapshot for rendering. Always clone — JSON import is read-only. */
 export function getRecruitingPipeline(): Pipeline {
   return structuredClone(pipeline) as Pipeline;
+}
+
+/**
+ * Latest pipeline for writes. Prefer GitHub `main` so Accept/Edit aren't
+ * stomped by scans that still have a stale deploy bundle in memory.
+ */
+export async function loadWritablePipeline(): Promise<Pipeline> {
+  try {
+    const remote = await readJsonFileFromGitHub<Pipeline>(
+      "data/recruiting-pipeline.json"
+    );
+    if (remote?.data?.companies?.length) {
+      return structuredClone(remote.data);
+    }
+  } catch {
+    // fall through to bundle
+  }
+  return getRecruitingPipeline();
 }
 
 export function companiesByStage(data: Pipeline) {

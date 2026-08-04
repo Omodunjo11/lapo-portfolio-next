@@ -6,7 +6,10 @@ import {
   type BoardPrefs,
 } from "@/lib/recruiting/board";
 import { allSuggestions } from "@/lib/recruiting/flags";
-import { getRecruitingPipeline } from "@/lib/recruiting/pipeline";
+import {
+  getRecruitingPipeline,
+  loadWritablePipeline,
+} from "@/lib/recruiting/pipeline";
 import { commitPipeline } from "@/lib/recruiting/store";
 import type { FunnelStage } from "@/lib/recruiting/types";
 import { EDITABLE_STAGES } from "@/lib/recruiting/types";
@@ -68,7 +71,9 @@ export async function GET() {
 
   const user = gate.user!;
   const prefs = readPrefs(user);
-  const pipeline = getRecruitingPipeline();
+  const pipeline = await loadWritablePipeline().catch(() =>
+    getRecruitingPipeline()
+  );
   const suggestions = allSuggestions(pipeline, prefs.dismissedSuggestionIds);
 
   return NextResponse.json({ pipeline, prefs, suggestions });
@@ -80,7 +85,14 @@ export async function POST(req: Request) {
 
   const user = gate.user!;
   const userId = gate.userId!;
-  let body: { action?: string; id?: string; companyId?: string; stage?: FunnelStage; stageLabel?: string };
+  let body: {
+    action?: string;
+    id?: string;
+    companyId?: string;
+    stage?: FunnelStage;
+    stageLabel?: string;
+    toStage?: FunnelStage;
+  };
   try {
     body = await req.json();
   } catch {
@@ -88,8 +100,7 @@ export async function POST(req: Request) {
   }
 
   const prefs = readPrefs(user);
-  // Clone so we never mutate the bundled JSON import.
-  const pipeline = getRecruitingPipeline();
+  const pipeline = await loadWritablePipeline();
 
   try {
     if (body.action === "move") {
@@ -122,30 +133,52 @@ export async function POST(req: Request) {
     } else if (body.action === "accept_suggestion") {
       const id = String(body.id || "");
       if (!id) return NextResponse.json({ error: "missing id" }, { status: 400 });
+
       const suggestions = allSuggestions(pipeline, prefs.dismissedSuggestionIds);
-      const sug = suggestions.find((s) => s.id === id);
+      let sug = suggestions.find((s) => s.id === id);
+
+      if (
+        !sug &&
+        body.companyId &&
+        body.toStage &&
+        (EDITABLE_STAGES as readonly string[]).includes(body.toStage)
+      ) {
+        const companyHint = pipeline.companies.find(
+          (c) => c.id === body.companyId
+        );
+        if (companyHint) {
+          sug = {
+            id,
+            companyId: body.companyId,
+            fromStage: companyHint.stage,
+            toStage: body.toStage,
+            reason: "client accept",
+            status: "pending",
+          };
+        }
+      }
+
       if (!sug) {
         return NextResponse.json(
           { error: "unknown suggestion", detail: `No pending flag ${id}` },
           { status: 404 }
         );
       }
-      const company = pipeline.companies.find((c) => c.id === sug.companyId);
+      const company = pipeline.companies.find((c) => c.id === sug!.companyId);
       if (!company) {
         return NextResponse.json({ error: "company_not_found" }, { status: 404 });
       }
       company.stage = sug.toStage;
       company.stageLabel = `${STAGE_LABELS[sug.toStage] || sug.toStage} (accepted flag)`;
-      company.ball = company.ball || "them";
       pipeline.updated = new Date().toISOString().slice(0, 10);
       if (!prefs.dismissedSuggestionIds.includes(id)) {
         prefs.dismissedSuggestionIds.push(id);
       }
+      await savePrefs(userId, user, prefs);
       await commitPipeline(
         pipeline,
         `War room: accept flag ${id} → ${sug.toStage}`
       );
-      await savePrefs(userId, user, prefs);
     } else {
       return NextResponse.json({ error: "unknown action" }, { status: 400 });
     }

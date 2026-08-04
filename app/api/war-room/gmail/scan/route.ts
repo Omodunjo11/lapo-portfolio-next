@@ -9,7 +9,10 @@ import {
 } from "@/lib/recruiting/gmail/scan";
 import { proposalsToFlags } from "@/lib/recruiting/inbox";
 import { commitRecruitingInbox } from "@/lib/recruiting/inbox-store";
-import { getRecruitingPipeline } from "@/lib/recruiting/pipeline";
+import {
+  getRecruitingPipeline,
+  loadWritablePipeline,
+} from "@/lib/recruiting/pipeline";
 import { ensurePrepDecks } from "@/lib/recruiting/prep-deck";
 import { commitPipeline } from "@/lib/recruiting/store";
 import { commitTextFile } from "@/lib/git-store";
@@ -60,7 +63,11 @@ async function runScan(opts: {
     };
   }
 
-  let pipeline = getRecruitingPipeline();
+  // Always start from GitHub main so Accept/Edit stages aren't stomped
+  // by a stale deploy bundle.
+  let pipeline = await loadWritablePipeline().catch(() =>
+    getRecruitingPipeline()
+  );
   const scan = await scanInterviewSignals(pipeline, { days: opts.days });
 
   let appliedCalendar = 0;

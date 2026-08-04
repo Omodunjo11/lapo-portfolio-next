@@ -418,7 +418,12 @@ export default function WarRoomBoard({
       );
     }
     startTransition(() => {
-      void post({ action: "accept_suggestion", id }).then((ok) => {
+      void post({
+        action: "accept_suggestion",
+        id,
+        companyId: sug?.companyId,
+        toStage: sug?.toStage,
+      }).then((ok) => {
         if (!ok && sug) {
           setSuggestions((prev) =>
             prev.some((s) => s.id === id) ? prev : [...prev, sug]

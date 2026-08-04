@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireRecruitingAccess } from "@/lib/recruiting/access";
-import { getRecruitingPipeline } from "@/lib/recruiting/pipeline";
+import { getRecruitingPipeline, loadWritablePipeline } from "@/lib/recruiting/pipeline";
 import { commitPipeline } from "@/lib/recruiting/store";
 import { EDITABLE_STAGES, type Company } from "@/lib/recruiting/types";
 
@@ -50,7 +50,7 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: "invalid_body" }, { status: 400 });
   }
 
-  const pipeline = getRecruitingPipeline();
+  const pipeline = await loadWritablePipeline();
   const company = pipeline.companies.find((c) => c.id === body.companyId);
   if (!company) {
     return NextResponse.json({ error: "company_not_found" }, { status: 404 });
