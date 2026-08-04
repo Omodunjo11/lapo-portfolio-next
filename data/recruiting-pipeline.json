@@ -12,33 +12,25 @@
   "focus": [
     {
       "companyId": "regal",
-      "detail": "Sahil next — prep people leadership, systems, playbook of excellence"
-    },
-    {
-      "companyId": "enterpret",
-      "detail": "Outbound first-round chase to Vikram (via Varun) — watch for reply"
+      "detail": "Today 1:30pm Kelsey — Now+Next brief; loop updates after"
     },
     {
       "companyId": "hang-ten",
-      "detail": "Sign Jack’s NDA and reply with the completed doc — next stage gated on that"
+      "detail": "Debrief Jack if done; capture loop updates"
     },
     {
       "companyId": "foundation-health",
-      "detail": "Chase Steve scheduling"
+      "detail": "Chase Steve scheduling — next brief ready"
     },
     {
       "companyId": "invisible",
-      "detail": "Nudge Aug 6"
-    },
-    {
-      "companyId": "blue-orange-digital",
-      "detail": "Catarina decision watch"
+      "detail": "Nudge Aug 6 — next-round brief ready"
     }
   ],
   "storyGaps": [
     {
       "id": "incomplete-info",
-      "detail": "Incomplete-info STAR drafted in recruiting-season story-bank — edit before Brain Co HM",
+      "detail": "Incomplete-info STAR drafted in story-bank — edit before Brain Co HM",
       "neededFor": [
         "brain-co",
         "hang-ten"
@@ -59,18 +51,18 @@
       "id": "hang-ten",
       "name": "Hang Ten",
       "role": "Founding-team / TBD",
-      "stage": "second",
-      "stageLabel": "2nd — NDA",
-      "ball": "you",
+      "stage": "first",
+      "stageLabel": "1st — founding team screen (Jack Ahn)",
+      "ball": "them",
       "priority": "P0",
-      "nextAction": "Sign Hang Ten NDA (Jack Ahn) and reply with completed doc",
-      "due": "2026-08-05",
+      "nextAction": "Wait for Jack Ahn follow-up after housekeeping",
+      "due": null,
       "nudgeDate": null,
       "lean": 4,
       "contacts": [
         {
           "name": "Jack Ahn",
-          "role": "Vice President"
+          "role": "Interviewer"
         }
       ],
       "aliases": [
@@ -86,31 +78,27 @@
       },
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/12xlBxLYw4ttCiolqWwylQswdyNGlr2IO",
-        "prepUrl": "https://docs.google.com/document/d/1OnXHeuq1tqHZiY1XMaL-hvn7-N8zFxCya12QsbV5z4I/edit?usp=drivesdk",
-        "note": "Mapped to Drive folder “Hang Ten”"
+        "prepUrl": "https://docs.google.com/document/d/1MIq0tBn5wfxJqcGcO3coDdrG_NsP-9TCR3fi_JuwaBQ/edit",
+        "note": "Canonical living notes Doc (Claude-created Aug 4). Update prepUrl only if Doc is intentionally replaced."
       }
     },
     {
       "id": "regal",
       "name": "Regal",
       "role": "Manager, AI Strategy & Deployment",
-      "stage": "second",
-      "stageLabel": "2nd — Sahil (prep; wait for invite)",
+      "stage": "first",
+      "stageLabel": "1st — phone with Kelsey",
       "ball": "you",
       "priority": "P0",
-      "nextAction": "Attend: Phone interview with Kelsey @ Regal!",
+      "nextAction": "Prep tonight; phone w/ Kelsey 1:30–2:00pm ET",
       "due": "2026-08-04",
       "nudgeDate": null,
       "lean": 4,
       "contacts": [
         {
-          "name": "Kelsey Heitz",
+          "name": "Kelsey",
           "email": "kelsey@regalvoice.com",
           "role": "Recruiter / coordinator"
-        },
-        {
-          "name": "Sahil",
-          "role": "Next interviewer — people leadership / systems / exec presence"
         }
       ],
       "aliases": [
@@ -128,7 +116,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1zz0A9CKj2CJvcicO6dOrdgwTeM3fOjf0",
         "prepUrl": "https://docs.google.com/document/d/1yVUuVFFeaLNZ6nZr7288Sr11ZmCkyfjlo1ZPfYKoo1M/edit",
-        "note": "Mapped to Drive folder “Regal”"
+        "note": "Canonical living notes + Sahil prep Doc. Update in place only — do not create a second Doc."
       }
     },
     {
@@ -137,10 +125,10 @@
       "role": "AI / Product Manager",
       "stage": "first",
       "stageLabel": "1st done (Jack); Steve not scheduled",
-      "ball": "you",
-      "priority": "P0",
-      "nextAction": "Attend: Onaolapo Michael Odunjo and Jack Leeming",
-      "due": "2026-08-03",
+      "ball": "them",
+      "priority": "P1",
+      "nextAction": "Follow up Jack Leeming to schedule Steve Charette",
+      "due": "2026-08-05",
       "nudgeDate": "2026-08-05",
       "lean": 3,
       "contacts": [
@@ -168,8 +156,8 @@
       },
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1C4rZXq5ho87J-YHJEP2eSMTEp4qPXNBB",
-        "prepUrl": "https://docs.google.com/document/d/1hjfV68LvWFWoj4rCXr2oOdSw5EOaSDb2_NFNZ0r1ATk/edit?usp=drivesdk",
-        "note": "Mapped to Drive folder “Foundation Health”"
+        "prepUrl": "https://docs.google.com/document/d/1G24HcWf3DUyD5c2G264q2DIhDy75SxYH_VCeV_Y7VsQ/edit",
+        "note": "Canonical living prep Doc - update in place, never create duplicates"
       }
     },
     {
@@ -178,10 +166,10 @@
       "role": "AI Deployment Lead",
       "stage": "first",
       "stageLabel": "1st done (recruiter); waiting HM = 2nd",
-      "ball": "you",
-      "priority": "P0",
-      "nextAction": "Attend: Interview with  Brain Co.",
-      "due": "2026-08-03",
+      "ball": "them",
+      "priority": "P1",
+      "nextAction": "Watch for hiring manager outreach; nudge Michal/Alina if silent",
+      "due": "2026-08-07",
       "nudgeDate": "2026-08-07",
       "lean": 4,
       "contacts": [
@@ -209,21 +197,21 @@
       },
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1VMTqazpBn2Dni4uqRtkD1NRiRylD7yK9",
-        "prepUrl": "https://docs.google.com/document/d/1_mA1QAiodpuMDz0uS0wj7jQa6FlUBj0Gnoo54vdA6x0/edit?usp=drivesdk",
-        "note": "Mapped to Drive folder “Brain Co”"
+        "prepUrl": "https://docs.google.com/document/d/1qqrwcstj98k0L9e67vPpiwCcDA3kdvHUEtXOssBRW2o/edit",
+        "note": "Canonical living notes Doc - update in place, never create duplicates"
       }
     },
     {
       "id": "invisible",
       "name": "Invisible Technologies",
       "role": "Senior Product Manager",
-      "stage": "fourth",
-      "stageLabel": "4th (accepted flag)",
-      "ball": "you",
+      "stage": "third",
+      "stageLabel": "3rd with Ranjani — Aug 7 10:30am ET (invite incoming)",
+      "ball": "them",
       "priority": "P0",
-      "nextAction": "Attend: Interview with Invisible Technologies",
+      "nextAction": "Watch for Kate calendar invite; attend Ranjani on Aug 7 10:30am ET",
       "due": "2026-08-07",
-      "nudgeDate": "2026-08-06",
+      "nudgeDate": "2026-08-07",
       "lean": 3,
       "contacts": [
         {
@@ -237,6 +225,10 @@
         {
           "name": "Derek Pages",
           "role": "Recruiting"
+        },
+        {
+          "name": "Ranjani",
+          "role": "Next interviewer"
         }
       ],
       "aliases": [
@@ -244,7 +236,8 @@
         "Invisible Technologies",
         "Kate Alvarico",
         "Derek Pages",
-        "Alex Arutyunyants"
+        "Alex Arutyunyants",
+        "Ranjani"
       ],
       "paths": {
         "folder": "Invisible Technologies",
@@ -254,7 +247,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/16n5gZwJ2fNQr7rXqshRgE3xPkw-uOMX0",
         "prepUrl": "https://docs.google.com/document/d/1AoW5dFjve10_TakV0_yirOuEPZcqWvrRH6iKKeO8g6c/edit?usp=drivesdk",
-        "note": "Mapped to Drive folder “Invisible Technologies”"
+        "note": "Living interview notes Doc (Brain Co format)"
       }
     },
     {
@@ -551,6 +544,42 @@
       "status": "scheduled",
       "briefPath": null,
       "blocker": null
+    },
+    {
+      "id": "evt-hang-ten-jack-2026-08-03",
+      "companyId": "hang-ten",
+      "start": "2026-08-03T19:00:00-04:00",
+      "end": "2026-08-03T19:30:00-04:00",
+      "title": "Hang Ten — Jack Ahn",
+      "with": "Jack Ahn",
+      "type": "founding",
+      "status": "scheduled",
+      "briefPath": "briefs/2026-08-03-hang-ten.md",
+      "blocker": null
+    },
+    {
+      "id": "evt-regal-kelsey-2026-08-04",
+      "companyId": "regal",
+      "start": "2026-08-04T13:30:00-04:00",
+      "end": "2026-08-04T14:00:00-04:00",
+      "title": "Regal — phone with Kelsey",
+      "with": "Kelsey",
+      "type": "phone",
+      "status": "scheduled",
+      "briefPath": "briefs/2026-08-04-regal.md",
+      "blocker": null
+    },
+    {
+      "id": "evt-invisible-ranjani-2026-08-07",
+      "companyId": "invisible",
+      "start": "2026-08-07T10:30:00-04:00",
+      "end": "2026-08-07T11:30:00-04:00",
+      "title": "Invisible — Ranjani (round 3)",
+      "with": "Ranjani",
+      "type": "loop",
+      "status": "scheduled",
+      "briefPath": "briefs/next-invisible.md",
+      "blocker": "Kate said confirmation/invite email is coming"
     }
   ],
   "funnelStages": [
@@ -562,7 +591,7 @@
     "final"
   ],
   "driveRootUrl": "https://drive.google.com/drive/folders/1MjTJoOq24ojbhXcvEbKU_PMcuwLOVw1q",
-  "driveRootNote": "Company folders auto-mapped from Recruiting Season Drive root on scan.",
+  "driveRootNote": "Company folders mapped from Recruiting Season Drive root. Scan inbox creates prep decks in the matching folder when a meeting is scheduled.",
   "chase": [
     {
       "companyId": "foundation-health",
