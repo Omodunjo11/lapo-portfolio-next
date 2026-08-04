@@ -85,7 +85,7 @@ async function AuthenticatedWarRoom() {
     <div className="wr-root">
       <header className="wr-top">
         <div>
-          <p className="wr-eyebrow">Private · you control every move</p>
+          <p className="wr-eyebrow">Private · recruiting command center</p>
           <h1 className="wr-title">
             Recruiting <span>War Room</span>
           </h1>

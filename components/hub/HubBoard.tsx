@@ -225,8 +225,8 @@ function NewItemForm({ onChanged }: { onChanged: () => void }) {
 
   if (!open) {
     return (
-      <button type="button" className="wr-btn-ghost hub-new-toggle" onClick={() => setOpen(true)}>
-        + New item
+      <button type="button" className="wr-btn hub-new-toggle" onClick={() => setOpen(true)}>
+        + Queue something
       </button>
     );
   }
@@ -253,7 +253,7 @@ function NewItemForm({ onChanged }: { onChanged: () => void }) {
         <input
           value={fields.title}
           onChange={(e) => setFields((f) => ({ ...f, title: e.target.value }))}
-          placeholder="What is it?"
+          placeholder="What are you running?"
         />
       </label>
       <label>
@@ -261,6 +261,7 @@ function NewItemForm({ onChanged }: { onChanged: () => void }) {
         <input
           value={fields.detail}
           onChange={(e) => setFields((f) => ({ ...f, detail: e.target.value }))}
+          placeholder="Why it matters / definition of done"
         />
       </label>
       <label>
@@ -318,8 +319,11 @@ export default function HubBoard({
         </section>
       ) : null}
 
-      <section className="wr-panel wr-board">
-        <h2>Board</h2>
+      <section className="wr-panel wr-board hub-runloop">
+        <div className="wr-board-head">
+          <h2>Runloop</h2>
+          <span className="wr-muted">Backlog → Active → Done</span>
+        </div>
         <div className="wr-columns hub-columns">
           {STAGES.map((stage) => (
             <div key={stage} className="wr-col">

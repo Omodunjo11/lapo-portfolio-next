@@ -3540,6 +3540,226 @@ a { color: inherit; text-decoration: none; }
   gap: 10px;
 }
 
+/* Shared private chrome — equal segment nav */
+.priv-chrome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(248, 250, 252, 0.92);
+  backdrop-filter: blur(14px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.priv-chrome-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.priv-chrome-mark {
+  margin: 0;
+  font-family: var(--font-syne), sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.priv-seg {
+  display: inline-grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--bg2) 80%, white);
+  min-width: min(360px, 100%);
+}
+
+.priv-seg-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  padding: 7px 12px;
+  border-radius: 6px;
+  color: var(--mid);
+  text-decoration: none;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.priv-seg-item:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.priv-seg-item.is-active {
+  background: var(--ink);
+  color: #f8fafc;
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.2);
+}
+
+.priv-seg-label {
+  font-family: var(--font-syne), sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.priv-seg-hint {
+  font-family: var(--font-dm-mono), monospace;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+.priv-seg-item.is-active .priv-seg-hint {
+  opacity: 0.75;
+  color: #cbd5e1;
+}
+
+.priv-chrome-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* Hub — personal OS atmosphere */
+.hub-shell {
+  background:
+    radial-gradient(900px 480px at 0% -8%, #d1fae5 0%, transparent 52%),
+    radial-gradient(700px 400px at 100% 0%, #e0f2fe 0%, transparent 48%),
+    var(--paper);
+}
+
+.hub-root .wr-title span {
+  color: #0f766e;
+}
+
+.hub-hero {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-end;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+
+.hub-hero-copy {
+  max-width: 40rem;
+}
+
+.hub-lede {
+  margin: 12px 0 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--mid);
+  max-width: 48ch;
+}
+
+.hub-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 18px;
+}
+
+.hub-runstat {
+  display: flex;
+  flex-direction: column;
+  min-width: 64px;
+}
+
+.hub-runstat-val {
+  font-family: var(--font-syne), sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.hub-runstat-lab {
+  margin-top: 4px;
+  font-family: var(--font-dm-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.hub-pulse {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.hub-pulse-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid color-mix(in srgb, #0f766e 22%, var(--border));
+  border-radius: 999px;
+  background: color-mix(in srgb, #0f766e 7%, var(--card));
+}
+
+.hub-pulse-n {
+  font-family: var(--font-syne), sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #0f766e;
+}
+
+.hub-pulse-lab {
+  font-size: 12px;
+  color: var(--mid);
+}
+
+.hub-runloop .wr-col-head {
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 640px) {
+  .priv-chrome {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+  }
+
+  .priv-seg {
+    min-width: 100%;
+    width: 100%;
+  }
+
+  .priv-seg-item {
+    padding: 8px 8px;
+  }
+
+  .priv-seg-hint {
+    display: none;
+  }
+
+  .hub-hero-meta {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+
 .wr-flags .wr-flag-list {
   list-style: none;
   margin: 0;
