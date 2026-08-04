@@ -3485,8 +3485,10 @@ a { color: inherit; text-decoration: none; }
 
 .hub-new-form { max-width: 420px; }
 
-.hub-columns {
-  grid-template-columns: repeat(3, minmax(220px, 1fr));
+@media (min-width: 641px) {
+  .hub-columns {
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+  }
 }
 
 .hub-badge {
