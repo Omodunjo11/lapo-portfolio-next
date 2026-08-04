@@ -1,6 +1,6 @@
 import type { FunnelStage, Pipeline } from "./types";
 import { nextFunnelStage } from "./board";
-import type { IngestProposal } from "./gmail/classify";
+import type { IngestProposal, IngestSignal } from "./gmail/classify";
 
 export type InboxSnapshot = {
   scannedAt: string;
@@ -20,6 +20,31 @@ export type InboxFlag = {
   signal: IngestProposal["signal"];
   subject?: string;
 };
+
+const SIGNAL_RANK: Record<IngestSignal, number> = {
+  reject: 4,
+  advance: 3,
+  schedule: 2,
+  wait: 1,
+  noise: 0,
+};
+
+/** One flag per company — prefer stronger signals; ties keep the newer proposal. */
+export function dedupeFlagsByCompany(flags: InboxFlag[]): InboxFlag[] {
+  const best = new Map<string, InboxFlag>();
+  for (const f of flags) {
+    const prev = best.get(f.companyId);
+    if (!prev) {
+      best.set(f.companyId, f);
+      continue;
+    }
+    const rank = SIGNAL_RANK[f.signal] ?? 0;
+    const prevRank = SIGNAL_RANK[prev.signal] ?? 0;
+    if (rank > prevRank) best.set(f.companyId, f);
+    // Equal rank: keep existing (proposals are newest-first from Gmail scan).
+  }
+  return [...best.values()];
+}
 
 /** Turn non-noise proposals into accept/dismiss flags (stage moves only on Accept). */
 export function proposalsToFlags(
@@ -118,6 +143,8 @@ export function proposalsToFlags(
     }
 
     if (p.signal === "advance") {
+      // Already at end of funnel — don't spam duplicate "advance" flags.
+      if (company.stage === "final") continue;
       const next = nextFunnelStage(company.stage);
       if (!next) continue;
       out.push({
@@ -133,5 +160,5 @@ export function proposalsToFlags(
     }
   }
 
-  return out;
+  return dedupeFlagsByCompany(out);
 }

@@ -521,8 +521,15 @@ export default function WarRoomBoard({
         );
         setSuggestions((prev) => {
           const keep = prev.filter((s) => !s.id.startsWith("inbox-"));
-          const seen = new Set(keep.map((s) => s.id));
-          return [...keep, ...inboxFlags.filter((s) => !seen.has(s.id))];
+          // Server already dedupes by company; belt-and-suspenders on the client.
+          const seenCompany = new Set(keep.map((s) => s.companyId));
+          const next: Suggestion[] = [...keep];
+          for (const f of inboxFlags) {
+            if (seenCompany.has(f.companyId)) continue;
+            seenCompany.add(f.companyId);
+            next.push(f);
+          }
+          return next;
         });
       }
       if (data.appliedCalendar > 0) {
