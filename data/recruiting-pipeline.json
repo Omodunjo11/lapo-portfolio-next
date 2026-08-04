@@ -12,15 +12,15 @@
   "focus": [
     {
       "companyId": "regal",
-      "detail": "Sahil next \u2014 prep people leadership, systems, playbook of excellence"
+      "detail": "Sahil next — prep people leadership, systems, playbook of excellence"
     },
     {
       "companyId": "enterpret",
-      "detail": "Outbound first-round chase to Vikram (via Varun) \u2014 watch for reply"
+      "detail": "Outbound first-round chase to Vikram (via Varun) — watch for reply"
     },
     {
       "companyId": "hang-ten",
-      "detail": "Calendar moved Jack to Tue 1:30pm \u2014 resolve conflict with Regal"
+      "detail": "Calendar moved Jack to Tue 1:30pm — resolve conflict with Regal"
     },
     {
       "companyId": "foundation-health",
@@ -38,7 +38,7 @@
   "storyGaps": [
     {
       "id": "incomplete-info",
-      "detail": "Incomplete-info STAR drafted in recruiting-season story-bank \u2014 edit before Brain Co HM",
+      "detail": "Incomplete-info STAR drafted in recruiting-season story-bank — edit before Brain Co HM",
       "neededFor": [
         "brain-co",
         "hang-ten"
@@ -87,7 +87,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/12xlBxLYw4ttCiolqWwylQswdyNGlr2IO",
         "prepUrl": "https://docs.google.com/document/d/1OnXHeuq1tqHZiY1XMaL-hvn7-N8zFxCya12QsbV5z4I/edit?usp=drivesdk",
-        "note": "Mapped to Drive folder \u201cHang Ten\u201d"
+        "note": "Mapped to Drive folder “Hang Ten”"
       }
     },
     {
@@ -95,7 +95,7 @@
       "name": "Regal",
       "role": "Manager, AI Strategy & Deployment",
       "stage": "second",
-      "stageLabel": "2nd \u2014 Sahil (prep; wait for invite)",
+      "stageLabel": "2nd — Sahil (prep; wait for invite)",
       "ball": "you",
       "priority": "P0",
       "nextAction": "Attend: Phone interview with Kelsey @ Regal!",
@@ -110,7 +110,7 @@
         },
         {
           "name": "Sahil",
-          "role": "Next interviewer \u2014 people leadership / systems / exec presence"
+          "role": "Next interviewer — people leadership / systems / exec presence"
         }
       ],
       "aliases": [
@@ -128,7 +128,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1zz0A9CKj2CJvcicO6dOrdgwTeM3fOjf0",
         "prepUrl": "https://docs.google.com/document/d/1yVUuVFFeaLNZ6nZr7288Sr11ZmCkyfjlo1ZPfYKoo1M/edit",
-        "note": "Canonical living notes + Sahil prep Doc. Update in place only \u2014 do not create a second Doc."
+        "note": "Mapped to Drive folder “Regal”"
       }
     },
     {
@@ -169,7 +169,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1C4rZXq5ho87J-YHJEP2eSMTEp4qPXNBB",
         "prepUrl": "https://docs.google.com/document/d/1hjfV68LvWFWoj4rCXr2oOdSw5EOaSDb2_NFNZ0r1ATk/edit?usp=drivesdk",
-        "note": "Mapped to Drive folder \u201cFoundation Health\u201d"
+        "note": "Mapped to Drive folder “Foundation Health”"
       }
     },
     {
@@ -210,7 +210,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1VMTqazpBn2Dni4uqRtkD1NRiRylD7yK9",
         "prepUrl": "https://docs.google.com/document/d/1_mA1QAiodpuMDz0uS0wj7jQa6FlUBj0Gnoo54vdA6x0/edit?usp=drivesdk",
-        "note": "Mapped to Drive folder \u201cBrain Co\u201d"
+        "note": "Mapped to Drive folder “Brain Co”"
       }
     },
     {
@@ -254,7 +254,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/16n5gZwJ2fNQr7rXqshRgE3xPkw-uOMX0",
         "prepUrl": "https://docs.google.com/document/d/1AoW5dFjve10_TakV0_yirOuEPZcqWvrRH6iKKeO8g6c/edit?usp=drivesdk",
-        "note": "Mapped to Drive folder \u201cInvisible Technologies\u201d"
+        "note": "Mapped to Drive folder “Invisible Technologies”"
       }
     },
     {
@@ -262,7 +262,7 @@
       "name": "Blue Orange Digital",
       "role": "Chief of Staff",
       "stage": "final",
-      "stageLabel": "Final \u2014 decision pending after interview with Rizwan",
+      "stageLabel": "Final — decision pending after interview with Rizwan",
       "ball": "you",
       "priority": "P0",
       "nextAction": "Attend: Onaolapo Odunjo / Rizwan Yousuf (Blue Orange Digital)",
@@ -291,7 +291,7 @@
       "drive": {
         "folderUrl": "",
         "prepUrl": "",
-        "note": "No company Drive folder found in Gmail scan \u2014 create Recruiting Season/Blue Orange Digital and paste folderUrl."
+        "note": "No company Drive folder found in Gmail scan — create Recruiting Season/Blue Orange Digital and paste folderUrl."
       }
     },
     {
@@ -299,7 +299,7 @@
       "name": "Sierra",
       "role": "Strategist, Agent Development",
       "stage": "final",
-      "stageLabel": "Final \u2014 onsite done (Jul 28), awaiting decision",
+      "stageLabel": "Final — onsite done (Jul 28), awaiting decision",
       "ball": "you",
       "priority": "P0",
       "nextAction": "Attend: Onaolapo Odunjo <> Sierra",
@@ -327,7 +327,7 @@
       "drive": {
         "folderUrl": "",
         "prepUrl": "https://docs.google.com/document/d/1UjpnDOgPJeWCeNdKLkFNMg9hCBLuXlej1VReDDbmCms/edit",
-        "note": "Found via email scan, Aug 3 \u2014 this is the original Sierra_Interview_Prep_Final doc reused for Foundation Health | Folder URL not found in mail \u2014 create Drive folder and paste."
+        "note": "Found via email scan, Aug 3 — this is the original Sierra_Interview_Prep_Final doc reused for Foundation Health | Folder URL not found in mail — create Drive folder and paste."
       }
     },
     {
@@ -335,10 +335,10 @@
       "name": "Semgrep",
       "role": "Unknown (never reached interview)",
       "stage": "passed",
-      "stageLabel": "Passed \u2014 no interview offered",
+      "stageLabel": "Passed — no interview offered",
       "ball": "them",
       "priority": "P2",
-      "nextAction": "Closed \u2014 confirmed no interview extended",
+      "nextAction": "Closed — confirmed no interview extended",
       "due": "",
       "nudgeDate": null,
       "lean": null,
@@ -357,7 +357,7 @@
       "drive": {
         "folderUrl": "",
         "prepUrl": "",
-        "note": "No company Drive folder found in Gmail scan \u2014 create Recruiting Season/Semgrep and paste folderUrl."
+        "note": "No company Drive folder found in Gmail scan — create Recruiting Season/Semgrep and paste folderUrl."
       }
     },
     {
@@ -365,7 +365,7 @@
       "name": "Enterpret",
       "role": "Chief of Staff",
       "stage": "applied",
-      "stageLabel": "Applied \u2014 chasing first round (Vikram via Varun)",
+      "stageLabel": "Applied — chasing first round (Vikram via Varun)",
       "ball": "them",
       "priority": "P1",
       "nextAction": "Sent Vikram 2026-08-04 asking to schedule first round; wait ~3 biz days then nudge",
@@ -406,7 +406,7 @@
       "type": "founding",
       "status": "scheduled",
       "briefPath": "briefs/2026-08-04-hang-ten.md",
-      "blocker": "Rescheduled from Mon Aug 3 7pm (calendar now shows Tue 12:30\u20131:00pm ET)",
+      "blocker": "Rescheduled from Mon Aug 3 7pm (calendar now shows Tue 12:30–1:00pm ET)",
       "done": true
     },
     {
@@ -426,7 +426,7 @@
       "companyId": "foundation-health",
       "start": "",
       "end": "",
-      "title": "Foundation Health \u2014 Steve Charette (not scheduled)",
+      "title": "Foundation Health — Steve Charette (not scheduled)",
       "with": "Steve Charette",
       "type": "hm",
       "status": "unscheduled",
@@ -438,7 +438,7 @@
       "companyId": "brain-co",
       "start": "",
       "end": "",
-      "title": "Brain Co \u2014 hiring manager screen",
+      "title": "Brain Co — hiring manager screen",
       "with": "TBD",
       "type": "hm",
       "status": "unscheduled",
@@ -450,7 +450,7 @@
       "companyId": "invisible",
       "start": "",
       "end": "",
-      "title": "Invisible \u2014 round 3 (time TBD)",
+      "title": "Invisible — round 3 (time TBD)",
       "with": "TBD",
       "type": "loop",
       "status": "unscheduled",
@@ -462,7 +462,7 @@
       "companyId": "foundation-health",
       "start": "2026-08-03T11:30:00-04:00",
       "end": "2026-08-03T11:45:00-04:00",
-      "title": "Foundation Health \u2014 Jack Leeming recruiter",
+      "title": "Foundation Health — Jack Leeming recruiter",
       "with": "Jack Leeming",
       "type": "recruiter",
       "status": "done",
@@ -474,7 +474,7 @@
       "companyId": "brain-co",
       "start": "2026-08-03T14:00:00-04:00",
       "end": "2026-08-03T14:30:00-04:00",
-      "title": "Brain Co \u2014 recruiter screen",
+      "title": "Brain Co — recruiter screen",
       "with": "Michal / Alina",
       "type": "recruiter",
       "status": "done",
@@ -486,7 +486,7 @@
       "companyId": "invisible",
       "start": "2026-07-29T12:00:00-04:00",
       "end": "2026-07-29T13:00:00-04:00",
-      "title": "Invisible \u2014 HM with Alex Arutyunyants",
+      "title": "Invisible — HM with Alex Arutyunyants",
       "with": "Alex Arutyunyants",
       "type": "hm",
       "status": "done",
