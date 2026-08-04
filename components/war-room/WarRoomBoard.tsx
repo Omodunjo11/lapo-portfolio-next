@@ -266,10 +266,8 @@ export default function WarRoomBoard({
   columns,
   initialCompanies,
   upcoming,
-  focus,
   chase = [],
   archived: initialArchived,
-  attention: initialAttention,
   today,
   initialSuggestions,
   gmailReady = false,
@@ -280,10 +278,8 @@ export default function WarRoomBoard({
   columns: Col[];
   initialCompanies: Company[];
   upcoming: PipelineEvent[];
-  focus: { companyId: string; detail: string }[];
   chase?: ChaseItem[];
   archived: Company[];
-  attention: Company[];
   today: string;
   initialSuggestions: Suggestion[];
   gmailReady?: boolean;
@@ -328,6 +324,19 @@ export default function WarRoomBoard({
     () => [...chase].sort((a, b) => a.due.localeCompare(b.due)),
     [chase]
   );
+  const chaseDueToday = useMemo(
+    () => chaseSorted.filter((item) => item.due <= today),
+    [chaseSorted, today]
+  );
+  const chaseLater = useMemo(
+    () => chaseSorted.filter((item) => item.due > today),
+    [chaseSorted, today]
+  );
+  const doneRecent = useMemo(
+    () => recentEvents.filter((e) => e.status === "done").slice(0, 5),
+    [recentEvents]
+  );
+  const laterCount = chaseLater.length + doneRecent.length;
 
   const byStage = useMemo(() => {
     const map: Record<string, Company[]> = {};
@@ -347,19 +356,6 @@ export default function WarRoomBoard({
       ),
     [companies]
   );
-
-  const attention = useMemo(() => {
-    const ids = new Set(initialAttention.map((c) => c.id));
-    return companies.filter((c) => {
-      if (!ids.has(c.id) && !(c.due && c.due <= today) && !(c.nudgeDate && c.nudgeDate <= today)) {
-        return false;
-      }
-      if (c.stage === "passed" || c.stage === "ghosted") return false;
-      return Boolean(
-        (c.due && c.due <= today) || (c.nudgeDate && c.nudgeDate <= today)
-      );
-    });
-  }, [companies, initialAttention, today]);
 
   const nameOf = (id: string) =>
     companies.find((c) => c.id === id)?.name || id;
@@ -500,15 +496,9 @@ export default function WarRoomBoard({
 
   return (
     <div className="wr-grid">
-      <section className="wr-panel wr-scan">
+      <section className="wr-panel wr-today">
         <div className="wr-board-head">
-          <div>
-            <h2>Inbox scan</h2>
-            <p className="wr-muted" style={{ margin: "6px 0 0" }}>
-              Button anytime · daily site cron 8am ET · Mac LaunchAgent ~every 3h.
-              Interview-only. Stages never auto-move.
-            </p>
-          </div>
+          <h2>Today</h2>
           <button
             type="button"
             className="wr-btn"
@@ -523,70 +513,17 @@ export default function WarRoomBoard({
             {scanning ? "Scanning…" : "Scan inbox"}
           </button>
         </div>
-        {scanNote ? <p className="wr-muted">{scanNote}</p> : null}
+        {scanNote ? <p className="wr-muted wr-today-meta">{scanNote}</p> : null}
         {!gmailReady ? (
           <p className="wr-error">
             Gmail not configured — set GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET,
             GOOGLE_REFRESH_TOKEN on Vercel.
           </p>
         ) : null}
-      </section>
+        {debriefNote ? <p className="wr-saved">{debriefNote}</p> : null}
 
-      {chaseSorted.length > 0 ? (
-        <section className="wr-panel wr-chase">
-          <h2>Chase queue</h2>
-          <p className="wr-muted" style={{ marginBottom: 12 }}>
-            Dated nudges — copy a draft, then send from your mail.
-          </p>
-          <ul className="wr-flag-list">
-            {chaseSorted.map((item) => {
-              const dueSoon = item.due <= today;
-              return (
-                <li key={`${item.companyId}-${item.due}`}>
-                  <div>
-                    <strong>
-                      {nameOf(item.companyId)}
-                      {dueSoon ? " · due" : ""}
-                    </strong>
-                    <span>
-                      By {item.due} — {item.detail}
-                    </span>
-                  </div>
-                  <div className="wr-flag-actions">
-                    <button
-                      type="button"
-                      className="wr-btn wr-btn-ghost"
-                      onClick={() =>
-                        setDraftOpen((cur) =>
-                          cur === `${item.companyId}-${item.due}`
-                            ? null
-                            : `${item.companyId}-${item.due}`
-                        )
-                      }
-                    >
-                      Draft
-                    </button>
-                  </div>
-                  {draftOpen === `${item.companyId}-${item.due}` ? (
-                    <pre className="wr-chase-draft">
-                      {CHASE_DRAFTS[item.draft || "soft-nudge"] ||
-                        CHASE_DRAFTS["soft-nudge"]}
-                    </pre>
-                  ) : null}
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-      ) : null}
-
-      {suggestions.length > 0 && (
-        <section className="wr-panel wr-flags">
-          <h2>Flags — you decide</h2>
-          <p className="wr-muted" style={{ marginBottom: 12 }}>
-            From Gmail/Calendar and pipeline events. Accept to move, or dismiss.
-          </p>
-          <ul className="wr-flag-list">
+        {suggestions.length > 0 ? (
+          <ul className="wr-flag-list wr-today-flags">
             {suggestions.map((s) => (
               <li key={s.id}>
                 <div>
@@ -616,47 +553,12 @@ export default function WarRoomBoard({
               </li>
             ))}
           </ul>
-        </section>
-      )}
+        ) : null}
 
-      {attention.length > 0 ? (
-        <section className="wr-panel wr-attention">
-          <h2>Needs attention today ({today})</h2>
-          <ul>
-            {attention.map((c) => (
-              <li key={c.id}>
-                <strong>{c.name}</strong>
-                <span>
-                  {c.due && c.due <= today ? `Due ${c.due}` : ""}
-                  {c.nudgeDate && c.nudgeDate <= today
-                    ? `${c.due && c.due <= today ? " · " : ""}Nudge by ${c.nudgeDate}`
-                    : ""}
-                  {" · "}
-                  {c.nextAction}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
-
-      <section className="wr-panel wr-focus">
-        <h2>Today&apos;s focus</h2>
-        <ul>
-          {focus.map((f) => (
-            <li key={f.companyId}>
-              <strong>{nameOf(f.companyId)}</strong>
-              <span>{f.detail}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="wr-panel">
-        <h2>Upcoming interviews</h2>
-        {debriefNote ? <p className="wr-saved">{debriefNote}</p> : null}
         <ul className="wr-upcoming">
-          {upcoming.length === 0 && <li className="wr-muted">None scheduled</li>}
+          {upcoming.length === 0 && chaseDueToday.length === 0 ? (
+            <li className="wr-muted">Nothing scheduled or due today</li>
+          ) : null}
           {upcoming.map((e) => {
             const co = companies.find((c) => c.id === e.companyId);
             const href = briefHref(e.briefPath);
@@ -675,9 +577,9 @@ export default function WarRoomBoard({
                 </span>
                 <div className="wr-card-actions">
                   {href ? (
-                    <Link href={href}>Open Now+Next brief</Link>
+                    <Link href={href}>Brief</Link>
                   ) : (
-                    <span className="wr-muted">Brief missing</span>
+                    <span className="wr-muted">No brief</span>
                   )}
                   <button
                     type="button"
@@ -690,20 +592,80 @@ export default function WarRoomBoard({
               </li>
             );
           })}
+          {chaseDueToday.map((item) => {
+            const draftKey = `${item.companyId}-${item.due}`;
+            return (
+              <li key={draftKey} className="wr-today-chase">
+                <strong>{nameOf(item.companyId)}</strong>
+                <span>{item.detail}</span>
+                <div className="wr-card-actions">
+                  <button
+                    type="button"
+                    className="wr-edit-toggle"
+                    onClick={() =>
+                      setDraftOpen((cur) => (cur === draftKey ? null : draftKey))
+                    }
+                  >
+                    Draft
+                  </button>
+                </div>
+                {draftOpen === draftKey ? (
+                  <pre className="wr-chase-draft">
+                    {CHASE_DRAFTS[item.draft || "soft-nudge"] ||
+                      CHASE_DRAFTS["soft-nudge"]}
+                  </pre>
+                ) : null}
+              </li>
+            );
+          })}
         </ul>
 
-        {recentEvents.some((e) => e.status === "done") ? (
-          <div style={{ marginTop: 14 }}>
-            <p className="wr-muted" style={{ marginBottom: 8 }}>
-              Recent done — debrief if notes are thin
-            </p>
-            <ul className="wr-upcoming">
-              {recentEvents
-                .filter((e) => e.status === "done")
-                .slice(0, 5)
-                .map((e) => {
+        {laterCount > 0 ? (
+          <details className="wr-later">
+            <summary>
+              Later ({laterCount}) — upcoming nudges
+              {doneRecent.length ? ` · recent calls` : ""}
+            </summary>
+            {chaseLater.length > 0 ? (
+              <ul className="wr-flag-list">
+                {chaseLater.map((item) => {
+                  const draftKey = `${item.companyId}-${item.due}`;
+                  return (
+                    <li key={draftKey}>
+                      <div>
+                        <strong>{nameOf(item.companyId)}</strong>
+                        <span>
+                          By {item.due} — {item.detail}
+                        </span>
+                      </div>
+                      <div className="wr-flag-actions">
+                        <button
+                          type="button"
+                          className="wr-btn wr-btn-ghost"
+                          onClick={() =>
+                            setDraftOpen((cur) =>
+                              cur === draftKey ? null : draftKey
+                            )
+                          }
+                        >
+                          Draft
+                        </button>
+                      </div>
+                      {draftOpen === draftKey ? (
+                        <pre className="wr-chase-draft">
+                          {CHASE_DRAFTS[item.draft || "soft-nudge"] ||
+                            CHASE_DRAFTS["soft-nudge"]}
+                        </pre>
+                      ) : null}
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : null}
+            {doneRecent.length > 0 ? (
+              <ul className="wr-upcoming" style={{ marginTop: 10 }}>
+                {doneRecent.map((e) => {
                   const co = companies.find((c) => c.id === e.companyId);
-                  const href = briefHref(e.briefPath);
                   return (
                     <li key={e.id}>
                       <strong>{co?.name || e.companyId}</strong>
@@ -712,7 +674,6 @@ export default function WarRoomBoard({
                         {e.start ? ` · ${e.start.slice(0, 10)}` : ""}
                       </span>
                       <div className="wr-card-actions">
-                        {href ? <Link href={href}>Brief</Link> : null}
                         <button
                           type="button"
                           className="wr-edit-toggle"
@@ -724,8 +685,9 @@ export default function WarRoomBoard({
                     </li>
                   );
                 })}
-            </ul>
-          </div>
+              </ul>
+            ) : null}
+          </details>
         ) : null}
       </section>
 
@@ -857,7 +819,7 @@ export default function WarRoomBoard({
 
       <section className="wr-panel wr-board">
         <div className="wr-board-head">
-          <h2>Pipeline funnel</h2>
+          <h2>Pipeline</h2>
           <span className="wr-muted">
             Drag, ← →, or dropdown {pending ? "· saving…" : ""}
           </span>

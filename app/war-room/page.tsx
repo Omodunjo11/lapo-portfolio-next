@@ -44,7 +44,6 @@ async function AuthenticatedWarRoom() {
   const {
     companiesByStage,
     archivedCompanies,
-    attentionToday,
     FUNNEL_COLUMNS,
     getRecruitingPipeline,
   } = await import("@/lib/recruiting/pipeline");
@@ -82,7 +81,6 @@ async function AuthenticatedWarRoom() {
     timeZone: pipeline.timezone || "America/New_York",
   }).format(new Date());
   const archived = archivedCompanies(pipeline);
-  const attention = attentionToday(pipeline, today);
 
   return (
     <div className="wr-root">
@@ -132,10 +130,8 @@ async function AuthenticatedWarRoom() {
         columns={[...FUNNEL_COLUMNS]}
         initialCompanies={pipeline.companies}
         upcoming={upcoming}
-        focus={pipeline.focus}
         chase={pipeline.chase || []}
         archived={archived}
-        attention={attention}
         today={today}
         initialSuggestions={suggestions}
         gmailReady={gmailConfigured()}
@@ -147,9 +143,7 @@ async function AuthenticatedWarRoom() {
       />
 
       <p className="wr-foot">
-        Scan inbox anytime (button). Site cron runs daily 8am ET; Mac LaunchAgent
-        still proposes every ~3h locally. Calendar facts can auto-update; stages
-        only move when you Accept a flag or drag a card.
+        Stages only move when you Accept a flag or drag a card.
       </p>
     </div>
   );
