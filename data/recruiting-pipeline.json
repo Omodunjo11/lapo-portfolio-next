@@ -11,6 +11,10 @@
   ],
   "focus": [
     {
+      "companyId": "enterpret",
+      "detail": "Outbound first-round chase to Vikram (via Varun) \u2014 watch for reply"
+    },
+    {
       "companyId": "hang-ten",
       "detail": "Calendar moved Jack to Tue 1:30pm \u2014 resolve conflict with Regal"
     },
@@ -351,6 +355,40 @@
         "prepUrl": "",
         "note": "No company Drive folder found in Gmail scan \u2014 create Recruiting Season/Semgrep and paste folderUrl."
       }
+    },
+    {
+      "id": "enterpret",
+      "name": "Enterpret",
+      "role": "Chief of Staff",
+      "stage": "applied",
+      "stageLabel": "Applied \u2014 chasing first round (Vikram via Varun)",
+      "ball": "them",
+      "priority": "P1",
+      "nextAction": "Sent Vikram 2026-08-04 asking to schedule first round; wait ~3 biz days then nudge",
+      "due": "2026-08-07",
+      "nudgeDate": "2026-08-07",
+      "lean": null,
+      "contacts": [
+        {
+          "name": "Vikram",
+          "email": "vikram@enterpret.com",
+          "role": "Scheduling / first round"
+        },
+        {
+          "name": "Varun",
+          "role": "Referral / intro"
+        }
+      ],
+      "aliases": [
+        "Enterpret",
+        "enterpret.com",
+        "vikram@enterpret.com"
+      ],
+      "drive": {
+        "folderUrl": "",
+        "prepUrl": "",
+        "note": "Add Drive folder when created"
+      }
     }
   ],
   "events": [
@@ -489,6 +527,12 @@
       "companyId": "brain-co",
       "due": "2026-08-07",
       "detail": "Nudge Michal/Alina if no HM forward yet",
+      "draft": "soft-nudge"
+    },
+    {
+      "companyId": "enterpret",
+      "due": "2026-08-07",
+      "detail": "Nudge Vikram if no first-round schedule reply to Aug 4 email",
       "draft": "soft-nudge"
     }
   ]

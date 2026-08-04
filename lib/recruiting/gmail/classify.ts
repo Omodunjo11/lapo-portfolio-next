@@ -31,7 +31,10 @@ export type IngestProposal = {
 type CompanyHit = Company & { noise?: boolean };
 
 const INTERVIEW_RE =
-  /\b(interview|interviewer|phone screen|recruiter screen|hiring manager|hm screen|onsite|on-site|loop|final round|panel|meet(?:ing)? with|zoom|google meet|teams call|calendly|schedule(?:d)? (?:a |an )?(?:call|interview|chat)|upcoming interview|interview confirmation|invitation:?)\b/i;
+  /\b(interview|interviewer|phone screen|recruiter screen|hiring manager|hm screen|onsite|on-site|loop|final round|panel|meet(?:ing)? with|zoom|google meet|teams call|calendly|schedule(?:d)? (?:a |an )?(?:call|interview|chat)|upcoming interview|interview confirmation|invitation:?|first round|get .* scheduled|find some time|whenever it works|pointed me|applied through)\b/i;
+
+const OUTBOUND_CHASE_RE =
+  /\b(first round|get .* scheduled|find some time|whenever it works|pointed me|applied through|copying (him|her|them)|attached my resume|would love to find some time)\b/i;
 
 const APPLICATION_NOISE_RE =
   /\b(thanks for applying|thank you for (?:your )?application|application (?:received|submitted)|we received your application|new jobs? for you|job alert|recommended (?:roles?|jobs?)|high-conviction|open roles digest)\b/i;
@@ -86,11 +89,13 @@ export function classifyEmail({
   snippet,
   from,
   company,
+  to = "",
 }: {
   subject: string;
   snippet: string;
   from: string;
   company: CompanyHit | null;
+  to?: string;
 }): { signal: IngestSignal; confidence: IngestConfidence; reason: string } {
   if (company?.noise) {
     return {
@@ -99,13 +104,22 @@ export function classifyEmail({
       reason: "job-search tool noise",
     };
   }
-  const text = `${subject} ${snippet} ${from}`.toLowerCase();
+  const text = `${subject} ${snippet} ${from} ${to}`.toLowerCase();
 
   if (APPLICATION_NOISE_RE.test(text)) {
     return {
       signal: "noise",
       confidence: "high",
       reason: "application / job digest noise",
+    };
+  }
+
+  // Outbound chase to a tracked company (e.g. sent "get a first round scheduled")
+  if (company && OUTBOUND_CHASE_RE.test(text)) {
+    return {
+      signal: "schedule",
+      confidence: "medium",
+      reason: "outbound schedule / first-round chase",
     };
   }
 

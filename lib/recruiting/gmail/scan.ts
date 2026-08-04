@@ -43,8 +43,11 @@ export async function scanInterviewSignals(
     .join(" OR ");
 
   const interviewTerms =
-    '(interview OR interviewer OR "phone screen" OR "hiring manager" OR onsite OR calendly OR "final round" OR "next round")';
-  const q = `after:${after} (${aliasQuery}) ${interviewTerms}`;
+    '(interview OR interviewer OR "phone screen" OR "hiring manager" OR onsite OR calendly OR "final round" OR "next round" OR "first round")';
+  // Also pull outbound chase/schedule emails to tracked companies (Sent).
+  const sentChaseTerms =
+    '("first round" OR schedule OR scheduled OR "find some time" OR "looking forward" OR calendly OR "attached" OR applied OR resume)';
+  const q = `after:${after} ((${aliasQuery}) (${interviewTerms}) OR (in:sent (${aliasQuery}) ${sentChaseTerms}))`;
 
   const list = await gmail.users.messages.list({
     userId: "me",
@@ -61,15 +64,27 @@ export async function scanInterviewSignals(
       userId: "me",
       id: m.id,
       format: "metadata",
-      metadataHeaders: ["From", "Subject", "Date"],
+      metadataHeaders: ["From", "To", "Cc", "Subject", "Date"],
     });
     const headers = full.data.payload?.headers || [];
     const subject = header(headers, "Subject");
     const from = header(headers, "From");
+    const to = [header(headers, "To"), header(headers, "Cc")]
+      .filter(Boolean)
+      .join(" ");
     const date = header(headers, "Date");
     const snippet = full.data.snippet || "";
-    const company = matchCompany(pipeline, `${subject} ${from} ${snippet}`);
-    const classification = classifyEmail({ subject, snippet, from, company });
+    const company = matchCompany(
+      pipeline,
+      `${subject} ${from} ${to} ${snippet}`
+    );
+    const classification = classifyEmail({
+      subject,
+      snippet,
+      from,
+      to,
+      company,
+    });
 
     if (classification.signal === "noise") continue;
 
@@ -78,7 +93,7 @@ export async function scanInterviewSignals(
       id: m.id,
       threadId: full.data.threadId,
       date,
-      from,
+      from: to ? `${from} → ${to}` : from,
       subject,
       snippet,
       companyId: company?.noise ? null : company?.id || null,
