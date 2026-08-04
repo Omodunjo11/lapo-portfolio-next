@@ -83,7 +83,8 @@ async function proposalFromMessage(
   const body = extractGmailBody(full.data.payload);
   const company = matchCompany(
     pipeline,
-    `${subject} ${from} ${to} ${snippet} ${body}`
+    `${subject} ${from} ${to} ${snippet} ${body}`,
+    { from }
   );
   let classification = classifyEmail({
     subject,
@@ -156,9 +157,22 @@ export async function scanInterviewSignals(
 
   // Keyword / process pass (inbox + sent chase).
   const inboxQ = `after:${after} -in:spam -in:trash ((${aliasQuery}) (${interviewTerms} OR ${processTerms}) OR (in:sent (${aliasQuery}) ${sentChaseTerms}))`;
-  // Safety net: any recent tracked-company mail — classify with full body.
-  // Catches NDA / process notes that slip past keyword OR clauses.
-  const companyQ = `after:${after} -in:spam -in:trash (${aliasQuery})`;
+  // Safety net: recent mail for company names / domains (not first-name aliases).
+  const strongAliasQuery = pipeline.companies
+    .flatMap((c) => {
+      const out = [c.name];
+      for (const a of c.aliases || []) {
+        const s = String(a || "").trim();
+        if (!s) continue;
+        if (s.includes(".") || s.includes("@") || /\s/.test(s)) out.push(s);
+      }
+      return out;
+    })
+    .filter(Boolean)
+    .slice(0, 40)
+    .map((a) => `"${String(a).replace(/"/g, "")}"`)
+    .join(" OR ");
+  const companyQ = `after:${after} -in:spam -in:trash (${strongAliasQuery})`;
   // Explicit Spam pass — Hang Ten and others have landed here.
   const spamQ = `in:spam after:${after} (${aliasQuery})`;
 
@@ -260,6 +274,12 @@ export function applyCalendarFacts(
     if (p.source !== "calendar" || p.signal !== "schedule") continue;
     if (!p.start || !p.end || !p.companyId) continue;
 
+    // Don't revive past meetings into "Attend" next actions.
+    const endMs = Date.parse(p.end);
+    if (Number.isFinite(endMs) && endMs < Date.now() - 30 * 60 * 1000) {
+      continue;
+    }
+
     const company = data.companies.find((c) => c.id === p.companyId);
     if (!company) continue;
 
@@ -270,6 +290,8 @@ export function applyCalendarFacts(
       data.events.find(
         (e) => e.companyId === company.id && e.status === "scheduled"
       );
+
+    if (event?.status === "done") continue;
 
     if (!event) {
       event = {

@@ -100,8 +100,9 @@ Also searches **Gmail Spam** for tracked-company aliases (Hang Ten has landed th
 Process mail counts too: **NDA**, “next step/stage”, “move forward” — not only the word “interview”.
 
 Each Gmail hit is fetched as **full message** and classified on subject + body
-(not snippet alone). A second query pulls all recent tracked-company mail so
-keyword OR gaps cannot hide process notes.
+(not snippet alone). A second query pulls recent tracked-company mail by **company
+name / domain** (not loose first-name aliases) so keyword OR gaps cannot hide
+process notes. Short person aliases (e.g. Michal, Kelsey) only match the From header.
 
 Scan cadence: button anytime; Actions ~every 6h; Vercel daily backup.
 

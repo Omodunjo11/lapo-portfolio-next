@@ -42,13 +42,15 @@ const OUTBOUND_CHASE_RE =
   /\b(first round|get .* scheduled|find some time|whenever it works|pointed me|applied through|copying (him|her|them)|attached my resume|would love to find some time)\b/i;
 
 const APPLICATION_NOISE_RE =
-  /\b(thanks for applying|thank you for (?:your )?application|application (?:received|submitted)|we received your application|new jobs? for you|job alert|recommended (?:roles?|jobs?)|high-conviction|open roles digest)\b/i;
+  /\b(thanks for applying|thank you for (?:your )?application|application (?:received|submitted)|we received your application|new jobs? for you|job alert|recommended (?:roles?|jobs?)|high-conviction|open roles digest|medium daily digest|stories for )\b/i;
 
 export function matchCompany(
   pipeline: Pipeline,
-  text: string
+  text: string,
+  opts: { from?: string } = {}
 ): CompanyHit | null {
   const hay = (text || "").toLowerCase();
+  const from = (opts.from || "").toLowerCase();
   if (/jackandjill\.ai|jack and jill/i.test(hay)) {
     return {
       id: "_noise",
@@ -63,10 +65,23 @@ export function matchCompany(
     };
   }
   for (const c of pipeline.companies) {
-    for (const a of c.aliases || []) {
-      if (a && hay.includes(String(a).toLowerCase())) return c;
-    }
     if (hay.includes(c.name.toLowerCase())) return c;
+    for (const a of c.aliases || []) {
+      const al = String(a || "").toLowerCase().trim();
+      if (!al || al.length < 4) continue;
+      // First-name / short single tokens are too sticky (e.g. "Michal" in a
+      // Medium digest). Only match those against the From header.
+      const personish =
+        !al.includes(".") &&
+        !al.includes("@") &&
+        !/\s/.test(al) &&
+        al.length < 12;
+      if (personish) {
+        if (from.includes(al)) return c;
+        continue;
+      }
+      if (hay.includes(al)) return c;
+    }
   }
   return null;
 }
