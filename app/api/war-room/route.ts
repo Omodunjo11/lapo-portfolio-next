@@ -80,75 +80,83 @@ export async function POST(req: Request) {
 
   const user = gate.user!;
   const userId = gate.userId!;
-  const body = await req.json();
+  let body: { action?: string; id?: string; companyId?: string; stage?: FunnelStage; stageLabel?: string };
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "invalid_json" }, { status: 400 });
+  }
+
   const prefs = readPrefs(user);
+  // Clone so we never mutate the bundled JSON import.
   const pipeline = getRecruitingPipeline();
 
-  if (body.action === "move") {
-    const companyId = String(body.companyId || "");
-    const stage = body.stage as FunnelStage;
-    if (
-      !companyId ||
-      !(EDITABLE_STAGES as readonly string[]).includes(stage)
-    ) {
-      return NextResponse.json({ error: "invalid move" }, { status: 400 });
-    }
-    const company = pipeline.companies.find((c) => c.id === companyId);
-    if (!company) {
-      return NextResponse.json({ error: "company_not_found" }, { status: 404 });
-    }
-    company.stage = stage;
-    company.stageLabel =
-      typeof body.stageLabel === "string" && body.stageLabel
-        ? body.stageLabel
-        : STAGE_LABELS[stage] || stage;
-    pipeline.updated = new Date().toISOString().slice(0, 10);
-    try {
+  try {
+    if (body.action === "move") {
+      const companyId = String(body.companyId || "");
+      const stage = body.stage as FunnelStage;
+      if (
+        !companyId ||
+        !(EDITABLE_STAGES as readonly string[]).includes(stage)
+      ) {
+        return NextResponse.json({ error: "invalid move" }, { status: 400 });
+      }
+      const company = pipeline.companies.find((c) => c.id === companyId);
+      if (!company) {
+        return NextResponse.json({ error: "company_not_found" }, { status: 404 });
+      }
+      company.stage = stage;
+      company.stageLabel =
+        typeof body.stageLabel === "string" && body.stageLabel
+          ? body.stageLabel
+          : STAGE_LABELS[stage] || stage;
+      pipeline.updated = new Date().toISOString().slice(0, 10);
       await commitPipeline(pipeline, `War room: move ${companyId} → ${stage}`);
-    } catch (err) {
-      return NextResponse.json(
-        { error: "commit_failed", detail: (err as Error).message },
-        { status: 502 }
-      );
-    }
-  } else if (body.action === "dismiss_suggestion") {
-    const id = String(body.id || "");
-    if (!id) return NextResponse.json({ error: "missing id" }, { status: 400 });
-    if (!prefs.dismissedSuggestionIds.includes(id)) {
-      prefs.dismissedSuggestionIds.push(id);
-    }
-    await savePrefs(userId, user, prefs);
-  } else if (body.action === "accept_suggestion") {
-    const id = String(body.id || "");
-    const suggestions = allSuggestions(pipeline, prefs.dismissedSuggestionIds);
-    const sug = suggestions.find((s) => s.id === id);
-    if (!sug) {
-      return NextResponse.json({ error: "unknown suggestion" }, { status: 404 });
-    }
-    const company = pipeline.companies.find((c) => c.id === sug.companyId);
-    if (!company) {
-      return NextResponse.json({ error: "company_not_found" }, { status: 404 });
-    }
-    company.stage = sug.toStage;
-    company.stageLabel = `${STAGE_LABELS[sug.toStage] || sug.toStage} (accepted flag)`;
-    pipeline.updated = new Date().toISOString().slice(0, 10);
-    if (!prefs.dismissedSuggestionIds.includes(id)) {
-      prefs.dismissedSuggestionIds.push(id);
-    }
-    try {
+    } else if (body.action === "dismiss_suggestion") {
+      const id = String(body.id || "");
+      if (!id) return NextResponse.json({ error: "missing id" }, { status: 400 });
+      if (!prefs.dismissedSuggestionIds.includes(id)) {
+        prefs.dismissedSuggestionIds.push(id);
+      }
+      await savePrefs(userId, user, prefs);
+    } else if (body.action === "accept_suggestion") {
+      const id = String(body.id || "");
+      if (!id) return NextResponse.json({ error: "missing id" }, { status: 400 });
+      const suggestions = allSuggestions(pipeline, prefs.dismissedSuggestionIds);
+      const sug = suggestions.find((s) => s.id === id);
+      if (!sug) {
+        return NextResponse.json(
+          { error: "unknown suggestion", detail: `No pending flag ${id}` },
+          { status: 404 }
+        );
+      }
+      const company = pipeline.companies.find((c) => c.id === sug.companyId);
+      if (!company) {
+        return NextResponse.json({ error: "company_not_found" }, { status: 404 });
+      }
+      company.stage = sug.toStage;
+      company.stageLabel = `${STAGE_LABELS[sug.toStage] || sug.toStage} (accepted flag)`;
+      company.ball = company.ball || "them";
+      pipeline.updated = new Date().toISOString().slice(0, 10);
+      if (!prefs.dismissedSuggestionIds.includes(id)) {
+        prefs.dismissedSuggestionIds.push(id);
+      }
       await commitPipeline(
         pipeline,
         `War room: accept flag ${id} → ${sug.toStage}`
       );
-    } catch (err) {
-      return NextResponse.json(
-        { error: "commit_failed", detail: (err as Error).message },
-        { status: 502 }
-      );
+      await savePrefs(userId, user, prefs);
+    } else {
+      return NextResponse.json({ error: "unknown action" }, { status: 400 });
     }
-    await savePrefs(userId, user, prefs);
-  } else {
-    return NextResponse.json({ error: "unknown action" }, { status: 400 });
+  } catch (err) {
+    return NextResponse.json(
+      {
+        error: "commit_failed",
+        detail: (err as Error).message || "accept_failed",
+      },
+      { status: 502 }
+    );
   }
 
   const suggestions = allSuggestions(pipeline, prefs.dismissedSuggestionIds);

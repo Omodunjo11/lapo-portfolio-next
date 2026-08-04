@@ -11,8 +11,10 @@ export const FUNNEL_COLUMNS = [
   { id: "final", label: "Final" },
 ] as const;
 
+/** Always clone — the JSON import is effectively read-only in Next, and
+ *  mutating it in place breaks Accept / move / Edit saves. */
 export function getRecruitingPipeline(): Pipeline {
-  return pipeline as Pipeline;
+  return structuredClone(pipeline) as Pipeline;
 }
 
 export function companiesByStage(data: Pipeline) {

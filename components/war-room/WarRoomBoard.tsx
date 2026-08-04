@@ -367,13 +367,20 @@ export default function WarRoomBoard({
       headers: { "content-type": "application/json" },
       body: JSON.stringify(body),
     });
-    const data = await res.json();
+    const data = await res.json().catch(() => ({}));
     if (!res.ok) {
-      setError(data.error || data.detail || "Request failed");
-      return;
+      const detail =
+        typeof data.detail === "string"
+          ? data.detail
+          : typeof data.error === "string"
+            ? data.error
+            : "Request failed";
+      setError(detail);
+      return false;
     }
     if (data.pipeline?.companies) setCompanies(data.pipeline.companies);
     if (data.suggestions) setSuggestions(data.suggestions);
+    return true;
   }
 
   function move(companyId: string, stage: FunnelStage) {
@@ -391,8 +398,38 @@ export default function WarRoomBoard({
   }
 
   function accept(id: string) {
+    const sug = suggestions.find((s) => s.id === id);
+    const prior = sug
+      ? companies.find((c) => c.id === sug.companyId)
+      : undefined;
+    // Optimistic: drop flag + move card immediately
+    setSuggestions((prev) => prev.filter((s) => s.id !== id));
+    if (sug) {
+      setCompanies((prev) =>
+        prev.map((c) =>
+          c.id === sug.companyId
+            ? {
+                ...c,
+                stage: sug.toStage,
+                stageLabel: `${sug.toStage} (accepted flag)`,
+              }
+            : c
+        )
+      );
+    }
     startTransition(() => {
-      void post({ action: "accept_suggestion", id });
+      void post({ action: "accept_suggestion", id }).then((ok) => {
+        if (!ok && sug) {
+          setSuggestions((prev) =>
+            prev.some((s) => s.id === id) ? prev : [...prev, sug]
+          );
+          if (prior) {
+            setCompanies((prev) =>
+              prev.map((c) => (c.id === prior.id ? prior : c))
+            );
+          }
+        }
+      });
     });
   }
 
