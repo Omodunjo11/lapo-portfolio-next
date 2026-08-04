@@ -1,9 +1,23 @@
 {
-  "scannedAt": "2026-08-04T17:26:00.615Z",
+  "scannedAt": "2026-08-04T17:58:04.400Z",
   "days": 7,
   "gmailMatched": 40,
   "calendarMatched": 9,
   "proposals": [
+    {
+      "source": "gmail",
+      "id": "19fcdd278d2d3c6e",
+      "threadId": "19fb8ebc2d8e02a7",
+      "date": "Tue, 4 Aug 2026 13:29:10 -0400",
+      "from": "Lapo Odunjo <odunjoonaolapo@gmail.com> → Kate Alvarico <kate.alvarico@invisible.email> Hafsa Tahir <hafsa.tahir@invisible.email>, Derek Pages <derek.pages@invisible.email>",
+      "subject": "Re: Invisible Technologies Senior Product Manager – Interview Scheduling Request",
+      "snippet": "Thank you, looking forward to it! Le mar. 4 août 2026 à 1:22 PM, Kate Alvarico &lt;kate.alvarico@invisible.email&gt; a écrit : Thanks Lapo! Ranjani mentioned 10:30am ET would work best for her. I&#39;",
+      "companyId": "invisible",
+      "companyName": "Invisible Technologies",
+      "signal": "wait",
+      "confidence": "low",
+      "reason": "interview-adjacent, unclear"
+    },
     {
       "source": "gmail",
       "id": "19fcdccae0e26dec",
@@ -409,20 +423,6 @@
       "signal": "advance",
       "confidence": "medium",
       "reason": "interview advance"
-    },
-    {
-      "source": "gmail",
-      "id": "19faf81e4ac93c6b",
-      "threadId": "19faf81e4ac93c6b",
-      "date": "Wed, 29 Jul 2026 20:12:32 +0000 (UTC)",
-      "from": "\"Otter.ai\" <no-reply@otter.ai> → Lapo Odunjo <odunjoonaolapo@gmail.com>",
-      "subject": "Unable to record Interview with Invisible Technologies",
-      "snippet": "Interview with Invisible Technologies Otter.ai logo The host has not admitted your Notetaker Notetaker tried to join your meeting, Interview with Invisible Technologies on Wed 7/29 at 16:00PM to record",
-      "companyId": "invisible",
-      "companyName": "Invisible Technologies",
-      "signal": "wait",
-      "confidence": "low",
-      "reason": "interview-adjacent, unclear"
     },
     {
       "source": "calendar",
