@@ -1,4 +1,9 @@
 import type { Company, Pipeline } from "../types";
+import {
+  INTERVIEW_SIGNAL_RE,
+  classifyProcessAdvanceKind,
+  processAdvanceReason,
+} from "./taxonomy";
 
 export type IngestSignal =
   | "noise"
@@ -31,12 +36,6 @@ export type IngestProposal = {
 };
 
 type CompanyHit = Company & { noise?: boolean };
-
-const INTERVIEW_RE =
-  /\b(interview|interviewer|phone screen|recruiter screen|hiring manager|hm screen|onsite|on-site|loop|final round|panel|meet(?:ing)? with|zoom|google meet|teams call|calendly|schedule(?:d)? (?:a |an )?(?:call|interview|chat)|upcoming interview|interview confirmation|invitation:?|first round|get .* scheduled|find some time|whenever it works|pointed me|applied through|nda|non-?disclosure|next step|next stage|move forward|moving forward|continue(?:d)? (?:our |the )?conversation|sign (?:the |this )?(?:attached )?nda)\b/i;
-
-const PROCESS_ADVANCE_RE =
-  /\b(next steps?|next stage|moving forward|move forward|hiring manager|next round|final round|onsite|nda|non-?disclosure|complete (?:the |an )?nda|sign (?:the |this )?(?:attached )?nda|excited to (?:move|continue))\b/i;
 
 const OUTBOUND_CHASE_RE =
   /\b(first round|get .* scheduled|find some time|whenever it works|pointed me|applied through|copying (him|her|them)|attached my resume|would love to find some time)\b/i;
@@ -103,7 +102,7 @@ export function isInterviewSignal({
   if (source === "calendar") return true;
   if (APPLICATION_NOISE_RE.test(text)) return false;
   if (/jackandjill/i.test(text)) return false;
-  return INTERVIEW_RE.test(text);
+  return INTERVIEW_SIGNAL_RE.test(text);
 }
 
 export function classifyEmail({
@@ -160,16 +159,12 @@ export function classifyEmail({
 
   // Process advance beats bare "schedule a …" — Regal "Next Steps" asks to
   // book Sahil after Kelsey; that is an advance, not a silent schedule.
-  const processAdvance = PROCESS_ADVANCE_RE.test(text);
-  if (company && processAdvance && !hardReject) {
+  const advanceKind = classifyProcessAdvanceKind(text);
+  if (company && advanceKind && !hardReject) {
     return {
       signal: "advance",
       confidence: "medium",
-      reason: /\bnda\b|\bnon-?disclosure\b/i.test(text)
-        ? "NDA / next-stage advance"
-        : /schedule|availability|dates?\/times?|video call with/i.test(text)
-          ? "next-round advance + schedule ask"
-          : "interview advance",
+      reason: processAdvanceReason(advanceKind, text),
     };
   }
 

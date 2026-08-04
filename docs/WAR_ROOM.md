@@ -97,12 +97,19 @@ War Room can scan your inbox from the site:
 
 Interview / process signals (not applications). Matches tracked companies by alias.
 Also searches **Gmail Spam** for tracked-company aliases (Hang Ten has landed there).
-Process mail counts too: **NDA**, “next step/stage”, “move forward” — not only the word “interview”.
+Process taxonomy is wide: **NDA**, next step/stage/round, move forward, HM/COO/exec,
+onsite/loop/panel, take-home/work sample, reference/offer process, meet-the-team.
 
 Each Gmail hit is fetched as **full message** and classified on subject + body
 (not snippet alone). A second query pulls recent tracked-company mail by **company
 name / domain** (not loose first-name aliases) so keyword OR gaps cannot hide
 process notes. Short person aliases (e.g. Michal, Kelsey) only match the From header.
+
+**Prep decks:** on Scan, Claude (`ANTHROPIC_API_KEY`) writes Now+Next markdown for
+scheduled interviews and for **advance** emails (next steps) even before a calendar
+invite exists. Falls back to the static stub if the key is missing or Claude errors.
+Existing rich hand briefs are kept unless a new interviewer name appears.
+Optional: `ANTHROPIC_PREP_MODEL` (default `claude-sonnet-4-5-20250929`).
 
 Scan cadence: button anytime; Actions ~every 6h; Vercel daily backup.
 
@@ -120,10 +127,14 @@ GOOGLE_CLIENT_SECRET=...
 GOOGLE_REFRESH_TOKEN=...
 GMAIL_INGEST_DAYS=7
 CRON_SECRET=long-random-string
+ANTHROPIC_API_KEY=sk-ant-...
+# optional:
+# ANTHROPIC_PREP_MODEL=claude-sonnet-4-5-20250929
 ```
 
 Copy client id/secret from `google-client.json` and `refresh_token` from
 `google-token.json` into Vercel env (Production + Preview). Never commit those files.
+Also set `ANTHROPIC_API_KEY` on Vercel so Scan can LLM-write prep decks.
 
 ## Briefs (Now + Next)
 
@@ -148,9 +159,10 @@ On each **Scan inbox** (and ~6h / daily automatic scans):
 
 1. Lists company subfolders under the Recruiting Season Drive root
 2. Maps them onto `companies[].drive.folderUrl`
-3. For every **scheduled** interview missing prep, creates a Google Doc
-   prep deck in that company folder and sets `companies[].drive.prepUrl`
-4. Also writes/links a local Now+Next markdown brief (`briefPath`) for War Room
+3. For every **scheduled** interview missing rich prep, Claude writes a Now+Next
+   deck (stub fallback) → local brief + Google Doc (`prepUrl`, updated in place when possible)
+4. For **advance** emails (next steps / NDA / HM), also writes `data/briefs/next-<company>.md`
+   even when the calendar invite is not on file yet
 
 Requires Google OAuth with **Drive** scope (plus existing Gmail + Calendar).
 Re-auth locally:

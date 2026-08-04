@@ -7,6 +7,7 @@ import {
   type IngestProposal,
 } from "./classify";
 import { getCalendarClient, getGmailClient } from "./client";
+import { gmailProcessOrClause } from "./taxonomy";
 
 function header(
   headers: { name?: string | null; value?: string | null }[] | undefined,
@@ -148,12 +149,10 @@ export async function scanInterviewSignals(
     .join(" OR ");
 
   const interviewTerms =
-    '(interview OR interviewer OR "phone screen" OR "hiring manager" OR onsite OR calendly OR "final round" OR "next round" OR "first round" OR "google meet" OR invitation OR NDA OR "non-disclosure" OR "next step" OR "next stage" OR "move forward" OR "moving forward")';
+    '(interview OR interviewer OR "phone screen" OR "hiring manager" OR onsite OR calendly OR "final round" OR "next round" OR "first round" OR "google meet" OR invitation OR NDA OR "non-disclosure" OR "next step" OR "next stage" OR "move forward" OR "moving forward" OR "take-home" OR "work sample" OR "meet the team" OR "reference check")';
   const sentChaseTerms =
     '("first round" OR schedule OR scheduled OR "find some time" OR "looking forward" OR calendly OR "attached" OR applied OR resume OR NDA)';
-  // Tracked company + clear process docs (NDA) even without the word interview.
-  const processTerms =
-    '(NDA OR "non-disclosure" OR "next step" OR "next stage" OR "move forward" OR "moving forward" OR "excited to continue" OR "excited to move")';
+  const processTerms = gmailProcessOrClause();
 
   // Keyword / process pass (inbox + sent chase).
   const inboxQ = `after:${after} -in:spam -in:trash ((${aliasQuery}) (${interviewTerms} OR ${processTerms}) OR (in:sent (${aliasQuery}) ${sentChaseTerms}))`;

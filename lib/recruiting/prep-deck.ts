@@ -3,10 +3,15 @@ import { join } from "node:path";
 import type { Company, Pipeline, PipelineEvent } from "./types";
 import {
   createPrepDoc,
+  docIdFromUrl,
   folderIdFromUrl,
   listChildFolders,
   mapCompanyFolders,
+  updatePrepDoc,
 } from "./drive";
+import type { IngestProposal } from "./gmail/classify";
+import { extractNextInterviewer } from "./gmail/taxonomy";
+import { generatePrepDeck, isRichBrief, stubPrepDeck } from "./prep-llm";
 
 function localBriefText(briefPath?: string | null): string | null {
   if (!briefPath) return null;
@@ -17,90 +22,8 @@ function localBriefText(briefPath?: string | null): string | null {
   return readFileSync(abs, "utf8");
 }
 
-function stubDeck(company: Company, event: PipelineEvent): string {
-  const when = event.start
-    ? new Date(event.start).toLocaleString("en-US", {
-        weekday: "short",
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-        timeZone: "America/New_York",
-      })
-    : "TBD";
-
-  return `# ${company.name} — prep deck
-
-When: ${when} ET
-With: ${event.with || "TBD"}
-Role: ${company.role}
-Stage: ${company.stageLabel || company.stage}
-Title: ${event.title}
-
----
-
-# Now — this interview
-
-## Goal for this call
-- Confirm fit for ${company.role}
-- Leave with next step + who you meet next
-
-## 5 talking points
-1. Why ${company.name} specifically (not generic AI interest)
-2. Forward-deployed / shipping ownership proof
-3. Trust, eval, and production quality bar
-4. Ambiguity comfort — incomplete info → decision → motion
-5. What "good" looks like in the first 90 days
-
-## Opening (~20s)
-Draft a tight opener tied to ${company.name}'s product and your closest proof.
-
-## Stories to have ready
-- Kinage scale / playbooks / cost-to-serve
-- Bank trust / precision / eval
-- Judgment under pressure (TD pushback)
-- Incomplete-info story
-
-## Likely topics
-- Role shape and success metrics
-- Enterprise vs product tension (if relevant)
-- Loop / timeline / competing process
-
-## 3 questions to ask
-1. What are you hiring this seat to own in the next 90 days?
-2. What's the biggest failure mode on the team right now?
-3. If this goes well, who else would I meet and what are those conversations testing?
-
-## Don't
-- Don't wing the loop question
-- Don't overclaim domain depth you don't have
-- Don't leave without a clear next owner + timing
-
----
-
-# Next — loop & future rounds
-
-## Loop map
-- Past rounds: (fill after debrief)
-- This round: ${event.title}${event.with ? ` with ${event.with}` : ""}
-- Likely next: TBD — ask on this call
-- Still unknown: interviewer ladder, timeline, role leveling
-
-## Prep bank for later rounds
-- Deepen one managed/coached technical delivery story
-- Research whoever they name next (same day)
-- Confirm format for the following round
-
-## After the call
-1. Debrief in War Room
-2. Update this doc's Loop map
-3. Stub next-round prep the same day if a name is known
-`;
-}
-
 function deckTitle(company: Company, event: PipelineEvent) {
-  const day = event.start?.slice(0, 10) || "soon";
+  const day = event.start?.slice(0, 10) || "next";
   const who = event.with ? ` — ${event.with}` : "";
   return `Prep deck — ${company.name} — ${day}${who}`;
 }
@@ -114,9 +37,10 @@ function briefSlug(company: Company, event: PipelineEvent) {
 export function writeLocalBrief(
   company: Company,
   event: PipelineEvent,
-  text: string
+  text: string,
+  slugOverride?: string
 ): string {
-  const slug = briefSlug(company, event);
+  const slug = slugOverride || briefSlug(company, event);
   const dir = join(process.cwd(), "data", "briefs");
   mkdirSync(dir, { recursive: true });
   const abs = join(dir, `${slug}.md`);
@@ -124,26 +48,87 @@ export function writeLocalBrief(
   return `briefs/${slug}.md`;
 }
 
+async function persistPrepDoc(
+  company: Company,
+  event: PipelineEvent,
+  text: string,
+  opts: { overwriteDoc?: boolean }
+): Promise<{ created: boolean; updated: boolean; error?: string }> {
+  const folderId = folderIdFromUrl(company.drive?.folderUrl);
+  if (!folderId) {
+    return {
+      created: false,
+      updated: false,
+      error: `no_folder ${company.id}: company folder not mapped yet under Drive root`,
+    };
+  }
+
+  const existingId = docIdFromUrl(company.drive?.prepUrl);
+  if (existingId && (opts.overwriteDoc || company.drive?.prepUrl)) {
+    try {
+      await updatePrepDoc({ docId: existingId, plainText: text });
+      return { created: false, updated: true };
+    } catch {
+      // Fall through to create a fresh Doc and retarget prepUrl.
+    }
+  }
+
+  if (company.drive?.prepUrl && !opts.overwriteDoc) {
+    return { created: false, updated: false };
+  }
+
+  try {
+    const doc = await createPrepDoc({
+      folderId,
+      title: deckTitle(company, event),
+      plainText: text,
+    });
+    company.drive = {
+      ...(company.drive || {}),
+      folderUrl: company.drive?.folderUrl,
+      prepUrl: doc.webViewLink,
+      note:
+        company.drive?.note ||
+        "Prep deck created in company Drive folder (Claude when configured)",
+    };
+    return { created: true, updated: false };
+  } catch (err) {
+    return {
+      created: false,
+      updated: false,
+      error: `prep_doc ${company.id}: ${(err as Error).message}`,
+    };
+  }
+}
+
 export type PrepEnsureResult = {
   pipeline: Pipeline;
   createdDocs: number;
+  updatedDocs: number;
   mappedFolders: number;
   localBriefs: number;
+  claudeDecks: number;
   errors: string[];
 };
 
 /**
  * Map Drive company folders, then for each scheduled event missing prep:
- * write local Now+Next brief + create Google Doc in the company folder.
+ * Claude (or stub) Now+Next brief + Google Doc in the company folder.
  */
 export async function ensurePrepDecks(
   pipeline: Pipeline,
-  opts: { onlyCompanyIds?: string[]; force?: boolean } = {}
+  opts: {
+    onlyCompanyIds?: string[];
+    force?: boolean;
+    emailByCompany?: Record<string, string>;
+  } = {}
 ): Promise<PrepEnsureResult> {
   const errors: string[] = [];
   let mappedFolders = 0;
   let createdDocs = 0;
+  let updatedDocs = 0;
   let localBriefs = 0;
+  let claudeDecks = 0;
 
   let data: Pipeline = {
     ...pipeline,
@@ -176,13 +161,23 @@ export async function ensurePrepDecks(
     if (!company) continue;
 
     const existingLocal = localBriefText(event.briefPath);
-    const text =
-      existingLocal && !opts.force
-        ? existingLocal
-        : stubDeck(company, event);
+    const shouldGen =
+      opts.force || !existingLocal || !isRichBrief(existingLocal);
 
-    // Always ensure a local brief path for War Room.
-    if (!event.briefPath || opts.force) {
+    let text = existingLocal || stubPrepDeck(company, event);
+    if (shouldGen) {
+      const gen = await generatePrepDeck({
+        company,
+        event,
+        emailContext: opts.emailByCompany?.[company.id] || null,
+        existingBrief: existingLocal,
+        force: opts.force,
+      });
+      text = gen.text;
+      if (gen.source === "claude") claudeDecks += 1;
+    }
+
+    if (!event.briefPath || opts.force || shouldGen) {
       try {
         event.briefPath = writeLocalBrief(company, event, text);
         localBriefs += 1;
@@ -191,45 +186,186 @@ export async function ensurePrepDecks(
       }
     }
 
-    const folderId = folderIdFromUrl(company.drive?.folderUrl);
-    const needsDoc = opts.force || !company.drive?.prepUrl;
-    if (!folderId) {
-      if (needsDoc) {
-        errors.push(
-          `no_folder ${company.id}: company folder not mapped yet under Drive root`
-        );
-      }
-      continue;
-    }
+    const needsDoc = opts.force || !company.drive?.prepUrl || shouldGen;
     if (!needsDoc) continue;
 
-    try {
-      const doc = await createPrepDoc({
-        folderId,
-        title: deckTitle(company, event),
-        plainText: text,
-      });
-      company.drive = {
-        ...(company.drive || {}),
-        folderUrl: company.drive?.folderUrl,
-        prepUrl: doc.webViewLink,
-        note: company.drive?.note || "Prep deck created in company Drive folder",
-      };
-      createdDocs += 1;
-    } catch (err) {
-      errors.push(`prep_doc ${company.id}: ${(err as Error).message}`);
-    }
+    const result = await persistPrepDoc(company, event, text, {
+      overwriteDoc: Boolean(company.drive?.prepUrl) && shouldGen,
+    });
+    if (result.error) errors.push(result.error);
+    if (result.created) createdDocs += 1;
+    if (result.updated) updatedDocs += 1;
   }
 
-  if (createdDocs > 0 || localBriefs > 0 || mappedFolders > 0) {
+  if (
+    createdDocs > 0 ||
+    updatedDocs > 0 ||
+    localBriefs > 0 ||
+    mappedFolders > 0
+  ) {
     data.updated = new Date().toISOString().slice(0, 10);
   }
 
   return {
     pipeline: data,
     createdDocs,
+    updatedDocs,
     mappedFolders,
     localBriefs,
+    claudeDecks,
+    errors,
+  };
+}
+
+/**
+ * From advance emails (next steps / NDA / HM), write next-round Claude prep
+ * even before a calendar invite exists.
+ */
+export async function ensureAdvancePrepDecks(
+  pipeline: Pipeline,
+  advances: IngestProposal[],
+  opts: { limit?: number } = {}
+): Promise<PrepEnsureResult> {
+  const limit = opts.limit ?? 3;
+  const errors: string[] = [];
+  let createdDocs = 0;
+  let updatedDocs = 0;
+  let localBriefs = 0;
+  let claudeDecks = 0;
+  let mappedFolders = 0;
+
+  let data: Pipeline = {
+    ...pipeline,
+    companies: pipeline.companies.map((c) => ({
+      ...c,
+      drive: { ...(c.drive || {}) },
+      contacts: c.contacts ? c.contacts.map((x) => ({ ...x })) : c.contacts,
+    })),
+    events: pipeline.events.map((e) => ({ ...e })),
+  };
+
+  try {
+    const folders = await listChildFolders();
+    const mapped = mapCompanyFolders(data, folders);
+    data = mapped.pipeline;
+    mappedFolders = mapped.mapped;
+  } catch (err) {
+    errors.push(`folder_map: ${(err as Error).message}`);
+  }
+
+  const seen = new Set<string>();
+  const work = advances
+    .filter((p) => p.signal === "advance" && p.companyId && p.source === "gmail")
+    .slice(0, limit * 2);
+
+  for (const p of work) {
+    if (!p.companyId || seen.has(p.companyId)) continue;
+    if (seen.size >= limit) break;
+    seen.add(p.companyId);
+
+    const company = data.companies.find((c) => c.id === p.companyId);
+    if (!company) continue;
+
+    const blob = `${p.subject || ""}\n${p.snippet || ""}`;
+    const who = extractNextInterviewer(blob) || undefined;
+    if (who) {
+      const contacts = company.contacts || [];
+      if (!contacts.some((c) => c.name.toLowerCase() === who.toLowerCase())) {
+        company.contacts = [...contacts, { name: who, role: "Next interviewer" }];
+      }
+    }
+
+    const day = new Date().toISOString().slice(0, 10);
+    const event: PipelineEvent = {
+      id: `prep-next-${company.id}-${day}`,
+      companyId: company.id,
+      start: `${day}T12:00:00-04:00`,
+      end: `${day}T12:45:00-04:00`,
+      title: who
+        ? `Next: ${who} @ ${company.name}`
+        : `Next interview — ${company.name}`,
+      with: who || "",
+      type: "other",
+      status: "unscheduled",
+      briefPath: null,
+      blocker: p.subject || p.reason,
+    };
+
+    const slug = `next-${company.id}`;
+    const existingPath = `briefs/${slug}.md`;
+    const existingLocal =
+      localBriefText(existingPath) ||
+      localBriefText(
+        data.events.find(
+          (e) => e.companyId === company.id && e.status === "scheduled"
+        )?.briefPath
+      );
+
+    // Force Claude when we have a fresh advance signal and only a stub/old brief.
+    const force =
+      !existingLocal ||
+      !isRichBrief(existingLocal) ||
+      (who
+        ? !new RegExp(who.split(/\s+/)[0] || "NOPE", "i").test(
+            existingLocal || ""
+          )
+        : false);
+
+    const gen = await generatePrepDeck({
+      company,
+      event,
+      emailContext: `Subject: ${p.subject || ""}\nFrom: ${p.from || ""}\n\n${p.snippet || ""}`,
+      existingBrief: existingLocal,
+      force,
+    });
+    if (gen.source === "claude") claudeDecks += 1;
+
+    try {
+      event.briefPath = writeLocalBrief(company, event, gen.text, slug);
+      localBriefs += 1;
+    } catch (err) {
+      errors.push(`advance_brief ${company.id}: ${(err as Error).message}`);
+      continue;
+    }
+
+    // Prefer linking upcoming scheduled event to this next brief when present.
+    const upcoming = data.events.find(
+      (e) => e.companyId === company.id && e.status === "scheduled"
+    );
+    if (upcoming && (!upcoming.briefPath || force)) {
+      upcoming.briefPath = event.briefPath;
+      if (who) upcoming.with = upcoming.with || who;
+    } else if (
+      !data.events.some((e) => e.id === event.id) &&
+      !upcoming
+    ) {
+      data.events.push(event);
+    }
+
+    const result = await persistPrepDoc(company, event, gen.text, {
+      overwriteDoc: Boolean(company.drive?.prepUrl),
+    });
+    if (result.error) errors.push(result.error);
+    if (result.created) createdDocs += 1;
+    if (result.updated) updatedDocs += 1;
+  }
+
+  if (
+    createdDocs > 0 ||
+    updatedDocs > 0 ||
+    localBriefs > 0 ||
+    mappedFolders > 0
+  ) {
+    data.updated = new Date().toISOString().slice(0, 10);
+  }
+
+  return {
+    pipeline: data,
+    createdDocs,
+    updatedDocs,
+    mappedFolders,
+    localBriefs,
+    claudeDecks,
     errors,
   };
 }

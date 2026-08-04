@@ -13,13 +13,16 @@ import {
   getRecruitingPipeline,
   loadWritablePipeline,
 } from "@/lib/recruiting/pipeline";
-import { ensurePrepDecks } from "@/lib/recruiting/prep-deck";
+import {
+  ensureAdvancePrepDecks,
+  ensurePrepDecks,
+} from "@/lib/recruiting/prep-deck";
 import { commitPipeline } from "@/lib/recruiting/store";
 import { commitTextFile } from "@/lib/git-store";
 import type { Pipeline } from "@/lib/recruiting/types";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
+export const maxDuration = 120;
 
 function cronAuthorized(req: NextRequest) {
   const secret = process.env.CRON_SECRET;
@@ -28,19 +31,31 @@ function cronAuthorized(req: NextRequest) {
   return auth === `Bearer ${secret}`;
 }
 
+async function commitBriefPath(briefPath: string, companyId: string) {
+  const slug = briefPath.split("/").pop()?.replace(/\.md$/i, "");
+  if (!slug) return;
+  const abs = join(process.cwd(), "data", "briefs", `${slug}.md`);
+  if (!existsSync(abs)) return;
+  const text = readFileSync(abs, "utf8");
+  await commitTextFile(
+    `data/briefs/${slug}.md`,
+    text,
+    `War room: prep brief for ${companyId}`
+  );
+}
+
 async function commitNewBriefs(beforePaths: Set<string>, pipeline: Pipeline) {
   for (const e of pipeline.events) {
     if (!e.briefPath || beforePaths.has(e.briefPath)) continue;
-    const slug = e.briefPath.split("/").pop()?.replace(/\.md$/i, "");
-    if (!slug) continue;
-    const abs = join(process.cwd(), "data", "briefs", `${slug}.md`);
+    await commitBriefPath(e.briefPath, e.companyId);
+  }
+  // Advance prep writes next-<company>.md which may not be on an event yet.
+  for (const c of pipeline.companies) {
+    const p = `briefs/next-${c.id}.md`;
+    if (beforePaths.has(p)) continue;
+    const abs = join(process.cwd(), "data", "briefs", `next-${c.id}.md`);
     if (!existsSync(abs)) continue;
-    const text = readFileSync(abs, "utf8");
-    await commitTextFile(
-      `data/briefs/${slug}.md`,
-      text,
-      `War room: prep brief for ${e.companyId}`
-    );
+    await commitBriefPath(p, c.id);
   }
 }
 
@@ -79,8 +94,10 @@ async function runScan(opts: {
 
   let prep = {
     createdDocs: 0,
+    updatedDocs: 0,
     mappedFolders: 0,
     localBriefs: 0,
+    claudeDecks: 0,
     errors: [] as string[],
   };
 
@@ -88,26 +105,53 @@ async function runScan(opts: {
     const beforePaths = new Set(
       pipeline.events.map((e) => e.briefPath).filter(Boolean) as string[]
     );
-    const ensured = await ensurePrepDecks(pipeline);
-    prep = {
-      createdDocs: ensured.createdDocs,
-      mappedFolders: ensured.mappedFolders,
-      localBriefs: ensured.localBriefs,
-      errors: ensured.errors,
-    };
+    for (const c of pipeline.companies) {
+      const p = `briefs/next-${c.id}.md`;
+      const abs = join(process.cwd(), "data", "briefs", `next-${c.id}.md`);
+      if (existsSync(abs)) beforePaths.add(p);
+    }
+
+    const emailByCompany: Record<string, string> = {};
+    for (const p of scan.proposals) {
+      if (!p.companyId || p.source !== "gmail") continue;
+      if (p.signal !== "advance" && p.signal !== "schedule") continue;
+      const chunk = `Subject: ${p.subject || ""}\nFrom: ${p.from || ""}\n${p.snippet || ""}`;
+      emailByCompany[p.companyId] = emailByCompany[p.companyId]
+        ? `${emailByCompany[p.companyId]}\n---\n${chunk}`
+        : chunk;
+    }
+
+    const ensured = await ensurePrepDecks(pipeline, { emailByCompany });
     pipeline = ensured.pipeline;
+
+    const advances = await ensureAdvancePrepDecks(
+      pipeline,
+      scan.proposals.filter((p) => p.signal === "advance"),
+      { limit: 3 }
+    );
+    pipeline = advances.pipeline;
+
+    prep = {
+      createdDocs: ensured.createdDocs + advances.createdDocs,
+      updatedDocs: ensured.updatedDocs + advances.updatedDocs,
+      mappedFolders: Math.max(ensured.mappedFolders, advances.mappedFolders),
+      localBriefs: ensured.localBriefs + advances.localBriefs,
+      claudeDecks: ensured.claudeDecks + advances.claudeDecks,
+      errors: [...ensured.errors, ...advances.errors],
+    };
 
     if (
       opts.persist &&
       (appliedCalendar > 0 ||
-        ensured.createdDocs > 0 ||
-        ensured.mappedFolders > 0 ||
-        ensured.localBriefs > 0)
+        prep.createdDocs > 0 ||
+        prep.updatedDocs > 0 ||
+        prep.mappedFolders > 0 ||
+        prep.localBriefs > 0)
     ) {
       await commitNewBriefs(beforePaths, pipeline);
       await commitPipeline(
         pipeline,
-        `War room scan: calendar ${appliedCalendar}, prep docs ${ensured.createdDocs}, folders ${ensured.mappedFolders}`
+        `War room scan: calendar ${appliedCalendar}, prep+${prep.createdDocs}/~${prep.updatedDocs}, claude ${prep.claudeDecks}`
       );
     }
   } else if (opts.persist && appliedCalendar > 0) {

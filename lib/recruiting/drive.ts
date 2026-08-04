@@ -150,4 +150,33 @@ export async function createPrepDoc(opts: {
   return { id, webViewLink };
 }
 
+export function docIdFromUrl(url?: string | null): string | null {
+  if (!url) return null;
+  const m = url.match(/\/document\/d\/([a-zA-Z0-9_-]+)/);
+  return m?.[1] || null;
+}
+
+/**
+ * Replace Google Doc body in place (keeps the same link / prepUrl).
+ * Drive Docs are Google-native; simplest reliable rewrite is upload as plain
+ * text conversion via files.update isn't supported for Docs → use overwrite
+ * via delete+create only when update fails. Prefer Docs API-less approach:
+ * create a temporary plain file then... Actually use drive.files.update with
+ * mime conversion from text/plain onto an existing Google Doc id.
+ */
+export async function updatePrepDoc(opts: {
+  docId: string;
+  plainText: string;
+}): Promise<void> {
+  const drive = getDriveClient();
+  await drive.files.update({
+    fileId: opts.docId,
+    media: {
+      mimeType: "text/plain",
+      body: opts.plainText,
+    },
+    supportsAllDrives: true,
+  });
+}
+
 export type DriveFile = drive_v3.Schema$File;

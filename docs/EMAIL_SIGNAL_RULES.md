@@ -16,8 +16,10 @@ Truth: scheduling conflict / reschedule. Lapo accepted Aug 7. Kate confirmed Ran
 ## Classifier ownership
 
 - Portfolio War Room: `lapo-portfolio-next/lib/recruiting/gmail/classify.ts`
+- Process taxonomy (next-step vocabulary): `lib/recruiting/gmail/taxonomy.ts`
 - Season ingest mirror: `recruiting-season/scripts/gmail/lib.mjs`
-Keep both in sync when changing reject/schedule rules.
+Keep classify + season mirror in sync when changing reject/schedule rules.
+Expand next-step vocabulary in `taxonomy.ts` first.
 
 ## When scanning email manually
 
