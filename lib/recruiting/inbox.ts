@@ -82,13 +82,12 @@ export function proposalsToFlags(
     }
 
     if (p.signal === "schedule") {
-      const toStage: FunnelStage =
-        company.stage === "applied" ? "first" : company.stage;
-      if (toStage === company.stage && p.source === "calendar") {
-        // Calendar facts already applied separately; still offer stage nudge
-        // only if still in applied.
-        continue;
-      }
+      // Next-round schedule asks on companies already in-process should still
+      // surface (classifier usually promotes these to advance; belt-and-suspenders).
+      const nextRoundAsk =
+        /\b(next steps?|next stage|move forward|moving forward|next round|hiring manager)\b/i.test(
+          `${p.subject || ""} ${p.reason || ""} ${p.snippet || ""}`
+        );
       if (company.stage === "applied") {
         out.push({
           id,
@@ -100,6 +99,20 @@ export function proposalsToFlags(
           signal: p.signal,
           subject: p.subject || p.summary,
         });
+      } else if (nextRoundAsk && p.source === "gmail") {
+        const next = nextFunnelStage(company.stage);
+        if (next) {
+          out.push({
+            id,
+            companyId: company.id,
+            fromStage: company.stage,
+            toStage: next,
+            reason: `${p.reason}: ${p.subject || p.summary || "next-round schedule"}`,
+            source: p.source,
+            signal: "advance",
+            subject: p.subject || p.summary,
+          });
+        }
       }
       continue;
     }

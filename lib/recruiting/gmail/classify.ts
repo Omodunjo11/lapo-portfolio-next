@@ -158,6 +158,21 @@ export function classifyEmail({
       text
     );
 
+  // Process advance beats bare "schedule a …" — Regal "Next Steps" asks to
+  // book Sahil after Kelsey; that is an advance, not a silent schedule.
+  const processAdvance = PROCESS_ADVANCE_RE.test(text);
+  if (company && processAdvance && !hardReject) {
+    return {
+      signal: "advance",
+      confidence: "medium",
+      reason: /nda|non-?disclosure/i.test(text)
+        ? "NDA / next-stage advance"
+        : /schedule|availability|dates?\/times?|video call with/i.test(text)
+          ? "next-round advance + schedule ask"
+          : "interview advance",
+    };
+  }
+
   // Scheduling first when both soft apology and new times appear.
   const isScheduling =
     /calendly|schedule a|book a time|availability|interview invite|zoom\.us|meet\.google|interview confirmation|phone interview is confirmed|you.?re invited to an interview|updated invitation|invitation from an unknown sender|invitation:|confirm a time|times? you (?:have )?shared|asking if you have|send you the (?:confirmation|invite)|calendar invite|what time (?:would|works?)|reschedul|any availability|time that works/i.test(
@@ -181,28 +196,10 @@ export function classifyEmail({
   }
 
   if (!isInterviewSignal({ subject, snippet, from, body, source: "gmail" })) {
-    // Tracked-company NDA / process mail can omit the word "interview" in
-    // subject+snippet. Full body + process terms still count.
-    if (company && PROCESS_ADVANCE_RE.test(text)) {
-      return {
-        signal: "advance",
-        confidence: "medium",
-        reason: "process advance (NDA / next stage)",
-      };
-    }
     return {
       signal: "noise",
       confidence: "medium",
       reason: "not interview-related (applications ignored)",
-    };
-  }
-  if (PROCESS_ADVANCE_RE.test(text)) {
-    return {
-      signal: "advance",
-      confidence: "medium",
-      reason: /nda|non-?disclosure/i.test(text)
-        ? "NDA / next-stage advance"
-        : "interview advance",
     };
   }
   if (
