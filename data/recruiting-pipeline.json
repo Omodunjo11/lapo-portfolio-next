@@ -1,7 +1,7 @@
 {
   "version": 1,
   "owner": "Onaolapo (Lapo) Odunjo",
-  "updated": "2026-08-03",
+  "updated": "2026-08-04",
   "timezone": "America/New_York",
   "killCriteria": [
     "Role is pure strategy / slideware with no shipping ownership",
@@ -11,35 +11,35 @@
   ],
   "focus": [
     {
-      "companyId": "hang-ten",
-      "detail": "Show up sharp at 7pm; use tonight's brief"
+      "companyId": "regal",
+      "detail": "Today 1:30pm Kelsey \u2014 use Now+Next brief; capture loop updates after"
     },
     {
-      "companyId": "regal",
-      "detail": "Finish brief + one pass of story bank before bed"
+      "companyId": "hang-ten",
+      "detail": "Debrief Jack call if done; otherwise close the loop in notes"
+    },
+    {
+      "companyId": "foundation-health",
+      "detail": "Chase Steve scheduling \u2014 brief ready in next-foundation-health"
     },
     {
       "companyId": "invisible",
-      "detail": "Follow-up sent for round 3 — wait for Kate/Derek to reply, nudge Aug 9 if silent"
+      "detail": "Nudge window Aug 6 \u2014 next-round brief ready"
     },
     {
       "companyId": "blue-orange-digital",
-      "detail": "Highest-stakes item on the board — decision pending, they know about your competing offer"
-    },
-    {
-      "companyId": "sierra",
-      "detail": "6 days silent since the SF onsite — worth a light check-in with Edith soon"
+      "detail": "Highest stakes \u2014 Catarina decision watch + Aug 5 nudge"
     }
   ],
   "storyGaps": [
     {
       "id": "incomplete-info",
-      "detail": "Write concrete 'moved on incomplete information' STAR story",
+      "detail": "Incomplete-info STAR drafted in recruiting-season story-bank \u2014 edit before Brain Co HM",
       "neededFor": [
         "brain-co",
         "hang-ten"
       ],
-      "status": "open"
+      "status": "drafted"
     },
     {
       "id": "gov-mena",
@@ -56,10 +56,10 @@
       "name": "Hang Ten",
       "role": "Founding-team / TBD",
       "stage": "first",
-      "stageLabel": "1st — founding team screen (Jack Ahn)",
+      "stageLabel": "1st \u2014 founding team screen (Jack Ahn)",
       "ball": "you",
       "priority": "P0",
-      "nextAction": "Call with Jack Ahn 7:00–7:30pm ET; capture notes after",
+      "nextAction": "Debrief Jack call (loop updates + thank-you); mark event done when captured",
       "due": "2026-08-03",
       "nudgeDate": null,
       "lean": 3,
@@ -83,7 +83,7 @@
       "drive": {
         "folderUrl": "",
         "prepUrl": "",
-        "note": "Add Recruiting Season / Hang Ten Drive folder URL"
+        "note": "No company Drive folder found in Gmail scan \u2014 create Recruiting Season/Hang Ten and paste folderUrl."
       }
     },
     {
@@ -91,10 +91,10 @@
       "name": "Regal",
       "role": "Manager, AI Strategy & Deployment",
       "stage": "first",
-      "stageLabel": "1st — phone with Kelsey",
+      "stageLabel": "1st \u2014 phone with Kelsey",
       "ball": "you",
       "priority": "P0",
-      "nextAction": "Prep tonight; phone w/ Kelsey 1:30–2:00pm ET",
+      "nextAction": "Phone w/ Kelsey 1:30\u20132:00pm ET \u2014 brief ready; capture loop after",
       "due": "2026-08-04",
       "nudgeDate": null,
       "lean": 4,
@@ -120,7 +120,7 @@
       "drive": {
         "folderUrl": "",
         "prepUrl": "",
-        "note": "Add Recruiting Season / Regal Drive folder URL"
+        "note": "No company Drive folder found in Gmail scan \u2014 create Recruiting Season/Regal and paste folderUrl."
       }
     },
     {
@@ -161,7 +161,7 @@
       "drive": {
         "folderUrl": "",
         "prepUrl": "https://docs.google.com/document/d/1UjpnDOgPJeWCeNdKLkFNMg9hCBLuXlej1VReDDbmCms/edit",
-        "note": "Sierra_Interview_Prep_Final (reusable); company guide in repo"
+        "note": "Sierra_Interview_Prep_Final (reusable); company guide in repo | Folder URL not found in mail \u2014 create Drive folder and paste."
       }
     },
     {
@@ -202,7 +202,7 @@
       "drive": {
         "folderUrl": "",
         "prepUrl": "",
-        "note": "Add Recruiting Season / Brain Co Drive folder URL"
+        "note": "No company Drive folder found in Gmail scan \u2014 create Recruiting Season/Brain Co and paste folderUrl."
       }
     },
     {
@@ -210,12 +210,12 @@
       "name": "Invisible Technologies",
       "role": "Senior Product Manager",
       "stage": "third",
-      "stageLabel": "3rd round — scheduled",
+      "stageLabel": "3rd round \u2014 scheduled",
       "ball": "them",
       "priority": "P1",
-      "nextAction": "Follow-up sent to Kate/Derek — awaiting reply on round 3 details",
+      "nextAction": "Nudge Kate/Derek Aug 6 if still silent on remaining rounds/type",
       "due": "2026-08-06",
-      "nudgeDate": "2026-08-09",
+      "nudgeDate": "2026-08-06",
       "lean": 3,
       "contacts": [
         {
@@ -246,7 +246,7 @@
       "drive": {
         "folderUrl": "",
         "prepUrl": "",
-        "note": "Add Recruiting Season / Invisible Drive folder URL"
+        "note": "No company Drive folder found in Gmail scan \u2014 create Recruiting Season/Invisible Technologies and paste folderUrl."
       }
     },
     {
@@ -254,7 +254,7 @@
       "name": "Blue Orange Digital",
       "role": "Chief of Staff",
       "stage": "final",
-      "stageLabel": "Final — decision pending after interview with Rizwan",
+      "stageLabel": "Final \u2014 decision pending after interview with Rizwan",
       "ball": "them",
       "priority": "P0",
       "nextAction": "Waiting on Catarina's update (said early this week, as of Jul 31); nudge if silent past Aug 5",
@@ -283,7 +283,7 @@
       "drive": {
         "folderUrl": "",
         "prepUrl": "",
-        "note": "Found via email scan, Aug 3 — add Drive folder URL"
+        "note": "No company Drive folder found in Gmail scan \u2014 create Recruiting Season/Blue Orange Digital and paste folderUrl."
       }
     },
     {
@@ -291,7 +291,7 @@
       "name": "Sierra",
       "role": "Strategist, Agent Development",
       "stage": "final",
-      "stageLabel": "Final — onsite done (Jul 28), awaiting decision",
+      "stageLabel": "Final \u2014 onsite done (Jul 28), awaiting decision",
       "ball": "them",
       "priority": "P1",
       "nextAction": "No word since Jul 28 SF onsite (Tina Xia, Niles Lawrence, Eleni Angelidis); nudge Edith if still silent by Aug 6",
@@ -319,7 +319,7 @@
       "drive": {
         "folderUrl": "",
         "prepUrl": "https://docs.google.com/document/d/1UjpnDOgPJeWCeNdKLkFNMg9hCBLuXlej1VReDDbmCms/edit",
-        "note": "Found via email scan, Aug 3 — this is the original Sierra_Interview_Prep_Final doc reused for Foundation Health"
+        "note": "Found via email scan, Aug 3 \u2014 this is the original Sierra_Interview_Prep_Final doc reused for Foundation Health | Folder URL not found in mail \u2014 create Drive folder and paste."
       }
     },
     {
@@ -327,10 +327,10 @@
       "name": "Semgrep",
       "role": "Unknown (never reached interview)",
       "stage": "passed",
-      "stageLabel": "Passed — no interview offered",
+      "stageLabel": "Passed \u2014 no interview offered",
       "ball": "them",
       "priority": "P2",
-      "nextAction": "Closed — confirmed no interview extended",
+      "nextAction": "Closed \u2014 confirmed no interview extended",
       "due": "",
       "nudgeDate": null,
       "lean": null,
@@ -349,7 +349,7 @@
       "drive": {
         "folderUrl": "",
         "prepUrl": "",
-        "note": "Found via email scan, Aug 3 — archived, no active action needed"
+        "note": "No company Drive folder found in Gmail scan \u2014 create Recruiting Season/Semgrep and paste folderUrl."
       }
     }
   ],
@@ -359,7 +359,7 @@
       "companyId": "hang-ten",
       "start": "2026-08-03T19:00:00-04:00",
       "end": "2026-08-03T19:30:00-04:00",
-      "title": "Hang Ten — Jack Ahn",
+      "title": "Hang Ten \u2014 Jack Ahn",
       "with": "Jack Ahn",
       "type": "founding",
       "status": "scheduled",
@@ -371,7 +371,7 @@
       "companyId": "regal",
       "start": "2026-08-04T13:30:00-04:00",
       "end": "2026-08-04T14:00:00-04:00",
-      "title": "Regal — phone with Kelsey",
+      "title": "Regal \u2014 phone with Kelsey",
       "with": "Kelsey",
       "type": "phone",
       "status": "scheduled",
@@ -383,11 +383,11 @@
       "companyId": "foundation-health",
       "start": "",
       "end": "",
-      "title": "Foundation Health — Steve Charette (not scheduled)",
+      "title": "Foundation Health \u2014 Steve Charette (not scheduled)",
       "with": "Steve Charette",
       "type": "hm",
       "status": "unscheduled",
-      "briefPath": null,
+      "briefPath": "briefs/next-foundation-health.md",
       "blocker": "Jack hasn't scheduled Round 1 yet"
     },
     {
@@ -395,11 +395,11 @@
       "companyId": "brain-co",
       "start": "",
       "end": "",
-      "title": "Brain Co — hiring manager screen",
+      "title": "Brain Co \u2014 hiring manager screen",
       "with": "TBD",
       "type": "hm",
       "status": "unscheduled",
-      "briefPath": null,
+      "briefPath": "briefs/next-brain-co.md",
       "blocker": "Waiting on Michal/Alina forward"
     },
     {
@@ -407,11 +407,11 @@
       "companyId": "invisible",
       "start": "",
       "end": "",
-      "title": "Invisible — round 3 (time TBD)",
+      "title": "Invisible \u2014 round 3 (time TBD)",
       "with": "TBD",
       "type": "loop",
       "status": "unscheduled",
-      "briefPath": null,
+      "briefPath": "briefs/next-invisible.md",
       "blocker": "Waiting on Derek Pages / Kate Alvarico to schedule round 3"
     },
     {
@@ -419,7 +419,7 @@
       "companyId": "foundation-health",
       "start": "2026-08-03T11:30:00-04:00",
       "end": "2026-08-03T11:45:00-04:00",
-      "title": "Foundation Health — Jack Leeming recruiter",
+      "title": "Foundation Health \u2014 Jack Leeming recruiter",
       "with": "Jack Leeming",
       "type": "recruiter",
       "status": "done",
@@ -431,7 +431,7 @@
       "companyId": "brain-co",
       "start": "2026-08-03T14:00:00-04:00",
       "end": "2026-08-03T14:30:00-04:00",
-      "title": "Brain Co — recruiter screen",
+      "title": "Brain Co \u2014 recruiter screen",
       "with": "Michal / Alina",
       "type": "recruiter",
       "status": "done",
@@ -443,7 +443,7 @@
       "companyId": "invisible",
       "start": "2026-07-29T12:00:00-04:00",
       "end": "2026-07-29T13:00:00-04:00",
-      "title": "Invisible — HM with Alex Arutyunyants",
+      "title": "Invisible \u2014 HM with Alex Arutyunyants",
       "with": "Alex Arutyunyants",
       "type": "hm",
       "status": "done",
@@ -459,5 +459,37 @@
     "fourth",
     "final"
   ],
-  "driveRootNote": "Paste each company Drive folder URL into companies[].drive.folderUrl"
+  "driveRootNote": "Paste each company Drive folder URL into companies[].drive.folderUrl",
+  "chase": [
+    {
+      "companyId": "foundation-health",
+      "due": "2026-08-05",
+      "detail": "Chase Jack Leeming to schedule Steve Charette",
+      "draft": "schedule-confirm"
+    },
+    {
+      "companyId": "blue-orange-digital",
+      "due": "2026-08-05",
+      "detail": "Nudge Catarina if still silent on Rizwan decision",
+      "draft": "soft-nudge"
+    },
+    {
+      "companyId": "invisible",
+      "due": "2026-08-06",
+      "detail": "Nudge Kate/Derek on remaining rounds + type",
+      "draft": "invisible-rounds"
+    },
+    {
+      "companyId": "sierra",
+      "due": "2026-08-06",
+      "detail": "Light check-in with Edith after Jul 28 onsite silence",
+      "draft": "soft-nudge"
+    },
+    {
+      "companyId": "brain-co",
+      "due": "2026-08-07",
+      "detail": "Nudge Michal/Alina if no HM forward yet",
+      "draft": "soft-nudge"
+    }
+  ]
 }

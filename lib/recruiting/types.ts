@@ -72,6 +72,18 @@ export type Pipeline = {
   updated: string;
   timezone: string;
   focus: { companyId: string; detail: string }[];
+  chase?: {
+    companyId: string;
+    due: string;
+    detail: string;
+    draft?: string;
+  }[];
+  storyGaps?: {
+    id: string;
+    detail: string;
+    neededFor?: string[];
+    status?: string;
+  }[];
   companies: Company[];
   events: PipelineEvent[];
   driveRootNote?: string;

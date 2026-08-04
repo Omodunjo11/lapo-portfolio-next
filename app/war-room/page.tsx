@@ -122,18 +122,22 @@ async function AuthenticatedWarRoom() {
         initialCompanies={pipeline.companies}
         upcoming={upcoming}
         focus={pipeline.focus}
+        chase={pipeline.chase || []}
         archived={archived}
         attention={attention}
         today={today}
         initialSuggestions={suggestions}
         gmailReady={gmailConfigured()}
         lastScanAt={inbox.scannedAt || null}
+        recentEvents={pipeline.events.filter(
+          (e) => e.status === "scheduled" || e.status === "done"
+        )}
       />
 
       <p className="wr-foot">
-        Scan Gmail for interview signals (manual or every few hours). Calendar
-        facts can auto-update; stages only move when you Accept a flag or drag
-        a card.
+        Scan inbox anytime (button). Site cron runs daily 8am ET; Mac LaunchAgent
+        still proposes every ~3h locally. Calendar facts can auto-update; stages
+        only move when you Accept a flag or drag a card.
       </p>
     </div>
   );

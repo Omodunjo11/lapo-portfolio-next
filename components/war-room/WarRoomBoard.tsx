@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState, useTransition } from "react";
 import type { Company, FunnelStage, PipelineEvent } from "@/lib/recruiting/types";
 import { EDITABLE_STAGES } from "@/lib/recruiting/types";
@@ -7,6 +8,39 @@ import type { Suggestion } from "@/lib/recruiting/board";
 import { nextFunnelStage, prevFunnelStage } from "@/lib/recruiting/board";
 
 type Col = { id: string; label: string };
+type ChaseItem = {
+  companyId: string;
+  due: string;
+  detail: string;
+  draft?: string;
+};
+
+function briefHref(briefPath?: string | null) {
+  if (!briefPath) return null;
+  const slug = briefPath.split("/").pop()?.replace(/\.md$/i, "");
+  return slug ? `/war-room/brief/${slug}` : null;
+}
+
+const CHASE_DRAFTS: Record<string, string> = {
+  "soft-nudge": `Subject: Checking in — [Company]
+
+[Name] — circling back briefly. Still very interested in [role / next step]. Happy to work around the team's calendar whenever it's useful.
+
+Thanks,
+Lapo`,
+  "schedule-confirm": `Subject: Next step — [Company]
+
+[Name] — thanks again for [call]. Wanted to confirm next steps: I understand it's [Round X with Y]. I'm flexible on timing — happy to take the next open slot on your calendar.
+
+Looking forward to it.
+Lapo`,
+  "invisible-rounds": `Subject: Next round logistics
+
+Kate / Derek — thanks for looping me in. Quick clarifying ask so I can prep well: roughly how many rounds remain, and what type should I expect (product, technical, panel, etc.)?
+
+Appreciate it,
+Lapo`,
+};
 
 type EditableFields = Pick<
   Company,
@@ -227,23 +261,27 @@ export default function WarRoomBoard({
   initialCompanies,
   upcoming,
   focus,
+  chase = [],
   archived: initialArchived,
   attention: initialAttention,
   today,
   initialSuggestions,
   gmailReady = false,
   lastScanAt = null,
+  recentEvents = [],
 }: {
   columns: Col[];
   initialCompanies: Company[];
   upcoming: PipelineEvent[];
   focus: { companyId: string; detail: string }[];
+  chase?: ChaseItem[];
   archived: Company[];
   attention: Company[];
   today: string;
   initialSuggestions: Suggestion[];
   gmailReady?: boolean;
   lastScanAt?: string | null;
+  recentEvents?: PipelineEvent[];
 }) {
   const [companies, setCompanies] = useState(initialCompanies);
   const [suggestions, setSuggestions] = useState(initialSuggestions);
@@ -260,6 +298,28 @@ export default function WarRoomBoard({
       : null
   );
   const [error, setError] = useState<string | null>(null);
+  const [debriefFor, setDebriefFor] = useState<PipelineEvent | null>(null);
+  const [debriefSaving, setDebriefSaving] = useState(false);
+  const [debriefNote, setDebriefNote] = useState<string | null>(null);
+  const [draftOpen, setDraftOpen] = useState<string | null>(null);
+  const [debriefForm, setDebriefForm] = useState({
+    energy: "4",
+    stageOutcome: "advancing",
+    whatTheyCareAbout: "",
+    landed: "",
+    fix: "",
+    nextStep: "",
+    timeline: "",
+    peopleMentioned: "",
+    loopNext: "",
+    loopUnknown: "",
+    prepNext: "",
+  });
+
+  const chaseSorted = useMemo(
+    () => [...chase].sort((a, b) => a.due.localeCompare(b.due)),
+    [chase]
+  );
 
   const byStage = useMemo(() => {
     const map: Record<string, Company[]> = {};
@@ -381,7 +441,6 @@ export default function WarRoomBoard({
           return [...keep, ...inboxFlags.filter((s) => !seen.has(s.id))];
         });
       }
-      // Refresh page data after git commit / rebuild lag
       if (data.appliedCalendar > 0) {
         setScanNote((n) => `${n || ""} · refresh in ~30–60s for calendar facts`);
       }
@@ -392,6 +451,45 @@ export default function WarRoomBoard({
     }
   }
 
+  async function submitDebrief() {
+    if (!debriefFor) return;
+    setDebriefSaving(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/war-room/debrief", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          eventId: debriefFor.id,
+          companyId: debriefFor.companyId,
+          energy: Number(debriefForm.energy) || undefined,
+          stageOutcome: debriefForm.stageOutcome,
+          whatTheyCareAbout: debriefForm.whatTheyCareAbout,
+          landed: debriefForm.landed,
+          fix: debriefForm.fix,
+          nextStep: debriefForm.nextStep,
+          timeline: debriefForm.timeline,
+          peopleMentioned: debriefForm.peopleMentioned,
+          loopNext: debriefForm.loopNext,
+          loopUnknown: debriefForm.loopUnknown,
+          prepNext: debriefForm.prepNext,
+          markEventDone: true,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.detail || data.error || "debrief_failed");
+      if (data.pipeline?.companies) setCompanies(data.pipeline.companies);
+      setDebriefNote(
+        `Debrief saved${data.debriefPath ? ` → ${data.debriefPath}` : ""}. Refresh in ~30–60s.`
+      );
+      setDebriefFor(null);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setDebriefSaving(false);
+    }
+  }
+
   return (
     <div className="wr-grid">
       <section className="wr-panel wr-scan">
@@ -399,7 +497,8 @@ export default function WarRoomBoard({
           <div>
             <h2>Inbox scan</h2>
             <p className="wr-muted" style={{ margin: "6px 0 0" }}>
-              Interview-only Gmail + Calendar. Stages never auto-move.
+              Button anytime · daily site cron 8am ET · Mac LaunchAgent ~every 3h.
+              Interview-only. Stages never auto-move.
             </p>
           </div>
           <button
@@ -424,6 +523,54 @@ export default function WarRoomBoard({
           </p>
         ) : null}
       </section>
+
+      {chaseSorted.length > 0 ? (
+        <section className="wr-panel wr-chase">
+          <h2>Chase queue</h2>
+          <p className="wr-muted" style={{ marginBottom: 12 }}>
+            Dated nudges — copy a draft, then send from your mail.
+          </p>
+          <ul className="wr-flag-list">
+            {chaseSorted.map((item) => {
+              const dueSoon = item.due <= today;
+              return (
+                <li key={`${item.companyId}-${item.due}`}>
+                  <div>
+                    <strong>
+                      {nameOf(item.companyId)}
+                      {dueSoon ? " · due" : ""}
+                    </strong>
+                    <span>
+                      By {item.due} — {item.detail}
+                    </span>
+                  </div>
+                  <div className="wr-flag-actions">
+                    <button
+                      type="button"
+                      className="wr-btn wr-btn-ghost"
+                      onClick={() =>
+                        setDraftOpen((cur) =>
+                          cur === `${item.companyId}-${item.due}`
+                            ? null
+                            : `${item.companyId}-${item.due}`
+                        )
+                      }
+                    >
+                      Draft
+                    </button>
+                  </div>
+                  {draftOpen === `${item.companyId}-${item.due}` ? (
+                    <pre className="wr-chase-draft">
+                      {CHASE_DRAFTS[item.draft || "soft-nudge"] ||
+                        CHASE_DRAFTS["soft-nudge"]}
+                    </pre>
+                  ) : null}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ) : null}
 
       {suggestions.length > 0 && (
         <section className="wr-panel wr-flags">
@@ -499,10 +646,12 @@ export default function WarRoomBoard({
 
       <section className="wr-panel">
         <h2>Upcoming interviews</h2>
+        {debriefNote ? <p className="wr-saved">{debriefNote}</p> : null}
         <ul className="wr-upcoming">
           {upcoming.length === 0 && <li className="wr-muted">None scheduled</li>}
           {upcoming.map((e) => {
             const co = companies.find((c) => c.id === e.companyId);
+            const href = briefHref(e.briefPath);
             return (
               <li key={e.id}>
                 <strong>{co?.name || e.companyId}</strong>
@@ -516,11 +665,187 @@ export default function WarRoomBoard({
                   })}
                   {e.with ? ` · ${e.with}` : ""}
                 </span>
+                <div className="wr-card-actions">
+                  {href ? (
+                    <Link href={href}>Open Now+Next brief</Link>
+                  ) : (
+                    <span className="wr-muted">Brief missing</span>
+                  )}
+                  <button
+                    type="button"
+                    className="wr-edit-toggle"
+                    onClick={() => setDebriefFor(e)}
+                  >
+                    Debrief
+                  </button>
+                </div>
               </li>
             );
           })}
         </ul>
+
+        {recentEvents.some((e) => e.status === "done") ? (
+          <div style={{ marginTop: 14 }}>
+            <p className="wr-muted" style={{ marginBottom: 8 }}>
+              Recent done — debrief if notes are thin
+            </p>
+            <ul className="wr-upcoming">
+              {recentEvents
+                .filter((e) => e.status === "done")
+                .slice(0, 5)
+                .map((e) => {
+                  const co = companies.find((c) => c.id === e.companyId);
+                  const href = briefHref(e.briefPath);
+                  return (
+                    <li key={e.id}>
+                      <strong>{co?.name || e.companyId}</strong>
+                      <span>
+                        {e.title}
+                        {e.start ? ` · ${e.start.slice(0, 10)}` : ""}
+                      </span>
+                      <div className="wr-card-actions">
+                        {href ? <Link href={href}>Brief</Link> : null}
+                        <button
+                          type="button"
+                          className="wr-edit-toggle"
+                          onClick={() => setDebriefFor(e)}
+                        >
+                          Debrief
+                        </button>
+                      </div>
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
+        ) : null}
       </section>
+
+      {debriefFor ? (
+        <section className="wr-panel wr-debrief">
+          <div className="wr-board-head">
+            <h2>
+              Debrief — {nameOf(debriefFor.companyId)}
+            </h2>
+            <button
+              type="button"
+              className="wr-btn-ghost"
+              onClick={() => setDebriefFor(null)}
+            >
+              Cancel
+            </button>
+          </div>
+          <p className="wr-muted" style={{ marginBottom: 12 }}>
+            Captures loop updates and marks the event done. Commits to the repo.
+          </p>
+          <div className="wr-edit-form">
+            <label>
+              Energy
+              <select
+                value={debriefForm.energy}
+                onChange={(e) =>
+                  setDebriefForm((f) => ({ ...f, energy: e.target.value }))
+                }
+              >
+                {["1", "2", "3", "4", "5"].map((n) => (
+                  <option key={n} value={n}>
+                    {n}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Stage outcome
+              <select
+                value={debriefForm.stageOutcome}
+                onChange={(e) =>
+                  setDebriefForm((f) => ({ ...f, stageOutcome: e.target.value }))
+                }
+              >
+                <option value="advancing">advancing</option>
+                <option value="unclear">unclear</option>
+                <option value="pass signal">pass signal</option>
+                <option value="ghost risk">ghost risk</option>
+              </select>
+            </label>
+            <label>
+              What they cared about
+              <input
+                value={debriefForm.whatTheyCareAbout}
+                onChange={(e) =>
+                  setDebriefForm((f) => ({
+                    ...f,
+                    whatTheyCareAbout: e.target.value,
+                  }))
+                }
+              />
+            </label>
+            <label>
+              What landed
+              <input
+                value={debriefForm.landed}
+                onChange={(e) =>
+                  setDebriefForm((f) => ({ ...f, landed: e.target.value }))
+                }
+              />
+            </label>
+            <label>
+              What to fix
+              <input
+                value={debriefForm.fix}
+                onChange={(e) =>
+                  setDebriefForm((f) => ({ ...f, fix: e.target.value }))
+                }
+              />
+            </label>
+            <label>
+              Next step
+              <input
+                value={debriefForm.nextStep}
+                onChange={(e) =>
+                  setDebriefForm((f) => ({ ...f, nextStep: e.target.value }))
+                }
+              />
+            </label>
+            <label>
+              Loop — confirmed next round
+              <input
+                value={debriefForm.loopNext}
+                onChange={(e) =>
+                  setDebriefForm((f) => ({ ...f, loopNext: e.target.value }))
+                }
+                placeholder="Who / format / what they test"
+              />
+            </label>
+            <label>
+              Loop — still unknown
+              <input
+                value={debriefForm.loopUnknown}
+                onChange={(e) =>
+                  setDebriefForm((f) => ({ ...f, loopUnknown: e.target.value }))
+                }
+              />
+            </label>
+            <label>
+              Prep to start now for next round
+              <input
+                value={debriefForm.prepNext}
+                onChange={(e) =>
+                  setDebriefForm((f) => ({ ...f, prepNext: e.target.value }))
+                }
+              />
+            </label>
+            <button
+              type="button"
+              className="wr-btn"
+              disabled={debriefSaving}
+              onClick={() => void submitDebrief()}
+            >
+              {debriefSaving ? "Saving…" : "Save debrief"}
+            </button>
+          </div>
+        </section>
+      ) : null}
 
       <section className="wr-panel wr-board">
         <div className="wr-board-head">

@@ -26,25 +26,43 @@ export async function commitJsonFile(
   next: unknown,
   message: string
 ): Promise<void> {
+  await commitTextFile(
+    filePath,
+    JSON.stringify(next, null, 2) + "\n",
+    message
+  );
+}
+
+/** Commit utf8 text (markdown, etc.) to `filePath` on `main`. */
+export async function commitTextFile(
+  filePath: string,
+  text: string,
+  message: string
+): Promise<void> {
   const headers = githubHeaders();
   const base = apiBase(filePath);
 
   const shaRes = await fetch(`${base}?ref=${BRANCH}`, { headers });
-  if (!shaRes.ok) {
+  let sha: string | undefined;
+  if (shaRes.ok) {
+    sha = ((await shaRes.json()) as { sha: string }).sha;
+  } else if (shaRes.status !== 404) {
     throw new Error(
       `Failed to read ${filePath} from GitHub: ${shaRes.status} ${await shaRes.text()}`
     );
   }
-  const { sha } = (await shaRes.json()) as { sha: string };
 
-  const content = Buffer.from(JSON.stringify(next, null, 2) + "\n").toString(
-    "base64"
-  );
+  const content = Buffer.from(text, "utf8").toString("base64");
 
   const putRes = await fetch(base, {
     method: "PUT",
     headers: { ...headers, "Content-Type": "application/json" },
-    body: JSON.stringify({ message, content, sha, branch: BRANCH }),
+    body: JSON.stringify({
+      message,
+      content,
+      branch: BRANCH,
+      ...(sha ? { sha } : {}),
+    }),
   });
   if (!putRes.ok) {
     throw new Error(

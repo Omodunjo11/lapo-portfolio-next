@@ -84,6 +84,8 @@ War Room can scan your inbox from the site:
 1. **Scan inbox** button on `/war-room`
 2. **Vercel Cron** once daily at 08:00 America/New_York (`0 12 * * *` UTC)
    — Hobby plan limit. Use **Scan inbox** anytime for a fresh pull.
+3. **Mac LaunchAgent** (local) still propose-scans every ~3h via
+   `npm run schedule:install` in recruiting-season.
 
 Interview signals only (not applications). Matches tracked companies by alias.
 
@@ -104,5 +106,32 @@ CRON_SECRET=long-random-string
 
 Copy client id/secret from `google-client.json` and `refresh_token` from
 `google-token.json` into Vercel env (Production + Preview). Never commit those files.
+
+## Briefs (Now + Next)
+
+Markdown briefs live in `data/briefs/` (synced from recruiting-season). Upcoming
+rows link to `/war-room/brief/<slug>`. Each brief has a **Now** layer (this
+interview) and a **Next** layer (loop map + prep bank).
+
+## Debrief
+
+Use **Debrief** on an upcoming/recent call. Saves `data/debriefs/<company>-<date>.md`,
+marks the event done, and updates next action. Refresh after deploy (~30–60s).
+
+## Chase queue
+
+`chase[]` in the pipeline powers the dated nudge list with copyable drafts.
+
+## Drive links
+
+Paste each company Drive folder URL into `companies[].drive.folderUrl`.
+Gmail scan did not find per-company folders. Known prep docs (e.g. Sierra prep)
+may appear in `prepUrl`.
+
+## Sync from recruiting-season
+
+```bash
+npm run portfolio:sync   # merges season → portfolio (keeps extra companies) + copies briefs
+```
 
 Local Mac LaunchAgent ingest remains optional; the site no longer depends on it.
