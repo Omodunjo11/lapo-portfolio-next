@@ -3958,12 +3958,24 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.4;
 }
 
+/* Company name stays visible while scrolling the rest of the row
+   sideways — the whole point of a comparison table is losing sight
+   of which row you're on the moment you scroll to see Rank/Docs. */
+.wr-compare-table th:first-child,
+.wr-compare-table td.wr-compare-company {
+  position: sticky;
+  left: 0;
+  background: var(--card);
+  z-index: 1;
+  padding-right: 14px;
+}
+
 .wr-compare-role {
   margin-top: 2px;
   font-size: 11px;
 }
 
-.wr-compare-docs {
+.wr-compare-docs-links {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -3996,8 +4008,33 @@ a { color: inherit; text-decoration: none; }
   max-width: 22ch;
 }
 
-.wr-compare-row-hot td:first-child strong {
+.wr-compare-rank {
+  display: inline-block;
+  font-family: var(--font-syne), sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent-tint);
+  color: var(--terra);
+}
+
+.wr-compare-row-hot .wr-compare-rank {
+  background: #0f766e;
+  color: #fff;
+}
+
+.wr-compare-row-hot td:first-child strong,
+.wr-compare-row-hot .wr-compare-company strong {
   color: #0f766e;
+}
+
+.wr-compare-why-line {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 34ch;
 }
 
 .wr-compare-memo {
@@ -4010,4 +4047,72 @@ a { color: inherit; text-decoration: none; }
   .wr-compare-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+@media (max-width: 640px) {
+  /* Below phone width a horizontally-scrolled 9-column table can't be
+     scanned no matter how it's tuned — convert each row into a
+     self-contained card instead, matching the .wr-card language
+     already used for the funnel and Hub board. */
+  .wr-compare-scroll { overflow-x: visible; margin: 0 0 14px; padding: 0; }
+
+  .wr-compare-table,
+  .wr-compare-table tbody,
+  .wr-compare-table tr,
+  .wr-compare-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .wr-compare-table thead { display: none; }
+
+  .wr-compare-table tr {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 10px;
+    background: var(--card);
+  }
+
+  .wr-compare-table td {
+    border-bottom: none;
+    padding: 4px 0;
+  }
+
+  .wr-compare-table td.wr-compare-company {
+    position: static;
+    padding: 0 0 8px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 6px;
+  }
+
+  .wr-compare-table td[data-label] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .wr-compare-table td[data-label]::before {
+    content: attr(data-label);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  .wr-compare-excited-cell { align-items: flex-start; }
+  .wr-compare-excited-why { max-width: 60%; text-align: right; }
+
+  .wr-compare-docs-links { flex-direction: row; gap: 10px; }
+
+  .wr-compare-why {
+    padding-top: 8px;
+    margin-top: 4px;
+    border-top: 1px solid var(--border);
+  }
+
+  .wr-compare-why-line { max-width: none; -webkit-line-clamp: unset; }
 }

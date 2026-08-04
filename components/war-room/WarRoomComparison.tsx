@@ -59,13 +59,15 @@ export default function WarRoomComparison({
           <thead>
             <tr>
               <th>Company</th>
-              <th>Live stage</th>
-              <th>Track</th>
-              <th>Fit</th>
-              <th>Cmp.</th>
-              <th>Exit</th>
-              <th>Excited</th>
-              <th>Rank</th>
+              <th title="Live pipeline stage">Live stage</th>
+              <th title="Track">Track</th>
+              <th title="Fit score">Fit</th>
+              <th title="Compound growth potential">Cmp.</th>
+              <th title="Company outcome optionality (liquidity / brand / path clarity)">
+                Exit
+              </th>
+              <th title="How keen they seem to advance you (1–10)">Excited</th>
+              <th title={comparison.formula}>Rank</th>
               <th>Docs</th>
               <th>Why / watch</th>
             </tr>
@@ -87,20 +89,20 @@ export default function WarRoomComparison({
                         : undefined
                   }
                 >
-                  <td>
+                  <td className="wr-compare-company">
                     <strong>{name(r)}</strong>
                     <div className="wr-muted wr-compare-role">
                       {r.company?.role || "—"}
                     </div>
                   </td>
-                  <td>
+                  <td data-label="Stage">
                     {r.company?.stageLabel || r.company?.stage || "—"}
                   </td>
-                  <td>{r.track}</td>
-                  <td>{r.fit}</td>
-                  <td>{r.compound}</td>
-                  <td>{r.exit}</td>
-                  <td>
+                  <td data-label="Track">{r.track}</td>
+                  <td data-label="Fit">{r.fit}</td>
+                  <td data-label="Compound">{r.compound}</td>
+                  <td data-label="Exit">{r.exit}</td>
+                  <td data-label="Excited" className="wr-compare-excited-cell">
                     <span
                       className={
                         hot
@@ -109,7 +111,6 @@ export default function WarRoomComparison({
                             ? "wr-excited wr-excited-cool"
                             : "wr-excited"
                       }
-                      title={r.excitedWhy}
                     >
                       {r.excited}
                     </span>
@@ -117,31 +118,35 @@ export default function WarRoomComparison({
                       {r.excitedWhy}
                     </div>
                   </td>
-                  <td>
-                    <strong>{r.rank}</strong>
+                  <td data-label="Rank">
+                    <span className="wr-compare-rank">{r.rank}</span>
                   </td>
-                  <td className="wr-compare-docs">
-                    {prep ? (
-                      <a href={prep} target="_blank" rel="noopener noreferrer">
-                        Prep
-                      </a>
-                    ) : null}
-                    {folder ? (
-                      <a
-                        href={folder}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Folder
-                      </a>
-                    ) : null}
-                    {!prep && !folder ? (
-                      <span className="wr-muted">—</span>
-                    ) : null}
+                  <td data-label="Docs" className="wr-compare-docs">
+                    <span className="wr-compare-docs-links">
+                      {prep ? (
+                        <a href={prep} target="_blank" rel="noopener noreferrer">
+                          Prep
+                        </a>
+                      ) : null}
+                      {folder ? (
+                        <a
+                          href={folder}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Folder
+                        </a>
+                      ) : null}
+                      {!prep && !folder ? (
+                        <span className="wr-muted">—</span>
+                      ) : null}
+                    </span>
                   </td>
-                  <td>
-                    <div>{r.why}</div>
-                    <div className="wr-muted">{r.watch}</div>
+                  <td className="wr-compare-why">
+                    <div className="wr-compare-why-line">{r.why}</div>
+                    <div className="wr-muted wr-compare-why-line">
+                      {r.watch}
+                    </div>
                   </td>
                 </tr>
               );
