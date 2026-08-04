@@ -458,6 +458,40 @@ export default function WarRoomBoard({
       if (!res.ok) {
         throw new Error(data.detail || data.error || "scan_failed");
       }
+
+      let claudeN = 0;
+      const advances = (data.proposals || []).filter(
+        (p: { signal?: string; source?: string; companyId?: string }) =>
+          p.signal === "advance" && p.source === "gmail" && p.companyId
+      ) as {
+        companyId: string;
+        subject?: string;
+        snippet?: string;
+        from?: string;
+      }[];
+      const seen = new Set<string>();
+      for (const p of advances) {
+        if (seen.has(p.companyId) || seen.size >= 2) continue;
+        seen.add(p.companyId);
+        try {
+          const prepRes = await fetch("/api/war-room/prep", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              companyId: p.companyId,
+              subject: p.subject || "",
+              snippet: p.snippet || "",
+              from: p.from || "",
+              persist: true,
+            }),
+          });
+          const prep = await prepRes.json();
+          if (prepRes.ok && (prep.claudeDecks || 0) > 0) claudeN += 1;
+        } catch {
+          /* prep is best-effort after scan */
+        }
+      }
+
       setScanNote(
         `Scanned · ${data.gmailMatched ?? 0} mail · ${data.calendarMatched ?? 0} cal · ${data.proposals?.length ?? 0} signals` +
           (data.spamMatched
@@ -465,7 +499,8 @@ export default function WarRoomBoard({
             : "") +
           (data.appliedCalendar
             ? ` · ${data.appliedCalendar} calendar fact(s) saved`
-            : "")
+            : "") +
+          (claudeN ? ` · Claude prep ×${claudeN}` : "")
       );
       if (Array.isArray(data.flags)) {
         const inboxFlags: Suggestion[] = data.flags.map(

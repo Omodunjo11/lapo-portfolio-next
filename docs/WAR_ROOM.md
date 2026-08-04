@@ -105,11 +105,13 @@ Each Gmail hit is fetched as **full message** and classified on subject + body
 name / domain** (not loose first-name aliases) so keyword OR gaps cannot hide
 process notes. Short person aliases (e.g. Michal, Kelsey) only match the From header.
 
-**Prep decks:** on Scan, Claude (`ANTHROPIC_API_KEY`) writes Now+Next markdown for
-scheduled interviews and for **advance** emails (next steps) even before a calendar
-invite exists. Falls back to the static stub if the key is missing or Claude errors.
-Existing rich hand briefs are kept unless a new interviewer name appears.
-Optional: `ANTHROPIC_PREP_MODEL` (default `claude-haiku-4-5-20251001` for scan speed).
+**Prep decks:** Scan stays fast (stubs + Drive map). Claude prep runs via
+`POST /api/war-room/prep` — GitHub Actions calls it after each automatic scan for
+up to 3 advance companies, and the War Room **Scan inbox** button requests
+`claudePrep` for one advance inline when possible.
+Set `ANTHROPIC_API_KEY` on Vercel. Optional: `ANTHROPIC_PREP_MODEL`
+(default `claude-haiku-4-5-20251001`). Rich hand briefs are kept unless a new
+interviewer name appears.
 
 Scan cadence: button anytime; Actions ~every 6h; Vercel daily backup.
 

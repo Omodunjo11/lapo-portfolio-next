@@ -9,9 +9,10 @@ on:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - name: Trigger War Room scan
+        id: scan
         env:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
           SCAN_URL: ${{ secrets.WAR_ROOM_SCAN_URL }}
@@ -23,7 +24,7 @@ jobs:
           fi
           url="${SCAN_URL:-https://lapoodunjo.com/api/war-room/gmail/scan}"
           echo "Scanning via $url"
-          curl -fsS --max-time 240 \
+          curl -fsS --max-time 90 \
             -H "Authorization: Bearer ${CRON_SECRET}" \
             "$url" | tee /tmp/scan.json
           python3 - <<'PY'
@@ -33,4 +34,52 @@ jobs:
             print(data, file=sys.stderr)
             sys.exit(1)
           print(f"ok proposals={len(data.get('proposals') or [])} gmail={data.get('gmailMatched')} calendar={data.get('calendarMatched')}")
+          PY
+
+      - name: Claude prep for advance companies
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          PREP_URL: ${{ secrets.WAR_ROOM_PREP_URL }}
+        run: |
+          set -euo pipefail
+          url="${PREP_URL:-https://lapoodunjo.com/api/war-room/prep}"
+          python3 - <<'PY'
+          import json, os, subprocess, sys
+          data = json.load(open("/tmp/scan.json"))
+          secret = os.environ["CRON_SECRET"]
+          url = os.environ.get("PREP_URL") or "https://lapoodunjo.com/api/war-room/prep"
+          seen = set()
+          for p in data.get("proposals") or []:
+              if p.get("signal") != "advance" or p.get("source") != "gmail":
+                  continue
+              cid = p.get("companyId")
+              if not cid or cid in seen:
+                  continue
+              seen.add(cid)
+              if len(seen) > 3:
+                  break
+              body = {
+                  "companyId": cid,
+                  "subject": p.get("subject") or "",
+                  "snippet": p.get("snippet") or "",
+                  "from": p.get("from") or "",
+                  "persist": True,
+              }
+              print(f"Claude prep → {cid}")
+              r = subprocess.run(
+                  [
+                      "curl", "-fsS", "--max-time", "55",
+                      "-H", f"Authorization: Bearer {secret}",
+                      "-H", "Content-Type: application/json",
+                      "-d", json.dumps(body),
+                      url,
+                  ],
+                  capture_output=True,
+                  text=True,
+              )
+              print(r.stdout or r.stderr)
+              if r.returncode != 0:
+                  print(f"prep failed for {cid}: {r.stderr}", file=sys.stderr)
+                  # Non-fatal: inbox scan already succeeded.
+          print(f"prep attempted for {len(seen)} company(ies)")
           PY

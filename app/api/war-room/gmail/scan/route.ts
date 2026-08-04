@@ -22,7 +22,7 @@ import { commitTextFile } from "@/lib/git-store";
 import type { Pipeline } from "@/lib/recruiting/types";
 
 export const runtime = "nodejs";
-export const maxDuration = 120;
+export const maxDuration = 60;
 
 function cronAuthorized(req: NextRequest) {
   const secret = process.env.CRON_SECRET;
@@ -64,6 +64,8 @@ async function runScan(opts: {
   applyCalendar: boolean;
   persist: boolean;
   ensurePrep?: boolean;
+  /** Claude on the scan request — keep false for cron (use /api/war-room/prep). */
+  claudePrep?: boolean;
 }) {
   if (!gmailConfigured()) {
     return {
@@ -121,15 +123,29 @@ async function runScan(opts: {
         : chunk;
     }
 
-    const ensured = await ensurePrepDecks(pipeline, { emailByCompany });
+    const ensured = await ensurePrepDecks(pipeline, {
+      emailByCompany: opts.claudePrep ? emailByCompany : {},
+    });
     pipeline = ensured.pipeline;
 
-    const advances = await ensureAdvancePrepDecks(
+    let advances = {
+      createdDocs: 0,
+      updatedDocs: 0,
+      mappedFolders: 0,
+      localBriefs: 0,
+      claudeDecks: 0,
+      errors: [] as string[],
       pipeline,
-      scan.proposals.filter((p) => p.signal === "advance"),
-      { limit: 2 }
-    );
-    pipeline = advances.pipeline;
+    };
+
+    if (opts.claudePrep) {
+      advances = await ensureAdvancePrepDecks(
+        pipeline,
+        scan.proposals.filter((p) => p.signal === "advance"),
+        { limit: 1 }
+      );
+      pipeline = advances.pipeline;
+    }
 
     prep = {
       createdDocs: ensured.createdDocs + advances.createdDocs,
@@ -199,6 +215,7 @@ export async function GET(req: NextRequest) {
       applyCalendar: true,
       persist: true,
       ensurePrep: true,
+      claudePrep: false,
     });
     if ("error" in result && result.error) return result.error;
     return result.ok!;
@@ -221,6 +238,7 @@ export async function POST(req: NextRequest) {
   const applyCalendar = body.applyCalendar !== false;
   const persist = body.persist !== false;
   const ensurePrep = body.ensurePrep !== false;
+  const claudePrep = body.claudePrep === true;
 
   try {
     const result = await runScan({
@@ -228,6 +246,7 @@ export async function POST(req: NextRequest) {
       applyCalendar,
       persist,
       ensurePrep,
+      claudePrep,
     });
     if ("error" in result && result.error) return result.error;
     return result.ok!;
