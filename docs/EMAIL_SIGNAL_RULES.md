@@ -6,7 +6,7 @@ Truth: scheduling conflict / reschedule. Lapo accepted Aug 7. Kate confirmed Ran
 
 ## Hard rules for humans and agents
 
-1. Read the full thread, not one keyword.
+1. Read the full thread (and full body when the scanner has it), not one keyword.
 2. Bare "Unfortunately" is never a reject by itself.
 3. If the email offers new times, asks for availability, names an interviewer, or promises an invite, classify as schedule, never reject.
 4. Reject only on hard close language: not moving forward, other candidates selected, position filled, no longer under consideration, will not be advancing.

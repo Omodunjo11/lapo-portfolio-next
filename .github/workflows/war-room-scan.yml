@@ -1,0 +1,36 @@
+name: War Room Gmail scan
+
+# Every 6 hours — plan-agnostic (Vercel Hobby only allows daily crons).
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Trigger War Room scan
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          SCAN_URL: ${{ secrets.WAR_ROOM_SCAN_URL }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CRON_SECRET:-}" ]; then
+            echo "Missing GitHub secret CRON_SECRET (same value as Vercel CRON_SECRET)"
+            exit 1
+          fi
+          url="${SCAN_URL:-https://lapoodunjo.com/api/war-room/gmail/scan}"
+          echo "Scanning via $url"
+          curl -fsS --max-time 90 \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "$url" | tee /tmp/scan.json
+          python3 - <<'PY'
+          import json,sys
+          data=json.load(open("/tmp/scan.json"))
+          if not data.get("ok"):
+            print(data, file=sys.stderr)
+            sys.exit(1)
+          print(f"ok proposals={len(data.get('proposals') or [])} gmail={data.get('gmailMatched')} calendar={data.get('calendarMatched')}")
+          PY

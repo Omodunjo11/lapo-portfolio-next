@@ -88,17 +88,22 @@ Then `npm run dogfood:pull` and redeploy. War Room cards fall back to `driveRoot
 War Room can scan your inbox from the site:
 
 1. **Scan inbox** button on `/war-room`
-2. **Vercel Cron** once daily at 08:00 America/New_York (`0 12 * * *` UTC)
-   — Hobby plan limit. Use **Scan inbox** anytime for a fresh pull.
-3. **Mac LaunchAgent** (local) still propose-scans every ~3h via
+2. **GitHub Actions** every **6 hours** (`.github/workflows/war-room-scan.yml`)
+   — needs repo secret `CRON_SECRET` (same value as Vercel). Manual: **Actions → War Room Gmail scan → Run workflow**.
+3. **Vercel Cron** daily backup at 08:00 America/New_York (`0 12 * * *` UTC)
+   — Hobby plan only allows daily; the 6h cadence is via GitHub.
+4. **Mac LaunchAgent** (local) still propose-scans every ~3h via
    `npm run schedule:install` in recruiting-season.
 
-Interview signals only (not applications). Matches tracked companies by alias.
+Interview / process signals (not applications). Matches tracked companies by alias.
 Also searches **Gmail Spam** for tracked-company aliases (Hang Ten has landed there).
 Process mail counts too: **NDA**, “next step/stage”, “move forward” — not only the word “interview”.
 
-Scan cadence: button anytime; site cron once daily ~8am ET. New mail after the last
-scan will not appear until you Scan again (or wait for cron).
+Each Gmail hit is fetched as **full message** and classified on subject + body
+(not snippet alone). A second query pulls all recent tracked-company mail so
+keyword OR gaps cannot hide process notes.
+
+Scan cadence: button anytime; Actions ~every 6h; Vercel daily backup.
 
 Behavior:
 - Calendar high-confidence interviews → write event facts into the pipeline (due / next action). **Does not move funnel stage.**
@@ -138,7 +143,7 @@ marks the event done, and updates next action. Refresh after deploy (~30–60s).
 
 Root folder: `driveRootUrl` on the pipeline.
 
-On each **Scan inbox** (and daily cron):
+On each **Scan inbox** (and ~6h / daily automatic scans):
 
 1. Lists company subfolders under the Recruiting Season Drive root
 2. Maps them onto `companies[].drive.folderUrl`

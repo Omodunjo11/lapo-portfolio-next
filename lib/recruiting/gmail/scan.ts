@@ -1,4 +1,5 @@
 import type { Pipeline } from "../types";
+import { extractGmailBody } from "./body";
 import {
   classifyCalendar,
   classifyEmail,
@@ -41,17 +42,35 @@ async function listMessageIds(
   return list.data.messages || [];
 }
 
+async function mapPool<T, R>(
+  items: T[],
+  concurrency: number,
+  fn: (item: T) => Promise<R>
+): Promise<R[]> {
+  const results: R[] = new Array(items.length);
+  let next = 0;
+  async function worker() {
+    while (next < items.length) {
+      const i = next++;
+      results[i] = await fn(items[i]);
+    }
+  }
+  const n = Math.min(concurrency, Math.max(items.length, 1));
+  await Promise.all(Array.from({ length: n }, () => worker()));
+  return results;
+}
+
 async function proposalFromMessage(
   gmail: ReturnType<typeof getGmailClient>,
   pipeline: Pipeline,
   messageId: string,
   opts: { fromSpam?: boolean } = {}
 ): Promise<IngestProposal | null> {
+  // Full payload so we classify on body text, not subject+snippet alone.
   const full = await gmail.users.messages.get({
     userId: "me",
     id: messageId,
-    format: "metadata",
-    metadataHeaders: ["From", "To", "Cc", "Subject", "Date"],
+    format: "full",
   });
   const headers = full.data.payload?.headers || [];
   const subject = header(headers, "Subject");
@@ -61,13 +80,15 @@ async function proposalFromMessage(
     .join(" ");
   const date = header(headers, "Date");
   const snippet = full.data.snippet || "";
+  const body = extractGmailBody(full.data.payload);
   const company = matchCompany(
     pipeline,
-    `${subject} ${from} ${to} ${snippet}`
+    `${subject} ${from} ${to} ${snippet} ${body}`
   );
   let classification = classifyEmail({
     subject,
     snippet,
+    body,
     from,
     to,
     company,
@@ -97,7 +118,7 @@ async function proposalFromMessage(
     date,
     from: to ? `${from} → ${to}` : from,
     subject: subject ? `${subject}${spamTag}` : subject,
-    snippet,
+    snippet: body ? body.slice(0, 280) : snippet,
     companyId: company?.noise ? null : company?.id || null,
     companyName: company?.noise ? "noise" : company?.name || null,
     fromSpam: Boolean(opts.fromSpam),
@@ -133,36 +154,42 @@ export async function scanInterviewSignals(
   const processTerms =
     '(NDA OR "non-disclosure" OR "next step" OR "next stage" OR "move forward" OR "moving forward" OR "excited to continue" OR "excited to move")';
 
-  // Inbox + Sent (default Gmail search excludes Spam/Trash).
+  // Keyword / process pass (inbox + sent chase).
   const inboxQ = `after:${after} -in:spam -in:trash ((${aliasQuery}) (${interviewTerms} OR ${processTerms}) OR (in:sent (${aliasQuery}) ${sentChaseTerms}))`;
+  // Safety net: any recent tracked-company mail — classify with full body.
+  // Catches NDA / process notes that slip past keyword OR clauses.
+  const companyQ = `after:${after} -in:spam -in:trash (${aliasQuery})`;
   // Explicit Spam pass — Hang Ten and others have landed here.
   const spamQ = `in:spam after:${after} (${aliasQuery})`;
 
-  const [inboxMsgs, spamMsgs] = await Promise.all([
+  const [inboxMsgs, companyMsgs, spamMsgs] = await Promise.all([
     listMessageIds(gmail, inboxQ, 40, false),
+    listMessageIds(gmail, companyQ, 35, false),
     listMessageIds(gmail, spamQ, 25, true),
   ]);
 
   const seen = new Set<string>();
-  const proposals: IngestProposal[] = [];
-  let spamMatched = 0;
+  const work: { id: string; fromSpam: boolean }[] = [];
 
-  for (const m of inboxMsgs) {
+  for (const m of [...inboxMsgs, ...companyMsgs]) {
     if (!m.id || seen.has(m.id)) continue;
     seen.add(m.id);
-    const p = await proposalFromMessage(gmail, pipeline, m.id);
-    if (p) proposals.push(p);
+    work.push({ id: m.id, fromSpam: false });
   }
 
+  let spamMatched = 0;
   for (const m of spamMsgs) {
     if (!m.id || seen.has(m.id)) continue;
     seen.add(m.id);
     spamMatched += 1;
-    const p = await proposalFromMessage(gmail, pipeline, m.id, {
-      fromSpam: true,
-    });
-    if (p) proposals.push(p);
+    work.push({ id: m.id, fromSpam: true });
   }
+
+  const proposals = (
+    await mapPool(work, 6, ({ id, fromSpam }) =>
+      proposalFromMessage(gmail, pipeline, id, { fromSpam })
+    )
+  ).filter((p): p is IngestProposal => Boolean(p));
 
   const timeMin = new Date(Date.now() - days * 86400000).toISOString();
   const timeMax = new Date(Date.now() + 14 * 86400000).toISOString();
@@ -209,7 +236,7 @@ export async function scanInterviewSignals(
   return {
     scannedAt: new Date().toISOString(),
     days,
-    gmailMatched: inboxMsgs.length + spamMsgs.length,
+    gmailMatched: inboxMsgs.length + companyMsgs.length + spamMsgs.length,
     calendarMatched,
     spamMatched,
     proposals,

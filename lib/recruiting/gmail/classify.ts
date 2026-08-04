@@ -75,14 +75,16 @@ export function isInterviewSignal({
   subject,
   snippet,
   from,
+  body = "",
   source,
 }: {
   subject?: string;
   snippet?: string;
   from?: string;
+  body?: string;
   source: "gmail" | "calendar";
 }) {
-  const text = `${subject || ""} ${snippet || ""} ${from || ""}`;
+  const text = `${subject || ""} ${snippet || ""} ${body || ""} ${from || ""}`;
   if (source === "calendar") return true;
   if (APPLICATION_NOISE_RE.test(text)) return false;
   if (/jackandjill/i.test(text)) return false;
@@ -95,12 +97,15 @@ export function classifyEmail({
   from,
   company,
   to = "",
+  body = "",
 }: {
   subject: string;
   snippet: string;
   from: string;
   company: CompanyHit | null;
   to?: string;
+  /** Full message plain text when fetched — preferred over snippet alone. */
+  body?: string;
 }): { signal: IngestSignal; confidence: IngestConfidence; reason: string } {
   if (company?.noise) {
     return {
@@ -109,7 +114,7 @@ export function classifyEmail({
       reason: "job-search tool noise",
     };
   }
-  const text = `${subject} ${snippet} ${from} ${to}`.toLowerCase();
+  const text = `${subject} ${snippet} ${body} ${from} ${to}`.toLowerCase();
 
   if (APPLICATION_NOISE_RE.test(text)) {
     return {
@@ -160,9 +165,9 @@ export function classifyEmail({
     };
   }
 
-  if (!isInterviewSignal({ subject, snippet, from, source: "gmail" })) {
+  if (!isInterviewSignal({ subject, snippet, from, body, source: "gmail" })) {
     // Tracked-company NDA / process mail can omit the word "interview" in
-    // subject+snippet. Still treat as process signal.
+    // subject+snippet. Full body + process terms still count.
     if (company && PROCESS_ADVANCE_RE.test(text)) {
       return {
         signal: "advance",
