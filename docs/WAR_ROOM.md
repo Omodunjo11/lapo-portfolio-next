@@ -151,8 +151,8 @@ Also set `ANTHROPIC_API_KEY` on Vercel so Scan can LLM-write prep decks.
 - **Excited (1–10)** = how keen *they* seem to advance you (calendar speed,
   senior loop, debrief `theirPull`, chase burden). Distinct from `lean` on the
   company card (your preference) and debrief **Your energy**.
-- Rank: `Fit×2 + Compound×2 + Excited + Potential − max(0, Size−7)`.
-  **No Exit score** — these seats lack a meaningful exit-plan scale.
+- Rank: `Fit×2 + Compound×2 + Excited + Potential + Exit − max(0, Size−7)`.
+- **Exit (1–10)** = company outcome optionality (liquidity / brand / path clarity). Thin data → lower score; do not invent funding rounds.
 
 ## Briefs (Now + Next)
 

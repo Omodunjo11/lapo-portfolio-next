@@ -1,7 +1,7 @@
 {
   "updated": "2026-08-04",
-  "formula": "Fit×2 + Compound×2 + Excited + Potential − max(0, Size−7)",
-  "note": "No Exit score — early/seed roles lack a meaningful exit plan. Rows link by companyId; live stage/prepUrl from pipeline.",
+  "formula": "Fit×2 + Compound×2 + Excited + Potential + Exit − max(0, Size−7)",
+  "note": "Scores are judgment. Exit = company outcome optionality (liquidity / brand / path clarity). Thin data → lower Exit, do not invent rounds. Rows link by companyId; live stage/prepUrl from pipeline.",
   "memo": {
     "topDeploy": [
       "sierra",
@@ -18,7 +18,7 @@
       "Hang Ten naming role shape moves Fit ±1–2.",
       "Debrief their-excitement / stageOutcome updates Excited on next rebuild."
     ],
-    "summary": "Top deploy: Sierra, Hang Ten, Brain Co (Excited lower on Brain — evergreen). Best CoS: Blue Orange. Deprioritize Enterpret. No Exit dimension."
+    "summary": "Top deploy: Sierra, Hang Ten, Brain Co. Best CoS: Blue Orange. Deprioritize Enterpret. Includes Exit (company outcome optionality)."
   },
   "rows": [
     {
@@ -27,6 +27,7 @@
       "sizeBand": "Growth/late, approx",
       "size": 6,
       "potential": 9,
+      "exit": 8,
       "fit": 8,
       "compound": 9,
       "excited": 8,
@@ -40,6 +41,7 @@
       "sizeBand": "Seed, approx",
       "size": 2,
       "potential": 7,
+      "exit": 6,
       "fit": 8,
       "compound": 9,
       "excited": 8,
@@ -53,6 +55,7 @@
       "sizeBand": "Seed, approx",
       "size": 2,
       "potential": 8,
+      "exit": 6,
       "fit": 8,
       "compound": 9,
       "excited": 5,
@@ -66,6 +69,7 @@
       "sizeBand": "Early growth, approx",
       "size": 4,
       "potential": 6,
+      "exit": 5,
       "fit": 8,
       "compound": 7,
       "excited": 8,
@@ -79,6 +83,7 @@
       "sizeBand": "Series A, approx",
       "size": 3,
       "potential": 7,
+      "exit": 6,
       "fit": 7,
       "compound": 8,
       "excited": 4,
@@ -92,6 +97,7 @@
       "sizeBand": "Growth/established, approx",
       "size": 6,
       "potential": 7,
+      "exit": 6,
       "fit": 6,
       "compound": 6,
       "excited": 7,
@@ -105,6 +111,7 @@
       "sizeBand": "Unclear, approx (thin data)",
       "size": 4,
       "potential": 5,
+      "exit": 4,
       "fit": 7,
       "compound": 4,
       "excited": 7,
@@ -118,6 +125,7 @@
       "sizeBand": "Seed, approx (thin data)",
       "size": 2,
       "potential": 5,
+      "exit": 4,
       "fit": 7,
       "compound": 4,
       "excited": 4,

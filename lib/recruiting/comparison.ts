@@ -8,6 +8,8 @@ export type ComparisonRow = {
   sizeBand: string;
   size: number;
   potential: number;
+  /** Company outcome optionality: liquidity / brand / path clarity (1–10). */
+  exit: number;
   fit: number;
   compound: number;
   /** How keen they seem to advance Lapo (1–10). */
@@ -37,15 +39,18 @@ export type RankedComparisonRow = ComparisonRow & {
   company: Company | null;
 };
 
-export function rankScore(r: Pick<
-  ComparisonRow,
-  "fit" | "compound" | "excited" | "potential" | "size"
->): number {
+export function rankScore(
+  r: Pick<
+    ComparisonRow,
+    "fit" | "compound" | "excited" | "potential" | "exit" | "size"
+  >
+): number {
   return (
     r.fit * 2 +
     r.compound * 2 +
     r.excited +
-    r.potential -
+    r.potential +
+    r.exit -
     Math.max(0, r.size - 7)
   );
 }

@@ -21,7 +21,8 @@ export default function WarRoomComparison({
       <p className="wr-muted wr-compare-note">
         Linked to live War Room companies (stage + Drive update with the
         pipeline). Scores refresh when you rebuild comparison — not on every
-        scan. Excited = how keen they seem to advance you. Rank ={" "}
+        scan. Excited = how keen they seem to advance you. Exit = company
+        outcome optionality (liquidity / brand / path clarity). Rank ={" "}
         {comparison.formula}.
       </p>
 
@@ -62,6 +63,7 @@ export default function WarRoomComparison({
               <th>Track</th>
               <th>Fit</th>
               <th>Cmp.</th>
+              <th>Exit</th>
               <th>Excited</th>
               <th>Rank</th>
               <th>Docs</th>
@@ -97,6 +99,7 @@ export default function WarRoomComparison({
                   <td>{r.track}</td>
                   <td>{r.fit}</td>
                   <td>{r.compound}</td>
+                  <td>{r.exit}</td>
                   <td>
                     <span
                       className={
