@@ -1,5 +1,5 @@
 {
-  "scannedAt": "2026-08-04T17:58:04.400Z",
+  "scannedAt": "2026-08-04T18:05:49.556Z",
   "days": 7,
   "gmailMatched": 40,
   "calendarMatched": 9,
@@ -28,9 +28,9 @@
       "snippet": "Thanks Lapo! Ranjani mentioned 10:30am ET would work best for her. I&#39;ll send you the confirmation email with the invite shortly. :) Regards, Kate Kate Alvarico Talent Acquisition Coordinator •",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
-      "signal": "wait",
-      "confidence": "low",
-      "reason": "interview-adjacent, unclear"
+      "signal": "schedule",
+      "confidence": "medium",
+      "reason": "interview scheduling"
     },
     {
       "source": "gmail",
@@ -84,9 +84,9 @@
       "snippet": "Hi Lapo, Unfortunately, we weren&#39;t able to confirm a time that works for Ranjani within the times you have shared. She&#39;s asking if you have any availability on the 7th? Please let us know.",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
-      "signal": "reject",
-      "confidence": "high",
-      "reason": "rejection language"
+      "signal": "schedule",
+      "confidence": "medium",
+      "reason": "interview scheduling"
     },
     {
       "source": "gmail",
@@ -98,9 +98,9 @@
       "snippet": "Hi Lapo, Apologies for the delay. We&#39;re still waiting to hear back from the interviewer to confirm a time that works for her. However, we&#39;ve followed it up, hoping to hear back later today.",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
-      "signal": "wait",
-      "confidence": "low",
-      "reason": "interview-adjacent, unclear"
+      "signal": "schedule",
+      "confidence": "medium",
+      "reason": "interview scheduling"
     },
     {
       "source": "gmail",
@@ -322,9 +322,9 @@
       "snippet": "Thanks Lapo! I&#39;ll just confirm a time that works for the interviewer within these and I&#39;ll let you know as soon as I hear back. :) I&#39;ve also added Hafsa here as I will be going offline in a",
       "companyId": "invisible",
       "companyName": "Invisible Technologies",
-      "signal": "wait",
-      "confidence": "low",
-      "reason": "interview-adjacent, unclear"
+      "signal": "schedule",
+      "confidence": "medium",
+      "reason": "interview scheduling"
     },
     {
       "source": "gmail",
