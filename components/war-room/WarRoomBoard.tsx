@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import type { Company, PipelineEvent } from "@/lib/recruiting/types";
+import { useMemo, useState, useTransition } from "react";
+import type { Company, FunnelStage, PipelineEvent } from "@/lib/recruiting/types";
 import { EDITABLE_STAGES } from "@/lib/recruiting/types";
+import type { Suggestion } from "@/lib/recruiting/board";
+import { nextFunnelStage, prevFunnelStage } from "@/lib/recruiting/board";
 
 type Col = { id: string; label: string };
 
@@ -11,7 +13,24 @@ type EditableFields = Pick<
   "stage" | "stageLabel" | "nextAction" | "due" | "nudgeDate"
 >;
 
-function CompanyCard({ c }: { c: Company }) {
+const FUNNEL: FunnelStage[] = [
+  "applied",
+  "first",
+  "second",
+  "third",
+  "fourth",
+  "final",
+];
+
+function CompanyCard({
+  c,
+  pending,
+  onMove,
+}: {
+  c: Company;
+  pending: boolean;
+  onMove: (companyId: string, stage: FunnelStage) => void;
+}) {
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -23,6 +42,9 @@ function CompanyCard({ c }: { c: Company }) {
     due: c.due,
     nudgeDate: c.nudgeDate || "",
   });
+
+  const prev = prevFunnelStage(c.stage);
+  const next = nextFunnelStage(c.stage);
 
   async function save() {
     setSaving(true);
@@ -39,6 +61,9 @@ function CompanyCard({ c }: { c: Company }) {
       if (!res.ok) throw new Error((await res.json()).error || "save_failed");
       setSaved(true);
       setEditing(false);
+      if (fields.stage !== c.stage) {
+        onMove(c.id, fields.stage);
+      }
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -47,7 +72,14 @@ function CompanyCard({ c }: { c: Company }) {
   }
 
   return (
-    <article key={c.id} className={`wr-card pri-${c.priority}`}>
+    <article
+      className={`wr-card pri-${c.priority}`}
+      draggable={!editing}
+      onDragStart={(e) => {
+        if (editing) return;
+        e.dataTransfer.setData("text/companyId", c.id);
+      }}
+    >
       <header>
         <h3>{c.name}</h3>
         <em className={`wr-ball ${c.ball}`}>{c.ball}</em>
@@ -58,6 +90,38 @@ function CompanyCard({ c }: { c: Company }) {
       {c.paths?.journal ? (
         <p className="wr-journal">📓 {c.paths.journal}</p>
       ) : null}
+
+      <div className="wr-move">
+        <button
+          type="button"
+          disabled={!prev || pending || editing}
+          onClick={() => prev && onMove(c.id, prev)}
+          title="Move left"
+        >
+          ←
+        </button>
+        <select
+          value={FUNNEL.includes(c.stage) ? c.stage : c.stage}
+          disabled={pending || editing}
+          onChange={(e) => onMove(c.id, e.target.value as FunnelStage)}
+          aria-label={`Stage for ${c.name}`}
+        >
+          {EDITABLE_STAGES.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+        <button
+          type="button"
+          disabled={!next || pending || editing}
+          onClick={() => next && onMove(c.id, next)}
+          title="Move right"
+        >
+          →
+        </button>
+      </div>
+
       <div className="wr-card-actions">
         {c.drive?.folderUrl ? (
           <a href={c.drive.folderUrl} target="_blank" rel="noopener noreferrer">
@@ -86,7 +150,9 @@ function CompanyCard({ c }: { c: Company }) {
         </button>
       </div>
 
-      {saved && !editing ? <p className="wr-saved">Saved — rebuilding, refresh in ~30-60s</p> : null}
+      {saved && !editing ? (
+        <p className="wr-saved">Saved — rebuilding, refresh in ~30-60s</p>
+      ) : null}
 
       {editing ? (
         <div className="wr-edit-form">
@@ -158,28 +224,147 @@ function CompanyCard({ c }: { c: Company }) {
 
 export default function WarRoomBoard({
   columns,
-  byStage,
+  initialCompanies,
   upcoming,
-  companies,
   focus,
-  archived,
-  attention,
+  archived: initialArchived,
+  attention: initialAttention,
   today,
+  initialSuggestions,
 }: {
   columns: Col[];
-  byStage: Record<string, Company[]>;
+  initialCompanies: Company[];
   upcoming: PipelineEvent[];
-  companies: Company[];
   focus: { companyId: string; detail: string }[];
   archived: Company[];
   attention: Company[];
   today: string;
+  initialSuggestions: Suggestion[];
 }) {
+  const [companies, setCompanies] = useState(initialCompanies);
+  const [suggestions, setSuggestions] = useState(initialSuggestions);
+  const [pending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+
+  const byStage = useMemo(() => {
+    const map: Record<string, Company[]> = {};
+    for (const col of columns) map[col.id] = [];
+    for (const c of companies) {
+      if (c.stage === "passed" || c.stage === "ghosted") continue;
+      if (c.stage === "offered") map.final?.push(c);
+      else if (map[c.stage]) map[c.stage].push(c);
+    }
+    return map;
+  }, [companies, columns]);
+
+  const archived = useMemo(
+    () =>
+      companies.filter(
+        (c) => c.stage === "passed" || c.stage === "ghosted"
+      ),
+    [companies]
+  );
+
+  const attention = useMemo(() => {
+    const ids = new Set(initialAttention.map((c) => c.id));
+    return companies.filter((c) => {
+      if (!ids.has(c.id) && !(c.due && c.due <= today) && !(c.nudgeDate && c.nudgeDate <= today)) {
+        return false;
+      }
+      if (c.stage === "passed" || c.stage === "ghosted") return false;
+      return Boolean(
+        (c.due && c.due <= today) || (c.nudgeDate && c.nudgeDate <= today)
+      );
+    });
+  }, [companies, initialAttention, today]);
+
   const nameOf = (id: string) =>
     companies.find((c) => c.id === id)?.name || id;
 
+  async function post(body: Record<string, unknown>) {
+    setError(null);
+    const res = await fetch("/api/war-room", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      setError(data.error || data.detail || "Request failed");
+      return;
+    }
+    if (data.pipeline?.companies) setCompanies(data.pipeline.companies);
+    if (data.suggestions) setSuggestions(data.suggestions);
+  }
+
+  function move(companyId: string, stage: FunnelStage) {
+    // Optimistic UI
+    setCompanies((prev) =>
+      prev.map((c) =>
+        c.id === companyId
+          ? { ...c, stage, stageLabel: stage }
+          : c
+      )
+    );
+    startTransition(() => {
+      void post({ action: "move", companyId, stage });
+    });
+  }
+
+  function accept(id: string) {
+    startTransition(() => {
+      void post({ action: "accept_suggestion", id });
+    });
+  }
+
+  function dismiss(id: string) {
+    setSuggestions((prev) => prev.filter((s) => s.id !== id));
+    startTransition(() => {
+      void post({ action: "dismiss_suggestion", id });
+    });
+  }
+
   return (
     <div className="wr-grid">
+      {suggestions.length > 0 && (
+        <section className="wr-panel wr-flags">
+          <h2>Flags — you decide</h2>
+          <p className="wr-muted" style={{ marginBottom: 12 }}>
+            Nothing auto-moves. Accept to advance, or dismiss.
+          </p>
+          <ul className="wr-flag-list">
+            {suggestions.map((s) => (
+              <li key={s.id}>
+                <div>
+                  <strong>{nameOf(s.companyId)}</strong>
+                  <span>
+                    {s.fromStage} → {s.toStage}: {s.reason}
+                  </span>
+                </div>
+                <div className="wr-flag-actions">
+                  <button
+                    type="button"
+                    className="wr-btn"
+                    disabled={pending}
+                    onClick={() => accept(s.id)}
+                  >
+                    Accept
+                  </button>
+                  <button
+                    type="button"
+                    className="wr-btn wr-btn-ghost"
+                    disabled={pending}
+                    onClick={() => dismiss(s.id)}
+                  >
+                    Dismiss
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {attention.length > 0 ? (
         <section className="wr-panel wr-attention">
           <h2>Needs attention today ({today})</h2>
@@ -239,17 +424,37 @@ export default function WarRoomBoard({
       </section>
 
       <section className="wr-panel wr-board">
-        <h2>Pipeline funnel</h2>
+        <div className="wr-board-head">
+          <h2>Pipeline funnel</h2>
+          <span className="wr-muted">
+            Drag, ← →, or dropdown {pending ? "· saving…" : ""}
+          </span>
+        </div>
+        {error && <p className="wr-error">{error}</p>}
         <div className="wr-columns">
           {columns.map((col) => (
-            <div key={col.id} className="wr-col">
+            <div
+              key={col.id}
+              className="wr-col"
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => {
+                e.preventDefault();
+                const companyId = e.dataTransfer.getData("text/companyId");
+                if (companyId) move(companyId, col.id as FunnelStage);
+              }}
+            >
               <div className="wr-col-head">
                 {col.label}
                 <span>{byStage[col.id]?.length ?? 0}</span>
               </div>
               <div className="wr-col-body">
                 {(byStage[col.id] || []).map((c) => (
-                  <CompanyCard key={c.id} c={c} />
+                  <CompanyCard
+                    key={c.id}
+                    c={c}
+                    pending={pending}
+                    onMove={move}
+                  />
                 ))}
               </div>
             </div>
@@ -257,12 +462,12 @@ export default function WarRoomBoard({
         </div>
       </section>
 
-      {archived.length > 0 ? (
+      {(archived.length > 0 || initialArchived.length > 0) ? (
         <details className="wr-panel wr-archive">
           <summary>Archived ({archived.length})</summary>
           <div className="wr-col-body">
             {archived.map((c) => (
-              <CompanyCard key={c.id} c={c} />
+              <CompanyCard key={c.id} c={c} pending={pending} onMove={move} />
             ))}
           </div>
         </details>

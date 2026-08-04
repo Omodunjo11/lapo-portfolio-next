@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import type { BoardPrefs } from "@/lib/recruiting/board";
 
 export const metadata: Metadata = {
-  title: "War Room · Setup",
+  title: "War Room",
   robots: { index: false, follow: false },
 };
 
@@ -33,7 +34,6 @@ export default function WarRoomPage() {
     );
   }
 
-  // Dynamic import path — real page logic lives in authenticated branch
   return <AuthenticatedWarRoom />;
 }
 
@@ -48,6 +48,7 @@ async function AuthenticatedWarRoom() {
     FUNNEL_COLUMNS,
     getRecruitingPipeline,
   } = await import("@/lib/recruiting/pipeline");
+  const { buildSuggestions } = await import("@/lib/recruiting/board");
   const WarRoomBoard = (await import("@/components/war-room/WarRoomBoard")).default;
 
   const user = await currentUser();
@@ -58,14 +59,19 @@ async function AuthenticatedWarRoom() {
 
   if (!user) {
     redirect("/war-room/sign-in");
+    return null;
   }
-
   if (!emailAllowed(email)) {
     redirect("/war-room/unauthorized");
+    return null;
   }
+
+  const prefs = (user.privateMetadata?.recruitingBoard || {}) as Partial<BoardPrefs>;
+  const dismissed = prefs.dismissedSuggestionIds || [];
 
   const pipeline = getRecruitingPipeline();
   const byStage = companiesByStage(pipeline);
+  const suggestions = buildSuggestions(pipeline, dismissed);
   const upcoming = pipeline.events
     .filter((e) => e.status === "scheduled" && e.start)
     .sort((a, b) => a.start.localeCompare(b.start));
@@ -79,7 +85,7 @@ async function AuthenticatedWarRoom() {
     <div className="wr-root">
       <header className="wr-top">
         <div>
-          <p className="wr-eyebrow">Private · lapoodunjo.com/war-room</p>
+          <p className="wr-eyebrow">Private · you control every move</p>
           <h1 className="wr-title">
             Recruiting <span>War Room</span>
           </h1>
@@ -100,18 +106,18 @@ async function AuthenticatedWarRoom() {
 
       <WarRoomBoard
         columns={[...FUNNEL_COLUMNS]}
-        byStage={byStage}
+        initialCompanies={pipeline.companies}
         upcoming={upcoming}
-        companies={pipeline.companies}
         focus={pipeline.focus}
         archived={archived}
         attention={attention}
         today={today}
+        initialSuggestions={suggestions}
       />
 
       <p className="wr-foot">
-        Interview signals only. Sync from recruiting-season via{" "}
-        <code>npm run portfolio:sync</code>. Add Drive folder URLs in pipeline JSON.
+        Drag cards, use ← → / dropdown, or accept flags. Moves commit to the
+        pipeline — nothing auto-advances from ingest.
       </p>
     </div>
   );
