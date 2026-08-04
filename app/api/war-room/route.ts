@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 import { emailAllowed } from "@/lib/recruiting/access";
 import {
   EMPTY_BOARD_PREFS,
-  buildSuggestions,
   type BoardPrefs,
 } from "@/lib/recruiting/board";
+import { allSuggestions } from "@/lib/recruiting/flags";
 import { getRecruitingPipeline } from "@/lib/recruiting/pipeline";
 import { commitPipeline } from "@/lib/recruiting/store";
 import type { FunnelStage } from "@/lib/recruiting/types";
@@ -42,10 +42,7 @@ async function requireLapo() {
 function readPrefs(
   user: NonNullable<Awaited<ReturnType<typeof currentUser>>>
 ): BoardPrefs {
-  const meta = (user.privateMetadata?.recruitingBoard || {}) as Partial<BoardPrefs> & {
-    dismissedSuggestionIds?: string[];
-    stages?: unknown;
-  };
+  const meta = (user.privateMetadata?.recruitingBoard || {}) as Partial<BoardPrefs>;
   return {
     dismissedSuggestionIds: meta.dismissedSuggestionIds || [],
   };
@@ -72,7 +69,7 @@ export async function GET() {
   const user = gate.user!;
   const prefs = readPrefs(user);
   const pipeline = getRecruitingPipeline();
-  const suggestions = buildSuggestions(pipeline, prefs.dismissedSuggestionIds);
+  const suggestions = allSuggestions(pipeline, prefs.dismissedSuggestionIds);
 
   return NextResponse.json({ pipeline, prefs, suggestions });
 }
@@ -123,7 +120,7 @@ export async function POST(req: Request) {
     await savePrefs(userId, user, prefs);
   } else if (body.action === "accept_suggestion") {
     const id = String(body.id || "");
-    const suggestions = buildSuggestions(pipeline, prefs.dismissedSuggestionIds);
+    const suggestions = allSuggestions(pipeline, prefs.dismissedSuggestionIds);
     const sug = suggestions.find((s) => s.id === id);
     if (!sug) {
       return NextResponse.json({ error: "unknown suggestion" }, { status: 404 });
@@ -154,7 +151,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "unknown action" }, { status: 400 });
   }
 
-  const suggestions = buildSuggestions(pipeline, prefs.dismissedSuggestionIds);
+  const suggestions = allSuggestions(pipeline, prefs.dismissedSuggestionIds);
   return NextResponse.json({
     ok: true,
     pipeline,

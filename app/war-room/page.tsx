@@ -48,7 +48,9 @@ async function AuthenticatedWarRoom() {
     FUNNEL_COLUMNS,
     getRecruitingPipeline,
   } = await import("@/lib/recruiting/pipeline");
-  const { buildSuggestions } = await import("@/lib/recruiting/board");
+  const { allSuggestions } = await import("@/lib/recruiting/flags");
+  const { getRecruitingInbox } = await import("@/lib/recruiting/inbox-store");
+  const { gmailConfigured } = await import("@/lib/recruiting/gmail/client");
   const WarRoomBoard = (await import("@/components/war-room/WarRoomBoard")).default;
 
   const user = await currentUser();
@@ -71,7 +73,8 @@ async function AuthenticatedWarRoom() {
 
   const pipeline = getRecruitingPipeline();
   const byStage = companiesByStage(pipeline);
-  const suggestions = buildSuggestions(pipeline, dismissed);
+  const suggestions = allSuggestions(pipeline, dismissed);
+  const inbox = getRecruitingInbox();
   const upcoming = pipeline.events
     .filter((e) => e.status === "scheduled" && e.start)
     .sort((a, b) => a.start.localeCompare(b.start));
@@ -91,7 +94,17 @@ async function AuthenticatedWarRoom() {
           </h1>
         </div>
         <div className="wr-top-right">
-          <span className="wr-meta">Updated {pipeline.updated}</span>
+          <span className="wr-meta">
+            Pipeline {pipeline.updated}
+            {inbox.scannedAt
+              ? ` · Inbox ${new Date(inbox.scannedAt).toLocaleString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit",
+                })}`
+              : ""}
+          </span>
         </div>
       </header>
 
@@ -113,11 +126,14 @@ async function AuthenticatedWarRoom() {
         attention={attention}
         today={today}
         initialSuggestions={suggestions}
+        gmailReady={gmailConfigured()}
+        lastScanAt={inbox.scannedAt || null}
       />
 
       <p className="wr-foot">
-        Drag cards, use ← → / dropdown, or accept flags. Moves commit to the
-        pipeline — nothing auto-advances from ingest.
+        Scan Gmail for interview signals (manual or every few hours). Calendar
+        facts can auto-update; stages only move when you Accept a flag or drag
+        a card.
       </p>
     </div>
   );

@@ -231,6 +231,8 @@ export default function WarRoomBoard({
   attention: initialAttention,
   today,
   initialSuggestions,
+  gmailReady = false,
+  lastScanAt = null,
 }: {
   columns: Col[];
   initialCompanies: Company[];
@@ -240,10 +242,23 @@ export default function WarRoomBoard({
   attention: Company[];
   today: string;
   initialSuggestions: Suggestion[];
+  gmailReady?: boolean;
+  lastScanAt?: string | null;
 }) {
   const [companies, setCompanies] = useState(initialCompanies);
   const [suggestions, setSuggestions] = useState(initialSuggestions);
   const [pending, startTransition] = useTransition();
+  const [scanning, setScanning] = useState(false);
+  const [scanNote, setScanNote] = useState<string | null>(
+    lastScanAt
+      ? `Last inbox scan ${new Date(lastScanAt).toLocaleString("en-US", {
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "2-digit",
+        })}`
+      : null
+  );
   const [error, setError] = useState<string | null>(null);
 
   const byStage = useMemo(() => {
@@ -324,13 +339,97 @@ export default function WarRoomBoard({
     });
   }
 
+  async function scanGmail() {
+    setScanning(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/war-room/gmail/scan", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ applyCalendar: true, persist: true }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.detail || data.error || "scan_failed");
+      }
+      setScanNote(
+        `Scanned · ${data.gmailMatched ?? 0} mail · ${data.calendarMatched ?? 0} cal · ${data.proposals?.length ?? 0} signals` +
+          (data.appliedCalendar
+            ? ` · ${data.appliedCalendar} calendar fact(s) saved`
+            : "")
+      );
+      if (Array.isArray(data.flags)) {
+        const inboxFlags: Suggestion[] = data.flags.map(
+          (f: {
+            id: string;
+            companyId: string;
+            fromStage: FunnelStage;
+            toStage: FunnelStage;
+            reason: string;
+          }) => ({
+            id: f.id,
+            companyId: f.companyId,
+            fromStage: f.fromStage,
+            toStage: f.toStage,
+            reason: f.reason,
+            status: "pending" as const,
+          })
+        );
+        setSuggestions((prev) => {
+          const keep = prev.filter((s) => !s.id.startsWith("inbox-"));
+          const seen = new Set(keep.map((s) => s.id));
+          return [...keep, ...inboxFlags.filter((s) => !seen.has(s.id))];
+        });
+      }
+      // Refresh page data after git commit / rebuild lag
+      if (data.appliedCalendar > 0) {
+        setScanNote((n) => `${n || ""} · refresh in ~30–60s for calendar facts`);
+      }
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setScanning(false);
+    }
+  }
+
   return (
     <div className="wr-grid">
+      <section className="wr-panel wr-scan">
+        <div className="wr-board-head">
+          <div>
+            <h2>Inbox scan</h2>
+            <p className="wr-muted" style={{ margin: "6px 0 0" }}>
+              Interview-only Gmail + Calendar. Stages never auto-move.
+            </p>
+          </div>
+          <button
+            type="button"
+            className="wr-btn"
+            disabled={!gmailReady || scanning || pending}
+            onClick={() => void scanGmail()}
+            title={
+              gmailReady
+                ? "Scan Gmail and Calendar now"
+                : "Add Google OAuth env vars on Vercel"
+            }
+          >
+            {scanning ? "Scanning…" : "Scan inbox"}
+          </button>
+        </div>
+        {scanNote ? <p className="wr-muted">{scanNote}</p> : null}
+        {!gmailReady ? (
+          <p className="wr-error">
+            Gmail not configured — set GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET,
+            GOOGLE_REFRESH_TOKEN on Vercel.
+          </p>
+        ) : null}
+      </section>
+
       {suggestions.length > 0 && (
         <section className="wr-panel wr-flags">
           <h2>Flags — you decide</h2>
           <p className="wr-muted" style={{ marginBottom: 12 }}>
-            Nothing auto-moves. Accept to advance, or dismiss.
+            From Gmail/Calendar and pipeline events. Accept to move, or dismiss.
           </p>
           <ul className="wr-flag-list">
             {suggestions.map((s) => (

@@ -77,6 +77,31 @@ Edit each company in `recruiting-season/schema/pipeline.json`:
 
 Then `npm run dogfood:pull` and redeploy.
 
-## Ingest
+## Ingest (Gmail + Calendar in War Room)
 
-Gmail ingest defaults to **interview-only** (not applications).
+War Room can scan your inbox from the site:
+
+1. **Scan inbox** button on `/war-room`
+2. **Vercel Cron** every few hours → `GET /api/war-room/gmail/scan`
+
+Interview signals only (not applications). Matches tracked companies by alias.
+
+Behavior:
+- Calendar high-confidence interviews → write event facts into the pipeline (due / next action). **Does not move funnel stage.**
+- Gmail reject / schedule / advance → show as **Flags** you Accept or Dismiss.
+- Stage moves only when you Accept a flag or drag/edit a card.
+
+Requires (from local recruiting-season `.credentials/`):
+
+```bash
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+GOOGLE_REFRESH_TOKEN=...
+GMAIL_INGEST_DAYS=7
+CRON_SECRET=long-random-string
+```
+
+Copy client id/secret from `google-client.json` and `refresh_token` from
+`google-token.json` into Vercel env (Production + Preview). Never commit those files.
+
+Local Mac LaunchAgent ingest remains optional; the site no longer depends on it.
