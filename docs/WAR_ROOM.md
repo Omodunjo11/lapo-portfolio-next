@@ -128,11 +128,29 @@ marks the event done, and updates next action. Refresh after deploy (~30–60s).
 
 `chase[]` in the pipeline powers the dated nudge list with copyable drafts.
 
-## Drive links
+## Drive + auto prep decks
 
-Root folder is `driveRootUrl` on the pipeline. Paste each company subfolder URL into `companies[].drive.folderUrl` when you have them.
-Gmail scan did not find per-company folders. Known prep docs (e.g. Sierra prep)
-may appear in `prepUrl`.
+Root folder: `driveRootUrl` on the pipeline.
+
+On each **Scan inbox** (and daily cron):
+
+1. Lists company subfolders under the Recruiting Season Drive root
+2. Maps them onto `companies[].drive.folderUrl`
+3. For every **scheduled** interview missing prep, creates a Google Doc
+   prep deck in that company folder and sets `companies[].drive.prepUrl`
+4. Also writes/links a local Now+Next markdown brief (`briefPath`) for War Room
+
+Requires Google OAuth with **Drive** scope (plus existing Gmail + Calendar).
+Re-auth locally:
+
+```bash
+cd ~/projects/recruiting-season
+npm run gmail:auth   # consent to Drive when prompted
+```
+
+Then copy the new `refresh_token` from `.credentials/google-token.json` into
+Vercel `GOOGLE_REFRESH_TOKEN` and redeploy. Enable **Google Drive API** on the
+GCP project if create fails.
 
 ## Sync from recruiting-season
 

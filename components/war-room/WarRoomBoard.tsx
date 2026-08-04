@@ -170,7 +170,7 @@ function CompanyCard({
         ) : null}
         {c.drive?.prepUrl ? (
           <a href={c.drive.prepUrl} target="_blank" rel="noopener noreferrer">
-            Prep doc
+            Prep deck
           </a>
         ) : null}
         {!c.drive?.folderUrl && !c.drive?.prepUrl && !driveRootUrl ? (
