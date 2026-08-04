@@ -165,7 +165,7 @@ export function classifyEmail({
     return {
       signal: "advance",
       confidence: "medium",
-      reason: /nda|non-?disclosure/i.test(text)
+      reason: /\bnda\b|\bnon-?disclosure\b/i.test(text)
         ? "NDA / next-stage advance"
         : /schedule|availability|dates?\/times?|video call with/i.test(text)
           ? "next-round advance + schedule ask"
