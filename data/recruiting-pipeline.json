@@ -20,7 +20,7 @@
     },
     {
       "companyId": "hang-ten",
-      "detail": "Calendar moved Jack to Tue 1:30pm — resolve conflict with Regal"
+      "detail": "Sign Jack’s NDA and reply with the completed doc — next stage gated on that"
     },
     {
       "companyId": "foundation-health",
@@ -59,18 +59,18 @@
       "id": "hang-ten",
       "name": "Hang Ten",
       "role": "Founding-team / TBD",
-      "stage": "first",
-      "stageLabel": "1st",
+      "stage": "second",
+      "stageLabel": "2nd — NDA",
       "ball": "you",
       "priority": "P0",
-      "nextAction": "Attend: Onaolapo Odunjo and Jack Ahn",
-      "due": "2026-08-04",
+      "nextAction": "Sign Hang Ten NDA (Jack Ahn) and reply with completed doc",
+      "due": "2026-08-05",
       "nudgeDate": null,
       "lean": 4,
       "contacts": [
         {
           "name": "Jack Ahn",
-          "role": "Interviewer"
+          "role": "Vice President"
         }
       ],
       "aliases": [
