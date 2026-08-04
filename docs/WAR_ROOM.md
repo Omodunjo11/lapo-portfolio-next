@@ -99,6 +99,7 @@ Behavior:
 - Calendar high-confidence interviews → write event facts into the pipeline (due / next action). **Does not move funnel stage.**
 - Gmail reject / schedule / advance → show as **Flags** you Accept or Dismiss.
 - Stage moves only when you Accept a flag or drag/edit a card.
+- Reject flags require hard close language. Bare "Unfortunately" is never enough. Scheduling conflicts that offer new times are schedule, not reject. See `recruiting-season/_shared/email-signal-rules.md`.
 
 Requires (from local recruiting-season `.credentials/`):
 

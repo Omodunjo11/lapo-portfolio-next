@@ -123,34 +123,43 @@ export function classifyEmail({
     };
   }
 
+  // Hard rejects on tracked companies can look like plain updates, not
+  // "interview" mail. Prefer truth over needing interview keywords.
+  const hardReject =
+    /\b(not moving forward|will not be moving forward|won't be progressing|will not be progressing|won't be advancing|will not be advancing|other candidates|decided not to proceed|no longer under consideration|position has been filled|will not be proceeding|won't be proceeding)\b/i.test(
+      text
+    ) ||
+    /\bunfortunately\b.{0,120}\b(not (?:be )?moving|won't be|will not be|other candidates|decided not|no longer under consideration|position has been filled)\b/i.test(
+      text
+    );
+
+  // Scheduling first when both soft apology and new times appear.
+  const isScheduling =
+    /calendly|schedule a|book a time|availability|interview invite|zoom\.us|meet\.google|interview confirmation|phone interview is confirmed|you.?re invited to an interview|updated invitation|invitation from an unknown sender|invitation:|confirm a time|times? you (?:have )?shared|asking if you have|send you the (?:confirmation|invite)|calendar invite|what time (?:would|works?)|reschedul|any availability|time that works/i.test(
+      text
+    );
+
+  if (isScheduling) {
+    return {
+      signal: "schedule",
+      confidence: "medium",
+      reason: "interview scheduling",
+    };
+  }
+
+  if (company && hardReject) {
+    return {
+      signal: "reject",
+      confidence: "high",
+      reason: "hard rejection language (not scheduling conflict)",
+    };
+  }
+
   if (!isInterviewSignal({ subject, snippet, from, source: "gmail" })) {
     return {
       signal: "noise",
       confidence: "medium",
       reason: "not interview-related (applications ignored)",
-    };
-  }
-
-  if (
-    /unfortunately|not moving forward|other candidates|won't be progressing|will not be moving/i.test(
-      text
-    )
-  ) {
-    return {
-      signal: "reject",
-      confidence: "high",
-      reason: "rejection language",
-    };
-  }
-  if (
-    /calendly|schedule a|book a time|availability|interview invite|zoom\.us|meet\.google|interview confirmation|phone interview is confirmed|you.?re invited to an interview|updated invitation|invitation from an unknown sender|invitation:/i.test(
-      text
-    )
-  ) {
-    return {
-      signal: "schedule",
-      confidence: "medium",
-      reason: "interview scheduling",
     };
   }
   if (

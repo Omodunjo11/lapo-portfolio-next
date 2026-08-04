@@ -5,7 +5,6 @@ Onaolapo (Lapo) Odunjo. Role: Senior Product Manager. Living notes doc, add to t
 - Next-round brief: [briefs/next-invisible.md](../briefs/next-invisible.md)
 - Decision journal: [decision-journal.md](./decision-journal.md)
 - Pipeline: [../pipeline.md](../pipeline.md)
-- Nudge window: August 6 if still silent (draft in _shared/follow-ups.md)
 
 ## Company and contacts, from your inbox
 
@@ -13,7 +12,8 @@ Onaolapo (Lapo) Odunjo. Role: Senior Product Manager. Living notes doc, add to t
 - Applied June 2026
 - Hiring manager interview held July 29 with Alex Arutyunyants
 - Recruiting: Kate Alvarico and Derek Pages
-- On July 31 Kate reached out to schedule the next round. Lapo asked how many rounds remain and what type, looped in Derek. No reply yet as of August 3
+- Next interviewer: Ranjani
+- Do not treat scheduling friction as a reject. The Aug 4 Kate note that started with "Unfortunately" was about time windows, not candidacy
 
 ## Notes from the hiring manager screen, July 29 (Alex Arutyunyants)
 
@@ -27,11 +27,30 @@ Onaolapo (Lapo) Odunjo. Role: Senior Product Manager. Living notes doc, add to t
 
 ### Next step
 
-Ball in their court on scheduling the next round after Lapo's July 31 question about loop shape.
+Continue into next round once scheduled. Loop shape still partly unknown.
+
+## Notes from scheduling thread, August 4 (Kate Alvarico)
+
+### What happened
+
+- Kate could not confirm a Ranjani time inside Lapo's previously shared windows
+- She asked whether Aug 7 worked
+- Lapo accepted Aug 7 and asked for confirmation a bit in advance because of Sierra constraints, while staying flexible
+- Kate confirmed Ranjani prefers 10:30am ET and said the confirmation email with invite would follow shortly
+
+### Status read
+
+- This is a live process. Soft apology language is not a rejection
+- Ball is briefly on them for the calendar invite, then on Lapo to attend
+
+### Next step
+
+Watch for Kate's invite. Prep from the next-round brief once invite lands and round type is clear.
 
 ## Follow-ups sent
 
 - About July 31: Kate (+ Derek). Asked how many rounds remain and what type.
+- August 4: accepted Aug 7 / 10:30am ET path with Kate
 
 ## Interview line to reuse, in their own language
 
@@ -39,15 +58,16 @@ Ball in their court on scheduling the next round after Lapo's July 31 question a
 
 ## How to read this and what to do with it
 
-- Do not over-prep until the loop shape is clear
-- Next action is a low-pressure nudge if silent by August 6
-- When they name round type and interviewers, refresh the Next brief same day and prep from that, not from guesswork
+- Keep Invisible live unless you get hard close language: not moving forward, other candidates selected, role filled
+- Expand Alex notes before Aug 7 so the Ranjani conversation has substance
+- Once invite confirms duration and format, refresh the Next brief same day
 
 ## Action items
 
-1. Nudge Kate / Derek on or after August 6 if still silent
-2. Expand the July 29 Alex notes while memory is still usable
-3. Once loop shape is known, stub or refresh briefs/next-invisible.md and prep only for that round
+1. Watch inbox for Kate's confirmation / calendar invite for Aug 7 10:30am ET with Ranjani
+2. Expand the July 29 Alex notes before Aug 7
+3. Refresh briefs/next-invisible.md as soon as round type and duration are confirmed
+4. Do not accept any War Room reject flag for Invisible based only on the Aug 4 "Unfortunately" scheduling email
 
 ---
 

@@ -51,7 +51,7 @@ export function proposalsToFlags(
         companyId: company.id,
         fromStage: company.stage,
         toStage: "passed",
-        reason: `${p.reason}: ${p.subject || p.summary || "rejection signal"}`,
+        reason: `Review carefully before Accept. ${p.reason}: ${p.subject || p.summary || "rejection signal"}`,
         source: p.source,
         signal: p.signal,
         subject: p.subject || p.summary,
