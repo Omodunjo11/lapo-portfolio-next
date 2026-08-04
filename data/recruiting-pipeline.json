@@ -79,7 +79,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/12xlBxLYw4ttCiolqWwylQswdyNGlr2IO",
         "prepUrl": "https://docs.google.com/document/d/1MIq0tBn5wfxJqcGcO3coDdrG_NsP-9TCR3fi_JuwaBQ/edit",
-        "note": "Canonical living notes Doc (Claude-created Aug 4). Update prepUrl only if Doc is intentionally replaced."
+        "note": "Mapped to Drive folder “Hang Ten”"
       }
     },
     {
@@ -116,7 +116,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1zz0A9CKj2CJvcicO6dOrdgwTeM3fOjf0",
         "prepUrl": "https://docs.google.com/document/d/1yVUuVFFeaLNZ6nZr7288Sr11ZmCkyfjlo1ZPfYKoo1M/edit",
-        "note": "Canonical living notes + Sahil prep Doc. Update in place only — do not create a second Doc."
+        "note": "Mapped to Drive folder “Regal”"
       }
     },
     {
@@ -157,7 +157,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1C4rZXq5ho87J-YHJEP2eSMTEp4qPXNBB",
         "prepUrl": "https://docs.google.com/document/d/1G24HcWf3DUyD5c2G264q2DIhDy75SxYH_VCeV_Y7VsQ/edit",
-        "note": "Canonical living prep Doc - update in place, never create duplicates"
+        "note": "Mapped to Drive folder “Foundation Health”"
       }
     },
     {
@@ -198,7 +198,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1VMTqazpBn2Dni4uqRtkD1NRiRylD7yK9",
         "prepUrl": "https://docs.google.com/document/d/1qqrwcstj98k0L9e67vPpiwCcDA3kdvHUEtXOssBRW2o/edit",
-        "note": "Canonical living notes Doc - update in place, never create duplicates"
+        "note": "Mapped to Drive folder “Brain Co”"
       }
     },
     {
@@ -207,9 +207,9 @@
       "role": "Senior Product Manager",
       "stage": "third",
       "stageLabel": "3rd with Ranjani — Aug 7 10:30am ET (invite incoming)",
-      "ball": "them",
+      "ball": "you",
       "priority": "P0",
-      "nextAction": "Watch for Kate calendar invite; attend Ranjani on Aug 7 10:30am ET",
+      "nextAction": "Attend: Interview with Invisible Technologies",
       "due": "2026-08-07",
       "nudgeDate": "2026-08-07",
       "lean": 3,
@@ -247,7 +247,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/16n5gZwJ2fNQr7rXqshRgE3xPkw-uOMX0",
         "prepUrl": "https://docs.google.com/document/d/1AoW5dFjve10_TakV0_yirOuEPZcqWvrRH6iKKeO8g6c/edit?usp=drivesdk",
-        "note": "Living interview notes Doc (Brain Co format)"
+        "note": "Mapped to Drive folder “Invisible Technologies”"
       }
     },
     {
@@ -577,9 +577,9 @@
       "title": "Invisible — Ranjani (round 3)",
       "with": "Ranjani",
       "type": "loop",
-      "status": "scheduled",
+      "status": "canceled",
       "briefPath": "briefs/next-invisible.md",
-      "blocker": "Kate said confirmation/invite email is coming"
+      "blocker": "Superseded by calendar update → 2026-08-07T10:30:00-04:00"
     }
   ],
   "funnelStages": [
@@ -591,7 +591,7 @@
     "final"
   ],
   "driveRootUrl": "https://drive.google.com/drive/folders/1MjTJoOq24ojbhXcvEbKU_PMcuwLOVw1q",
-  "driveRootNote": "Company folders mapped from Recruiting Season Drive root. Scan inbox creates prep decks in the matching folder when a meeting is scheduled.",
+  "driveRootNote": "Company folders auto-mapped from Recruiting Season Drive root on scan.",
   "chase": [
     {
       "companyId": "foundation-health",
