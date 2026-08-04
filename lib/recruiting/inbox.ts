@@ -59,6 +59,21 @@ export function proposalsToFlags(
       continue;
     }
 
+    // Surface Spam hits even when they're not a stage-move yet.
+    if (p.signal === "wait" && (p.fromSpam || /\b\[spam\]\b/i.test(p.subject || ""))) {
+      out.push({
+        id,
+        companyId: company.id,
+        fromStage: company.stage,
+        toStage: company.stage,
+        reason: `${p.reason}: ${p.subject || p.summary || "spam hit"} — open Gmail Spam and move to Inbox`,
+        source: p.source,
+        signal: p.signal,
+        subject: p.subject || p.summary,
+      });
+      continue;
+    }
+
     if (p.signal === "schedule") {
       const toStage: FunnelStage =
         company.stage === "applied" ? "first" : company.stage;

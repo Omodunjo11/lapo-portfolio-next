@@ -94,6 +94,7 @@ War Room can scan your inbox from the site:
    `npm run schedule:install` in recruiting-season.
 
 Interview signals only (not applications). Matches tracked companies by alias.
+Also searches **Gmail Spam** for tracked-company aliases (Hang Ten has landed there).
 
 Behavior:
 - Calendar high-confidence interviews → write event facts into the pipeline (due / next action). **Does not move funnel stage.**

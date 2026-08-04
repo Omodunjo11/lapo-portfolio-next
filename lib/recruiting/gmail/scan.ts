@@ -22,8 +22,91 @@ export type ScanResult = {
   days: number;
   gmailMatched: number;
   calendarMatched: number;
+  spamMatched: number;
   proposals: IngestProposal[];
 };
+
+async function listMessageIds(
+  gmail: ReturnType<typeof getGmailClient>,
+  q: string,
+  maxResults: number,
+  includeSpamTrash = false
+) {
+  const list = await gmail.users.messages.list({
+    userId: "me",
+    q,
+    maxResults,
+    includeSpamTrash,
+  });
+  return list.data.messages || [];
+}
+
+async function proposalFromMessage(
+  gmail: ReturnType<typeof getGmailClient>,
+  pipeline: Pipeline,
+  messageId: string,
+  opts: { fromSpam?: boolean } = {}
+): Promise<IngestProposal | null> {
+  const full = await gmail.users.messages.get({
+    userId: "me",
+    id: messageId,
+    format: "metadata",
+    metadataHeaders: ["From", "To", "Cc", "Subject", "Date"],
+  });
+  const headers = full.data.payload?.headers || [];
+  const subject = header(headers, "Subject");
+  const from = header(headers, "From");
+  const to = [header(headers, "To"), header(headers, "Cc")]
+    .filter(Boolean)
+    .join(" ");
+  const date = header(headers, "Date");
+  const snippet = full.data.snippet || "";
+  const company = matchCompany(
+    pipeline,
+    `${subject} ${from} ${to} ${snippet}`
+  );
+  let classification = classifyEmail({
+    subject,
+    snippet,
+    from,
+    to,
+    company,
+  });
+
+  // Spam often strips "interview" wording. Still surface tracked-company hits.
+  if (
+    opts.fromSpam &&
+    company &&
+    !company.noise &&
+    classification.signal === "noise"
+  ) {
+    classification = {
+      signal: "wait",
+      confidence: "medium",
+      reason: "Tracked company mail found in Spam — open and move out of Spam",
+    };
+  }
+
+  if (classification.signal === "noise") return null;
+
+  const spamTag = opts.fromSpam ? " [spam]" : "";
+  return {
+    source: "gmail",
+    id: messageId,
+    threadId: full.data.threadId,
+    date,
+    from: to ? `${from} → ${to}` : from,
+    subject: subject ? `${subject}${spamTag}` : subject,
+    snippet,
+    companyId: company?.noise ? null : company?.id || null,
+    companyName: company?.noise ? "noise" : company?.name || null,
+    fromSpam: Boolean(opts.fromSpam),
+    ...classification,
+    reason: opts.fromSpam
+      ? `${classification.reason} (in Spam)`
+      : classification.reason,
+  };
+}
 
 export async function scanInterviewSignals(
   pipeline: Pipeline,
@@ -38,68 +121,44 @@ export async function scanInterviewSignals(
   const aliasQuery = pipeline.companies
     .flatMap((c) => c.aliases || [c.name])
     .filter(Boolean)
-    .slice(0, 30)
+    .slice(0, 40)
     .map((a) => `"${String(a).replace(/"/g, "")}"`)
     .join(" OR ");
 
   const interviewTerms =
-    '(interview OR interviewer OR "phone screen" OR "hiring manager" OR onsite OR calendly OR "final round" OR "next round" OR "first round")';
-  // Also pull outbound chase/schedule emails to tracked companies (Sent).
+    '(interview OR interviewer OR "phone screen" OR "hiring manager" OR onsite OR calendly OR "final round" OR "next round" OR "first round" OR "google meet" OR invitation)';
   const sentChaseTerms =
     '("first round" OR schedule OR scheduled OR "find some time" OR "looking forward" OR calendly OR "attached" OR applied OR resume)';
-  const q = `after:${after} ((${aliasQuery}) (${interviewTerms}) OR (in:sent (${aliasQuery}) ${sentChaseTerms}))`;
 
-  const list = await gmail.users.messages.list({
-    userId: "me",
-    q,
-    maxResults: 40,
-  });
+  // Inbox + Sent (default Gmail search excludes Spam/Trash).
+  const inboxQ = `after:${after} -in:spam -in:trash ((${aliasQuery}) (${interviewTerms}) OR (in:sent (${aliasQuery}) ${sentChaseTerms}))`;
+  // Explicit Spam pass — Hang Ten and others have landed here.
+  const spamQ = `in:spam after:${after} (${aliasQuery})`;
 
-  const messages = list.data.messages || [];
+  const [inboxMsgs, spamMsgs] = await Promise.all([
+    listMessageIds(gmail, inboxQ, 40, false),
+    listMessageIds(gmail, spamQ, 25, true),
+  ]);
+
+  const seen = new Set<string>();
   const proposals: IngestProposal[] = [];
+  let spamMatched = 0;
 
-  for (const m of messages) {
-    if (!m.id) continue;
-    const full = await gmail.users.messages.get({
-      userId: "me",
-      id: m.id,
-      format: "metadata",
-      metadataHeaders: ["From", "To", "Cc", "Subject", "Date"],
-    });
-    const headers = full.data.payload?.headers || [];
-    const subject = header(headers, "Subject");
-    const from = header(headers, "From");
-    const to = [header(headers, "To"), header(headers, "Cc")]
-      .filter(Boolean)
-      .join(" ");
-    const date = header(headers, "Date");
-    const snippet = full.data.snippet || "";
-    const company = matchCompany(
-      pipeline,
-      `${subject} ${from} ${to} ${snippet}`
-    );
-    const classification = classifyEmail({
-      subject,
-      snippet,
-      from,
-      to,
-      company,
-    });
+  for (const m of inboxMsgs) {
+    if (!m.id || seen.has(m.id)) continue;
+    seen.add(m.id);
+    const p = await proposalFromMessage(gmail, pipeline, m.id);
+    if (p) proposals.push(p);
+  }
 
-    if (classification.signal === "noise") continue;
-
-    proposals.push({
-      source: "gmail",
-      id: m.id,
-      threadId: full.data.threadId,
-      date,
-      from: to ? `${from} → ${to}` : from,
-      subject,
-      snippet,
-      companyId: company?.noise ? null : company?.id || null,
-      companyName: company?.noise ? "noise" : company?.name || null,
-      ...classification,
+  for (const m of spamMsgs) {
+    if (!m.id || seen.has(m.id)) continue;
+    seen.add(m.id);
+    spamMatched += 1;
+    const p = await proposalFromMessage(gmail, pipeline, m.id, {
+      fromSpam: true,
     });
+    if (p) proposals.push(p);
   }
 
   const timeMin = new Date(Date.now() - days * 86400000).toISOString();
@@ -147,8 +206,9 @@ export async function scanInterviewSignals(
   return {
     scannedAt: new Date().toISOString(),
     days,
-    gmailMatched: messages.length,
+    gmailMatched: inboxMsgs.length + spamMsgs.length,
     calendarMatched,
+    spamMatched,
     proposals,
   };
 }
@@ -174,8 +234,6 @@ export function applyCalendarFacts(
     if (!company) continue;
 
     const eid = `evt-${company.id}-${p.start.slice(0, 10)}`;
-    // Prefer same calendar id, else same-day id, else any still-scheduled
-    // event for this company (handles reschedules to a new day).
     let event =
       data.events.find((e) => e.id === `cal-${p.id}`) ||
       data.events.find((e) => e.id === eid) ||
@@ -198,8 +256,6 @@ export function applyCalendarFacts(
       };
       data.events.push(event);
     } else {
-      // Keep stable id if this is a same-day/calendar match; otherwise
-      // rewrite onto the new-day id and cancel any other scheduled dupes.
       if (event.id !== eid && event.id !== `cal-${p.id}`) {
         event.id = eid;
       }
@@ -209,7 +265,6 @@ export function applyCalendarFacts(
       event.title = p.summary || event.title;
     }
 
-    // Cancel other scheduled events for this company on different times
     for (const e of data.events) {
       if (
         e.companyId === company.id &&

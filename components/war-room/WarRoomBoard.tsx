@@ -460,6 +460,9 @@ export default function WarRoomBoard({
       }
       setScanNote(
         `Scanned · ${data.gmailMatched ?? 0} mail · ${data.calendarMatched ?? 0} cal · ${data.proposals?.length ?? 0} signals` +
+          (data.spamMatched
+            ? ` · ${data.spamMatched} in Spam`
+            : "") +
           (data.appliedCalendar
             ? ` · ${data.appliedCalendar} calendar fact(s) saved`
             : "")

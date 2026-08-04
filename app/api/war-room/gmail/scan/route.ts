@@ -140,6 +140,7 @@ async function runScan(opts: {
       ...inbox,
       appliedCalendar,
       prep,
+      spamMatched: scan.spamMatched,
       flags,
     }),
   };

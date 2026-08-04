@@ -26,6 +26,8 @@ export type IngestProposal = {
   signal: IngestSignal;
   confidence: IngestConfidence;
   reason: string;
+  /** True when the Gmail message was in Spam when scanned. */
+  fromSpam?: boolean;
 };
 
 type CompanyHit = Company & { noise?: boolean };

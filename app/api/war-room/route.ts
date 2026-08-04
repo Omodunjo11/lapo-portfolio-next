@@ -169,16 +169,23 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "company_not_found" }, { status: 404 });
       }
       company.stage = sug.toStage;
-      company.stageLabel = `${STAGE_LABELS[sug.toStage] || sug.toStage} (accepted flag)`;
+      company.stageLabel =
+        sug.fromStage === sug.toStage
+          ? company.stageLabel || STAGE_LABELS[sug.toStage] || sug.toStage
+          : `${STAGE_LABELS[sug.toStage] || sug.toStage} (accepted flag)`;
       pipeline.updated = new Date().toISOString().slice(0, 10);
       if (!prefs.dismissedSuggestionIds.includes(id)) {
         prefs.dismissedSuggestionIds.push(id);
       }
       await savePrefs(userId, user, prefs);
-      await commitPipeline(
-        pipeline,
-        `War room: accept flag ${id} → ${sug.toStage}`
-      );
+      // No-op stage (e.g. Spam acknowledge) still dismisses the flag; only
+      // commit pipeline when the stage actually changes.
+      if (sug.fromStage !== sug.toStage) {
+        await commitPipeline(
+          pipeline,
+          `War room: accept flag ${id} → ${sug.toStage}`
+        );
+      }
     } else {
       return NextResponse.json({ error: "unknown action" }, { status: 400 });
     }
