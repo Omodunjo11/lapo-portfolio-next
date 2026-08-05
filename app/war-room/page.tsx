@@ -159,6 +159,10 @@ async function AuthenticatedWarRoom() {
         }
       />
 
+      {comparison ? (
+        <WarRoomComparison comparison={comparison} rows={comparisonRows} />
+      ) : null}
+
       <p className="wr-foot">
         Stages only move when you Accept a flag or drag a card. Comparison scores
         update when you rebuild comparison — live stage and Drive links join by
