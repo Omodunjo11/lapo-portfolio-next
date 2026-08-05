@@ -85,8 +85,18 @@ async function AuthenticatedWarRoom() {
   const byStage = companiesByStage(pipeline);
   const suggestions = allSuggestions(pipeline, dismissed);
   const inbox = getRecruitingInbox();
+  const activeIds = new Set(
+    pipeline.companies
+      .filter((c) => c.stage !== "passed" && c.stage !== "ghosted")
+      .map((c) => c.id)
+  );
   const upcoming = pipeline.events
-    .filter((e) => e.status === "scheduled" && e.start)
+    .filter(
+      (e) =>
+        e.status === "scheduled" &&
+        e.start &&
+        activeIds.has(e.companyId)
+    )
     .sort((a, b) => a.start.localeCompare(b.start));
   const today = new Intl.DateTimeFormat("en-CA", {
     timeZone: pipeline.timezone || "America/New_York",
@@ -96,6 +106,10 @@ async function AuthenticatedWarRoom() {
   const comparisonRows = comparison
     ? joinComparison(comparison, pipeline.companies)
     : { active: [], archived: [] };
+
+  const chaseActive = (pipeline.chase || []).filter((c) =>
+    activeIds.has(c.companyId)
+  );
 
   return (
     <div className="wr-root">
@@ -146,7 +160,7 @@ async function AuthenticatedWarRoom() {
         columns={[...FUNNEL_COLUMNS]}
         initialCompanies={pipeline.companies}
         upcoming={upcoming}
-        chase={pipeline.chase || []}
+        chase={chaseActive}
         archived={archived}
         today={today}
         initialSuggestions={suggestions}

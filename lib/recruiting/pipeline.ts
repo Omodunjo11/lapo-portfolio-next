@@ -1,4 +1,4 @@
-import type { Company, Pipeline } from "./types";
+import type { Company, FunnelStage, Pipeline } from "./types";
 import { ARCHIVE_STAGES } from "./types";
 import { readJsonFileFromGitHub } from "../git-store";
 import pipeline from "../../data/recruiting-pipeline.json";
@@ -57,6 +57,37 @@ export function activeCompanies(data: Pipeline): Company[] {
   return data.companies.filter(
     (c) => !(ARCHIVE_STAGES as readonly string[]).includes(c.stage)
   );
+}
+
+
+/** Drop chase + open calendar rows when a company is passed/ghosted. */
+export function applyArchiveHygiene(
+  data: Pipeline,
+  companyId: string,
+  stage: FunnelStage
+): void {
+  if (!(ARCHIVE_STAGES as readonly string[]).includes(stage)) return;
+
+  data.chase = (data.chase || []).filter((c) => c.companyId !== companyId);
+
+  for (const e of data.events) {
+    if (e.companyId !== companyId) continue;
+    if (e.status === "scheduled" || e.status === "unscheduled") {
+      e.status = "canceled";
+    }
+  }
+
+  const company = data.companies.find((c) => c.id === companyId);
+  if (company) {
+    company.nudgeDate = null;
+    if (
+      !company.nextAction ||
+      /attend|nudge|check-in|chase/i.test(company.nextAction)
+    ) {
+      company.nextAction =
+        stage === "passed" ? "Passed - no further chase" : "Ghosted - parked";
+    }
+  }
 }
 
 /** Companies whose `due` or `nudgeDate` is today or earlier, among active companies only. */

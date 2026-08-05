@@ -16,6 +16,7 @@ import {
 import {
   getRecruitingPipeline,
   loadWritablePipeline,
+  applyArchiveHygiene,
 } from "@/lib/recruiting/pipeline";
 import { commitPipeline } from "@/lib/recruiting/store";
 import type { FunnelStage } from "@/lib/recruiting/types";
@@ -147,6 +148,7 @@ export async function POST(req: Request) {
         typeof body.stageLabel === "string" && body.stageLabel
           ? body.stageLabel
           : STAGE_LABELS[stage] || stage;
+      applyArchiveHygiene(pipeline, companyId, stage);
       pipeline.updated = new Date().toISOString().slice(0, 10);
       await commitPipeline(pipeline, `War room: move ${companyId} → ${stage}`);
     } else if (body.action === "dismiss_suggestion") {
@@ -201,10 +203,8 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "company_not_found" }, { status: 404 });
       }
       company.stage = sug.toStage;
-      company.stageLabel =
-        sug.fromStage === sug.toStage
-          ? company.stageLabel || STAGE_LABELS[sug.toStage] || sug.toStage
-          : `${STAGE_LABELS[sug.toStage] || sug.toStage} (accepted flag)`;
+      company.stageLabel = STAGE_LABELS[sug.toStage] || sug.toStage;
+      applyArchiveHygiene(pipeline, company.id, sug.toStage);
       pipeline.updated = new Date().toISOString().slice(0, 10);
       if (!prefs.dismissedSuggestionIds.includes(id)) {
         prefs.dismissedSuggestionIds.push(id);
