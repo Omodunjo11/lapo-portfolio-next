@@ -93,24 +93,6 @@ You will use a coding agent (Claude Code, Cursor, or whatever you prefer). Pract
 
 Walk through prototype and explain what it proves, why this approach solves customer's problem, what is still needed for production, any tradeoffs made and why. Communicate technical concepts clearly. Understand full scope of building for production. Articulate business value, not just technical merit. Think about handing off to engineering team. Your bank / regulated trust work (eval gates, precision, production quality bar, field failure modes into Product) is the cleanest example of understanding what is still needed for production.
 
-## Interview line to reuse, in their own language
+### Interview line to reuse, in their own language
 
-"I measure the work the same way you do. Understanding the problem and running an agentic process is necessary, but it is not done. Done is fully deployed and actively used, by people or by systems. I'm comfortable deciding when AI is the wrong tool, and I like environments that are diverse, incomplete, and moving fast, including a small team that is scaling hard."
-
-## How to read this and what to do with it
-
-This is a live interactive session, not a traditional interview. The problem statement will be sent one day before the interview date. Read it 2-3 times. Think about customer's situation. Do some domain research if industry is new (30-60 min). Sketch out thinking (whiteboard notes, rough architecture). Familiarize yourself with any tools/frameworks you might use. Do NOT build any code in advance. Do NOT prepare slides or formal presentations. Do NOT memorize perfect answers. This is a conversation, not a quiz.
-
-Your proof bank maps cleanly to their four-phase structure. Discovery phase: Kinage incomplete specs and clarifying questions. Solution design phase: AI-native playbooks and coaching model, not one-off custom builds. Live prototyping phase: fluency with coding agents, validate what AI generates, iterate based on what you learn. Presentation phase: bank / regulated trust work (eval gates, precision, production quality bar, field failure modes into Product).
-
-Do not invent depth in areas you do not have. If Sanjay asks about government or MENA work, say so. The role is Forward Deployed Engineer - Solution Engineer, so expect the conversation to focus on customer-facing build, design, deploy, and sustain.
-
-## Action items before the call
-
-1. Confirm stable internet connection. Test audio/video on Google Meet. Confirm screen sharing works. Make sure preferred coding agent (Claude Code, Cursor, or whatever you prefer) is installed and you can use it fluently. Plan quiet environment. Have everything ready 5 minutes early
-2. Review the Kinage multi-account deployment story and be ready to walk through discovery phase (incomplete specs, clarifying questions, success criteria, constraints, real problem versus surface request)
-3. Prepare the incomplete-info shipping example with specifics on how you cut scope, what you shipped, and how you measured adoption
-4. Write down 2 to 3 questions about Sanjay's role and the internal enablement team's tooling so you can ask them naturally during the conversation
-5. Wait for problem statement to be sent one day before interview date. Read it 2-3 times. Think about customer's situation. Do some domain research if industry is new (30-60 min). Sketch out thinking (whiteboard notes, rough architecture). Familiarize yourself with any tools/frameworks you might use. Do NOT build any code in advance
-
-This is a living document. Add new notes here after every Hang Ten conversation so the next round always has the full picture in one place.
+"I measure the work the same way you do. Understanding the problem and running an agentic process is necessary, but it is not done. Done is fully deployed and actively used, by people or by systems. I'm comfortable deciding when AI is the wrong tool."
