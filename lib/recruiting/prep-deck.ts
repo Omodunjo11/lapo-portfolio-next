@@ -284,19 +284,27 @@ export async function ensureAdvancePrepDecks(
     events: pipeline.events.map((e) => ({ ...e })),
   };
 
-  try {
-    const folders = await listChildFolders();
-    const mapped = mapCompanyFolders(data, folders);
-    data = mapped.pipeline;
-    mappedFolders = mapped.mapped;
-  } catch (err) {
-    errors.push(`folder_map: ${(err as Error).message}`);
-  }
-
   const seen = new Set<string>();
   const work = advances
     .filter((p) => p.signal === "advance" && p.companyId && p.source === "gmail")
     .slice(0, limit * 2);
+
+  try {
+    // Skip Drive folder listing when every company we touch already has a folder.
+    const needsFolderMap = work.some((p) => {
+      if (!p.companyId) return false;
+      const c = data.companies.find((x) => x.id === p.companyId);
+      return Boolean(c && !folderIdFromUrl(c.drive?.folderUrl));
+    });
+    if (needsFolderMap) {
+      const folders = await listChildFolders();
+      const mapped = mapCompanyFolders(data, folders);
+      data = mapped.pipeline;
+      mappedFolders = mapped.mapped;
+    }
+  } catch (err) {
+    errors.push(`folder_map: ${(err as Error).message}`);
+  }
 
   for (const p of work) {
     if (!p.companyId || seen.has(p.companyId)) continue;
@@ -349,16 +357,15 @@ export async function ensureAdvancePrepDecks(
       );
 
     // Fresh email, named interviewer not yet in brief, or explicit force/user update.
+    const firstName = (who || "").split(/\s+/)[0] || "";
     const force =
       Boolean(opts.force) ||
       Boolean(opts.userUpdate?.trim()) ||
       !existingLocal ||
       !isRichBrief(existingLocal) ||
       looksLikeLegacyPrepDeck(existingLocal || "") ||
-      (who
-        ? !new RegExp(who.split(/\s+/)[0] || "NOPE", "i").test(
-            existingLocal || ""
-          )
+      (firstName
+        ? !existingLocal?.toLowerCase().includes(firstName.toLowerCase())
         : !localBriefText(existingPath));
 
     const gen = await generatePrepDeck({

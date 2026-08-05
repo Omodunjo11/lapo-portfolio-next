@@ -21,6 +21,32 @@ function briefHref(briefPath?: string | null) {
   return slug ? `/war-room/brief/${slug}` : null;
 }
 
+/** Safari throws a useless "string did not match the expected pattern" on .json() of HTML/empty. */
+async function readWarRoomJson(
+  res: Response
+): Promise<Record<string, any>> {
+  const text = await res.text();
+  if (!text.trim()) {
+    throw new Error(
+      `Empty response from server (${res.status}). Often a timeout — try again.`
+    );
+  }
+  try {
+    return JSON.parse(text) as Record<string, any>;
+  } catch {
+    const hint = text.replace(/\s+/g, " ").slice(0, 160);
+    if (res.status === 504 || res.status === 502 || /timeout|gateway/i.test(text)) {
+      throw new Error(
+        `Prep timed out (${res.status}). Wait a moment and try Update again.`
+      );
+    }
+    if (res.status === 401 || res.status === 403 || /sign-in|unauthorized/i.test(text)) {
+      throw new Error("Session expired — refresh and sign in again.");
+    }
+    throw new Error(`Non-JSON response (${res.status}): ${hint}`);
+  }
+}
+
 const CHASE_DRAFTS: Record<string, string> = {
   "soft-nudge": `Subject: Checking in, [Company]
 
@@ -370,7 +396,7 @@ export default function WarRoomBoard({
       `/api/war-room/prep-notes?companyId=${encodeURIComponent(notesCompanyId)}`
     )
       .then(async (res) => {
-        const data = await res.json();
+        const data = await readWarRoomJson(res);
         if (!res.ok) throw new Error(data.error || "load_failed");
         if (!cancelled) {
           setNotesLog(typeof data.notes === "string" ? data.notes : "");
@@ -401,7 +427,7 @@ export default function WarRoomBoard({
           mode: "append",
         }),
       });
-      const data = await res.json();
+      const data = await readWarRoomJson(res);
       if (!res.ok) throw new Error(data.detail || data.error || "save_failed");
       setNotesLog(typeof data.notes === "string" ? data.notes : "");
       setPrepNotes("");
@@ -418,13 +444,20 @@ export default function WarRoomBoard({
   }
 
   async function updateNextRoundDoc() {
-    if (!notesCompanyId) return;
-    if (!prepNotes.trim() && !notesLog.trim()) return;
+    if (!notesCompanyId) {
+      setNotesStatus("Update failed: pick a company first.");
+      return;
+    }
+    if (!prepNotes.trim() && !notesLog.trim()) {
+      setNotesStatus("Update failed: add some feedback first.");
+      return;
+    }
     setNotesUpdating(true);
     setNotesStatus(null);
     try {
       let fullLog = notesLog;
       if (prepNotes.trim()) {
+        setNotesStatus("Saving feedback…");
         const saveRes = await fetch("/api/war-room/prep-notes", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -434,9 +467,13 @@ export default function WarRoomBoard({
             mode: "append",
           }),
         });
-        const saveData = await saveRes.json();
+        const saveData = await readWarRoomJson(saveRes);
         if (!saveRes.ok) {
-          throw new Error(saveData.detail || saveData.error || "save_failed");
+          throw new Error(
+            saveData.detail ||
+              saveData.error ||
+              `save_failed (${saveRes.status})`
+          );
         }
         fullLog =
           typeof saveData.notes === "string" ? saveData.notes : notesLog;
@@ -444,16 +481,20 @@ export default function WarRoomBoard({
         setPrepNotes("");
       }
 
+      if (!fullLog.trim()) {
+        throw new Error("No accumulated feedback to build from.");
+      }
+
       const co = companies.find((c) => c.id === notesCompanyId);
       const upcomingForCo = upcoming.find(
         (e) => e.companyId === notesCompanyId
       );
+      setNotesStatus("Rewriting next-step prep with Claude…");
       const prepRes = await fetch("/api/war-room/prep", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           companyId: notesCompanyId,
-          // Full accumulated log — regen keeps history and refreshes next-step tab
           userUpdate: fullLog,
           subject: upcomingForCo
             ? `Next: ${upcomingForCo.with || "round"} @ ${co?.name || notesCompanyId}`
@@ -463,9 +504,11 @@ export default function WarRoomBoard({
           force: true,
         }),
       });
-      const prep = await prepRes.json();
+      const prep = await readWarRoomJson(prepRes);
       if (!prepRes.ok) {
-        throw new Error(prep.detail || prep.error || "prep_failed");
+        throw new Error(
+          prep.detail || prep.error || `prep_failed (${prepRes.status})`
+        );
       }
 
       const errors = Array.isArray(prep.errors) ? prep.errors : [];
@@ -473,8 +516,12 @@ export default function WarRoomBoard({
         ? " Drive doc updated."
         : prep.driveError
           ? ` Drive sync failed: ${prep.driveError}`
-          : "";
-      const errBit = errors.length ? ` Warnings: ${errors.slice(0, 2).join("; ")}` : "";
+          : co?.drive?.prepUrl
+            ? " Drive not updated."
+            : "";
+      const errBit = errors.length
+        ? ` Warnings: ${errors.slice(0, 2).join("; ")}`
+        : "";
 
       setNotesStatus(
         `Next-step prep refreshed${
@@ -482,7 +529,7 @@ export default function WarRoomBoard({
         }. Prior notes kept.${driveBit}${errBit}`
       );
     } catch (e) {
-      setNotesStatus(`Update failed: ${(e as Error).message}`);
+      setNotesStatus(`Update failed: ${(e as Error).message || String(e)}`);
     } finally {
       setNotesUpdating(false);
     }

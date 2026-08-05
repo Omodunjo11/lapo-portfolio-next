@@ -59,6 +59,22 @@ async function commitBriefIfPresent(
  * If userUpdate is empty, uses saved prep-notes for that company.
  */
 export async function POST(req: NextRequest) {
+  try {
+    return await handlePrepPost(req);
+  } catch (err) {
+    const message = (err as Error).message || String(err);
+    console.error("[war-room/prep]", message);
+    return NextResponse.json(
+      {
+        error: "prep_failed",
+        detail: message,
+      },
+      { status: 500 }
+    );
+  }
+}
+
+async function handlePrepPost(req: NextRequest) {
   const cron = cronAuthorized(req);
   if (!cron) {
     const access = await requireRecruitingAccess();
@@ -147,28 +163,34 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Push the freshly generated brief to Drive in this same request so /tmp
-  // handwriting is not lost across serverless instances.
-  let driveUpdated = false;
-  let driveError: string | undefined;
+  // Prefer Drive write done inside ensureAdvancePrepDecks; only retry if needed.
+  let driveUpdated = ensured.updatedDocs > 0 || ensured.createdDocs > 0;
+  let driveError: string | undefined = ensured.errors.find((e) =>
+    /drive|prep doc|google/i.test(e)
+  );
   const briefText =
     ensured.briefFiles?.[`data/briefs/next-${companyId}.md`] ||
     ensured.briefFiles?.[`briefs/next-${companyId}.md`];
   const company = pipeline.companies.find((c) => c.id === companyId);
   const docId = docIdFromUrl(company?.drive?.prepUrl);
-  if (briefText && docId) {
+  if (!driveUpdated && briefText && docId) {
     try {
       await updatePrepDoc({ docId, plainText: briefText });
       driveUpdated = true;
+      driveError = undefined;
     } catch (err) {
       driveError = (err as Error).message;
     }
+  } else if (!driveUpdated && briefText && !docId) {
+    driveError = driveError || "No Drive prepUrl for this company yet.";
   }
 
   return NextResponse.json({
     ok: true,
     companyId,
     ...ensured,
+    // Avoid dumping full markdown into the client response.
+    briefFiles: undefined,
     anthropic: true,
     usedSavedNotes: !bodyUpdate.trim() && Boolean(savedNotes.trim()),
     driveUpdated,
