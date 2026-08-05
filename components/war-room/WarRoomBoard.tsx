@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import type { Company, FunnelStage, PipelineEvent } from "@/lib/recruiting/types";
 import { EDITABLE_STAGES } from "@/lib/recruiting/types";
 import type { Suggestion } from "@/lib/recruiting/board";
@@ -321,6 +321,27 @@ export default function WarRoomBoard({
     prepNext: "",
   });
 
+  const activeCompanies = useMemo(
+    () =>
+      [...companies]
+        .filter((c) => !["passed", "rejected", "ghosted", "accepted"].includes(c.stage))
+        .sort((a, b) => a.name.localeCompare(b.name)),
+    [companies]
+  );
+  const [notesCompanyId, setNotesCompanyId] = useState(
+    () =>
+      upcoming[0]?.companyId ||
+      initialCompanies.find((c) => c.priority === "P0")?.id ||
+      initialCompanies[0]?.id ||
+      ""
+  );
+  const [prepNotes, setPrepNotes] = useState("");
+  const [notesLog, setNotesLog] = useState("");
+  const [notesLoading, setNotesLoading] = useState(false);
+  const [notesSaving, setNotesSaving] = useState(false);
+  const [notesUpdating, setNotesUpdating] = useState(false);
+  const [notesStatus, setNotesStatus] = useState<string | null>(null);
+
   const chaseSorted = useMemo(
     () => [...chase].sort((a, b) => a.due.localeCompare(b.due)),
     [chase]
@@ -338,6 +359,139 @@ export default function WarRoomBoard({
     [recentEvents]
   );
   const laterCount = chaseLater.length + doneRecent.length;
+
+  useEffect(() => {
+    if (!notesCompanyId) return;
+    let cancelled = false;
+    setNotesLoading(true);
+    setNotesStatus(null);
+    setPrepNotes("");
+    void fetch(
+      `/api/war-room/prep-notes?companyId=${encodeURIComponent(notesCompanyId)}`
+    )
+      .then(async (res) => {
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "load_failed");
+        if (!cancelled) {
+          setNotesLog(typeof data.notes === "string" ? data.notes : "");
+        }
+      })
+      .catch((e) => {
+        if (!cancelled) setNotesStatus((e as Error).message);
+      })
+      .finally(() => {
+        if (!cancelled) setNotesLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [notesCompanyId]);
+
+  async function savePrepNotesOnly() {
+    if (!notesCompanyId || !prepNotes.trim()) return;
+    setNotesSaving(true);
+    setNotesStatus(null);
+    try {
+      const res = await fetch("/api/war-room/prep-notes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          companyId: notesCompanyId,
+          notes: prepNotes,
+          mode: "append",
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.detail || data.error || "save_failed");
+      setNotesLog(typeof data.notes === "string" ? data.notes : "");
+      setPrepNotes("");
+      setNotesStatus(
+        data.persisted === false
+          ? `Feedback added (local)${data.warn ? ` (${data.warn})` : ""}`
+          : "Feedback added. Prior notes kept."
+      );
+    } catch (e) {
+      setNotesStatus((e as Error).message);
+    } finally {
+      setNotesSaving(false);
+    }
+  }
+
+  async function updateNextRoundDoc() {
+    if (!notesCompanyId) return;
+    if (!prepNotes.trim() && !notesLog.trim()) return;
+    setNotesUpdating(true);
+    setNotesStatus(null);
+    try {
+      let fullLog = notesLog;
+      if (prepNotes.trim()) {
+        const saveRes = await fetch("/api/war-room/prep-notes", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            companyId: notesCompanyId,
+            notes: prepNotes,
+            mode: "append",
+          }),
+        });
+        const saveData = await saveRes.json();
+        if (!saveRes.ok) {
+          throw new Error(saveData.detail || saveData.error || "save_failed");
+        }
+        fullLog =
+          typeof saveData.notes === "string" ? saveData.notes : notesLog;
+        setNotesLog(fullLog);
+        setPrepNotes("");
+      }
+
+      const co = companies.find((c) => c.id === notesCompanyId);
+      const upcomingForCo = upcoming.find(
+        (e) => e.companyId === notesCompanyId
+      );
+      const prepRes = await fetch("/api/war-room/prep", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          companyId: notesCompanyId,
+          // Full accumulated log — regen keeps history and refreshes next-step tab
+          userUpdate: fullLog,
+          subject: upcomingForCo
+            ? `Next: ${upcomingForCo.with || "round"} @ ${co?.name || notesCompanyId}`
+            : `Next-round prep notes for ${co?.name || notesCompanyId}`,
+          snippet: fullLog.slice(0, 1500),
+          from: "war-room@notes",
+          force: true,
+        }),
+      });
+      const prep = await prepRes.json();
+      if (!prepRes.ok) {
+        throw new Error(prep.detail || prep.error || "prep_failed");
+      }
+
+      try {
+        await fetch("/api/war-room/drive-sync", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            companyId: notesCompanyId,
+            persist: false,
+          }),
+        });
+      } catch {
+        /* optional */
+      }
+
+      setNotesStatus(
+        `Next-step prep refreshed from all feedback${
+          prep.claudeDecks ? " (Claude)" : ""
+        }. Prior notes kept.`
+      );
+    } catch (e) {
+      setNotesStatus((e as Error).message);
+    } finally {
+      setNotesUpdating(false);
+    }
+  }
 
   const byStage = useMemo(() => {
     const map: Record<string, Company[]> = {};
@@ -782,6 +936,86 @@ export default function WarRoomBoard({
             ) : null}
           </details>
         ) : null}
+      </section>
+
+      <section className="wr-panel wr-prep-notes">
+        <h2>Next-round notes</h2>
+        <p className="wr-muted">
+          Add new feedback here. Saving appends it. Updating the doc keeps all
+          old feedback and refreshes only the next-step prep section so it uses
+          everything so far.
+        </p>
+        <div className="wr-edit-form wr-prep-notes-form">
+          <label>
+            Company
+            <select
+              value={notesCompanyId}
+              onChange={(e) => setNotesCompanyId(e.target.value)}
+            >
+              {activeCompanies.length === 0 ? (
+                <option value="">No active companies</option>
+              ) : null}
+              {activeCompanies.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name} ({c.stageLabel || c.stage})
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            New feedback to add
+            <textarea
+              rows={6}
+              value={prepNotes}
+              disabled={notesLoading || !notesCompanyId}
+              placeholder={
+                notesLoading
+                  ? "Loading…"
+                  : "New signal only. Ex: Sahil email says COO deep-dive on enterprise delivery. Keep Kinage cost-to-serve ready."
+              }
+              onChange={(e) => setPrepNotes(e.target.value)}
+            />
+          </label>
+          {notesLog.trim() ? (
+            <details className="wr-prep-notes-log">
+              <summary>Accumulated feedback (kept on every update)</summary>
+              <pre>{notesLog}</pre>
+            </details>
+          ) : (
+            <p className="wr-muted">No saved feedback yet for this company.</p>
+          )}
+          <div className="wr-prep-notes-actions">
+            <button
+              type="button"
+              className="wr-btn wr-btn-ghost"
+              disabled={
+                notesSaving ||
+                notesUpdating ||
+                notesLoading ||
+                !notesCompanyId ||
+                !prepNotes.trim()
+              }
+              onClick={() => void savePrepNotesOnly()}
+            >
+              {notesSaving ? "Saving…" : "Add feedback"}
+            </button>
+            <button
+              type="button"
+              className="wr-btn"
+              disabled={
+                notesSaving ||
+                notesUpdating ||
+                notesLoading ||
+                !notesCompanyId ||
+                (!prepNotes.trim() && !notesLog.trim())
+              }
+              onClick={() => void updateNextRoundDoc()}
+            >
+              {notesUpdating ? "Updating doc…" : "Update next-step prep"}
+            </button>
+          </div>
+          {notesStatus ? <p className="wr-saved">{notesStatus}</p> : null}
+        </div>
       </section>
 
       {debriefFor ? (

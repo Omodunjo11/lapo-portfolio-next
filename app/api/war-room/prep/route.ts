@@ -8,6 +8,7 @@ import {
   loadWritablePipeline,
 } from "@/lib/recruiting/pipeline";
 import { ensureAdvancePrepDecks } from "@/lib/recruiting/prep-deck";
+import { loadPrepNotes } from "@/lib/recruiting/prep-notes";
 import { commitPipeline } from "@/lib/recruiting/store";
 import { commitTextFile } from "@/lib/git-store";
 import type { IngestProposal } from "@/lib/recruiting/gmail/classify";
@@ -21,7 +22,10 @@ function cronAuthorized(req: NextRequest) {
   return req.headers.get("authorization") === `Bearer ${secret}`;
 }
 
-async function commitBriefIfPresent(companyId: string, briefFiles?: Record<string, string>) {
+async function commitBriefIfPresent(
+  companyId: string,
+  briefFiles?: Record<string, string>
+) {
   const repoPath = `data/briefs/next-${companyId}.md`;
   const fromMem = briefFiles?.[repoPath];
   if (fromMem) {
@@ -46,8 +50,9 @@ async function commitBriefIfPresent(companyId: string, briefFiles?: Record<strin
 }
 
 /**
- * Generate next-round Claude prep for one company from email + optional Lapo update.
+ * Generate next-round Claude prep for one company from email + Lapo notes.
  * Body: { companyId, subject?, snippet?, from?, userUpdate?, force?, persist? }
+ * If userUpdate is empty, uses saved prep-notes for that company.
  */
 export async function POST(req: NextRequest) {
   const cron = cronAuthorized(req);
@@ -71,13 +76,27 @@ export async function POST(req: NextRequest) {
   const subject = typeof body.subject === "string" ? body.subject : "";
   const snippet = typeof body.snippet === "string" ? body.snippet : "";
   const from = typeof body.from === "string" ? body.from : "";
-  const userUpdate =
+  const bodyUpdate =
     typeof body.userUpdate === "string" ? body.userUpdate : "";
+  const savedNotes = companyId ? loadPrepNotes(companyId) : "";
+  // Always prefer the full accumulated log so regen never drops prior feedback.
+  const userUpdate = savedNotes.trim() || bodyUpdate.trim();
   const force = body.force === true || Boolean(userUpdate.trim());
   const persist = body.persist !== false;
 
   if (!companyId) {
     return NextResponse.json({ error: "companyId_required" }, { status: 400 });
+  }
+
+  if (!userUpdate.trim() && !subject.trim() && !snippet.trim()) {
+    return NextResponse.json(
+      {
+        error: "notes_required",
+        detail:
+          "Paste notes in Next-round notes (or pass userUpdate / email fields) before updating the doc.",
+      },
+      { status: 400 }
+    );
   }
 
   let pipeline = await loadWritablePipeline().catch(() =>
@@ -110,7 +129,13 @@ export async function POST(req: NextRequest) {
   });
   pipeline = ensured.pipeline;
 
-  if (persist && (ensured.localBriefs > 0 || ensured.createdDocs > 0 || ensured.updatedDocs > 0 || ensured.claudeDecks > 0)) {
+  if (
+    persist &&
+    (ensured.localBriefs > 0 ||
+      ensured.createdDocs > 0 ||
+      ensured.updatedDocs > 0 ||
+      ensured.claudeDecks > 0)
+  ) {
     await commitBriefIfPresent(companyId, ensured.briefFiles);
     await commitPipeline(
       pipeline,
@@ -123,5 +148,6 @@ export async function POST(req: NextRequest) {
     companyId,
     ...ensured,
     anthropic: true,
+    usedSavedNotes: !bodyUpdate.trim() && Boolean(savedNotes.trim()),
   });
 }

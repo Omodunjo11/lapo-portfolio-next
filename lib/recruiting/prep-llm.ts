@@ -3,59 +3,53 @@ import type { Company, PipelineEvent } from "./types";
 import { anthropicConfigured, getAnthropic, prepModel } from "./claude";
 
 /**
- * READABILITY gold standard: Brain Co Google Doc.
- * JOB: turn email + Lapo's updates into next-round prep (not a static archive).
+ * READABILITY: Brain Co Google Doc.
+ * JOB: accumulate feedback; rewrite only the next-step prep tab from ALL of it.
  */
 const STYLE_AND_JOB = `
 Write like the Brain Co Google Doc: readable titles, short bullets, clear judgment, action items.
-But the PURPOSE is always: prep Lapo for the NEXT interview round.
 
-Primary job (in order):
-1. Read the email / calendar signal about who is next and what the conversation is about
-2. Fold in notes Lapo already captured (prior rounds, debriefs, updates he shared)
-3. Produce a forward brief: what they are likely testing, what to say, stories to warm, questions to ask, action items before that call
+ACCUMULATION RULES (critical):
+- NEVER delete or invent away prior feedback. Old "Notes from …", "Feedback added …", and company/contact facts stay in the document.
+- When Lapo adds new notes, ADD a new dated feedback block if it is not already captured.
+- REWRITE only the forward section: "## Next step prep (updated {date})" / "## Prep for {person}, {date}".
+  That next-step section must synthesize ALL prior feedback + the newest notes + email into one clear prep for the upcoming round.
+- Think of the doc as tabs over time: history stays; the next-step tab is refreshed to encompass everything.
 
-Shape example:
+Shape:
 
 # {Company}: Interview Notes and Prep
 
 Onaolapo (Lapo) Odunjo. Role: …. Living notes doc, add to this after every conversation.
 
 ## Company and contacts, from your inbox
-- Who reached out, role, stage, logos / framing only if known from signal
+- Stable facts (keep and extend, do not wipe)
 
-## What we already know (from prior rounds)
-- Short bullets from prior notes / Lapo's updates. Skip this section if there is no prior signal.
+## Notes from {prior person/date}
+- Keep prior round notes (preserve substance)
 
-## Prep for {Next person}, {date or TBD}
+## Feedback added {dates}
+- Keep prior Lapo feedback entries; add new ones when provided
+
+## Next step prep (updated {today's date}): {Next person or next round}
 ### What this conversation is about
-- From the email / invite / Lapo's update (do not invent)
-
-### What they are likely testing
-- Tied to role stage and email language
-
+### What they are likely testing (from ALL feedback so far)
 ### Lines and stories to land
-- 3 to 5 concrete items mapped to Lapo's proof bank
-
 ### Questions to ask
-- 2 to 4 numbered questions
+### Action items before the call
 
 ## Interview line to reuse, in their own language
 "…"
 
 ## How to read this and what to do with it
-- Short judgment paragraph + bullets on what matters for THIS next round
-
-## Action items before the call
-1. …
-2. …
+- Judgment that uses the full history, focused on the next round
 
 This is a living document. Add new notes here after every {Company} conversation so the next round always has the full picture in one place.
 `.trim();
 
 const CANDIDATE_CONTEXT = `
 Candidate: Onaolapo "Lapo" Odunjo (he/him). Wharton MBA. Product / forward-deployed AI.
-Voice: calm, specific, readable. Night-before brief for the next call. Not a template. Not a history essay.
+Voice: calm, specific, readable. Night-before brief. Not a template.
 
 Proof bank (use only what is relevant; do not invent employers or metrics):
 - Kinage: multi-account AI deployment; playbooks; coached deployed engineers; 0 to 12 institutions; cost-to-serve about 62 percent down. Team leverage, not solo heroics.
@@ -65,24 +59,25 @@ Proof bank (use only what is relevant; do not invent employers or metrics):
 - Do not overclaim formal manager headcount. Lead by ownership and coaching.
 - Gov or MENA depth may be thin. Say so if asked.
 
-Do not invent companies, titles, metrics, interviewer biographies, or what the interview is about. If email does not say, mark it unknown and ask it as a question.
+Do not invent companies, titles, metrics, interviewer biographies, or what the interview is about. If signal does not say, mark unknown.
 `.trim();
 
 export type PrepGenInput = {
   company: Company;
   event: PipelineEvent;
   emailContext?: string | null;
-  /** Fresh notes Lapo shared (debrief, chat update, War Room text). */
+  /** Full accumulated notes log and/or newest batch. */
   userUpdate?: string | null;
   existingBrief?: string | null;
   force?: boolean;
 };
 
-/** Forward prep that names a next conversation and has action items. */
 export function isRichBrief(text: string | null | undefined): boolean {
   if (!text) return false;
   if (looksLikeLegacyPrepDeck(text)) return false;
-  const hasNextPrep = /## Prep for /i.test(text) || /Action items before/i.test(text);
+  const hasNextPrep =
+    /## (Next step prep|Prep for )/i.test(text) ||
+    /Action items before/i.test(text);
   const hasReadable =
     /How to read this and what to do with it/i.test(text) &&
     /Action items/i.test(text);
@@ -97,7 +92,10 @@ export function looksLikeLegacyPrepDeck(text: string): boolean {
   if (text.includes("\u2014")) return true;
   if (text.includes("**With:**") || text.includes("**When:**")) return true;
   if (/^\|.+\|$/m.test(text) && text.includes("|---")) return true;
-  if (/Prep deck\s*[,:—-]/i.test(text) && !/Interview Notes and Prep/i.test(text)) {
+  if (
+    /Prep deck\s*[,:—-]/i.test(text) &&
+    !/Interview Notes and Prep/i.test(text)
+  ) {
     return true;
   }
   return false;
@@ -118,6 +116,12 @@ export function stubPrepDeck(company: Company, event: PipelineEvent): string {
 
   const withWho = event.with || "TBD";
   const nextLabel = withWho !== "TBD" ? withWho : "next round";
+  const today = new Date().toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "America/New_York",
+  });
 
   return `# ${company.name}: Interview Notes and Prep
 
@@ -131,17 +135,16 @@ Onaolapo (Lapo) Odunjo. Role: ${company.role}. Living notes doc, add to this aft
 - Next action on file: ${company.nextAction || "none"}
 - Upcoming: ${event.title} with ${withWho} (${when} ET)
 
-## Prep for ${nextLabel}${when !== "TBD" ? `, ${when}` : ""}
+## Next step prep (updated ${today}): ${nextLabel}
 
 ### What this conversation is about
 
-- Waiting on email / Lapo update for what they want this round to cover. Do not invent.
+- Waiting on email / Lapo notes. Do not invent.
 
-### What they are likely testing
+### What they are likely testing (from ALL feedback so far)
 
 - Fit for ${company.role} at stage ${company.stageLabel || company.stage}
 - Shipping judgment under incomplete information
-- Calm ownership, not solo-hero polish
 
 ### Lines and stories to land
 
@@ -155,19 +158,18 @@ Onaolapo (Lapo) Odunjo. Role: ${company.role}. Living notes doc, add to this aft
 2. What is the biggest failure mode on the team right now?
 3. If this goes well, who else would I meet and what are those conversations testing?
 
+### Action items before the call
+
+1. Add notes in War Room Next-round notes, then Update next-round doc
+2. Rehearse one incomplete-info story
+
 ## Interview line to reuse, in their own language
 
 "I'm at my best when the product bar is high and the brief is incomplete. I take partial signal, drive a decision, and keep delivery protected."
 
 ## How to read this and what to do with it
 
-This is a stub until live email or Lapo's update lands. Once Scan or War Room has signal about the next round, regenerate so the Prep for section names the person and what the conversation is about.
-
-## Action items before the call
-
-1. Paste the latest email or your own update into War Room prep so this brief can be rewritten for the real next round
-2. Rehearse one incomplete-info story
-3. Leave with a clear next owner and timing
+Stub until live feedback lands. Each Update next-round doc should keep prior feedback and refresh only this next-step section.
 
 This is a living document. Add new notes here after every ${company.name} conversation so the next round always has the full picture in one place.
 `;
@@ -217,18 +219,25 @@ export async function generatePrepDeck(input: PrepGenInput): Promise<{
       })
     : "Scheduling / TBD";
 
-  const system = `You write next-round interview prep for Lapo Odunjo.
+  const today = new Date().toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "America/New_York",
+  });
+
+  const system = `You write accumulating interview notes + next-round prep for Lapo Odunjo.
 
 ${STYLE_AND_JOB}
 
 HARD RULES:
-- The center of the document is "## Prep for {next person or next round}". Everything else supports that.
-- Use email + Lapo updates as ground truth for what the next interview is about. Do not invent agenda, product details, or interviewer bios.
-- Keep useful prior-round facts under "What we already know". Do not rewrite the whole history as the main event.
-- Readable Brain Co style: real ## / ### titles, hyphen bullets, short judgment prose.
-- No markdown tables. No em dashes. No --- rules. No **bold** spam.
-- Interview funnel stage ("2nd", "Final") is not a funding Series.
-- Under ~900 words. Skimmable the morning of the call.
+- Preserve prior feedback and prior round notes. Do not shrink history into a short summary that drops detail Lapo already captured.
+- Refresh "## Next step prep (updated ${today}): …" so it encompasses ALL feedback for the upcoming round.
+- You may keep an older "## Prep for …" section only if you rename/move substance into history; do not leave two conflicting next-step sections. One current next-step section only.
+- Email + Lapo feedback log are ground truth. Do not invent.
+- Readable Brain Co style. No tables. No em dashes. No --- rules. No **bold** spam.
+- Interview funnel stage is not a funding Series.
+- Prefer under ~1200 words, but never cut prior feedback to hit a length target.
 - Output Markdown only. No preamble.`;
 
   const user = `${CANDIDATE_CONTEXT}
@@ -242,24 +251,25 @@ Next action on file: ${company.nextAction}
 When: ${when} ET
 With: ${event.with || "TBD"}
 Calendar/title: ${event.title}
+Today (for Next step prep header): ${today}
 
-## Email / invite signal about the next interview (priority source)
+## Email / invite signal about the next interview
 ${(emailContext || "").slice(0, 4000) || "(none)"}
 
-## Updates Lapo shared (debrief, chat, War Room). Treat as ground truth.
-${(userUpdate || "").slice(0, 4000) || "(none)"}
+## Accumulated Lapo feedback log (KEEP ALL of this in the doc; newest may be on top)
+${(userUpdate || "").slice(0, 8000) || "(none)"}
 
-## Prior living notes (keep facts; rewrite so Prep for next round leads)
-${(existingBrief || "").slice(0, 3500) || "(none)"}
+## Current living notes / prior brief (KEEP prior round sections; refresh next-step section only)
+${(existingBrief || "").slice(0, 9000) || "(none)"}
 
-Write the next-round prep now.`;
+Rewrite the living document now. Preserve history. Update the next-step prep section so it uses every piece of feedback above.`;
 
   try {
     const anthropic = getAnthropic();
     const res = await anthropic.messages.create({
       model: prepModel(),
-      max_tokens: 4096,
-      temperature: 0.35,
+      max_tokens: 8192,
+      temperature: 0.3,
       system,
       messages: [{ role: "user", content: user }],
     });
