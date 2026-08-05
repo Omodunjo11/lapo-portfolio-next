@@ -179,7 +179,8 @@ async function AuthenticatedWarRoom() {
       <p className="wr-foot">
         Stages only move when you Accept a flag or drag a card. Live stage on Fit
         comparison reads GitHub main, so Passed moves off the ranking without a
-        redeploy. Comparison scores still refresh when you rebuild comparison.
+        redeploy. New companies get Claude research scores on Scan and appear in
+        the table immediately.
       </p>
     </div>
   );

@@ -26,8 +26,15 @@ import {
   ensurePrepDecks,
 } from "@/lib/recruiting/prep-deck";
 import { commitPipeline } from "@/lib/recruiting/store";
-import { commitTextFile } from "@/lib/git-store";
+import { commitJsonFile, commitTextFile } from "@/lib/git-store";
 import type { Pipeline } from "@/lib/recruiting/types";
+import {
+  getRecruitingComparison,
+  joinComparison,
+  type ComparisonFile,
+  type JoinedComparison,
+} from "@/lib/recruiting/comparison";
+import { upsertComparisonForCompanies } from "@/lib/recruiting/comparison-score";
 
 export const runtime = "nodejs";
 export const maxDuration = 90;
@@ -132,6 +139,23 @@ async function runScan(opts: {
     errors: [] as string[],
   };
 
+  // Shared across prep + comparison scoring.
+  const emailByCompany: Record<string, string> = {};
+  for (const p of scan.proposals) {
+    if (!p.companyId || p.source !== "gmail") continue;
+    if (
+      p.signal !== "advance" &&
+      p.signal !== "schedule" &&
+      p.signal !== "wait"
+    ) {
+      continue;
+    }
+    const chunk = `Subject: ${p.subject || ""}\nFrom: ${p.from || ""}\n${p.snippet || ""}`;
+    emailByCompany[p.companyId] = emailByCompany[p.companyId]
+      ? `${emailByCompany[p.companyId]}\n---\n${chunk}`
+      : chunk;
+  }
+
   if (opts.ensurePrep !== false) {
     const beforePaths = new Set(
       pipeline.events.map((e) => e.briefPath).filter(Boolean) as string[]
@@ -143,22 +167,6 @@ async function runScan(opts: {
     }
 
     try {
-      const emailByCompany: Record<string, string> = {};
-      for (const p of scan.proposals) {
-        if (!p.companyId || p.source !== "gmail") continue;
-        if (
-          p.signal !== "advance" &&
-          p.signal !== "schedule" &&
-          p.signal !== "wait"
-        ) {
-          continue;
-        }
-        const chunk = `Subject: ${p.subject || ""}\nFrom: ${p.from || ""}\n${p.snippet || ""}`;
-        emailByCompany[p.companyId] = emailByCompany[p.companyId]
-          ? `${emailByCompany[p.companyId]}\n---\n${chunk}`
-          : chunk;
-      }
-
       const discoveredIds = discovered.added.map((c) => c.id);
       // Any scheduled company still missing a Drive prepUrl gets a folder +
       // research-first doc (covers Northslope if discovery ran earlier).
@@ -289,6 +297,42 @@ async function runScan(opts: {
     );
   }
 
+  let comparisonFile: ComparisonFile | null = getRecruitingComparison();
+  let comparisonRows: JoinedComparison | null = null;
+  let comparisonAdded: string[] = [];
+  let comparisonScored = 0;
+  try {
+    if (comparisonFile) {
+      const upserted = await upsertComparisonForCompanies(
+        comparisonFile,
+        pipeline.companies,
+        { emailByCompany }
+      );
+      comparisonFile = upserted.file;
+      comparisonAdded = upserted.added.map((r) => r.companyId);
+      comparisonScored = upserted.scored;
+      if (
+        opts.persist &&
+        (upserted.added.length > 0 || upserted.scored > 0)
+      ) {
+        await commitJsonFile(
+          "data/recruiting-comparison.json",
+          comparisonFile,
+          `War room scan: comparison +${upserted.added.length} / scored ${upserted.scored}`
+        );
+      }
+      comparisonRows = joinComparison(comparisonFile, pipeline.companies);
+    }
+  } catch (err) {
+    console.error("war-room scan comparison upsert failed", err);
+    prep.errors.push(
+      `comparison: ${(err as Error).message || "comparison_failed"}`
+    );
+    if (comparisonFile) {
+      comparisonRows = joinComparison(comparisonFile, pipeline.companies);
+    }
+  }
+
   return {
     ok: NextResponse.json({
       ok: true,
@@ -312,6 +356,10 @@ async function runScan(opts: {
         focus: pipeline.focus,
         updated: pipeline.updated,
       },
+      comparison: comparisonFile,
+      comparisonRows,
+      comparisonAdded,
+      comparisonScored,
       prep,
       spamMatched: scan.spamMatched,
       flags: pendingFlags,

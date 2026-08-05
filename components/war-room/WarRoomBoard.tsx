@@ -6,6 +6,7 @@ import type { Company, FunnelStage, PipelineEvent } from "@/lib/recruiting/types
 import { EDITABLE_STAGES } from "@/lib/recruiting/types";
 import type { Suggestion } from "@/lib/recruiting/board";
 import { nextFunnelStage, prevFunnelStage } from "@/lib/recruiting/board";
+import { WAR_ROOM_SCAN_EVENT } from "@/components/war-room/WarRoomComparison";
 
 type Col = { id: string; label: string };
 type ChaseItem = {
@@ -757,6 +758,12 @@ export default function WarRoomBoard({
           (data.companiesAdded
             ? ` · +${data.companiesAdded} company${discoveredNames ? ` (${discoveredNames})` : ""}`
             : "") +
+          (data.comparisonAdded?.length
+            ? ` · compare +${data.comparisonAdded.length}`
+            : "") +
+          (data.comparisonScored
+            ? ` · scored ${data.comparisonScored}`
+            : "") +
           (data.spamMatched
             ? ` · ${data.spamMatched} in Spam`
             : "") +
@@ -764,6 +771,18 @@ export default function WarRoomBoard({
             ? ` · ${data.appliedCalendar} calendar fact(s) saved`
             : "") +
           (claudeN ? ` · Claude prep ×${claudeN}` : "")
+      );
+
+      window.dispatchEvent(
+        new CustomEvent(WAR_ROOM_SCAN_EVENT, {
+          detail: {
+            pipeline: data.pipeline,
+            comparison: data.comparison,
+            comparisonRows: data.comparisonRows,
+            comparisonAdded: data.comparisonAdded,
+            comparisonScored: data.comparisonScored,
+          },
+        })
       );
       if (Array.isArray(data.flags)) {
         const inboxFlags: Suggestion[] = data.flags.map(

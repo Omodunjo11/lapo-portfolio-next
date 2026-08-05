@@ -94,12 +94,41 @@ function toRanked(
 /**
  * Join scored rows to live pipeline companies.
  * Active ranking excludes passed/ghosted; those go in `archived`.
+ * Active pipeline companies missing from the scorefile still appear
+ * (provisional row) so discovery shows up before a full rebuild.
  */
 export function joinComparison(
   file: ComparisonFile,
   companies: Company[]
 ): JoinedComparison {
-  const ranked = toRanked(file, companies);
+  const have = new Set(file.rows.map((r) => r.companyId));
+  const provisional: ComparisonRow[] = companies
+    .filter(
+      (c) =>
+        !have.has(c.id) &&
+        c.stage !== "passed" &&
+        c.stage !== "ghosted"
+    )
+    .map((c) => ({
+      companyId: c.id,
+      track: "TBD",
+      sizeBand: "Unknown, approx",
+      size: 3,
+      potential: 5,
+      exit: 4,
+      fit: 5,
+      compound: 5,
+      excited: 6,
+      excitedWhy: "Just added — scoring from research pending or in progress.",
+      why: `${c.name} is on the board but not yet in the scored comparison file.`,
+      watch: "Wait for scan/research score, then refine.",
+    }));
+
+  const merged: ComparisonFile = {
+    ...file,
+    rows: [...file.rows, ...provisional],
+  };
+  const ranked = toRanked(merged, companies);
   const active: RankedComparisonRow[] = [];
   const archived: RankedComparisonRow[] = [];
 

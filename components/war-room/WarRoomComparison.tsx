@@ -1,8 +1,23 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import type {
   RankedComparisonRow,
   ComparisonFile,
   JoinedComparison,
 } from "@/lib/recruiting/comparison";
+import { joinComparison } from "@/lib/recruiting/comparison";
+import type { Company } from "@/lib/recruiting/types";
+
+export const WAR_ROOM_SCAN_EVENT = "war-room-scan-complete";
+
+export type WarRoomScanDetail = {
+  pipeline?: { companies?: Company[] };
+  comparison?: ComparisonFile | null;
+  comparisonRows?: JoinedComparison | null;
+  comparisonAdded?: string[];
+  comparisonScored?: number;
+};
 
 function CompareTable({
   rows,
@@ -123,12 +138,33 @@ function CompareTable({
 }
 
 export default function WarRoomComparison({
-  comparison,
-  rows,
+  comparison: initialComparison,
+  rows: initialRows,
 }: {
   comparison: ComparisonFile;
   rows: JoinedComparison;
 }) {
+  const [comparison, setComparison] = useState(initialComparison);
+  const [rows, setRows] = useState(initialRows);
+
+  useEffect(() => {
+    function onScan(ev: Event) {
+      const detail = (ev as CustomEvent<WarRoomScanDetail>).detail;
+      if (!detail) return;
+      if (detail.comparisonRows) {
+        setRows(detail.comparisonRows);
+        if (detail.comparison) setComparison(detail.comparison);
+        return;
+      }
+      if (detail.comparison && detail.pipeline?.companies) {
+        setComparison(detail.comparison);
+        setRows(joinComparison(detail.comparison, detail.pipeline.companies));
+      }
+    }
+    window.addEventListener(WAR_ROOM_SCAN_EVENT, onScan);
+    return () => window.removeEventListener(WAR_ROOM_SCAN_EVENT, onScan);
+  }, []);
+
   if (rows.active.length === 0 && rows.archived.length === 0) return null;
 
   return (
@@ -138,10 +174,10 @@ export default function WarRoomComparison({
         <span className="wr-muted">as of {comparison.updated}</span>
       </div>
       <p className="wr-muted wr-compare-note">
-        Linked to the live pipeline (stage + Drive). Passed and ghosted drop out
-        of the ranking and land in Archived below. Scores refresh when you rebuild
-        comparison. Excited = how keen they seem to advance you. Exit = company
-        outcome optionality. Rank = {comparison.formula}.
+        Linked to the live pipeline (stage + Drive). New companies land here on
+        Scan with Claude research scores. Passed and ghosted drop to Archived.
+        Excited = how keen they seem to advance you. Exit = company outcome
+        optionality. Rank = {comparison.formula}.
       </p>
 
       <CompareTable rows={rows.active} formula={comparison.formula} />
