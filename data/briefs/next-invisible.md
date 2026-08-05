@@ -2,14 +2,14 @@
 
 Onaolapo (Lapo) Odunjo. Role: Senior Product Manager. Living notes doc, add to this after every conversation.
 
-
 ## Company and contacts, from your inbox
 
 - Invisible Technologies, Senior Product Manager
 - Applied June 2026
 - Hiring manager interview held July 29 with Alex Arutyunyants
-- Recruiting: Kate Alvarico and Derek Pages
-- Next interviewer: Ranjani
+- Recruiting: Kate Alvarico, Hafsa Tahir, Derek Pages
+- Final round scheduled: Friday, August 7, 2026, 10:30 AM ET
+- Final round interviewer: Ranjani (last name unknown)
 - Do not treat scheduling friction as a reject. The Aug 4 Kate note that started with "Unfortunately" was about time windows, not candidacy
 
 ## Notes from the hiring manager screen, July 29 (Alex Arutyunyants)
@@ -40,14 +40,67 @@ Continue into next round once scheduled. Loop shape still partly unknown.
 - This is a live process. Soft apology language is not a rejection
 - Ball is briefly on them for the calendar invite, then on Lapo to attend
 
-### Next step
-
-Watch for Kate's invite. Prep from the next-round brief once invite lands and round type is clear.
-
 ## Follow-ups sent
 
 - About July 31: Kate (+ Derek). Asked how many rounds remain and what type.
 - August 4: accepted Aug 7 / 10:30am ET path with Kate
+
+## Next step prep (updated Aug 5, 2026): Final round with Ranjani, Aug 7
+
+### What this conversation is about
+
+Final round interview. Stage label is known, but format, duration, and Ranjani's role at Invisible are not yet confirmed. Watch for Kate's calendar invite to clarify.
+
+Likely a senior stakeholder conversation testing judgment, product sense, and culture fit for a Senior PM role at a company that operates AI-enabled process automation at scale.
+
+### What they are likely testing (from ALL feedback so far)
+
+Limited signal from the Alex conversation is captured in this doc. Expand those notes before Aug 7 to understand what themes landed and what Alex cared about.
+
+General final-round Senior PM tests:
+- Judgment under ambiguity and how you make product decisions when specs are incomplete
+- How you work cross-functionally, especially with engineering and operations teams in a deployed or process-heavy environment
+- Ability to ship iteratively and measure what matters
+- How you handle production quality and risk in customer-facing or regulated contexts
+- Culture and team fit at a senior level
+
+If Invisible's model involves human-in-the-loop AI or process orchestration, expect questions about how you balance automation quality with operational leverage.
+
+### Lines and stories to land
+
+Use only if relevant to what Ranjani asks. Do not force.
+
+Deployed AI at scale, team leverage:
+Kinage: took multi-account AI deployment from 0 to 12 institutions. Built playbooks so deployed engineers could own rollout. Cost-to-serve dropped about 62 percent. Team leverage, not solo heroics.
+
+Production quality and risk:
+Banking context: eval gates, precision bar, production quality discipline. Field failure modes back into Product so the next release is tighter.
+
+Judgment under pressure:
+TD-style pushback example. Stayed calm, proposed alternative, protected delivery timeline, spoke to risk and outcomes.
+
+Shipping with incomplete info:
+Cut scope when specs were incomplete, shipped, measured adoption, iterated. Prefer learning from real usage over waiting for perfect requirements.
+
+Limitations:
+Do not overclaim formal manager headcount. Lead by ownership and coaching, not org chart authority. Gov or MENA depth may be thin; say so if asked.
+
+### Questions to ask
+
+Tailor once you know more about Ranjani's role.
+
+- What does great look like for this role in the first six months?
+- How does Product work with operations or delivery teams here? (if human-in-the-loop or process model applies)
+- What is the biggest product trade-off you have made recently, and how did you decide?
+- How do you think about quality and speed when you are scaling a new capability?
+
+### Action items before the call
+
+1. Watch inbox for Kate's confirmation email and calendar invite. Confirm duration and any prep instructions.
+2. Expand the July 29 Alex notes in this doc before Aug 7 so you have substance from the hiring manager conversation.
+3. Research Ranjani on LinkedIn once last name is available from the invite.
+4. Refresh this brief same day if the invite reveals round format or focus area.
+5. Do not accept any War Room reject flag for Invisible based only on the Aug 4 "Unfortunately" scheduling email.
 
 ## Interview line to reuse, in their own language
 
@@ -55,17 +108,8 @@ Watch for Kate's invite. Prep from the next-round brief once invite lands and ro
 
 ## How to read this and what to do with it
 
-- Keep Invisible live unless you get hard close language: not moving forward, other candidates selected, role filled
-- Expand Alex notes before Aug 7 so the Ranjani conversation has substance
-- Once invite confirms duration and format, refresh the Next brief same day
+Keep Invisible live unless you get hard close language: not moving forward, other candidates selected, role filled. The Aug 4 scheduling friction was logistical, not a rejection.
 
-## Action items
-
-1. Watch inbox for Kate's confirmation / calendar invite for Aug 7 10:30am ET with Ranjani
-2. Expand the July 29 Alex notes before Aug 7
-3. Refresh briefs/next-invisible.md as soon as round type and duration are confirmed
-4. Do not accept any War Room reject flag for Invisible based only on the Aug 4 "Unfortunately" scheduling email
-
----
+Expand Alex notes before Aug 7 so the Ranjani conversation has full context. Once the invite confirms duration and format, refresh the next-step section same day if new signal appears.
 
 This is a living document. Add new notes here after every Invisible conversation so the next round always has the full picture in one place.
