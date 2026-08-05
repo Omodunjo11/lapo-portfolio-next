@@ -293,22 +293,22 @@ Target prep heading: ## ${nextHeading}
 Mode: ${surgical ? "surgical UPDATE of existing living doc" : "full living notes create/refresh"}
 
 ## Email / invite signal
-${(emailContext || "").slice(0, surgical ? 3500 : 4000) || "(none)"}
+${(emailContext || "").slice(0, surgical ? 2500 : 4000) || "(none)"}
 
-## New / accumulated Lapo feedback (fold into doc; keep prior)
-${(userUpdate || "").slice(0, surgical ? 6000 : 8000) || "(none)"}
+## Newest Lapo feedback to fold in (prior feedback already lives in the current doc)
+${(userUpdate || "").slice(0, surgical ? 2800 : 8000) || "(none)"}
 
 ## Current living doc (base; edit this)
-${(existingBrief || "").slice(0, surgical ? 14000 : 9000) || "(none)"}
+${(existingBrief || "").slice(0, surgical ? 10000 : 9000) || "(none)"}
 
-${surgical ? "Update the living document in place now." : "Write the living document now. Preserve history. Update the next-step prep section."}`;
+${surgical ? "Update the living document in place now. Keep history. Refresh only the continuous next-interview heading and that prep section plus any new feedback block." : "Write the living document now. Preserve history. Update the next-step prep section."}`;
 
   try {
     const anthropic = getAnthropic();
     const res = await anthropic.messages.create({
-      model: prepModel(),
-      // Surgical updates should finish well under the Vercel 60s limit.
-      max_tokens: surgical ? 4500 : 6000,
+      model: prepModel(surgical ? "update" : "full"),
+      // Surgical updates must finish inside the Vercel 60s window.
+      max_tokens: surgical ? 3200 : 6000,
       temperature: 0.25,
       system,
       messages: [{ role: "user", content: user }],
