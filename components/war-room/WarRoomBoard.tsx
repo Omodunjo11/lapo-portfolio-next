@@ -468,26 +468,21 @@ export default function WarRoomBoard({
         throw new Error(prep.detail || prep.error || "prep_failed");
       }
 
-      try {
-        await fetch("/api/war-room/drive-sync", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            companyId: notesCompanyId,
-            persist: false,
-          }),
-        });
-      } catch {
-        /* optional */
-      }
+      const errors = Array.isArray(prep.errors) ? prep.errors : [];
+      const driveBit = prep.driveUpdated
+        ? " Drive doc updated."
+        : prep.driveError
+          ? ` Drive sync failed: ${prep.driveError}`
+          : "";
+      const errBit = errors.length ? ` Warnings: ${errors.slice(0, 2).join("; ")}` : "";
 
       setNotesStatus(
-        `Next-step prep refreshed from all feedback${
-          prep.claudeDecks ? " (Claude)" : ""
-        }. Prior notes kept.`
+        `Next-step prep refreshed${
+          prep.claudeDecks ? " with Claude" : " (no new Claude rewrite)"
+        }. Prior notes kept.${driveBit}${errBit}`
       );
     } catch (e) {
-      setNotesStatus((e as Error).message);
+      setNotesStatus(`Update failed: ${(e as Error).message}`);
     } finally {
       setNotesUpdating(false);
     }
@@ -1011,7 +1006,7 @@ export default function WarRoomBoard({
               }
               onClick={() => void updateNextRoundDoc()}
             >
-              {notesUpdating ? "Updating doc…" : "Update next-step prep"}
+              {notesUpdating ? "Updating doc… (30–60s)" : "Update next-step prep"}
             </button>
           </div>
           {notesStatus ? <p className="wr-saved">{notesStatus}</p> : null}

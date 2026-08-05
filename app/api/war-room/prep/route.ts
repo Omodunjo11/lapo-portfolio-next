@@ -11,6 +11,10 @@ import { ensureAdvancePrepDecks } from "@/lib/recruiting/prep-deck";
 import { loadPrepNotes } from "@/lib/recruiting/prep-notes";
 import { commitPipeline } from "@/lib/recruiting/store";
 import { commitTextFile } from "@/lib/git-store";
+import {
+  docIdFromUrl,
+  updatePrepDoc,
+} from "@/lib/recruiting/drive";
 import type { IngestProposal } from "@/lib/recruiting/gmail/classify";
 
 export const runtime = "nodejs";
@@ -79,8 +83,8 @@ export async function POST(req: NextRequest) {
   const bodyUpdate =
     typeof body.userUpdate === "string" ? body.userUpdate : "";
   const savedNotes = companyId ? loadPrepNotes(companyId) : "";
-  // Always prefer the full accumulated log so regen never drops prior feedback.
-  const userUpdate = savedNotes.trim() || bodyUpdate.trim();
+  // Prefer the payload from the War Room form (fresh full log). Fall back to disk.
+  const userUpdate = bodyUpdate.trim() || savedNotes.trim();
   const force = body.force === true || Boolean(userUpdate.trim());
   const persist = body.persist !== false;
 
@@ -143,11 +147,32 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // Push the freshly generated brief to Drive in this same request so /tmp
+  // handwriting is not lost across serverless instances.
+  let driveUpdated = false;
+  let driveError: string | undefined;
+  const briefText =
+    ensured.briefFiles?.[`data/briefs/next-${companyId}.md`] ||
+    ensured.briefFiles?.[`briefs/next-${companyId}.md`];
+  const company = pipeline.companies.find((c) => c.id === companyId);
+  const docId = docIdFromUrl(company?.drive?.prepUrl);
+  if (briefText && docId) {
+    try {
+      await updatePrepDoc({ docId, plainText: briefText });
+      driveUpdated = true;
+    } catch (err) {
+      driveError = (err as Error).message;
+    }
+  }
+
   return NextResponse.json({
     ok: true,
     companyId,
     ...ensured,
     anthropic: true,
     usedSavedNotes: !bodyUpdate.trim() && Boolean(savedNotes.trim()),
+    driveUpdated,
+    driveError,
+    prepUrl: company?.drive?.prepUrl || null,
   });
 }
