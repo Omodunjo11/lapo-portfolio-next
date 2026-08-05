@@ -48,7 +48,7 @@ async function AuthenticatedWarRoom() {
     companiesByStage,
     archivedCompanies,
     FUNNEL_COLUMNS,
-    getRecruitingPipeline,
+    loadWritablePipeline,
   } = await import("@/lib/recruiting/pipeline");
   const { allSuggestions } = await import("@/lib/recruiting/flags");
   const { getRecruitingInbox } = await import("@/lib/recruiting/inbox-store");
@@ -80,7 +80,8 @@ async function AuthenticatedWarRoom() {
   const prefs = (user.privateMetadata?.recruitingBoard || {}) as Partial<BoardPrefs>;
   const dismissed = prefs.dismissedSuggestionIds || [];
 
-  const pipeline = getRecruitingPipeline();
+  // Prefer GitHub main so moves (e.g. Sierra → Passed) show in comparison without redeploy.
+  const pipeline = await loadWritablePipeline();
   const byStage = companiesByStage(pipeline);
   const suggestions = allSuggestions(pipeline, dismissed);
   const inbox = getRecruitingInbox();
@@ -94,7 +95,7 @@ async function AuthenticatedWarRoom() {
   const comparison = getRecruitingComparison();
   const comparisonRows = comparison
     ? joinComparison(comparison, pipeline.companies)
-    : [];
+    : { active: [], archived: [] };
 
   return (
     <div className="wr-root">
@@ -162,9 +163,9 @@ async function AuthenticatedWarRoom() {
       ) : null}
 
       <p className="wr-foot">
-        Stages only move when you Accept a flag or drag a card. Comparison scores
-        update when you rebuild comparison — live stage and Drive links join by
-        company id.
+        Stages only move when you Accept a flag or drag a card. Live stage on Fit
+        comparison reads GitHub main, so Passed moves off the ranking without a
+        redeploy. Comparison scores still refresh when you rebuild comparison.
       </p>
     </div>
   );

@@ -4108,6 +4108,29 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.45;
 }
 
+.wr-compare-archive {
+  margin: 14px 0 8px;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+  padding-top: 10px;
+}
+
+.wr-compare-archive summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.wr-compare-archived,
+.wr-compare-row-archived {
+  opacity: 0.78;
+}
+
+.wr-compare-row-archived td:first-child strong {
+  font-weight: 600;
+}
+
 @media (max-width: 640px) {
   /* Below phone width a horizontally-scrolled 9-column table can't be
      scanned no matter how it's tuned — convert each row into a

@@ -1,6 +1,7 @@
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 import type { Company } from "./types";
+import { ARCHIVE_STAGES } from "./types";
 
 export type ComparisonRow = {
   companyId: string;
@@ -39,6 +40,17 @@ export type RankedComparisonRow = ComparisonRow & {
   company: Company | null;
 };
 
+export type JoinedComparison = {
+  active: RankedComparisonRow[];
+  archived: RankedComparisonRow[];
+};
+
+function isArchivedStage(stage: string | undefined | null): boolean {
+  return Boolean(
+    stage && (ARCHIVE_STAGES as readonly string[]).includes(stage)
+  );
+}
+
 export function rankScore(
   r: Pick<
     ComparisonRow,
@@ -65,8 +77,7 @@ export function getRecruitingComparison(): ComparisonFile | null {
   }
 }
 
-/** Join scored rows to live pipeline companies (stage, Drive, name). */
-export function joinComparison(
+function toRanked(
   file: ComparisonFile,
   companies: Company[]
 ): RankedComparisonRow[] {
@@ -77,9 +88,25 @@ export function joinComparison(
       rank: rankScore(r),
       company: byId.get(r.companyId) || null,
     }))
-    .filter((r) => {
-      const stage = r.company?.stage;
-      return stage !== "passed" && stage !== "ghosted";
-    })
     .sort((a, b) => b.rank - a.rank);
+}
+
+/**
+ * Join scored rows to live pipeline companies.
+ * Active ranking excludes passed/ghosted; those go in `archived`.
+ */
+export function joinComparison(
+  file: ComparisonFile,
+  companies: Company[]
+): JoinedComparison {
+  const ranked = toRanked(file, companies);
+  const active: RankedComparisonRow[] = [];
+  const archived: RankedComparisonRow[] = [];
+
+  for (const r of ranked) {
+    if (isArchivedStage(r.company?.stage)) archived.push(r);
+    else active.push(r);
+  }
+
+  return { active, archived };
 }
