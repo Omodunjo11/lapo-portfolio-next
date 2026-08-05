@@ -24,10 +24,16 @@ import { EDITABLE_STAGES } from "@/lib/recruiting/types";
 async function rememberHandled(keys: string[]) {
   if (!keys.length) return;
   const inbox = getRecruitingInbox();
+  const handledKeys = mergeHandledKeys(inbox.handledKeys, keys);
+  const keySet = new Set(keys);
+  const pendingFlags = (inbox.pendingFlags || []).filter(
+    (f) => !keySet.has(f.key) && !keySet.has(f.id)
+  );
   await commitRecruitingInbox(
     {
       ...inbox,
-      handledKeys: mergeHandledKeys(inbox.handledKeys, keys),
+      handledKeys,
+      pendingFlags,
     },
     `War room: remember ${keys.length} handled inbox flag(s)`
   );

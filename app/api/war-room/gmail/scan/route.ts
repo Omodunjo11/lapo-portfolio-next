@@ -7,7 +7,11 @@ import {
   applyCalendarFacts,
   scanInterviewSignals,
 } from "@/lib/recruiting/gmail/scan";
-import { proposalsToFlags } from "@/lib/recruiting/inbox";
+import {
+  proposalsToFlags,
+  mergePendingFlags,
+  activePendingFlags,
+} from "@/lib/recruiting/inbox";
 import {
   commitRecruitingInbox,
   getRecruitingInbox,
@@ -181,12 +185,18 @@ async function runScan(opts: {
   }
 
   const prevInbox = getRecruitingInbox();
-  // Same messages/threads that were already in the last scan must not
-  // propose another "→ next round" just because Scan ran again.
-  const flags = proposalsToFlags(pipeline, scan.proposals, {
+  // Only NEW messages vs last scan become flags. Same threads already in the
+  // snapshot do not propose another "→ next round".
+  const discovered = proposalsToFlags(pipeline, scan.proposals, {
     handledKeys: prevInbox.handledKeys || [],
     alreadySeenProposals: prevInbox.proposals || [],
   });
+  const pendingFlags = activePendingFlags(
+    pipeline,
+    mergePendingFlags(prevInbox.pendingFlags, discovered),
+    [],
+    prevInbox.handledKeys || []
+  );
 
   const inbox = {
     scannedAt: scan.scannedAt,
@@ -195,12 +205,13 @@ async function runScan(opts: {
     calendarMatched: scan.calendarMatched,
     proposals: scan.proposals,
     handledKeys: prevInbox.handledKeys || [],
+    pendingFlags,
   };
 
   if (opts.persist) {
     await commitRecruitingInbox(
       inbox,
-      `War room Gmail scan: ${scan.proposals.length} proposal(s), ${flags.length} new flag(s)`
+      `War room Gmail scan: ${scan.proposals.length} proposal(s), ${discovered.length} new flag(s)`
     );
   }
 
@@ -211,7 +222,7 @@ async function runScan(opts: {
       appliedCalendar,
       prep,
       spamMatched: scan.spamMatched,
-      flags,
+      flags: pendingFlags,
     }),
   };
 }

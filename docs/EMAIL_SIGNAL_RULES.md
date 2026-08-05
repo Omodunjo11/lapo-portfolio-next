@@ -13,7 +13,7 @@ Truth: scheduling conflict / reschedule. Lapo accepted Aug 7. Kate confirmed Ran
 5. Pipeline stage never auto-moves to passed. Flags require Accept. If a reject flag looks wrong, Dismiss it and fix the classifier if needed.
 6. Scheduling conflict language often includes soft apology words. Prefer process outcome over tone.
 7. **Same-round logistics are not stage advances.** Calendar invites, interview confirmations, updated invitations, and reminders that only name a COO / hiring manager / panel are `schedule` (or ignored for stage flags). Stage-advance flags require explicit progression language (`next steps`, `next round`, `move forward`, NDA, take-home, offer, etc.).
-8. **Re-scan is not re-advance.** If the same Gmail message — or another message in the same thread that already floated as an advance — is still in the scan window, do **not** propose another funnel bump. Only a *new* message/thread with real progression language should reopen a stage flag. Accept/Dismiss also permanently remembers that thread key.
+8. **Re-scan is not re-advance.** Stage-move flags are only created when Scan discovers a *new* message/thread. They live in `pendingFlags` until Accept/Dismiss. Reloading the page or re-scanning the same inbox must not rebuild “→ next round” from old Gmail.
 
 ## Classifier ownership
 

@@ -12,6 +12,7 @@ export function getRecruitingInbox(): InboxSnapshot {
     calendarMatched?: number;
     proposals?: InboxSnapshot["proposals"];
     handledKeys?: string[];
+    pendingFlags?: InboxSnapshot["pendingFlags"];
   };
   return {
     scannedAt: raw.scannedAt || "",
@@ -20,6 +21,7 @@ export function getRecruitingInbox(): InboxSnapshot {
     calendarMatched: raw.calendarMatched || 0,
     proposals: raw.proposals || [],
     handledKeys: raw.handledKeys || [],
+    pendingFlags: raw.pendingFlags || [],
   };
 }
 

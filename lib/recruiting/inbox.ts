@@ -9,11 +9,14 @@ export type InboxSnapshot = {
   gmailMatched: number;
   calendarMatched: number;
   proposals: IngestProposal[];
-  /**
-   * Fingerprints dismissed or accepted — never float that thread+stage again.
-   * Distinct from "already seen last scan" which uses previous proposals.
-   */
+  /** Dismissed / accepted thread keys — permanent suppress. */
   handledKeys?: string[];
+  /**
+   * Stage-move flags first discovered on a Scan. Shown on Today until
+   * Accept/Dismiss. Re-derived flags from the whole inbox are never used
+   * on page load — that was causing the same emails to nag every visit.
+   */
+  pendingFlags?: InboxFlag[];
 };
 
 export type InboxFlag = {
@@ -92,18 +95,14 @@ function threadKey(p: IngestProposal): string {
 }
 
 /**
- * Turn non-noise proposals into accept/dismiss flags (stage moves only on Accept).
- *
- * Re-scan rule: if this exact message — or its thread for advances — was already
- * in the previous scan’s proposals, do not propose another stage bump. That is
- * how “same invite pops again” stops being treated as moving to the next round.
+ * Discover NEW stage-move flags from a scan (vs previous proposals).
+ * Do not call this on cold page load against the full inbox — use pendingFlags.
  */
 export function proposalsToFlags(
   pipeline: Pipeline,
   proposals: IngestProposal[],
   filter: FlagFilter | string[] = {}
 ): InboxFlag[] {
-  // Back-compat: older callers passed dismissedIds as the 3rd arg array.
   const opts: FlagFilter = Array.isArray(filter)
     ? { dismissedIds: filter }
     : filter;
@@ -206,8 +205,6 @@ export function proposalsToFlags(
       const next = nextFunnelStage(company.stage);
       if (!next) continue;
 
-      // Already mid/late funnel: don't let an older "next steps / HM" mail keep
-      // bumping stages. Require language that clearly names a later milestone.
       if (
         (company.stage === "second" ||
           company.stage === "third" ||
@@ -221,7 +218,6 @@ export function proposalsToFlags(
 
       const key = proposalStageKey(p, next);
       if (handled.has(key) || dismissed.has(key)) continue;
-      // Same email as last scan, or any prior advance in this thread.
       if (alreadyScanned || seenAdvanceThreads.has(threadKey(p))) continue;
 
       out.push({
@@ -246,4 +242,60 @@ export function mergeHandledKeys(
   keys: string[]
 ): string[] {
   return [...new Set([...(existing || []), ...keys])];
+}
+
+/** Keep pending flags that are still valid for the live pipeline stage. */
+export function activePendingFlags(
+  pipeline: Pipeline,
+  pending: InboxFlag[] | undefined,
+  dismissedIds: string[] = [],
+  handledKeys: string[] = []
+): InboxFlag[] {
+  const dismissed = new Set(dismissedIds);
+  const handled = new Set(handledKeys);
+  const out: InboxFlag[] = [];
+  for (const f of pending || []) {
+    if (dismissed.has(f.id) || dismissed.has(f.key) || handled.has(f.key)) {
+      continue;
+    }
+    const company = pipeline.companies.find((c) => c.id === f.companyId);
+    if (!company) continue;
+    if (
+      company.stage === "passed" ||
+      company.stage === "ghosted" ||
+      company.stage === "offered"
+    ) {
+      continue;
+    }
+    // Drop if they already moved past the suggested toStage (or to it).
+    const order = [
+      "applied",
+      "first",
+      "second",
+      "third",
+      "fourth",
+      "final",
+      "offered",
+    ];
+    const cur = order.indexOf(company.stage);
+    const to = order.indexOf(f.toStage);
+    if (cur >= 0 && to >= 0 && cur >= to && f.fromStage !== f.toStage) {
+      continue;
+    }
+    out.push({
+      ...f,
+      fromStage: company.stage,
+    });
+  }
+  return dedupeFlagsByCompany(out);
+}
+
+export function mergePendingFlags(
+  existing: InboxFlag[] | undefined,
+  discovered: InboxFlag[]
+): InboxFlag[] {
+  const byKey = new Map<string, InboxFlag>();
+  for (const f of existing || []) byKey.set(f.key, f);
+  for (const f of discovered) byKey.set(f.key, f);
+  return [...byKey.values()];
 }

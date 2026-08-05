@@ -1,21 +1,24 @@
 import { buildSuggestions, type Suggestion } from "./board";
-import { proposalsToFlags } from "./inbox";
+import { activePendingFlags } from "./inbox";
 import { getRecruitingInbox } from "./inbox-store";
 import type { Pipeline } from "./types";
 
-/** Event-based suggestions + latest Gmail/Calendar inbox flags. */
+/**
+ * Today flags = board event heuristics + pending inbox flags discovered on Scan.
+ * Never re-derive stage bumps from the full saved inbox (that re-nagged every visit).
+ */
 export function allSuggestions(
   pipeline: Pipeline,
   dismissedIds: string[] = []
 ): Suggestion[] {
   const fromEvents = buildSuggestions(pipeline, dismissedIds);
   const inbox = getRecruitingInbox();
-  // Page load: show current flags until Accept/Dismiss. Re-scan uses
-  // alreadySeenProposals so the same threads don't re-nag.
-  const fromInbox: Suggestion[] = proposalsToFlags(pipeline, inbox.proposals, {
+  const fromInbox: Suggestion[] = activePendingFlags(
+    pipeline,
+    inbox.pendingFlags,
     dismissedIds,
-    handledKeys: inbox.handledKeys || [],
-  }).map((f) => ({
+    inbox.handledKeys || []
+  ).map((f) => ({
     id: f.id,
     companyId: f.companyId,
     fromStage: f.fromStage,
