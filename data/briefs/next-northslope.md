@@ -1,14 +1,15 @@
-# Northslope: Interview Notes and Prep
+# Northslope Technologies: Interview Notes and Prep
+
+Onaolapo (Lapo) Odunjo. Role: Business Operations and Strategy. Living notes doc, add to this after every conversation.
 
 ## Company research
 
-- Northslope Technologies; business ops / strategy leadership conversation.
-- Recruiter / sender: Samantha Obre (sobre@northslopetech.com).
-- Domain: northslopetech.com.
-- Public signal to verify carefully: OpenAI deployment ecosystem linkage (do not overclaim).
-- First-round interview scheduled Thu Aug 6, 2026, 4:30–5:00pm ET.
-
-Onaolapo (Lapo) Odunjo. Role: Business Operations and Strategy. Living notes doc, add to this after every conversation.
+- Northslope Technologies, domain northslopetech.com.
+- Outreach from Samantha Obre (sobre@northslopetech.com).
+- Role frame on file: Business Operations and Strategy leadership.
+- First-round interview: Thu Aug 6, 2026, 4:30–5:00pm ET.
+- Public linkage signal (verify, do not overclaim): OpenAI deployment ecosystem association mentioned in current notes.
+- Why it matters for Lapo: ops + strategy seat near an AI deployment motion, if the thesis holds under diligence.
 
 ## Company and contacts, from your inbox
 
