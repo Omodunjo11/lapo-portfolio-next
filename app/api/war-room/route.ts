@@ -7,12 +7,31 @@ import {
 } from "@/lib/recruiting/board";
 import { allSuggestions } from "@/lib/recruiting/flags";
 import {
+  mergeHandledKeys,
+} from "@/lib/recruiting/inbox";
+import {
+  getRecruitingInbox,
+  commitRecruitingInbox,
+} from "@/lib/recruiting/inbox-store";
+import {
   getRecruitingPipeline,
   loadWritablePipeline,
 } from "@/lib/recruiting/pipeline";
 import { commitPipeline } from "@/lib/recruiting/store";
 import type { FunnelStage } from "@/lib/recruiting/types";
 import { EDITABLE_STAGES } from "@/lib/recruiting/types";
+
+async function rememberHandled(keys: string[]) {
+  if (!keys.length) return;
+  const inbox = getRecruitingInbox();
+  await commitRecruitingInbox(
+    {
+      ...inbox,
+      handledKeys: mergeHandledKeys(inbox.handledKeys, keys),
+    },
+    `War room: remember ${keys.length} handled inbox flag(s)`
+  );
+}
 
 const STAGE_LABELS: Record<string, string> = {
   applied: "Applied",
@@ -92,6 +111,7 @@ export async function POST(req: Request) {
     stage?: FunnelStage;
     stageLabel?: string;
     toStage?: FunnelStage;
+    key?: string;
   };
   try {
     body = await req.json();
@@ -129,7 +149,12 @@ export async function POST(req: Request) {
       if (!prefs.dismissedSuggestionIds.includes(id)) {
         prefs.dismissedSuggestionIds.push(id);
       }
+      const key = typeof body.key === "string" ? body.key : "";
+      if (key && !prefs.dismissedSuggestionIds.includes(key)) {
+        prefs.dismissedSuggestionIds.push(key);
+      }
       await savePrefs(userId, user, prefs);
+      await rememberHandled([id, key].filter(Boolean));
     } else if (body.action === "accept_suggestion") {
       const id = String(body.id || "");
       if (!id) return NextResponse.json({ error: "missing id" }, { status: 400 });
@@ -154,6 +179,7 @@ export async function POST(req: Request) {
             toStage: body.toStage,
             reason: "client accept",
             status: "pending",
+            key: typeof body.key === "string" ? body.key : undefined,
           };
         }
       }
@@ -177,7 +203,11 @@ export async function POST(req: Request) {
       if (!prefs.dismissedSuggestionIds.includes(id)) {
         prefs.dismissedSuggestionIds.push(id);
       }
+      if (sug.key && !prefs.dismissedSuggestionIds.includes(sug.key)) {
+        prefs.dismissedSuggestionIds.push(sug.key);
+      }
       await savePrefs(userId, user, prefs);
+      await rememberHandled([id, sug.key].filter(Boolean) as string[]);
       // No-op stage (e.g. Spam acknowledge) still dismisses the flag; only
       // commit pipeline when the stage actually changes.
       if (sug.fromStage !== sug.toStage) {

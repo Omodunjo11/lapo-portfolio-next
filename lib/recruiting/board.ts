@@ -7,6 +7,8 @@ export type Suggestion = {
   toStage: FunnelStage;
   reason: string;
   status: "pending" | "accepted" | "dismissed";
+  /** Inbox suppress key (thread + company + toStage). */
+  key?: string;
 };
 
 export type BoardPrefs = {

@@ -424,6 +424,7 @@ export default function WarRoomBoard({
         id,
         companyId: sug?.companyId,
         toStage: sug?.toStage,
+        key: sug?.key,
       }).then((ok) => {
         if (!ok && sug) {
           setSuggestions((prev) =>
@@ -440,9 +441,10 @@ export default function WarRoomBoard({
   }
 
   function dismiss(id: string) {
+    const sug = suggestions.find((s) => s.id === id);
     setSuggestions((prev) => prev.filter((s) => s.id !== id));
     startTransition(() => {
-      void post({ action: "dismiss_suggestion", id });
+      void post({ action: "dismiss_suggestion", id, key: sug?.key });
     });
   }
 
@@ -511,6 +513,7 @@ export default function WarRoomBoard({
             fromStage: FunnelStage;
             toStage: FunnelStage;
             reason: string;
+            key?: string;
           }) => ({
             id: f.id,
             companyId: f.companyId,
@@ -518,6 +521,7 @@ export default function WarRoomBoard({
             toStage: f.toStage,
             reason: f.reason,
             status: "pending" as const,
+            key: f.key,
           })
         );
         setSuggestions((prev) => {

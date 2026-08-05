@@ -9,6 +9,11 @@ export type InboxSnapshot = {
   gmailMatched: number;
   calendarMatched: number;
   proposals: IngestProposal[];
+  /**
+   * Fingerprints dismissed or accepted — never float that thread+stage again.
+   * Distinct from "already seen last scan" which uses previous proposals.
+   */
+  handledKeys?: string[];
 };
 
 export type InboxFlag = {
@@ -20,6 +25,14 @@ export type InboxFlag = {
   source: "gmail" | "calendar";
   signal: IngestProposal["signal"];
   subject?: string;
+  key: string;
+};
+
+export type FlagFilter = {
+  dismissedIds?: string[];
+  handledKeys?: string[];
+  /** Proposals from the previous scan — same message/thread must not re-nag. */
+  alreadySeenProposals?: IngestProposal[];
 };
 
 const SIGNAL_RANK: Record<IngestSignal, number> = {
@@ -30,7 +43,17 @@ const SIGNAL_RANK: Record<IngestSignal, number> = {
   noise: 0,
 };
 
-/** One flag per company — prefer stronger signals; ties keep the newer proposal. */
+const OWN_MAIL =
+  /odunjoonaolapo@gmail\.com|omodunjo@wharton\.upenn\.edu/i;
+
+export function proposalStageKey(
+  p: Pick<IngestProposal, "companyId" | "threadId" | "id" | "source">,
+  toStage: FunnelStage
+): string {
+  const thread = p.threadId || p.id;
+  return `${p.companyId}|${p.source}|${thread}|${toStage}`;
+}
+
 export function dedupeFlagsByCompany(flags: InboxFlag[]): InboxFlag[] {
   const best = new Map<string, InboxFlag>();
   for (const f of flags) {
@@ -42,7 +65,6 @@ export function dedupeFlagsByCompany(flags: InboxFlag[]): InboxFlag[] {
     const rank = SIGNAL_RANK[f.signal] ?? 0;
     const prevRank = SIGNAL_RANK[prev.signal] ?? 0;
     if (rank > prevRank) best.set(f.companyId, f);
-    // Equal rank: keep existing (proposals are newest-first from Gmail scan).
   }
   return [...best.values()];
 }
@@ -51,18 +73,55 @@ function blob(p: IngestProposal) {
   return `${p.subject || ""} ${p.reason || ""} ${p.snippet || ""} ${p.summary || ""}`;
 }
 
-/** Turn non-noise proposals into accept/dismiss flags (stage moves only on Accept). */
+function isSchedulingOverview(p: IngestProposal): boolean {
+  const sub = p.subject || "";
+  return /\b(scheduling|interview overview|availability|calendly|invitation:|updated invitation|reminder:)\b/i.test(
+    sub
+  );
+}
+
+function isOutboundFromLapo(p: IngestProposal): boolean {
+  const from = p.from || "";
+  if (!OWN_MAIL.test(from)) return false;
+  const left = from.split("→")[0] || from;
+  return OWN_MAIL.test(left);
+}
+
+function threadKey(p: IngestProposal): string {
+  return `${p.companyId}|${p.threadId || p.id}`;
+}
+
+/**
+ * Turn non-noise proposals into accept/dismiss flags (stage moves only on Accept).
+ *
+ * Re-scan rule: if this exact message — or its thread for advances — was already
+ * in the previous scan’s proposals, do not propose another stage bump. That is
+ * how “same invite pops again” stops being treated as moving to the next round.
+ */
 export function proposalsToFlags(
   pipeline: Pipeline,
   proposals: IngestProposal[],
-  dismissedIds: string[] = []
+  filter: FlagFilter | string[] = {}
 ): InboxFlag[] {
-  const dismissed = new Set(dismissedIds);
+  // Back-compat: older callers passed dismissedIds as the 3rd arg array.
+  const opts: FlagFilter = Array.isArray(filter)
+    ? { dismissedIds: filter }
+    : filter;
+  const dismissed = new Set(opts.dismissedIds || []);
+  const handled = new Set(opts.handledKeys || []);
+  const seenMsgs = new Set(
+    (opts.alreadySeenProposals || []).map((p) => `${p.source}:${p.id}`)
+  );
+  const seenAdvanceThreads = new Set(
+    (opts.alreadySeenProposals || [])
+      .filter((p) => p.signal === "advance" && p.companyId)
+      .map((p) => threadKey(p))
+  );
+
   const out: InboxFlag[] = [];
 
   for (const p of proposals) {
     if (!p.companyId || p.signal === "noise") continue;
-    // Non-spam waits stay quiet; spam waits surface below.
     if (
       p.signal === "wait" &&
       !(p.fromSpam || /\b\[spam\]\b/i.test(p.subject || ""))
@@ -82,7 +141,11 @@ export function proposalsToFlags(
     const id = `inbox-${p.source}-${p.id}`;
     if (dismissed.has(id)) continue;
 
+    const alreadyScanned = seenMsgs.has(`${p.source}:${p.id}`);
+
     if (p.signal === "reject") {
+      const key = proposalStageKey(p, "passed");
+      if (handled.has(key) || dismissed.has(key) || alreadyScanned) continue;
       out.push({
         id,
         companyId: company.id,
@@ -92,12 +155,14 @@ export function proposalsToFlags(
         source: p.source,
         signal: p.signal,
         subject: p.subject || p.summary,
+        key,
       });
       continue;
     }
 
-    // Surface Spam hits even when they're not a stage-move yet.
     if (p.signal === "wait" && (p.fromSpam || /\b\[spam\]\b/i.test(p.subject || ""))) {
+      const key = `${company.id}|spam|${p.threadId || p.id}`;
+      if (handled.has(key) || dismissed.has(key) || alreadyScanned) continue;
       out.push({
         id,
         companyId: company.id,
@@ -107,15 +172,16 @@ export function proposalsToFlags(
         source: p.source,
         signal: p.signal,
         subject: p.subject || p.summary,
+        key,
       });
       continue;
     }
 
     if (p.signal === "schedule") {
-      // Calendar sync already adds the event — never treat calendar as a stage bump.
-      // Gmail schedule: only Applied → 1st. Same-round invites must not look like advances.
       if (p.source === "calendar") continue;
       if (company.stage === "applied") {
+        const key = proposalStageKey(p, "first");
+        if (handled.has(key) || dismissed.has(key) || alreadyScanned) continue;
         out.push({
           id,
           companyId: company.id,
@@ -125,18 +191,39 @@ export function proposalsToFlags(
           source: p.source,
           signal: p.signal,
           subject: p.subject || p.summary,
+          key,
         });
       }
       continue;
     }
 
     if (p.signal === "advance") {
-      // Already at end of funnel — don't spam duplicate "advance" flags.
       if (company.stage === "final") continue;
-      // Require explicit progression words so same-round logistics don't +1 stage.
+      if (isOutboundFromLapo(p)) continue;
+      if (isSchedulingOverview(p)) continue;
       if (!hasExplicitProgression(blob(p))) continue;
+
       const next = nextFunnelStage(company.stage);
       if (!next) continue;
+
+      // Already mid/late funnel: don't let an older "next steps / HM" mail keep
+      // bumping stages. Require language that clearly names a later milestone.
+      if (
+        (company.stage === "second" ||
+          company.stage === "third" ||
+          company.stage === "fourth") &&
+        !/\b(final\s+round|third\s+round|fourth\s+round|on-?site|super\s*day|panel interview|reference check|offer (?:discussion|letter)|verbal offer)\b/i.test(
+          blob(p)
+        )
+      ) {
+        continue;
+      }
+
+      const key = proposalStageKey(p, next);
+      if (handled.has(key) || dismissed.has(key)) continue;
+      // Same email as last scan, or any prior advance in this thread.
+      if (alreadyScanned || seenAdvanceThreads.has(threadKey(p))) continue;
+
       out.push({
         id,
         companyId: company.id,
@@ -146,9 +233,17 @@ export function proposalsToFlags(
         source: p.source,
         signal: p.signal,
         subject: p.subject || p.summary,
+        key,
       });
     }
   }
 
   return dedupeFlagsByCompany(out);
+}
+
+export function mergeHandledKeys(
+  existing: string[] | undefined,
+  keys: string[]
+): string[] {
+  return [...new Set([...(existing || []), ...keys])];
 }

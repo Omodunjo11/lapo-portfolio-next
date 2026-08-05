@@ -8,7 +8,10 @@ import {
   scanInterviewSignals,
 } from "@/lib/recruiting/gmail/scan";
 import { proposalsToFlags } from "@/lib/recruiting/inbox";
-import { commitRecruitingInbox } from "@/lib/recruiting/inbox-store";
+import {
+  commitRecruitingInbox,
+  getRecruitingInbox,
+} from "@/lib/recruiting/inbox-store";
 import {
   getRecruitingPipeline,
   loadWritablePipeline,
@@ -177,22 +180,29 @@ async function runScan(opts: {
     );
   }
 
+  const prevInbox = getRecruitingInbox();
+  // Same messages/threads that were already in the last scan must not
+  // propose another "→ next round" just because Scan ran again.
+  const flags = proposalsToFlags(pipeline, scan.proposals, {
+    handledKeys: prevInbox.handledKeys || [],
+    alreadySeenProposals: prevInbox.proposals || [],
+  });
+
   const inbox = {
     scannedAt: scan.scannedAt,
     days: scan.days,
     gmailMatched: scan.gmailMatched,
     calendarMatched: scan.calendarMatched,
     proposals: scan.proposals,
+    handledKeys: prevInbox.handledKeys || [],
   };
 
   if (opts.persist) {
     await commitRecruitingInbox(
       inbox,
-      `War room Gmail scan: ${scan.proposals.length} proposal(s)`
+      `War room Gmail scan: ${scan.proposals.length} proposal(s), ${flags.length} new flag(s)`
     );
   }
-
-  const flags = proposalsToFlags(pipeline, scan.proposals);
 
   return {
     ok: NextResponse.json({
