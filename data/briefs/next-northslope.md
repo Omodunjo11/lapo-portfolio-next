@@ -1,5 +1,13 @@
 # Northslope: Interview Notes and Prep
 
+## Company research
+
+- Northslope Technologies; business ops / strategy leadership conversation.
+- Recruiter / sender: Samantha Obre (sobre@northslopetech.com).
+- Domain: northslopetech.com.
+- Public signal to verify carefully: OpenAI deployment ecosystem linkage (do not overclaim).
+- First-round interview scheduled Thu Aug 6, 2026, 4:30–5:00pm ET.
+
 Onaolapo (Lapo) Odunjo. Role: Business Operations and Strategy. Living notes doc, add to this after every conversation.
 
 ## Company and contacts, from your inbox
