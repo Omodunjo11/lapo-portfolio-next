@@ -51,13 +51,13 @@
       "id": "blue-orange-digital",
       "name": "Blue Orange Digital",
       "role": "Chief of Staff",
-      "stage": "final",
-      "stageLabel": "Final",
+      "stage": "passed",
+      "stageLabel": "Passed",
       "ball": "you",
       "priority": "P0",
-      "nextAction": "Attend: Onaolapo Odunjo / Rizwan Yousuf (Blue Orange Digital)",
+      "nextAction": "Passed - no further chase",
       "due": "2026-07-28",
-      "nudgeDate": "2026-08-05",
+      "nudgeDate": null,
       "lean": null,
       "contacts": [
         {
@@ -485,7 +485,7 @@
       "title": "Onaolapo Odunjo / Rizwan Yousuf (Blue Orange Digital)",
       "with": "",
       "type": "other",
-      "status": "scheduled",
+      "status": "canceled",
       "briefPath": "briefs/next-blue-orange-digital.md",
       "blocker": null
     },
@@ -679,12 +679,6 @@
       "companyId": "brain-co",
       "due": "2026-08-07",
       "detail": "Nudge Michal/Alina if no HM forward yet",
-      "draft": "soft-nudge"
-    },
-    {
-      "companyId": "blue-orange-digital",
-      "due": "2026-08-05",
-      "detail": "Nudge Catarina if still silent on Rizwan decision",
       "draft": "soft-nudge"
     },
     {
