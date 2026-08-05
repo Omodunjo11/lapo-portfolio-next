@@ -63,4 +63,3 @@ First call with Samantha or hiring manager. Testing fit for Business Operations 
 Stub until live feedback lands. Each update should keep prior feedback and refresh only the next-step section.
 
 This is a living document. Add new notes here after every Northslope conversation so the next round always has the full picture in one place.
-\n
