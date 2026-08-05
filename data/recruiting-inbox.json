@@ -1,5 +1,5 @@
 {
-  "scannedAt": "2026-08-05T19:26:20.193Z",
+  "scannedAt": "2026-08-05T19:38:14.453Z",
   "days": 7,
   "gmailMatched": 100,
   "calendarMatched": 10,
@@ -722,8 +722,8 @@
       "companyId": "northslope",
       "companyName": "Northslope",
       "signal": "schedule",
-      "confidence": "medium",
-      "reason": "untracked calendar interview"
+      "confidence": "high",
+      "reason": "calendar interview matched company"
     },
     {
       "source": "calendar",
