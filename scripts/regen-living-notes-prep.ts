@@ -26,7 +26,7 @@ const ROOT = process.cwd();
 const BRIEFS = join(ROOT, "data", "briefs");
 const PIPELINE_PATH = join(ROOT, "data", "recruiting-pipeline.json");
 
-const SKIP = new Set(["semgrep"]);
+const SKIP = new Set(["semgrep", "brain-co"]); // brain-co uses human gold notes in debriefs/
 
 function wipeBriefs() {
   if (!existsSync(BRIEFS)) return [];

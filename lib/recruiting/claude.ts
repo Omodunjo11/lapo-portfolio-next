@@ -10,7 +10,9 @@ export function getAnthropic() {
   return new Anthropic({ apiKey, timeout: 45_000 });
 }
 
-/** Fast enough for scan path; override with ANTHROPIC_PREP_MODEL if needed. */
+/** Fast enough for scan path; prep writing defaults to Sonnet for Brain Co quality. */
 export function prepModel() {
-  return process.env.ANTHROPIC_PREP_MODEL?.trim() || "claude-haiku-4-5-20251001";
+  return (
+    process.env.ANTHROPIC_PREP_MODEL?.trim() || "claude-sonnet-4-5-20250929"
+  );
 }

@@ -1,106 +1,80 @@
 # Brain Co: Interview Notes and Prep
 
-Onaolapo (Lapo) Odunjo. Role: AI Deployment Lead. Living notes. Stage: Waiting for hiring manager (2nd round).
+Onaolapo (Lapo) Odunjo. Role: AI Deployment Lead. Living notes doc, add to this after every conversation.
 
-When: Mon, Aug 3, 2026, 2:00 PM ET
-With: TBD (watch for HM name)
-Calendar: Interview with Brain Co
 
-## Goal for this conversation
+## Company and contacts, from your inbox
 
-Establish that you own end-to-end AI deployment in regulated or high-stakes environments. Show you ship incomplete specs, measure adoption, and coach teams to scale. Prove you can move fast without breaking trust or compliance. Learn what "deployment" means to Brain Co: is it customer rollout, internal ops, or both?
+- Brain Co. is described as an applied AI startup, founded by Elad Gil and Eric Wu
+- Alina Kuznetsovski reached out on LinkedIn on July 29 about "First AI Deployment role at Brain Co."
+- Recruiter screen held Monday, August 3, 11:00 to 11:30am PT (2:00 to 2:30pm ET), over Google Meet, coordinated by Michal (michal@braincompany.ai), with Alina also involved
+- Otter's notetaker was not let into that meeting, so there is no automatic transcript. These notes below are what you captured yourself
 
-## What they are testing
+## Notes from the recruiter screen, August 3
 
-- Shipping velocity under incomplete information. Can you cut scope, ship, and measure adoption without waiting for perfect specs?
-- Regulated or high-stakes judgment. How do you hold precision and production quality when pressure is on?
-- Team leverage and coaching, not solo heroics. Do you scale through people or burn out trying?
-- Calm under pushback. How do you speak risk and outcomes, not emotion, when stakeholders disagree?
-- Honest gaps. Will you say "I don't know" or pretend domain depth you don't have?
+### Culture, what they want to hear
 
-## Opening (~20 seconds)
+- People work hard because they like the pace, not because of grind for its own sake
+- Built for people who are comfortable in fast paced, ambiguous environments
+- Values staying ahead of the curve and genuine interest in the work itself
+- Not a fit for people who need heavy structure, wait on others, or treat time as a blocker
+- Bias is to never wait: push forward with incomplete information
+- Team is sharp and expects you to work through mess alongside them
+- This is a lean, strong product org. The AI role sits between or adjacent to that group
 
-"Thanks for the time. I've spent the last few years owning AI deployment end-to-end: taking incomplete specs, shipping to production, measuring what sticks, and coaching teams to scale. I'm curious what 'deployment' means at Brain Co and where the biggest friction lives right now."
+### Role shape
 
-## Lines to land
+- Comfortable with ambiguity
+- Able to push forward on small amounts of information
+- Execution matters more than process for its own sake
+- This is an evergreen seat: an ongoing hiring need, not a one time opening
 
-1. Multi-account ownership at Kinage: took deployment from zero to twelve institutions, coached technical delivery, cut cost-to-serve by about 62 percent. Emphasis on team leverage and playbooks, not solo work.
+### Growth and go to market traction
 
-2. Regulated trust and precision: built eval gates and production quality bars at Bank. Fielded failure modes into Product. That muscle matters in any high-stakes rollout.
+- Strongest traction is where growth is already showing
+- Government is a real segment, with many nuances across verticals, meaning high complexity
+- Middle East, especially Qatar, is a real expansion bet
+- Seeds have been planted; the open decision is where to double down next
+- Your angle: help prioritize and execute where traction already exists, including the geography and vertical nuance
 
-3. Incomplete-info shipping: spec is never perfect. Cut scope, ship, measure adoption, iterate. That's how you move fast without breaking things.
+### Hiring status
 
-4. Calm under pressure: when stakeholders push back (TD-style), I speak risk and outcomes, offer a protected alternative, protect the delivery. No emotion, no drama.
+- Headcount is approved for the first lead or leads
+- They are mid pipeline, closing some candidates already
+- They are hiring more than one person for this kind of role
+- Client demand means they want to hire sooner rather than later
+- The role is evergreen
 
-5. Honest about gaps: I have strong deployment and team-scaling proof. Gov or MENA depth is thin. If that's critical, I'll say so upfront.
+### Work and travel policy
 
-## Stories to have ready
+- Hybrid, three days a week in the office when not traveling
+- NYC is more flexible and more remote friendly; align to the SF schedule
+- Travel is part of the job when needed
 
-### Kinage: Zero to Twelve Institutions
+### Next step
 
-Situation: Inherited a single-account deployment. No playbooks, no cost model, no team structure. Pressure to scale to 12 institutions in 18 months.
+The recruiter is forwarding you to the hiring manager. Watch for that outreach and reply promptly.
 
-Decision: Built a playbook for onboarding, trained a small team to own delivery, created cost-to-serve tracking. Focused on repeatability, not heroics.
+## Interview line to reuse, in their own language
 
-Result: Scaled to 12 institutions. Cost-to-serve dropped about 62 percent. Team could own new accounts without me in the room.
+"I'm at my best in lean, fast environments where the product bar is high and the brief is incomplete. I don't wait for perfect structure. I take partial signal, drive a decision, and keep the work moving, especially across nuanced verticals like government and new geographies."
 
-### Bank: Eval Gates and Production Quality
+## How to read this and what to do with it
 
-Situation: Pressure to ship a model to production. Stakeholders wanted to skip eval gates. I pushed back.
+This reads as a strong, live signal, not a generic pitch. A few things worth noticing:
 
-Decision: Built a lightweight eval gate that caught precision issues before field deployment. Spoke the risk clearly: "If we ship this, here's what fails in the field."
-
-Result: Caught two failure modes. Shipped a version that held. No customer fallout. Product team learned to field-test before launch.
-
-### Incomplete Spec, Ship Anyway
-
-Situation: Product spec was 60 percent done. Stakeholders wanted to wait. Customers were waiting.
-
-Decision: Cut scope to what we could ship in two weeks. Shipped with measurement hooks. Planned iteration.
-
-Result: Shipped on time. Measured adoption. Iterated based on real usage, not guesses. Adoption was 40 percent higher than the "perfect spec" would have predicted.
-
-## Questions to ask
-
-1. What does "deployment" mean at Brain Co right now? Are we talking customer rollout, internal ops, or both?
-
-2. Where is the biggest friction in your current deployment process? Is it speed, precision, team scaling, or something else?
-
-3. What does success look like in the first 90 days? What metric or outcome matters most?
-
-## Don't
-
-- Overclaim domain depth in gov, MENA, or regulatory frameworks you don't know well. Say "I don't know" if asked.
-- Pretend you have formal manager headcount if you don't. Lead by ownership and coaching.
-- Ramble about AI theory or product philosophy. Stay concrete: what shipped, what it cost, what happened next.
-- Defend incomplete specs as good. Own the tradeoff: speed vs. perfection, and how you measure the bet.
-- React emotionally to pushback. Speak risk, offer alternatives, protect the delivery.
-
-## Loop map
-
-Recruiter (done) > Hiring Manager (2nd round, waiting) > Likely: Peer or Ops Lead (3rd) > Likely: Leadership or Customer Stakeholder (final).
-
-## Prep bank
-
-- Kinage: 0 to 12 institutions, 62 percent cost-to-serve reduction, playbook-driven scaling.
-- Bank: eval gates, precision, production quality bar, field failure modes into Product.
-- Judgment under pressure: calm alternative, protected delivery, risk and outcomes not emotion.
-- Incomplete-info shipping: cut scope, ship, measure adoption, iterate.
-- People leadership: team leverage, coaching, no overclaim on formal headcount.
-- Honest gaps: Gov and MENA depth thin. Say so if asked.
-
-## After the call
-
-- Note the HM name, team size, and what "deployment" means at Brain Co.
-- Capture any pushback or skepticism. What did they probe on?
-- Assess fit: Is this a speed play, a precision play, or a team-scaling play?
-- If silent after 5 business days, nudge Michal or Alina.
+- The heavy emphasis on ambiguity and "never wait" is the single biggest theme. Whatever the hiring manager asks, look for a chance to show a time you moved on incomplete information and it worked out.
+- Government and Qatar coming up in a recruiter screen, not just an executive round, suggests this is a live strategic question at the company right now, not background color. If you have any experience touching government, regulated, or Middle East market entry work, that is worth surfacing early rather than saving for later rounds.
+- "Evergreen seat, hiring more than one" means this is not a single req you either win or lose. It is fine to treat this less like a one shot interview and more like an ongoing relationship: staying visibly sharp and responsive matters as much as any single answer.
+- Next step is on them (forwarding to the hiring manager). If you do not hear anything in three or four business days, a short, low pressure check in with Michal or Alina is reasonable, matching the casual tone they have used with you so far.
 
 ## Action items
 
-- Watch for HM outreach this week.
-- Review Kinage playbook notes before the call (cost model, onboarding checklist, team structure).
-- Prepare one concrete example of a field failure mode you caught and fixed.
-- Have a question ready about Brain Co's current deployment bottleneck.
+1. Watch for hiring manager outreach and respond quickly once it lands
+2. Prepare one or two specific stories that show deciding and moving with incomplete information, ideally from a regulated, enterprise, or cross border context
+3. If you have any real exposure to government sales, public sector procurement, or Middle East or Qatar market entry, write it down now while it is fresh, even if thin, since it maps directly to their stated GTM bet
+4. Keep your answers short and decisive in tone, since that matches the culture they described
+
+---
 
 This is a living document. Add new notes here after every Brain Co conversation so the next round always has the full picture in one place.

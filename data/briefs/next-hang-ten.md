@@ -1,106 +1,99 @@
 # Hang Ten: Interview Notes and Prep
 
-Onaolapo (Lapo) Odunjo. Role: Founding-team / TBD. Living notes. Stage: 2nd (accepted flag).
+Onaolapo (Lapo) Odunjo. Role: Founding-team / TBD. Living notes doc, add to this after every conversation.
 
-When: Mon, Aug 10, 2026, 12:00 PM ET
-With: Jack Ahn
-Calendar: Onaolapo (Lapo) Odunjo and Sanjay Rajagopalan
+## Company and contacts, from your inbox
 
-## Goal for this conversation
+- Hang Ten Systems is an enterprise AI services company in the Vishal Sikka / Navin Budhiraja orbit
+- Public framing: help large enterprises build, change, and run software with agentic AI
+- Seed: about $32M (Mayfield, Aramco Ventures). Named enterprise logos in market include Fresenius and Siemens Energy
+- Distinct from VianAI (Sikka's prior analytics / AI apps company). Do not conflate them
+- Founding-team conversation with Jack Ahn held Tuesday, August 4, 2026, 12:30 to 1:00pm ET over Google Meet (jack@hangten.ai)
+- Next calendar hold: Monday, August 10, 2026, 12:00pm ET with Sanjay Rajagopalan (sanjay@hangten.ai)
 
-Understand what Hang Ten is building, what "founding-team / TBD" means in their context, and whether there is a fit between your product-and-deployment playbook and their stage, market, and team structure. Assess Jack's leadership style and clarity on the first 6 months.
+## Notes from the founding-team screen, August 4 (Jack Ahn)
 
-## What they are testing
+### Company model
 
-- Comfort with ambiguity and undefined scope. Early-stage founding roles are often built, not hired into.
-- Ability to ship under incomplete information and measure what matters.
-- Judgment about when to push back on timeline or scope versus when to protect delivery.
-- Coachability and directness. Founding teams need people who say "no" and "here's why" without ego.
-- Product intuition about their market and user. You will need to learn fast.
-- Appetite for regulated or high-stakes environments if that is their domain.
+- Hang Ten is not a single-product company. Engagements vary by customer
+- The work is helping customers figure out what is possible, what needs to be done, and the best way to solve the real problem
+- Problems can be generic (for example, data) or highly custom
+- AI/ML is a tool, not the default. Sometimes the right answer is that AI is not the right approach
+- That judgment usually happens in discovery or early stages, when the approach is still being formulated
 
-## Opening (~20 seconds)
+### Team structure
 
-"Thanks for the time, Jack. I know Hang Ten is early and you're building out the founding team. I've spent the last few years shipping AI into production at scale, coaching teams through deployment, and learning how to make hard calls on scope and risk when specs are incomplete. Curious what you're solving and what the first few months look like."
+- Customer-facing build team: design and build production-quality solutions, deploy them, and aim for something sustainable
+- Agentic systems / internal enablement team: build tools that map customer landscape and architecture so solution engineers and architects get a kickstart and can focus on solving, not thrashing through discovery
+- These motions connect: better internal tooling should make customer delivery faster while the company is still small
 
-## Lines to land
+### Definition of done
 
-1. You ship under incomplete specs and measure adoption to decide next moves. Kinage went from 0 to 12 institutions by cutting scope, shipping, and letting users tell you what mattered.
+- Not enough: understanding the problem, running an agentic process, producing a design, or building something that only works in isolation
+- The job ends when the solution is fully deployed and actively used by end users, customer teams, and/or machine-to-machine systems
+- Output matters downstream. Value shows up after the system exists
 
-2. You protect delivery and speak risk clearly. You don't trade quality for speed, and you tell stakeholders what trade-offs mean.
+### Why the role is challenging
 
-3. You coach deployed teams and build playbooks so the work scales beyond you. You do not claim credit for solo heroics.
+- Problem quality under incomplete information; sometimes you must reject AI
+- Agentic process is necessary but not sufficient; production adoption is the bar
+- Diversity of environments: every stack, workflow, and constraint differs
+- Small team trying to roughly double over the next quarter or two
+- End-to-end ownership through deploy and usage, not just design or build
 
-4. You are honest about what you don't know. You have regulated-environment and production-quality discipline. You may be thin on gov or MENA depth if that is their market, and you will say so.
+### Culture and fit filter
 
-5. You are calm under pressure and direct with pushback. You have seen TD-style friction and know how to propose alternatives that protect both the business and the team.
+- Looking for people who thrive in ambiguity, pace, and small-team scale-up
+- Not a fit for someone who wants a stable, highly structured environment
+- Rough filter: thrive here is strong fit; need predictable structure is not this environment
 
-## Stories to have ready
+### Tools context discussed
 
-### Kinage: Multi-account deployment and cost-to-serve
+- For mid-size customers with small IT teams upskilling toward agentic code generation: Cursor first, with GitHub plus PR/CI gates
+- Do not jump straight to fully autonomous coding agents
+- Claude Code as a later power-user path
+- Agents should open PRs; humans and CI decide what merges
 
-Situation: Owned deployment across 12 institutions in parallel. Each had different specs, timelines, and integration needs. Cost-to-serve was high and uneven.
+### Next step after Jack
 
-Decision: Built a playbook for onboarding. Cut scope on custom integrations, shipped a standard path, measured adoption and support load. Coached field engineers to own their accounts and escalate only true blockers.
+Jack wanted to follow up after housekeeping on their side. Calendar has since landed for Sanjay on August 10.
 
-Result: Cost-to-serve dropped about 62 percent. Institutions shipped faster because they knew what to expect. Team scaled without proportional headcount growth.
+## Prep for Sanjay Rajagopalan, August 10
 
-### Incomplete-info shipping and adoption measurement
+Treat this as the next founding-team conversation after Jack's screen. Carry Jack's language forward.
 
-Situation: Specs were incomplete. Stakeholders wanted everything. Timeline was fixed.
+### What to carry forward from Jack
 
-Decision: Cut to the core user flow. Shipped a narrower feature set. Measured what users actually did versus what we predicted.
+- Done means deployed and actively used, not a design or a demo
+- AI is a tool, sometimes the wrong tool
+- Customer-facing build versus agentic enablement: ask which motion this seat owns
+- Small team scaling hard; environment diversity is the job
 
-Result: Adoption data showed us what to build next. Avoided building features no one used. Moved faster because we were not guessing.
+### Questions for Sanjay
 
-### Regulated environment and production quality bar
+1. What are you hiring this seat to own in the next 90 days, customer delivery or internal enablement?
+2. What did Jack's round already confirm, and what are you still testing?
+3. Where do Fresenius or Siemens Energy teach you the most about where Hang Ten must not become a services sink?
 
-Situation: Bank environment. Eval gates and precision mattered. A field failure could break trust.
+## Interview line to reuse, in their own language
 
-Decision: Built gates into the pipeline. Tested failure modes before production. Spoke to risk and outcomes, not emotion, when pushing back on timeline.
+"I measure the work the same way you do. Understanding the problem and running an agentic process is necessary, but it is not done. Done is fully deployed and actively used, by people or by systems. I'm comfortable deciding when AI is the wrong tool, and I like environments that are diverse, incomplete, and moving fast, including a small team that is scaling hard."
 
-Result: Zero production failures. Stakeholders trusted the bar because we were clear about what we were protecting.
+## How to read this and what to do with it
 
-## Questions to ask
+This was a company-understanding and mutual-fit conversation, not a deep technical grill. A few things worth noticing:
 
-1. What is the founding team structure right now, and what does "TBD" mean for this role? Are you building the role as we go, or is there a clear mandate?
-
-2. What is the first problem you are solving, and who is the first user? What does success look like in the first 6 months?
-
-3. How do you think about scope and timeline? If we have to choose between shipping something narrow and fast versus waiting for a fuller feature set, how do you want to make that call?
-
-## Don't
-
-- Oversell domain depth you don't have. If they ask about gov or MENA and that is their market, say "I have not worked there, and I would need to learn fast."
-- Claim formal manager headcount if you have not had it. Talk about coaching and ownership instead.
-- Ramble about AI trends or frameworks. Stay grounded in what you have shipped.
-- Agree to undefined scope without naming the risk. "Yes, and here is what we are trading off" is better than "yes."
-- Pretend to know Jack's background or Hang Ten's product if you don't. Ask.
-
-## Loop map
-
-Jack opens with Hang Ten's mission and the founding team shape. You listen and ask about the first 6 months. Jack describes the problem and the user. You ask how they think about scope. You land one story about shipping under incomplete specs. You ask what success looks like. Jack asks about your experience. You land the Kinage playbook story. Jack asks about your leadership style or a specific scenario. You answer with the TD pushback story or the regulated-environment story. Close with "What does the next step look like?"
-
-## Prep bank
-
-- Hang Ten: founding-team hiring at the 2nd interview stage. Jack Ahn is the point. Sanjay Rajagopalan is on the calendar. No fresh signal email, so assume you are being tested on comfort with ambiguity and directness.
-- Your strength: shipping under incomplete specs, coaching teams, protecting delivery, honest about gaps.
-- Your risk: may be thin on gov or MENA if that is their market. Own it if asked.
-- Tone: calm, direct, no ramble. Speak in Situation / Decision / Result. Listen more than you talk.
-
-## After the call
-
-- Write down what Hang Ten is building and what Jack said the first 6 months look like.
-- Note any red flags on scope clarity or team structure.
-- Assess Jack's leadership style: does he protect the team, or does he push scope without naming risk?
-- Decide if the role is a fit or if you need more information.
-- If you move forward, ask for a second conversation with the full founding team.
+- Deploy-to-adoption is their central standard. Every later story should end in real usage, not a deck or a demo.
+- AI judgment matters as much as AI enthusiasm. Prepare an example where you chose not to overbuild or over-AI.
+- Environment diversity and small-team scale-up are explicit challenges. Signal energy for that, not tolerance for it.
+- Next people and exact role shape (customer-facing build versus agentic enablement versus hybrid) are still partly open. Ask early with Sanjay.
+- Keep Hang Ten distinct from VianAI if deeper founders enter later rounds.
 
 ## Action items
 
-- Prepare one calm, direct opener about shipping under incomplete specs.
-- Have the Kinage story ready in under 90 seconds.
-- Be ready to ask about the first 6 months and how they make scope calls.
-- Listen for what "founding-team / TBD" means in Jack's words.
+1. Rehearse three stories that end in production usage: regulated bank/compliance, multi-environment delivery, and building process while shipping on a small team
+2. Prepare one clear example of recommending against AI or against overbuild when that was the better call
+3. Research Sanjay Rajagopalan before Monday and update this doc after the call
+4. Mirror their language in all follow-ups: diversity of environments, deploy-to-adoption as the finish line, agentic methods as accelerant not deliverable, high ownership with low structure
 
 This is a living document. Add new notes here after every Hang Ten conversation so the next round always has the full picture in one place.

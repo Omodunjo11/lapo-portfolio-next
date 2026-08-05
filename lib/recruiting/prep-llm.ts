@@ -2,17 +2,68 @@ import type Anthropic from "@anthropic-ai/sdk";
 import type { Company, PipelineEvent } from "./types";
 import { anthropicConfigured, getAnthropic, prepModel } from "./claude";
 
+/**
+ * Gold standard: the Brain Co Google Doc living notes.
+ * Readable titles, short bullets, prose judgment, action items.
+ * Not a consulting “prep deck” template.
+ */
+const BRAIN_CO_STYLE_SAMPLE = `
+# Brain Co: Interview Notes and Prep
+
+Onaolapo (Lapo) Odunjo. Role: AI Deployment Lead. Living notes doc, add to this after every conversation.
+
+## Company and contacts, from your inbox
+
+- Brain Co. is described as an applied AI startup, founded by Elad Gil and Eric Wu
+- Recruiter screen held Monday, August 3, coordinated by Michal, with Alina also involved
+- Otter's notetaker was not let into that meeting, so there is no automatic transcript
+
+## Notes from the recruiter screen, August 3
+
+### Culture, what they want to hear
+
+- People work hard because they like the pace, not because of grind for its own sake
+- Bias is to never wait: push forward with incomplete information
+- This is a lean, strong product org. The AI role sits between or adjacent to that group
+
+### Role shape
+
+- Comfortable with ambiguity
+- Able to push forward on small amounts of information
+- This is an evergreen seat: an ongoing hiring need, not a one time opening
+
+## Interview line to reuse, in their own language
+
+"I'm at my best in lean, fast environments where the product bar is high and the brief is incomplete. I don't wait for perfect structure. I take partial signal, drive a decision, and keep the work moving."
+
+## How to read this and what to do with it
+
+This reads as a strong, live signal, not a generic pitch. A few things worth noticing:
+
+- The heavy emphasis on ambiguity and "never wait" is the single biggest theme
+- Government and Qatar coming up in a recruiter screen suggests a live strategic question
+- Evergreen seat, hiring more than one: treat this like an ongoing relationship
+
+## Action items
+
+1. Watch for hiring manager outreach and respond quickly once it lands
+2. Prepare one or two specific stories that show deciding and moving with incomplete information
+3. Keep your answers short and decisive in tone, since that matches the culture they described
+
+This is a living document. Add new notes here after every Brain Co conversation so the next round always has the full picture in one place.
+`.trim();
+
 const CANDIDATE_CONTEXT = `
 Candidate: Onaolapo "Lapo" Odunjo (he/him). Wharton MBA. Product / forward-deployed AI.
-Voice: calm, direct, living-notes style. Situation, decision, system, result. No ramble. No fake domain depth.
+Voice: calm, specific, readable. Like briefing a sharp friend the night before. Not a template.
 
-Proof bank (use the relevant ones; do not invent employers or metrics):
-- Kinage: multi-account AI deployment ownership; coached technical delivery; playbooks; 0 to 12 institutions; cost-to-serve about 62 percent down. Emphasize team leverage, not solo heroics.
+Proof bank (use only what is relevant; do not invent employers or metrics):
+- Kinage: multi-account AI deployment; playbooks; coached deployed engineers; 0 to 12 institutions; cost-to-serve about 62 percent down. Team leverage, not solo heroics.
 - Bank / regulated trust: eval gates, precision, production quality bar; field failure modes into Product.
-- Judgment under pressure: TD-style pushback. Calm alternative, protected delivery, spoke risk and outcomes not emotion.
+- Judgment under pressure: TD-style pushback. Calm alternative, protected delivery, spoke to risk and outcomes.
 - Incomplete-info shipping: incomplete specs, cut scope, ship, measure adoption.
-- People leadership honesty: lead by ownership and coaching deployed engineers; do not overclaim formal manager headcount.
-- Incomplete-info STAR is drafted. Gov or MENA depth may be thin. Say so if asked.
+- Do not overclaim formal manager headcount. Lead by ownership and coaching.
+- Gov or MENA depth may be thin. Say so if asked.
 
 Do not invent companies, titles, metrics, or interviewer biographies.
 `.trim();
@@ -22,29 +73,32 @@ export type PrepGenInput = {
   event: PipelineEvent;
   emailContext?: string | null;
   existingBrief?: string | null;
-  /** Regenerate even when an existing brief looks rich. */
   force?: boolean;
 };
 
-/** True when brief already matches the living-notes style we want to keep. */
+/** Keep only Brain Co–style living notes. Force-regenerate robotic templates. */
 export function isRichBrief(text: string | null | undefined): boolean {
   if (!text) return false;
   if (looksLikeLegacyPrepDeck(text)) return false;
-  if (text.length >= 1800) return true;
-  return /living notes|action items|how to read this|interview line to reuse/i.test(
-    text
+  return (
+    /How to read this and what to do with it/i.test(text) &&
+    /Action items/i.test(text) &&
+    text.length >= 1200
   );
 }
 
-/** Old Cursor-style decks: tables, em dashes, bold labels, "Five lines to land". */
+/** Old decks + the failed auto template that feels unreadable in Drive. */
 export function looksLikeLegacyPrepDeck(text: string): boolean {
-  if (/Five lines to land|# Now |What they are testing\s*\n\s*\|/i.test(text)) {
+  if (/Five lines to land|# Now |Points to land|Lines to land/i.test(text)) {
     return true;
   }
-  if (text.includes("\u2014") || text.includes("**With:**") || text.includes("**When:**")) {
-    return true;
-  }
+  if (/## Goal for this conversation/i.test(text)) return true;
+  if (text.includes("\u2014")) return true;
+  if (text.includes("**With:**") || text.includes("**When:**")) return true;
   if (/^\|.+\|$/m.test(text) && text.includes("|---")) return true;
+  if (/Prep deck\s*[,:—-]/i.test(text) && !/Interview Notes and Prep/i.test(text)) {
+    return true;
+  }
   return false;
 }
 
@@ -61,73 +115,59 @@ export function stubPrepDeck(company: Company, event: PipelineEvent): string {
       })
     : "TBD";
 
+  const withWho = event.with || "TBD";
+
   return `# ${company.name}: Interview Notes and Prep
 
-Onaolapo (Lapo) Odunjo. Role: ${company.role}. Living notes doc. Stage: ${company.stageLabel || company.stage}.
+Onaolapo (Lapo) Odunjo. Role: ${company.role}. Living notes doc, add to this after every conversation.
 
-When: ${when} ET
-With: ${event.with || "TBD"}
-Calendar: ${event.title}
+## Company and contacts, from your inbox
 
-## Goal for this conversation
+- Role on file: ${company.role}
+- Stage: ${company.stageLabel || company.stage}
+- Priority: ${company.priority}
+- Next action on file: ${company.nextAction || "none"}
+- Upcoming: ${event.title} with ${withWho} (${when} ET)
 
-- Confirm fit for ${company.role}
-- Leave with next step and who you meet next
+## Prep for the next conversation
 
-## What they are testing
+### What matters in this room
 
 - Why ${company.name} specifically, not generic AI interest
-- Forward-deployed / shipping ownership proof
-- Trust, eval, and production quality bar
-- Ambiguity comfort: incomplete info, decision, motion
+- Proof you ship under incomplete information
+- Trust and production quality when agents meet real operators
+- Calm judgment under pressure
 
-## Opening (~20 seconds)
+### Interview line to reuse
 
-Draft a tight opener tied to ${company.name}'s product and your closest proof.
+"I'm at my best when the product bar is high and the brief is incomplete. I take partial signal, drive a decision, and keep delivery protected."
 
-## Stories to have ready
+### Stories to keep warm
 
-- Kinage scale, playbooks, cost-to-serve
-- Bank trust, precision, eval gates
-- Judgment under pressure (TD pushback)
-- Incomplete-info story
+- Kinage playbooks and cost-to-serve
+- Bank trust and eval gates
+- TD-style pushback that protected the outcome
 
-## Questions to ask
+### Questions worth asking
 
 1. What are you hiring this seat to own in the next 90 days?
 2. What is the biggest failure mode on the team right now?
 3. If this goes well, who else would I meet and what are those conversations testing?
 
-## Don't
+## How to read this and what to do with it
 
-- Don't wing the loop question
-- Don't overclaim domain depth you don't have
-- Don't leave without a clear next owner and timing
-
-## Loop map
-
-- This round: ${event.title}${event.with ? ` with ${event.with}` : ""}
-- Likely next: TBD. Ask on this call.
-
-## After the call
-
-1. Debrief in War Room
-2. Update this doc's loop map
-3. Stub next-round prep the same day if a name is known
+This is a stub until Claude can write from live signal. Replace the prep section after the next real conversation with notes in their language, the way the Brain Co doc does.
 
 ## Action items
 
 1. Rehearse one incomplete-info story before the call
-2. Write down one company-specific why in their language
-3. End the call with a clear next owner and timing
+2. Write one company-specific why in their language
+3. Leave with a clear next owner and timing
 
 This is a living document. Add new notes here after every ${company.name} conversation so the next round always has the full picture in one place.
 `;
 }
 
-/**
- * Claude-written living-notes prep markdown. Falls back to stub if no key / error.
- */
 export async function generatePrepDeck(input: PrepGenInput): Promise<{
   text: string;
   source: "claude" | "stub" | "existing";
@@ -145,9 +185,10 @@ export async function generatePrepDeck(input: PrepGenInput): Promise<{
 
   if (!anthropicConfigured()) {
     return {
-      text: existingBrief && !looksLikeLegacyPrepDeck(existingBrief)
-        ? existingBrief
-        : stubPrepDeck(company, event),
+      text:
+        existingBrief && !looksLikeLegacyPrepDeck(existingBrief)
+          ? existingBrief
+          : stubPrepDeck(company, event),
       source: "stub",
     };
   }
@@ -164,43 +205,30 @@ export async function generatePrepDeck(input: PrepGenInput): Promise<{
       })
     : "Scheduling / TBD";
 
-  const system = `You write interview prep as living notes for Lapo Odunjo's recruiting War Room.
+  const system = `You write living interview notes for Lapo Odunjo, matching the Brain Co Google Doc exactly in feel.
 
-GOLD STANDARD STYLE (match Brain Co interview notes, not a consulting deck):
-- Clean, readable prose and bullet lists.
-- Plain Markdown headings and hyphen bullets only.
-- No bold, no italic, no asterisk emphasis (** or * for emphasis). Hyphen "-" for list bullets is required.
-- No markdown tables. Never.
-- No em dashes (the Unicode character). Use commas, periods, colons, or "to" instead.
-- No "---" horizontal rules.
-- No partner-memo pomp. Write like notes Lapo will reread the morning of the call.
+GOLD STANDARD (mirror this shape and readability):
+${BRAIN_CO_STYLE_SAMPLE}
 
-STRUCTURE (use these section headings, in order):
-1. Title: "# {Company}: Interview Notes and Prep"
-2. One short identity line: "Onaolapo (Lapo) Odunjo. Role: .... Living notes. Stage: ...."
-3. Plain meta lines (not bold): When, With, Calendar
-4. ## Goal for this conversation
-5. ## What they are testing (bullets: each signal, then why it matters in one short clause)
-6. ## Opening (~20 seconds) with one quoted opener
-7. ## Lines to land (numbered, 4 to 6)
-8. ## Stories to have ready (short subsections with Situation / Decision / Result as plain labels, not bold)
-9. ## Questions to ask (2 to 4 numbered)
-10. ## Don't (bullets)
-11. ## Loop map
-12. ## Prep bank
-13. ## After the call
-14. ## Action items
-15. Closing line: "This is a living document. Add new notes here after every {Company} conversation so the next round always has the full picture in one place."
-
-Be specific to the company and interview funnel stage. Never reframe "2nd" / "1st" / "Final" as a funding Series. Honest about gaps. Output Markdown only, no preamble, no code fences around the whole doc.`;
+RULES:
+- Real document title: "# {Company}: Interview Notes and Prep"
+- Identity line under the title, then useful sections with plain ## and ### titles that a human would write (named after the conversation, theme, or person), not a rigid template checklist.
+- Prefer sections like: Company and contacts; Notes from {person/date}; Prep for {upcoming person}; Interview line to reuse; How to read this and what to do with it; Action items.
+- Short hyphen bullets. Short prose where judgment helps.
+- No markdown tables. No em dashes. No horizontal rules made of ---.
+- Do not use "**bold**" spam. Titles carry hierarchy. Occasional plain emphasis in prose is fine without asterisks.
+- Do not invent. If signal is thin, say what is known and what is still unknown.
+- Interview funnel stage ("2nd", "Final") is not a funding Series.
+- End with the living document closing line.
+- Under ~800 words. Easy to skim the morning of the call.
+- Output Markdown only. No preamble.`;
 
   const user = `${CANDIDATE_CONTEXT}
 
 ## Target
 Company: ${company.name}
 Role: ${company.role}
-Stage: ${company.stageLabel || company.stage}
-(Interview funnel stage, e.g. 1st / 2nd / Final. NOT funding round.)
+Interview stage: ${company.stageLabel || company.stage}
 Priority: ${company.priority}
 Next action on file: ${company.nextAction}
 When: ${when} ET
@@ -210,17 +238,17 @@ Calendar/title: ${event.title}
 ## Signal email / context (may be empty)
 ${(emailContext || "").slice(0, 3500) || "(none)"}
 
-## Existing brief (may be empty, stubby, or legacy structured). Rewrite fresh in the living-notes style. Do not preserve tables, bold, or em dashes.
+## Existing notes (may be wrong style). Rewrite into the Brain Co living-notes style. Keep real facts.
 ${(existingBrief || "").slice(0, 2500) || "(none, write fresh)"}
 
-Write the prep notes now.`;
+Write the notes now.`;
 
   try {
     const anthropic = getAnthropic();
     const res = await anthropic.messages.create({
       model: prepModel(),
       max_tokens: 4096,
-      temperature: 0.4,
+      temperature: 0.35,
       system,
       messages: [{ role: "user", content: user }],
     });
@@ -254,7 +282,6 @@ Write the prep notes now.`;
   }
 }
 
-/** Soft cleanup if the model still slips legacy punctuation. */
 export function sanitizePrepMarkdown(text: string): string {
   return text
     .replace(/\u2014/g, ",")

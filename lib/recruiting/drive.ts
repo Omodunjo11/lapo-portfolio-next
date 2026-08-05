@@ -119,7 +119,127 @@ export function folderIdFromUrl(url?: string | null): string | null {
   return m?.[1] || null;
 }
 
-/** Create a Google Doc in a folder from plain text (Now+Next prep deck). */
+export function docIdFromUrl(url?: string | null): string | null {
+  if (!url) return null;
+  const m = url.match(/\/document\/d\/([a-zA-Z0-9_-]+)/);
+  return m?.[1] || null;
+}
+
+/** Turn living-notes Markdown into HTML Google Docs will format as real headings. */
+export function markdownToDriveHtml(md: string): string {
+  const lines = md.replace(/\r\n/g, "\n").split("\n");
+  const parts: string[] = [
+    "<html><body style=\"font-family:Arial,sans-serif;font-size:11pt;line-height:1.45;color:#222\">",
+  ];
+
+  let inUl = false;
+  let inOl = false;
+
+  const closeLists = () => {
+    if (inUl) {
+      parts.push("</ul>");
+      inUl = false;
+    }
+    if (inOl) {
+      parts.push("</ol>");
+      inOl = false;
+    }
+  };
+
+  const esc = (s: string) =>
+    s
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+
+  for (const raw of lines) {
+    const line = raw.trimEnd();
+    const trimmed = line.trim();
+
+    if (!trimmed) {
+      closeLists();
+      continue;
+    }
+
+    if (/^---+$/.test(trimmed)) {
+      closeLists();
+      parts.push("<hr>");
+      continue;
+    }
+
+    const h1 = trimmed.match(/^#\s+(.+)$/);
+    if (h1) {
+      closeLists();
+      parts.push(
+        `<h1 style="font-size:18pt;margin:0 0 8px">${esc(h1[1])}</h1>`
+      );
+      continue;
+    }
+    const h2 = trimmed.match(/^##\s+(.+)$/);
+    if (h2) {
+      closeLists();
+      parts.push(
+        `<h2 style="font-size:13pt;margin:18px 0 6px">${esc(h2[1])}</h2>`
+      );
+      continue;
+    }
+    const h3 = trimmed.match(/^###\s+(.+)$/);
+    if (h3) {
+      closeLists();
+      parts.push(
+        `<h3 style="font-size:11pt;margin:12px 0 4px">${esc(h3[1])}</h3>`
+      );
+      continue;
+    }
+
+    const ul = trimmed.match(/^[-*]\s+(.+)$/);
+    if (ul) {
+      if (inOl) {
+        parts.push("</ol>");
+        inOl = false;
+      }
+      if (!inUl) {
+        parts.push("<ul style=\"margin:4px 0 8px 18px\">");
+        inUl = true;
+      }
+      parts.push(`<li style="margin:2px 0">${esc(ul[1])}</li>`);
+      continue;
+    }
+
+    const ol = trimmed.match(/^\d+\.\s+(.+)$/);
+    if (ol) {
+      if (inUl) {
+        parts.push("</ul>");
+        inUl = false;
+      }
+      if (!inOl) {
+        parts.push("<ol style=\"margin:4px 0 8px 18px\">");
+        inOl = true;
+      }
+      parts.push(`<li style="margin:2px 0">${esc(ol[1])}</li>`);
+      continue;
+    }
+
+    closeLists();
+    // Quoted interview line
+    if (
+      (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+      (trimmed.startsWith("“") && trimmed.endsWith("”"))
+    ) {
+      parts.push(
+        `<p style="margin:8px 0;font-style:italic">${esc(trimmed)}</p>`
+      );
+      continue;
+    }
+    parts.push(`<p style="margin:6px 0">${esc(trimmed)}</p>`);
+  }
+
+  closeLists();
+  parts.push("</body></html>");
+  return parts.join("\n");
+}
+
+/** Create a Google Doc in a folder from living-notes Markdown (HTML conversion). */
 export async function createPrepDoc(opts: {
   folderId: string;
   title: string;
@@ -133,8 +253,8 @@ export async function createPrepDoc(opts: {
       parents: [opts.folderId],
     },
     media: {
-      mimeType: "text/plain",
-      body: opts.plainText,
+      mimeType: "text/html",
+      body: markdownToDriveHtml(opts.plainText),
     },
     fields: "id, webViewLink",
     supportsAllDrives: true,
@@ -150,19 +270,9 @@ export async function createPrepDoc(opts: {
   return { id, webViewLink };
 }
 
-export function docIdFromUrl(url?: string | null): string | null {
-  if (!url) return null;
-  const m = url.match(/\/document\/d\/([a-zA-Z0-9_-]+)/);
-  return m?.[1] || null;
-}
-
 /**
  * Replace Google Doc body in place (keeps the same link / prepUrl).
- * Drive Docs are Google-native; simplest reliable rewrite is upload as plain
- * text conversion via files.update isn't supported for Docs → use overwrite
- * via delete+create only when update fails. Prefer Docs API-less approach:
- * create a temporary plain file then... Actually use drive.files.update with
- * mime conversion from text/plain onto an existing Google Doc id.
+ * Uploads HTML so headings become real Doc styles, not literal "##".
  */
 export async function updatePrepDoc(opts: {
   docId: string;
@@ -172,8 +282,8 @@ export async function updatePrepDoc(opts: {
   await drive.files.update({
     fileId: opts.docId,
     media: {
-      mimeType: "text/plain",
-      body: opts.plainText,
+      mimeType: "text/html",
+      body: markdownToDriveHtml(opts.plainText),
     },
     supportsAllDrives: true,
   });
