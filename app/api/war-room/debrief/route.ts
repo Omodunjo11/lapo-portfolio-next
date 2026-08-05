@@ -77,12 +77,12 @@ export async function POST(req: NextRequest) {
   pipeline.updated = today;
 
   const withWho = event?.with || "TBD";
-  const md = `# Debrief — ${company.name} — ${today}
+  const md = `# Debrief, ${company.name}, ${today}
 
-**With:** ${withWho}  
-**Energy (yours):** ${body.energy ?? "?"} / 5  
-**Their excitement / pull:** ${body.theirPull ?? "?"} / 5  
-**Stage outcome:** ${body.stageOutcome || "unclear"}
+With: ${withWho}
+Energy (yours): ${body.energy ?? "?"} / 5
+Their excitement / pull: ${body.theirPull ?? "?"} / 5
+Stage outcome: ${body.stageOutcome || "unclear"}
 
 ## What they care about
 ${body.whatTheyCareAbout || "-"}

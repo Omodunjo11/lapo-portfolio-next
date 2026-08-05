@@ -76,7 +76,7 @@ export function buildSuggestions(
           companyId: c.id,
           fromStage: "applied",
           toStage: "first",
-          reason: "Interview is on the calendar — move to 1st when you confirm.",
+          reason: "Interview is on the calendar. Move to 1st when you confirm.",
           status: "pending",
         });
       }

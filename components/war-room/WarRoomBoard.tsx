@@ -22,21 +22,21 @@ function briefHref(briefPath?: string | null) {
 }
 
 const CHASE_DRAFTS: Record<string, string> = {
-  "soft-nudge": `Subject: Checking in — [Company]
+  "soft-nudge": `Subject: Checking in, [Company]
 
-[Name] — circling back briefly. Still very interested in [role / next step]. Happy to work around the team's calendar whenever it's useful.
+[Name], circling back briefly. Still very interested in [role / next step]. Happy to work around the team's calendar whenever it's useful.
 
 Thanks,
 Lapo`,
-  "schedule-confirm": `Subject: Next step — [Company]
+  "schedule-confirm": `Subject: Next step, [Company]
 
-[Name] — thanks again for [call]. Wanted to confirm next steps: I understand it's [Round X with Y]. I'm flexible on timing — happy to take the next open slot on your calendar.
+[Name], thanks again for [call]. Wanted to confirm next steps: I understand it's [Round X with Y]. I'm flexible on timing, happy to take the next open slot on your calendar.
 
 Looking forward to it.
 Lapo`,
   "invisible-rounds": `Subject: Next round logistics
 
-Kate / Derek — thanks for looping me in. Quick clarifying ask so I can prep well: roughly how many rounds remain, and what type should I expect (product, technical, panel, etc.)?
+Kate / Derek, thanks for looping me in. Quick clarifying ask so I can prep well: roughly how many rounds remain, and what type should I expect (product, technical, panel, etc.)?
 
 Appreciate it,
 Lapo`,

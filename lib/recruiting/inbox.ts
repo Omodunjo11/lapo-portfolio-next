@@ -167,7 +167,7 @@ export function proposalsToFlags(
         companyId: company.id,
         fromStage: company.stage,
         toStage: company.stage,
-        reason: `${p.reason}: ${p.subject || p.summary || "spam hit"} — open Gmail Spam and move to Inbox`,
+        reason: `${p.reason}: ${p.subject || p.summary || "spam hit"}. Open Gmail Spam and move to Inbox.`,
         source: p.source,
         signal: p.signal,
         subject: p.subject || p.summary,

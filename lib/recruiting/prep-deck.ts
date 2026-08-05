@@ -34,8 +34,8 @@ function localBriefText(briefPath?: string | null): string | null {
 
 function deckTitle(company: Company, event: PipelineEvent) {
   const day = event.start?.slice(0, 10) || "next";
-  const who = event.with ? ` — ${event.with}` : "";
-  return `Prep deck — ${company.name} — ${day}${who}`;
+  const who = event.with ? `, ${event.with}` : "";
+  return `Prep deck, ${company.name}, ${day}${who}`;
 }
 
 function briefSlug(company: Company, event: PipelineEvent) {
@@ -314,7 +314,7 @@ export async function ensureAdvancePrepDecks(
       end: `${day}T12:45:00-04:00`,
       title: who
         ? `Next: ${who} @ ${company.name}`
-        : `Next interview — ${company.name}`,
+        : `Next interview, ${company.name}`,
       with: who || "",
       type: "other",
       status: "unscheduled",

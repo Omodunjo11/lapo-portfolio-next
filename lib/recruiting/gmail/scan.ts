@@ -106,7 +106,7 @@ async function proposalFromMessage(
     classification = {
       signal: "wait",
       confidence: "medium",
-      reason: "Tracked company mail found in Spam — open and move out of Spam",
+      reason: "Tracked company mail found in Spam. Open and move it out of Spam.",
     };
   }
 
