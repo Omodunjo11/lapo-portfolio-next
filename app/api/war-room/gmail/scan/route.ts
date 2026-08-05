@@ -7,6 +7,7 @@ import {
   applyCalendarFacts,
   scanInterviewSignals,
 } from "@/lib/recruiting/gmail/scan";
+import { ensureDiscoveredCompanies } from "@/lib/recruiting/gmail/discover-company";
 import {
   proposalsToFlags,
   mergePendingFlags,
@@ -29,7 +30,7 @@ import { commitTextFile } from "@/lib/git-store";
 import type { Pipeline } from "@/lib/recruiting/types";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
+export const maxDuration = 90;
 
 function cronAuthorized(req: NextRequest) {
   const secret = process.env.CRON_SECRET;
@@ -94,11 +95,32 @@ async function runScan(opts: {
   );
   const scan = await scanInterviewSignals(pipeline, { days: opts.days });
 
+  // Auto-add firms from clear "Interview with X" / calendar titles before
+  // calendar facts and stage flags run (needs companyId on the board).
+  const discovered = ensureDiscoveredCompanies(pipeline, scan.proposals);
+  pipeline = discovered.pipeline;
+  const companiesAdded = discovered.added.length;
+
   let appliedCalendar = 0;
   if (opts.applyCalendar) {
     const result = applyCalendarFacts(pipeline, scan.proposals);
     appliedCalendar = result.applied;
     pipeline = result.pipeline;
+  }
+
+  // Persist discoveries immediately so a later Drive/prep failure cannot
+  // leave Northslope (etc.) offline after a successful classify.
+  if (opts.persist && (companiesAdded > 0 || appliedCalendar > 0)) {
+    try {
+      await commitPipeline(
+        pipeline,
+        companiesAdded > 0
+          ? `War room scan: add ${companiesAdded} discovered company(ies), calendar ${appliedCalendar}`
+          : `War room Gmail scan: apply ${appliedCalendar} calendar fact(s)`
+      );
+    } catch (err) {
+      console.error("war-room scan early pipeline commit failed", err);
+    }
   }
 
   let prep = {
@@ -120,80 +142,132 @@ async function runScan(opts: {
       if (existsSync(abs)) beforePaths.add(p);
     }
 
-    const emailByCompany: Record<string, string> = {};
-    for (const p of scan.proposals) {
-      if (!p.companyId || p.source !== "gmail") continue;
-      if (p.signal !== "advance" && p.signal !== "schedule") continue;
-      const chunk = `Subject: ${p.subject || ""}\nFrom: ${p.from || ""}\n${p.snippet || ""}`;
-      emailByCompany[p.companyId] = emailByCompany[p.companyId]
-        ? `${emailByCompany[p.companyId]}\n---\n${chunk}`
-        : chunk;
-    }
+    try {
+      const emailByCompany: Record<string, string> = {};
+      for (const p of scan.proposals) {
+        if (!p.companyId || p.source !== "gmail") continue;
+        if (
+          p.signal !== "advance" &&
+          p.signal !== "schedule" &&
+          p.signal !== "wait"
+        ) {
+          continue;
+        }
+        const chunk = `Subject: ${p.subject || ""}\nFrom: ${p.from || ""}\n${p.snippet || ""}`;
+        emailByCompany[p.companyId] = emailByCompany[p.companyId]
+          ? `${emailByCompany[p.companyId]}\n---\n${chunk}`
+          : chunk;
+      }
 
-    const ensured = await ensurePrepDecks(pipeline, {
-      emailByCompany: opts.claudePrep ? emailByCompany : {},
-    });
-    pipeline = ensured.pipeline;
-
-    let advances = {
-      createdDocs: 0,
-      updatedDocs: 0,
-      mappedFolders: 0,
-      localBriefs: 0,
-      claudeDecks: 0,
-      errors: [] as string[],
-      pipeline,
-    };
-
-    if (opts.claudePrep) {
-      advances = await ensureAdvancePrepDecks(
-        pipeline,
-        scan.proposals.filter((p) => p.signal === "advance"),
-        { limit: 1 }
+      const discoveredIds = discovered.added.map((c) => c.id);
+      // Any scheduled company still missing a Drive prepUrl gets a folder +
+      // research-first doc (covers Northslope if discovery ran earlier).
+      const missingPrepIds = pipeline.companies
+        .filter(
+          (c) =>
+            !c.drive?.prepUrl &&
+            pipeline.events.some(
+              (e) =>
+                e.companyId === c.id && e.status === "scheduled" && e.start
+            )
+        )
+        .map((c) => c.id);
+      const bootstrapIds = Array.from(
+        new Set([...discoveredIds, ...missingPrepIds])
       );
-      pipeline = advances.pipeline;
-    }
 
-    prep = {
-      createdDocs: ensured.createdDocs + advances.createdDocs,
-      updatedDocs: ensured.updatedDocs + advances.updatedDocs,
-      mappedFolders: Math.max(ensured.mappedFolders, advances.mappedFolders),
-      localBriefs: ensured.localBriefs + advances.localBriefs,
-      claudeDecks: ensured.claudeDecks + advances.claudeDecks,
-      errors: [...ensured.errors, ...advances.errors],
-    };
+      const ensured = await ensurePrepDecks(pipeline, {
+        emailByCompany:
+          opts.claudePrep || bootstrapIds.length > 0 ? emailByCompany : {},
+        onlyCompanyIds: bootstrapIds.length > 0 ? bootstrapIds : undefined,
+        force: bootstrapIds.length > 0,
+        researchBootstrap: bootstrapIds.length > 0,
+      });
+      // If we only bootstrapped missing companies, still map/create prep for
+      // other scheduled events missing docs.
+      if (bootstrapIds.length > 0) {
+        const rest = await ensurePrepDecks(ensured.pipeline, {
+          emailByCompany: opts.claudePrep ? emailByCompany : {},
+        });
+        pipeline = rest.pipeline;
+        prep = {
+          createdDocs: ensured.createdDocs + rest.createdDocs,
+          updatedDocs: ensured.updatedDocs + rest.updatedDocs,
+          mappedFolders: Math.max(ensured.mappedFolders, rest.mappedFolders),
+          localBriefs: ensured.localBriefs + rest.localBriefs,
+          claudeDecks: ensured.claudeDecks + rest.claudeDecks,
+          errors: [...ensured.errors, ...rest.errors],
+        };
+      } else {
+        pipeline = ensured.pipeline;
+        prep = {
+          createdDocs: ensured.createdDocs,
+          updatedDocs: ensured.updatedDocs,
+          mappedFolders: ensured.mappedFolders,
+          localBriefs: ensured.localBriefs,
+          claudeDecks: ensured.claudeDecks,
+          errors: [...ensured.errors],
+        };
+      }
 
-    if (
-      opts.persist &&
-      (appliedCalendar > 0 ||
-        prep.createdDocs > 0 ||
-        prep.updatedDocs > 0 ||
-        prep.mappedFolders > 0 ||
-        prep.localBriefs > 0)
-    ) {
-      await commitNewBriefs(beforePaths, pipeline);
-      await commitPipeline(
+      let advances = {
+        createdDocs: 0,
+        updatedDocs: 0,
+        mappedFolders: 0,
+        localBriefs: 0,
+        claudeDecks: 0,
+        errors: [] as string[],
         pipeline,
-        `War room scan: calendar ${appliedCalendar}, prep+${prep.createdDocs}/~${prep.updatedDocs}, claude ${prep.claudeDecks}`
-      );
+      };
+
+      if (opts.claudePrep) {
+        advances = await ensureAdvancePrepDecks(
+          pipeline,
+          scan.proposals.filter((p) => p.signal === "advance"),
+          { limit: 1 }
+        );
+        pipeline = advances.pipeline;
+      }
+
+      prep = {
+        createdDocs: prep.createdDocs + advances.createdDocs,
+        updatedDocs: prep.updatedDocs + advances.updatedDocs,
+        mappedFolders: Math.max(prep.mappedFolders, advances.mappedFolders),
+        localBriefs: prep.localBriefs + advances.localBriefs,
+        claudeDecks: prep.claudeDecks + advances.claudeDecks,
+        errors: [...prep.errors, ...advances.errors],
+      };
+
+      if (
+        opts.persist &&
+        (prep.createdDocs > 0 ||
+          prep.updatedDocs > 0 ||
+          prep.mappedFolders > 0 ||
+          prep.localBriefs > 0)
+      ) {
+        await commitNewBriefs(beforePaths, pipeline);
+        await commitPipeline(
+          pipeline,
+          `War room scan: prep+${prep.createdDocs}/~${prep.updatedDocs}, claude ${prep.claudeDecks}`
+        );
+      }
+    } catch (err) {
+      const detail = (err as Error).message || "prep_failed";
+      console.error("war-room scan prep failed", err);
+      prep.errors.push(detail);
     }
-  } else if (opts.persist && appliedCalendar > 0) {
-    await commitPipeline(
-      pipeline,
-      `War room Gmail scan: apply ${appliedCalendar} calendar fact(s)`
-    );
   }
 
   const prevInbox = getRecruitingInbox();
   // Only NEW messages vs last scan become flags. Same threads already in the
   // snapshot do not propose another "→ next round".
-  const discovered = proposalsToFlags(pipeline, scan.proposals, {
+  const discoveredFlags = proposalsToFlags(pipeline, scan.proposals, {
     handledKeys: prevInbox.handledKeys || [],
     alreadySeenProposals: prevInbox.proposals || [],
   });
   const pendingFlags = activePendingFlags(
     pipeline,
-    mergePendingFlags(prevInbox.pendingFlags, discovered),
+    mergePendingFlags(prevInbox.pendingFlags, discoveredFlags),
     [],
     prevInbox.handledKeys || []
   );
@@ -211,7 +285,7 @@ async function runScan(opts: {
   if (opts.persist) {
     await commitRecruitingInbox(
       inbox,
-      `War room Gmail scan: ${scan.proposals.length} proposal(s), ${discovered.length} new flag(s)`
+      `War room Gmail scan: ${scan.proposals.length} proposal(s), ${discoveredFlags.length} new flag(s)`
     );
   }
 
@@ -220,6 +294,24 @@ async function runScan(opts: {
       ok: true,
       ...inbox,
       appliedCalendar,
+      companiesAdded,
+      discoveredCompanies: discovered.added.map((c) => ({
+        id: c.id,
+        name: c.name,
+        stage: c.stage,
+        nextAction: c.nextAction,
+        due: c.due,
+        priority: c.priority,
+        aliases: c.aliases,
+      })),
+      // Fresh board slice so the client updates immediately (don't wait for
+      // GitHub/Vercel rebuild after commitPipeline).
+      pipeline: {
+        companies: pipeline.companies,
+        events: pipeline.events,
+        focus: pipeline.focus,
+        updated: pipeline.updated,
+      },
       prep,
       spamMatched: scan.spamMatched,
       flags: pendingFlags,

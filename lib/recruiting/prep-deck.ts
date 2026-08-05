@@ -4,6 +4,7 @@ import type { Company, Pipeline, PipelineEvent } from "./types";
 import {
   createPrepDoc,
   docIdFromUrl,
+  ensureCompanyDriveFolder,
   folderIdFromUrl,
   listChildFolders,
   mapCompanyFolders,
@@ -76,14 +77,24 @@ async function persistPrepDoc(
   company: Company,
   event: PipelineEvent,
   text: string,
-  opts: { overwriteDoc?: boolean }
+  opts: { overwriteDoc?: boolean; folders?: { id: string; name: string; webViewLink: string }[] } = {}
 ): Promise<{ created: boolean; updated: boolean; error?: string }> {
+  try {
+    await ensureCompanyDriveFolder(company, opts.folders);
+  } catch (err) {
+    return {
+      created: false,
+      updated: false,
+      error: `folder ${company.id}: ${(err as Error).message}`,
+    };
+  }
+
   const folderId = folderIdFromUrl(company.drive?.folderUrl);
   if (!folderId) {
     return {
       created: false,
       updated: false,
-      error: `no_folder ${company.id}: company folder not mapped yet under Drive root`,
+      error: `no_folder ${company.id}: could not map or create company folder`,
     };
   }
 
@@ -147,6 +158,8 @@ export async function ensurePrepDecks(
     onlyCompanyIds?: string[];
     force?: boolean;
     emailByCompany?: Record<string, string>;
+    /** Force research-first Claude bootstrap (new companies). */
+    researchBootstrap?: boolean;
   } = {}
 ): Promise<PrepEnsureResult> {
   const errors: string[] = [];
@@ -166,8 +179,9 @@ export async function ensurePrepDecks(
     events: pipeline.events.map((e) => ({ ...e })),
   };
 
+  let folders: { id: string; name: string; webViewLink: string }[] = [];
   try {
-    const folders = await listChildFolders();
+    folders = await listChildFolders();
     const mapped = mapCompanyFolders(data, folders);
     data = mapped.pipeline;
     mappedFolders = mapped.mapped;
@@ -192,9 +206,15 @@ export async function ensurePrepDecks(
     const legacyLocal = Boolean(
       existingLocal && looksLikeLegacyPrepDeck(existingLocal)
     );
-    // Claude when force, legacy style, or fresh email with a thin/missing brief.
+    const needsBootstrap =
+      Boolean(opts.researchBootstrap) ||
+      !company.drive?.prepUrl ||
+      !existingLocal ||
+      !isRichBrief(existingLocal);
+    // Claude when force, bootstrap, legacy style, or fresh email with a thin/missing brief.
     const shouldClaude =
       opts.force ||
+      needsBootstrap ||
       legacyLocal ||
       (hasEmail && (!existingLocal || !isRichBrief(existingLocal)));
 
@@ -205,7 +225,8 @@ export async function ensurePrepDecks(
         event,
         emailContext: opts.emailByCompany?.[company.id] || null,
         existingBrief: existingLocal,
-        force: opts.force,
+        force: opts.force || needsBootstrap,
+        researchBootstrap: needsBootstrap,
       });
       text = gen.text;
       if (gen.source === "claude") claudeDecks += 1;
@@ -229,9 +250,23 @@ export async function ensurePrepDecks(
 
     const result = await persistPrepDoc(company, event, text, {
       overwriteDoc: Boolean(company.drive?.prepUrl) && shouldClaude,
+      folders,
     });
     if (result.error) errors.push(result.error);
-    if (result.created) createdDocs += 1;
+    if (result.created) {
+      createdDocs += 1;
+      // New folder may not be in the prior listing.
+      if (company.drive?.folderUrl) {
+        const id = folderIdFromUrl(company.drive.folderUrl);
+        if (id && !folders.some((f) => f.id === id)) {
+          folders.push({
+            id,
+            name: company.name,
+            webViewLink: company.drive.folderUrl,
+          });
+        }
+      }
+    }
     if (result.updated) updatedDocs += 1;
   }
 
@@ -269,6 +304,7 @@ export async function ensureAdvancePrepDecks(
     force?: boolean;
     /** When true, write local brief only; caller pushes Drive. */
     skipDrive?: boolean;
+    researchBootstrap?: boolean;
   } = {}
 ): Promise<PrepEnsureResult> {
   const limit = opts.limit ?? 2;
@@ -295,6 +331,7 @@ export async function ensureAdvancePrepDecks(
     .filter((p) => p.signal === "advance" && p.companyId && p.source === "gmail")
     .slice(0, limit * 2);
 
+  let folders: { id: string; name: string; webViewLink: string }[] = [];
   try {
     // Skip Drive folder listing when every company we touch already has a folder.
     const needsFolderMap = work.some((p) => {
@@ -303,7 +340,7 @@ export async function ensureAdvancePrepDecks(
       return Boolean(c && !folderIdFromUrl(c.drive?.folderUrl));
     });
     if (needsFolderMap) {
-      const folders = await listChildFolders();
+      folders = await listChildFolders();
       const mapped = mapCompanyFolders(data, folders);
       data = mapped.pipeline;
       mappedFolders = mapped.mapped;
@@ -395,8 +432,11 @@ export async function ensureAdvancePrepDecks(
 
     // Fresh email, named interviewer not yet in brief, or explicit force/user update.
     const firstName = (withWho || "").split(/\s+/)[0] || "";
+    const needsBootstrap =
+      Boolean(opts.researchBootstrap) || !company.drive?.prepUrl;
     const force =
       Boolean(opts.force) ||
+      needsBootstrap ||
       Boolean(opts.userUpdate?.trim()) ||
       !existingLocal ||
       !isRichBrief(existingLocal) ||
@@ -412,6 +452,7 @@ export async function ensureAdvancePrepDecks(
       userUpdate: opts.userUpdate || null,
       existingBrief: existingLocal,
       force,
+      researchBootstrap: needsBootstrap,
     });
     if (gen.source === "claude") claudeDecks += 1;
 
@@ -439,6 +480,7 @@ export async function ensureAdvancePrepDecks(
       ? { created: false, updated: false }
       : await persistPrepDoc(company, event, gen.text, {
           overwriteDoc: Boolean(company.drive?.prepUrl),
+          folders,
         });
     if (result.error) errors.push(result.error);
     if (result.created) createdDocs += 1;

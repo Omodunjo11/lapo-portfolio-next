@@ -8,6 +8,10 @@ import {
 } from "./classify";
 import { getCalendarClient, getGmailClient } from "./client";
 import {
+  extractCompanyNameFromInterviewTitle,
+  looksLikeInterviewTitle,
+} from "./discover-company";
+import {
   extractNextInterviewer,
   gmailProcessOrClause,
   parseInterviewWindow,
@@ -91,6 +95,11 @@ async function proposalFromMessage(
     `${subject} ${from} ${to} ${snippet} ${body}`,
     { from }
   );
+  const discoveredName =
+    !company || company.noise
+      ? extractCompanyNameFromInterviewTitle(subject) ||
+        extractCompanyNameFromInterviewTitle(`${snippet} ${body}`)
+      : null;
   let classification = classifyEmail({
     subject,
     snippet,
@@ -126,7 +135,9 @@ async function proposalFromMessage(
     subject: subject ? `${subject}${spamTag}` : subject,
     snippet: body ? body.slice(0, 280) : snippet,
     companyId: company?.noise ? null : company?.id || null,
-    companyName: company?.noise ? "noise" : company?.name || null,
+    companyName: company?.noise
+      ? "noise"
+      : company?.name || discoveredName || null,
     fromSpam: Boolean(opts.fromSpam),
     ...classification,
     reason: opts.fromSpam
@@ -178,24 +189,32 @@ export async function scanInterviewSignals(
   const companyQ = `after:${after} -in:spam -in:trash (${strongAliasQuery})`;
   // Explicit Spam pass — Hang Ten and others have landed here.
   const spamQ = `in:spam after:${after} (${aliasQuery})`;
+  // Discovery pass: interview / invite mail that does NOT require a tracked
+  // company alias (e.g. "Interview with Northslope" before the firm is on
+  // the board). Kept narrow so digests do not flood the queue.
+  const openInterviewQ = `after:${after} -in:spam -in:trash (subject:("Interview with" OR "video interview" OR "interview is confirmed" OR "interview confirmed" OR Invitation OR calendly OR "phone screen") OR "Interview with")`;
+  const openSpamQ = `in:spam after:${after} (subject:("Interview with" OR "video interview" OR Invitation OR calendly) OR "Interview with")`;
 
-  const [inboxMsgs, companyMsgs, spamMsgs] = await Promise.all([
-    listMessageIds(gmail, inboxQ, 40, false),
-    listMessageIds(gmail, companyQ, 35, false),
-    listMessageIds(gmail, spamQ, 25, true),
-  ]);
+  const [inboxMsgs, companyMsgs, openMsgs, spamMsgs, openSpamMsgs] =
+    await Promise.all([
+      listMessageIds(gmail, inboxQ, 40, false),
+      listMessageIds(gmail, companyQ, 35, false),
+      listMessageIds(gmail, openInterviewQ, 25, false),
+      listMessageIds(gmail, spamQ, 25, true),
+      listMessageIds(gmail, openSpamQ, 15, true),
+    ]);
 
   const seen = new Set<string>();
   const work: { id: string; fromSpam: boolean }[] = [];
 
-  for (const m of [...inboxMsgs, ...companyMsgs]) {
+  for (const m of [...inboxMsgs, ...companyMsgs, ...openMsgs]) {
     if (!m.id || seen.has(m.id)) continue;
     seen.add(m.id);
     work.push({ id: m.id, fromSpam: false });
   }
 
   let spamMatched = 0;
-  for (const m of spamMsgs) {
+  for (const m of [...spamMsgs, ...openSpamMsgs]) {
     if (!m.id || seen.has(m.id)) continue;
     seen.add(m.id);
     spamMatched += 1;
@@ -230,7 +249,14 @@ export async function scanInterviewSignals(
       .join(" ");
     const blob = `${summary} ${description} ${organizer} ${attendeeBlob}`;
     const company = matchCompany(pipeline, blob, { from: organizer });
-    if (!company || company.noise) continue;
+    if (company?.noise) continue;
+
+    const discoveredName =
+      !company && looksLikeInterviewTitle(summary)
+        ? extractCompanyNameFromInterviewTitle(summary) ||
+          extractCompanyNameFromInterviewTitle(description)
+        : null;
+    if (!company && !discoveredName) continue;
 
     const classification = classifyCalendar({ company, summary });
     if (classification.signal === "noise") continue;
@@ -246,8 +272,8 @@ export async function scanInterviewSignals(
       start,
       end,
       htmlLink: ev.htmlLink || undefined,
-      companyId: company.id,
-      companyName: company.name,
+      companyId: company?.id || null,
+      companyName: company?.name || discoveredName,
       ...classification,
     });
   }
@@ -255,7 +281,12 @@ export async function scanInterviewSignals(
   return {
     scannedAt: new Date().toISOString(),
     days,
-    gmailMatched: inboxMsgs.length + companyMsgs.length + spamMsgs.length,
+    gmailMatched:
+      inboxMsgs.length +
+      companyMsgs.length +
+      openMsgs.length +
+      spamMsgs.length +
+      openSpamMsgs.length,
     calendarMatched,
     spamMatched,
     proposals,

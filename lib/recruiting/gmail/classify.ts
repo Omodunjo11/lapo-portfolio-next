@@ -234,6 +234,21 @@ export function classifyEmail({
       reason: "interview-adjacent, unclear",
     };
   }
+
+  // Clear invite titles ("Interview with Acme") without a tracked alias:
+  // keep as schedule so discover-company can auto-add the firm.
+  if (
+    /\b(?:video\s+|phone\s+)?interview\s+with\b/i.test(subject) ||
+    /\binvitation\s*:/i.test(subject) ||
+    /\binterview\s+is\s+confirmed\s+with\b/i.test(subject)
+  ) {
+    return {
+      signal: "schedule",
+      confidence: "medium",
+      reason: "untracked interview title",
+    };
+  }
+
   return { signal: "noise", confidence: "low", reason: "no company match" };
 }
 
@@ -244,7 +259,25 @@ export function classifyCalendar({
   company: CompanyHit | null;
   summary?: string;
 }): { signal: IngestSignal; confidence: IngestConfidence; reason: string } {
-  if (!company || company.noise) {
+  if (company?.noise) {
+    return {
+      signal: "noise",
+      confidence: "low",
+      reason: "unmatched calendar",
+    };
+  }
+  if (!company) {
+    const s = summary || "";
+    if (
+      /\b(?:video\s+|phone\s+)?interview\b/i.test(s) ||
+      /\binvitation\s*:/i.test(s)
+    ) {
+      return {
+        signal: "schedule",
+        confidence: "medium",
+        reason: "untracked calendar interview",
+      };
+    }
     return {
       signal: "noise",
       confidence: "low",

@@ -314,6 +314,7 @@ export default function WarRoomBoard({
   driveRootUrl?: string;
 }) {
   const [companies, setCompanies] = useState(initialCompanies);
+  const [upcomingEvents, setUpcomingEvents] = useState(upcoming);
   const [suggestions, setSuggestions] = useState(initialSuggestions);
   const [pending, startTransition] = useTransition();
   const [scanning, setScanning] = useState(false);
@@ -356,7 +357,7 @@ export default function WarRoomBoard({
   );
   const [notesCompanyId, setNotesCompanyId] = useState(
     () =>
-      upcoming[0]?.companyId ||
+      upcomingEvents[0]?.companyId ||
       initialCompanies.find((c) => c.priority === "P0")?.id ||
       initialCompanies[0]?.id ||
       ""
@@ -486,7 +487,7 @@ export default function WarRoomBoard({
       }
 
       const co = companies.find((c) => c.id === notesCompanyId);
-      const upcomingForCo = upcoming.find(
+      const upcomingForCo = upcomingEvents.find(
         (e) => e.companyId === notesCompanyId
       );
       setNotesStatus("Rewriting next-step prep with Claude…");
@@ -512,22 +513,44 @@ export default function WarRoomBoard({
       }
 
       const errors = Array.isArray(prep.errors) ? prep.errors : [];
-      const driveBit = prep.driveUpdated
-        ? " Drive doc updated."
-        : prep.driveError
-          ? ` Drive sync failed: ${prep.driveError}`
-          : co?.drive?.prepUrl
-            ? " Drive not updated."
-            : "";
+      const driveBit = prep.driveCreated
+        ? " Drive folder + research doc created."
+        : prep.driveUpdated
+          ? " Drive doc updated."
+          : prep.driveError
+            ? ` Drive sync failed: ${prep.driveError}`
+            : co?.drive?.prepUrl
+              ? " Drive not updated."
+              : "";
       const errBit = errors.length
         ? ` Warnings: ${errors.slice(0, 2).join("; ")}`
         : "";
 
       setNotesStatus(
         `Living Drive prep updated${
-          prep.claudeDecks ? " (edit, not full rewrite)" : ""
-        }. Same continuous doc; next-interview title/dates refreshed.${driveBit}${errBit}`
+          prep.driveCreated
+            ? " (research-first bootstrap)"
+            : prep.claudeDecks
+              ? " (edit, not full rewrite)"
+              : ""
+        }. Research stays first; your notes follow.${driveBit}${errBit}`
       );
+      if (prep.prepUrl || prep.folderUrl) {
+        setCompanies((prev) =>
+          prev.map((c) =>
+            c.id === notesCompanyId
+              ? {
+                  ...c,
+                  drive: {
+                    ...(c.drive || {}),
+                    ...(prep.folderUrl ? { folderUrl: prep.folderUrl } : {}),
+                    ...(prep.prepUrl ? { prepUrl: prep.prepUrl } : {}),
+                  },
+                }
+              : c
+          )
+        );
+      }
     } catch (e) {
       setNotesStatus(`Update failed: ${(e as Error).message || String(e)}`);
     } finally {
@@ -691,8 +714,49 @@ export default function WarRoomBoard({
         }
       }
 
+      const discoveredNames = Array.isArray(data.discoveredCompanies)
+        ? data.discoveredCompanies
+            .map((c: { name?: string }) => c.name)
+            .filter(Boolean)
+            .join(", ")
+        : "";
+
+      // Apply board updates immediately from the scan response (don't wait for
+      // a GitHub→Vercel rebuild of pipeline.json).
+      if (Array.isArray(data.pipeline?.companies)) {
+        setCompanies(data.pipeline.companies as Company[]);
+      } else if (Array.isArray(data.discoveredCompanies)) {
+        setCompanies((prev) => {
+          const byId = new Map(prev.map((c) => [c.id, c]));
+          for (const c of data.discoveredCompanies as Company[]) {
+            if (c?.id) byId.set(c.id, { ...(byId.get(c.id) || ({} as Company)), ...c });
+          }
+          return Array.from(byId.values());
+        });
+      }
+      if (Array.isArray(data.pipeline?.events)) {
+        const activeIds = new Set(
+          ((data.pipeline.companies as Company[]) || companies)
+            .filter((c) => c.stage !== "passed" && c.stage !== "ghosted")
+            .map((c) => c.id)
+        );
+        setUpcomingEvents(
+          (data.pipeline.events as PipelineEvent[])
+            .filter(
+              (e) =>
+                e.status === "scheduled" &&
+                e.start &&
+                activeIds.has(e.companyId)
+            )
+            .sort((a, b) => a.start.localeCompare(b.start))
+        );
+      }
+
       setScanNote(
         `Scanned · ${data.gmailMatched ?? 0} mail · ${data.calendarMatched ?? 0} cal · ${data.proposals?.length ?? 0} signals` +
+          (data.companiesAdded
+            ? ` · +${data.companiesAdded} company${discoveredNames ? ` (${discoveredNames})` : ""}`
+            : "") +
           (data.spamMatched
             ? ` · ${data.spamMatched} in Spam`
             : "") +
@@ -732,9 +796,6 @@ export default function WarRoomBoard({
           }
           return next;
         });
-      }
-      if (data.appliedCalendar > 0) {
-        setScanNote((n) => `${n || ""} · refresh in ~30–60s for calendar facts`);
       }
     } catch (e) {
       setError((e as Error).message);
@@ -845,10 +906,10 @@ export default function WarRoomBoard({
         ) : null}
 
         <ul className="wr-upcoming">
-          {upcoming.length === 0 && chaseDueToday.length === 0 ? (
+          {upcomingEvents.length === 0 && chaseDueToday.length === 0 ? (
             <li className="wr-muted">Nothing scheduled or due today</li>
           ) : null}
-          {upcoming.map((e) => {
+          {upcomingEvents.map((e) => {
             const co = companies.find((c) => c.id === e.companyId);
             const href = briefHref(e.briefPath);
             return (

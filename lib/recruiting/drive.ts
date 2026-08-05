@@ -119,6 +119,67 @@ export function folderIdFromUrl(url?: string | null): string | null {
   return m?.[1] || null;
 }
 
+/** Create a new company folder under the Recruiting Season Drive root. */
+export async function createCompanyFolder(
+  name: string,
+  parentId: string = ROOT_FOLDER_ID
+): Promise<{ id: string; webViewLink: string }> {
+  const drive = getDriveClient();
+  const safeName = String(name || "Company").trim() || "Company";
+  const created = await drive.files.create({
+    requestBody: {
+      name: safeName,
+      mimeType: "application/vnd.google-apps.folder",
+      parents: [parentId],
+    },
+    fields: "id, webViewLink",
+    supportsAllDrives: true,
+  });
+  const id = created.data.id;
+  if (!id) throw new Error("Drive create folder returned no id");
+  return {
+    id,
+    webViewLink: created.data.webViewLink || folderUrl(id),
+  };
+}
+
+/**
+ * Ensure company has a Drive folderUrl: map existing children first, else create.
+ * Mutates and returns the company object.
+ */
+export async function ensureCompanyDriveFolder(
+  company: Company,
+  knownFolders?: { id: string; name: string; webViewLink: string }[]
+): Promise<{ company: Company; created: boolean }> {
+  if (folderIdFromUrl(company.drive?.folderUrl)) {
+    return { company, created: false };
+  }
+
+  const folders = knownFolders || (await listChildFolders());
+  let best: { score: number; folder: (typeof folders)[0] } | null = null;
+  for (const folder of folders) {
+    const score = scoreFolder(company, folder.name);
+    if (score < 60) continue;
+    if (!best || score > best.score) best = { score, folder };
+  }
+  if (best) {
+    company.drive = {
+      ...(company.drive || {}),
+      folderUrl: best.folder.webViewLink,
+      note: `Mapped to Drive folder “${best.folder.name}”`,
+    };
+    return { company, created: false };
+  }
+
+  const created = await createCompanyFolder(company.name);
+  company.drive = {
+    ...(company.drive || {}),
+    folderUrl: created.webViewLink,
+    note: `Created Drive folder “${company.name}”`,
+  };
+  return { company, created: true };
+}
+
 export function docIdFromUrl(url?: string | null): string | null {
   if (!url) return null;
   const m = url.match(/\/document\/d\/([a-zA-Z0-9_-]+)/);

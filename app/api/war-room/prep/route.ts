@@ -12,13 +12,17 @@ import { loadPrepNotes } from "@/lib/recruiting/prep-notes";
 import { commitPipeline } from "@/lib/recruiting/store";
 import { commitTextFile } from "@/lib/git-store";
 import {
+  createPrepDoc,
   docIdFromUrl,
+  ensureCompanyDriveFolder,
+  folderIdFromUrl,
   updatePrepDoc,
 } from "@/lib/recruiting/drive";
 import type { IngestProposal } from "@/lib/recruiting/gmail/classify";
+import type { PipelineEvent } from "@/lib/recruiting/types";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
+export const maxDuration = 90;
 
 function cronAuthorized(req: NextRequest) {
   const secret = process.env.CRON_SECRET;
@@ -143,11 +147,14 @@ async function handlePrepPost(req: NextRequest) {
 
   // Skip Drive writes inside ensure; we push Drive immediately below so
   // GitHub persistence never races the user-facing timeout.
+  const companyBefore = pipeline.companies.find((c) => c.id === companyId);
+  const needsBootstrap = !companyBefore?.drive?.prepUrl;
   const ensured = await ensureAdvancePrepDecks(pipeline, [advance], {
     limit: 1,
     userUpdate: userUpdate || null,
     force,
     skipDrive: true,
+    researchBootstrap: needsBootstrap,
   });
   pipeline = ensured.pipeline;
 
@@ -155,19 +162,52 @@ async function handlePrepPost(req: NextRequest) {
     ensured.briefFiles?.[`data/briefs/next-${companyId}.md`] ||
     ensured.briefFiles?.[`briefs/next-${companyId}.md`];
   const company = pipeline.companies.find((c) => c.id === companyId);
-  const docId = docIdFromUrl(company?.drive?.prepUrl);
+  let docId = docIdFromUrl(company?.drive?.prepUrl);
 
   let driveUpdated = false;
+  let driveCreated = false;
   let driveError: string | undefined;
-  if (briefText && docId) {
+  if (briefText && company) {
     try {
-      await updatePrepDoc({ docId, plainText: briefText });
-      driveUpdated = true;
+      if (!docId) {
+        await ensureCompanyDriveFolder(company);
+        const folderId = folderIdFromUrl(company.drive?.folderUrl);
+        if (!folderId) {
+          throw new Error("Could not create or map a Drive folder for this company.");
+        }
+        const upcoming = pipeline.events.find(
+          (e) => e.companyId === companyId && e.status === "scheduled"
+        );
+        const event: PipelineEvent = upcoming || {
+          id: `prep-next-${companyId}`,
+          companyId,
+          start: new Date().toISOString(),
+          end: new Date().toISOString(),
+          title: `Interview notes: ${company.name}`,
+          status: "unscheduled",
+        };
+        const day = (event.start || "").slice(0, 10) || "next";
+        const title = `Interview notes: ${company.name} ${day}`;
+        const doc = await createPrepDoc({
+          folderId,
+          title,
+          plainText: briefText,
+        });
+        company.drive = {
+          ...(company.drive || {}),
+          prepUrl: doc.webViewLink,
+          note: company.drive?.note || "Prep doc created on first Update",
+        };
+        docId = doc.id;
+        driveCreated = true;
+        driveUpdated = true;
+      } else {
+        await updatePrepDoc({ docId, plainText: briefText });
+        driveUpdated = true;
+      }
     } catch (err) {
       driveError = (err as Error).message;
     }
-  } else if (briefText && !docId) {
-    driveError = "No Drive prepUrl for this company yet.";
   } else if (!briefText) {
     driveError = "No brief generated to push to Drive.";
   }
@@ -176,7 +216,8 @@ async function handlePrepPost(req: NextRequest) {
     persist &&
     (ensured.localBriefs > 0 ||
       ensured.claudeDecks > 0 ||
-      driveUpdated);
+      driveUpdated ||
+      driveCreated);
 
   if (shouldPersist) {
     const briefFiles = ensured.briefFiles;
@@ -201,8 +242,8 @@ async function handlePrepPost(req: NextRequest) {
   return NextResponse.json({
     ok: true,
     companyId,
-    createdDocs: ensured.createdDocs,
-    updatedDocs: driveUpdated ? 1 : ensured.updatedDocs,
+    createdDocs: driveCreated ? 1 : ensured.createdDocs,
+    updatedDocs: driveUpdated && !driveCreated ? 1 : ensured.updatedDocs,
     mappedFolders: ensured.mappedFolders,
     localBriefs: ensured.localBriefs,
     claudeDecks: ensured.claudeDecks,
@@ -210,8 +251,10 @@ async function handlePrepPost(req: NextRequest) {
     anthropic: true,
     usedSavedNotes: !bodyUpdate.trim() && Boolean(savedNotes.trim()),
     driveUpdated,
+    driveCreated,
     driveError,
     deferredGit: shouldPersist,
     prepUrl: company?.drive?.prepUrl || null,
+    folderUrl: company?.drive?.folderUrl || null,
   });
 }

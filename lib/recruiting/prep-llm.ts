@@ -9,18 +9,34 @@ import { anthropicConfigured, getAnthropic, prepModel } from "./claude";
 const STYLE_AND_JOB = `
 Write like the Brain Co Google Doc: readable titles, short bullets, clear judgment, action items.
 
+DOCUMENT ORDER (always, top to bottom):
+1. Title + Lapo line
+2. ## Company research — public + signal research FIRST
+3. ## Company and contacts, from your inbox
+4. ## Notes from … / ## Feedback added … — Lapo's notes AFTER research
+5. ## Next step prep / Prep for {person} — refreshed for the upcoming round
+6. ## Interview line to reuse
+7. ## How to read this and what to do with it
+
 ACCUMULATION RULES (critical):
 - NEVER delete or invent away prior feedback. Old "Notes from …", "Feedback added …", and company/contact facts stay in the document.
-- When Lapo adds new notes, ADD a new dated feedback block if it is not already captured.
+- Company research stays at the top and only grows with better verified facts. Do not bury research under Lapo's notes.
+- When Lapo adds new notes, ADD a new dated feedback block BELOW research (not above it).
 - REWRITE only the forward section: "## Next step prep (updated {date})" / "## Prep for {person}, {date}".
   That next-step section must synthesize ALL prior feedback + the newest notes + email into one clear prep for the upcoming round.
-- Think of the doc as tabs over time: history stays; the next-step tab is refreshed to encompass everything.
+- Think of the doc as tabs over time: research + history stay; the next-step tab is refreshed.
 
 Shape:
 
 # {Company}: Interview Notes and Prep
 
 Onaolapo (Lapo) Odunjo. Role: …. Living notes doc, add to this after every conversation.
+
+## Company research
+- What they do / product
+- Stage, customers, positioning (mark unknown if not found)
+- Why this seat or process matters for Lapo
+- Sources: public web + inbox signal only; no invented facts
 
 ## Company and contacts, from your inbox
 - Stable facts (keep and extend, do not wipe)
@@ -70,6 +86,8 @@ export type PrepGenInput = {
   userUpdate?: string | null;
   existingBrief?: string | null;
   force?: boolean;
+  /** New company / first doc: research-first with public web search. */
+  researchBootstrap?: boolean;
 };
 
 export function isRichBrief(text: string | null | undefined): boolean {
@@ -127,6 +145,12 @@ export function stubPrepDeck(company: Company, event: PipelineEvent): string {
 
 Onaolapo (Lapo) Odunjo. Role: ${company.role}. Living notes doc, add to this after every conversation.
 
+## Company research
+
+- Waiting on public + inbox research. Do not invent.
+- Role on file: ${company.role || "unknown"}
+- Stage: ${company.stageLabel || company.stage}
+
 ## Company and contacts, from your inbox
 
 - Role on file: ${company.role}
@@ -134,6 +158,10 @@ Onaolapo (Lapo) Odunjo. Role: ${company.role}. Living notes doc, add to this aft
 - Priority: ${company.priority}
 - Next action on file: ${company.nextAction || "none"}
 - Upcoming: ${event.title} with ${withWho} (${when} ET)
+
+## Feedback / My notes
+
+- (none yet — add in War Room Next-round notes)
 
 ## Next step prep (updated ${today}): ${nextLabel}
 
@@ -169,7 +197,7 @@ Onaolapo (Lapo) Odunjo. Role: ${company.role}. Living notes doc, add to this aft
 
 ## How to read this and what to do with it
 
-Stub until live feedback lands. Each Update next-round doc should keep prior feedback and refresh only this next-step section.
+Stub until live feedback lands. Research stays first; your notes follow under Feedback. Each Update refreshes only the next-step section.
 
 This is a living document. Add new notes here after every ${company.name} conversation so the next round always has the full picture in one place.
 `;
@@ -212,8 +240,15 @@ export async function generatePrepDeck(input: PrepGenInput): Promise<{
   text: string;
   source: "claude" | "stub" | "existing";
 }> {
-  const { company, event, emailContext, userUpdate, existingBrief, force } =
-    input;
+  const {
+    company,
+    event,
+    emailContext,
+    userUpdate,
+    existingBrief,
+    force,
+    researchBootstrap,
+  } = input;
 
   const hasFreshSignal = Boolean(
     (emailContext && emailContext.trim().length > 40) ||
@@ -225,6 +260,7 @@ export async function generatePrepDeck(input: PrepGenInput): Promise<{
     isRichBrief(existingBrief) &&
     !force &&
     !hasFreshSignal &&
+    !researchBootstrap &&
     !looksLikeLegacyPrepDeck(existingBrief)
   ) {
     return { text: existingBrief, source: "existing" };
@@ -248,7 +284,18 @@ export async function generatePrepDeck(input: PrepGenInput): Promise<{
       ? `Prep for ${withWho}, ${when} ET`
       : `Next step prep (updated ${today})`;
 
-  const surgical = shouldSurgicalUpdate(existingBrief, force, hasFreshSignal);
+  const bootstrap =
+    Boolean(researchBootstrap) ||
+    !existingBrief ||
+    !isRichBrief(existingBrief) ||
+    looksLikeLegacyPrepDeck(existingBrief || "");
+
+  const surgical =
+    !bootstrap && shouldSurgicalUpdate(existingBrief, force, hasFreshSignal);
+
+  const domainHint = (company.aliases || []).find((a) =>
+    /\./.test(String(a))
+  );
 
   const system = surgical
     ? `You UPDATE an existing living Google Doc for Lapo Odunjo. Do not rewrite from scratch.
@@ -257,9 +304,16 @@ Continuous doc identity (keep):
 # ${company.name}: Interview Notes and Prep
 Keep the company line and role line. This doc stays one continuous living notes file.
 
+ORDER (do not rearrange):
+1. Company research (top)
+2. Company and contacts
+3. Notes / Feedback (Lapo notes AFTER research)
+4. Current next-step prep
+5. Closing sections
+
 UPDATE RULES:
-1. Preserve every prior section that is already history (company/contacts, Notes from …, What we already know, Feedback added …, interview lines worth keeping).
-2. Fold NEW Lapo feedback / email facts into history (new "## Feedback added ${today}" or extend company/contacts). Do not drop older feedback.
+1. Preserve every prior section that is already history (company research, company/contacts, Notes from …, Feedback added …, interview lines worth keeping).
+2. Fold NEW Lapo feedback / email facts into history BELOW research (new "## Feedback added ${today}" or extend company/contacts). Do not drop older feedback. Never put Lapo notes above Company research.
 3. There must be exactly ONE current upcoming-prep section. Rename it to:
    ## ${nextHeading}
    Update that section in place with dates, interview title/format, and prep for THIS next conversation. Older "## Prep for …" / "## Next step prep …" content that is no longer the upcoming round moves under a history heading if it still has substance.
@@ -272,12 +326,13 @@ UPDATE RULES:
 ${STYLE_AND_JOB}
 
 HARD RULES:
+- Start with ## Company research (public web + inbox). Put Lapo's notes AFTER research, never before.
 - Preserve prior feedback and prior round notes. Do not shrink history into a short summary that drops detail Lapo already captured.
 - Refresh the upcoming prep heading to: ## ${nextHeading}
 - One current next-step section only.
-- Email + Lapo feedback log are ground truth. Do not invent.
+- Email + Lapo feedback log + web research are ground truth. Do not invent. Mark unknowns.
 - Readable Brain Co style. No tables. No em dashes. No --- rules. No **bold** spam.
-- Prefer under ~1200 words, but never cut prior feedback to hit a length target.
+- Prefer under ~1400 words, but never cut prior feedback to hit a length target.
 - Output Markdown only. No preamble.`;
 
   const user = `${CANDIDATE_CONTEXT}
@@ -285,32 +340,55 @@ HARD RULES:
 ## Upcoming interview (use for continuous prep title / dates)
 Company: ${company.name}
 Role: ${company.role}
+Likely domain / site hint: ${domainHint || "(none)"}
 Interview stage: ${company.stageLabel || company.stage}
 When: ${when} ET
 With: ${withWho}
 Calendar/title: ${event.title}
 Target prep heading: ## ${nextHeading}
-Mode: ${surgical ? "surgical UPDATE of existing living doc" : "full living notes create/refresh"}
+Mode: ${
+    surgical
+      ? "surgical UPDATE of existing living doc"
+      : bootstrap
+        ? "BOOTSTRAP research-first living notes (use web search)"
+        : "full living notes create/refresh"
+  }
 
 ## Email / invite signal
 ${(emailContext || "").slice(0, surgical ? 2500 : 4000) || "(none)"}
 
-## Newest Lapo feedback to fold in (prior feedback already lives in the current doc)
+## Newest Lapo feedback to fold in BELOW company research (prior feedback already lives in the current doc)
 ${(userUpdate || "").slice(0, surgical ? 2800 : 8000) || "(none)"}
 
 ## Current living doc (base; edit this)
 ${(existingBrief || "").slice(0, surgical ? 10000 : 9000) || "(none)"}
 
-${surgical ? "Update the living document in place now. Keep history. Refresh only the continuous next-interview heading and that prep section plus any new feedback block." : "Write the living document now. Preserve history. Update the next-step prep section."}`;
+${
+    surgical
+      ? "Update the living document in place now. Keep research first. Keep history. Refresh only the continuous next-interview heading and that prep section plus any new feedback block under research."
+      : bootstrap
+        ? `Research ${company.name} on the public web (use web_search). Write a research-first living document now: Company research first, then inbox contacts, then any Lapo notes, then next-step prep.`
+        : "Write the living document now. Research first. Preserve history. Update the next-step prep section."
+  }`;
 
   try {
-    const anthropic = getAnthropic();
+    const anthropic = getAnthropic(bootstrap ? 55_000 : 35_000);
+    const tools = bootstrap
+      ? ([
+          {
+            type: "web_search_20250305",
+            name: "web_search",
+            max_uses: 5,
+          },
+        ] as unknown as Anthropic.Messages.ToolUnion[])
+      : undefined;
     const res = await anthropic.messages.create({
       model: prepModel(surgical ? "update" : "full"),
       // Surgical updates must finish inside the Vercel 60s window.
       max_tokens: surgical ? 3200 : 6000,
       temperature: 0.25,
       system,
+      tools,
       messages: [{ role: "user", content: user }],
     });
     const text = res.content
