@@ -1,7 +1,7 @@
 {
   "version": 1,
   "owner": "Onaolapo (Lapo) Odunjo",
-  "updated": "2026-08-04",
+  "updated": "2026-08-05",
   "timezone": "America/New_York",
   "killCriteria": [
     "Role is pure strategy / slideware with no shipping ownership",
@@ -127,7 +127,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1VMTqazpBn2Dni4uqRtkD1NRiRylD7yK9",
         "prepUrl": "https://docs.google.com/document/d/1qqrwcstj98k0L9e67vPpiwCcDA3kdvHUEtXOssBRW2o/edit",
-        "note": "Canonical living notes Doc - update in place, never create duplicates"
+        "note": "Mapped to Drive folder “Brain Co”"
       }
     },
     {
@@ -207,7 +207,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1C4rZXq5ho87J-YHJEP2eSMTEp4qPXNBB",
         "prepUrl": "https://docs.google.com/document/d/1G24HcWf3DUyD5c2G264q2DIhDy75SxYH_VCeV_Y7VsQ/edit",
-        "note": "Canonical living prep Doc - update in place, never create duplicates"
+        "note": "Mapped to Drive folder “Foundation Health”"
       }
     },
     {
@@ -216,10 +216,10 @@
       "role": "Founding-team / TBD",
       "stage": "second",
       "stageLabel": "2nd (accepted flag)",
-      "ball": "them",
+      "ball": "you",
       "priority": "P0",
-      "nextAction": "Wait for Jack Ahn follow-up after housekeeping",
-      "due": "2026-08-05",
+      "nextAction": "Attend: Onaolapo (Lapo) Odunjo and Sanjay Rajagopalan",
+      "due": "2026-08-10",
       "nudgeDate": null,
       "lean": 4,
       "contacts": [
@@ -242,7 +242,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/12xlBxLYw4ttCiolqWwylQswdyNGlr2IO",
         "prepUrl": "https://docs.google.com/document/d/1MIq0tBn5wfxJqcGcO3coDdrG_NsP-9TCR3fi_JuwaBQ/edit",
-        "note": "Canonical living notes Doc (Claude-created Aug 4). Update prepUrl only if Doc is intentionally replaced."
+        "note": "Mapped to Drive folder “Hang Ten”"
       }
     },
     {
@@ -336,7 +336,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1zz0A9CKj2CJvcicO6dOrdgwTeM3fOjf0",
         "prepUrl": "https://docs.google.com/document/d/1yVUuVFFeaLNZ6nZr7288Sr11ZmCkyfjlo1ZPfYKoo1M/edit",
-        "note": "Canonical living notes + Sahil prep Doc. Update in place only — do not create a second Doc."
+        "note": "Mapped to Drive folder “Regal”"
       }
     },
     {
@@ -538,11 +538,11 @@
       "blocker": null
     },
     {
-      "id": "evt-hang-ten-jack-2026-08-03",
+      "id": "evt-hang-ten-2026-08-10",
       "companyId": "hang-ten",
-      "start": "2026-08-03T19:00:00-04:00",
-      "end": "2026-08-03T19:30:00-04:00",
-      "title": "Hang Ten — Jack Ahn",
+      "start": "2026-08-10T12:00:00-04:00",
+      "end": "2026-08-10T13:30:00-04:00",
+      "title": "Onaolapo (Lapo) Odunjo and Sanjay Rajagopalan",
       "with": "Jack Ahn",
       "type": "founding",
       "status": "scheduled",
