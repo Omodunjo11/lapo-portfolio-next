@@ -1,5 +1,5 @@
 {
-  "scannedAt": "2026-08-05T01:47:49.087Z",
+  "scannedAt": "2026-08-05T01:58:36.427Z",
   "days": 7,
   "gmailMatched": 75,
   "calendarMatched": 8,
@@ -649,5 +649,6 @@
       "reason": "calendar interview matched company"
     }
   ],
-  "handledKeys": []
+  "handledKeys": [],
+  "pendingFlags": []
 }
