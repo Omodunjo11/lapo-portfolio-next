@@ -433,7 +433,7 @@
     },
     {
       "id": "northslope",
-      "name": "Northslope",
+      "name": "Northslope Technologies",
       "role": "",
       "stage": "first",
       "ball": "you",
@@ -441,9 +441,15 @@
       "nextAction": "Attend: Interview with Northslope",
       "due": "2026-08-06",
       "aliases": [
-        "Northslope"
+        "Northslope",
+        "Northslope Technologies",
+        "northslopetech.com"
       ],
-      "drive": {},
+      "drive": {
+        "folderUrl": "https://drive.google.com/drive/folders/1BPr95AGzGMzIW6PQKzbWemTIZjrFu_CO",
+        "note": "Created Drive folder “Northslope”",
+        "prepUrl": "https://docs.google.com/document/d/1cW_KkEtumGEdc4ehlfYKLwIB4Yu3S4RU9Up6rQu-V84/edit?usp=drivesdk"
+      },
       "stageLabel": "1st"
     }
   ],
@@ -697,7 +703,7 @@
       "with": "",
       "type": "other",
       "status": "scheduled",
-      "briefPath": "briefs/next-northslope.md",
+      "briefPath": "briefs/2026-08-06-northslope.md",
       "blocker": null
     }
   ],
