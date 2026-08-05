@@ -45,7 +45,7 @@ Continue into next round once scheduled. Loop shape still partly unknown.
 - About July 31: Kate (+ Derek). Asked how many rounds remain and what type.
 - August 4: accepted Aug 7 / 10:30am ET path with Kate
 
-## Next step prep (updated Aug 5, 2026): Final round with Ranjani, Aug 7
+## Next step prep (updated Aug 5, 2026): Final round with Ranjani, Aug 7, 10:30 AM ET
 
 ### What this conversation is about
 
