@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
   pipeline.updated = today;
 
   const withWho = event?.with || "TBD";
-  const md = `# Debrief, ${company.name}, ${today}
+  const md = `# Debrief: ${company.name} (${today})
 
 With: ${withWho}
 Energy (yours): ${body.energy ?? "?"} / 5
@@ -103,7 +103,6 @@ ${body.fix || "-"}
 - Still unknown: ${body.loopUnknown || "-"}
 - Prep to start now: ${body.prepNext || "-"}
 
----
 Captured from War Room debrief.
 `;
 

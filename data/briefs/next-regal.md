@@ -1,86 +1,104 @@
-# Regal: Sahil prep, one pager
+# Regal: Interview Notes and Prep
 
-Round: next interview after the Kelsey Heitz phone screen
-With: Sahil, who sets the hiring and leadership bar for this seat
-Role: Manager, AI Strategy and Deployment
-What Kelsey said he wants: executive presence and articulate speech; people leadership; systems thinking; managing 4 to 6 deployed engineers; creating leverage; a consistent executive structure with no thrash and no complaints culture; a playbook of excellence; frontline to Product feedback; jumping in to own customers to generate revenue.
+Onaolapo (Lapo) Odunjo. Role: Manager, AI Strategy & Deployment. Living notes. Stage: 2nd round (accepted flag).
 
-Tone for this round: calm, crisp, structured. Short answers. Name the system, then the people move, then the outcome. No ramble.
+When: Wed, Aug 5, 2026, 12:00 PM ET
+With: Sahil (COO)
+Calendar: Next: Sahil @ Regal
 
----
+## Goal for this conversation
 
-## Opening, about 20 seconds
+Sahil is testing whether you can own AI strategy and deployment at scale without overstepping into engineering or product, and whether you can operate in a regulated or high-stakes environment where cost, precision, and stakeholder trust matter more than speed alone. He wants to see calm judgment under pressure and the ability to coach teams into ownership, not heroics.
 
-"What I'm optimizing for in this seat is leverage: a team of deployed engineers who ship customer value on a repeatable bar, feed Product from the field, and can scale without constant heroics. I've done that as a player coach on launches, and I'm happy to go deep on how I build the playbook and how I show up with executives and customers."
+## What they are testing
 
----
+- Judgment under incomplete information: Can you ship and measure when specs are unclear or scope is contested?
+- Regulated-environment instinct: Do you know how to build eval gates, protect quality, and feed field failures back into product?
+- Team leverage, not solo heroics: Do you build playbooks and coach deployed teams, or do you hoard the work?
+- Cost discipline: Can you drive cost-to-serve down without cutting corners on precision or trust?
+- Stakeholder calm under pushback: When a COO or board member says "this is too slow" or "this costs too much," do you panic or speak risk and outcomes?
 
-## What Sahil is testing, and how to show it
+## Opening (~20 seconds)
 
-| He wants | You show |
-|---|---|
-| Executive presence, articulate | Structure every answer: situation, decision, system, result. Pause. No filler. |
-| People leadership, 4 to 6 forward deployed engineers | Coach bar, weekly priorities, unblock, escalate early, performance measured against customer outcomes |
-| Systems thinking | Recurring launch failures become process, not blame |
-| Leverage, scale | Playbooks, the same quality bar across accounts, cut custom work |
-| Playbook of excellence | An explicit artifact plus a coaching ritual, not a slide nobody uses |
-| Frontline to Product | A feedback loop with real owners, not venting in Slack |
-| Own customers, revenue | You jump into accounts when needed; go live is the start of expansion, not the end of the job |
+"Thanks for the time, Sahil. I've spent the last few years shipping AI into multi-account environments where precision and cost-to-serve matter as much as speed. I'm curious how Regal is thinking about the gap between AI capability and the operational and trust constraints that come with scale. That's where I've found the real leverage is."
 
----
+## Lines to land
 
-## Five lines to land, practice out loud
+1. Kinage taught me that cost-to-serve is a strategy lever, not just a line item. We cut it 62 percent by building playbooks and coaching deployed teams to own their own delivery, not by cutting precision or eval gates.
 
-1. People leadership: "I manage deployed engineers like a launch org: clear weekly outcomes, a shared quality bar, daily unblock, and I take on customer thrash so they can keep focus."
-2. Systems: "If the same failure shows up twice, it becomes a playbook step or a Product ticket, not another ad hoc fire drill."
-3. Playbook of excellence: "Excellence is a checklist the team will actually use under pressure: kickoff metric, quality gate, go live criteria, weekly executive status. If they ignore it, it is not a playbook yet."
-4. Executive structure: "Executives get a short, consistent cadence: status, risk, ask. No surprise red. No complaint theater, just options and owners."
-5. Customer and revenue: "I'll run the team and still jump into a customer when the revenue or trust risk needs a senior owner. Deployment ownership includes the commercial relationship after go live."
+2. In regulated or high-stakes environments, field failures are product feedback. I've built systems to surface them fast and feed them back to product without letting them become crisis narratives.
 
----
+3. I don't claim formal manager headcount. I lead by ownership and coaching. At Kinage, I owned multi-account deployment and coached technical delivery across teams that weren't on my org chart.
 
-## Stories to have ready, pick based on his prompt
+4. Incomplete-info shipping is a skill. I cut scope, ship, measure adoption, and iterate. I'm honest about what we don't know and what we're betting on.
 
-A, people and leverage, 4 to 6 style: Kinage multi account work. Coached technical delivery, built playbooks, went from 0 to 12 institutions, cost to serve down 62 percent. Emphasize team leverage, not "I did the tickets."
+5. When a stakeholder pushes back on timeline or cost, I speak risk and outcomes, not emotion. I've had to tell senior leaders "we can go faster, but here's what breaks" and "here's the cost of that precision."
 
-B, systems and playbook of excellence: recurring custom heroics turned into a named pattern, then a minimal playbook, run twice, then made the default. Same answer works for "how do you create process."
+## Stories to have ready
 
-C, protect team and customer confidence: under pressure, picked one win metric plus a quality gate, owned the no, gave daily honest status. You were the shock absorber for thrash.
+### Kinage: Cost-to-serve and team leverage
 
-D, executive presence beat: TD Bank pushback. Calm alternative to a bad architecture choice, protected delivery, spoke in outcomes and risk rather than emotion.
+Situation: Owned multi-account AI deployment across 12 institutions. Cost-to-serve was high; pressure to scale faster and cheaper.
 
-E, frontline to Product and revenue: bank eval loop. Field failure modes became gates Product had to respect; trust in production is what unlocked continued and expanded use.
+Decision: Instead of cutting precision or eval gates, I built playbooks and coached deployed engineers to own their own delivery. Shifted from me being the bottleneck to teams being self-sufficient.
 
----
+Result: Cost-to-serve dropped about 62 percent. Deployment velocity increased. Quality gates stayed intact. The system scaled because teams owned it, not because I worked harder.
 
-## 90 day sketch, if he asks how you would build it
+### Bank / regulated environment: Eval gates and field failures
 
-Days 1 to 30, structure: map the 4 to 6 engineers' accounts. Define "excellent launch" together with Sahil and leadership. Install a weekly, executive ready status. Ride 1 or 2 live launches.
+Situation: Deployed AI into a regulated trust environment. Field failures happened. Pressure to patch fast and move on.
 
-Days 31 to 60, playbook of excellence v1: codify the top failure modes, integration, agent quality, customer readiness. Build a checklist plus a coaching ritual. Kill any steps nobody actually uses.
+Decision: Built eval gates upstream and a system to surface field failures back to product without panic. Treated failures as product feedback, not operational crises.
 
-Days 61 to 90, leverage: the team runs more without you. You still jump into critical customers. Frontline feedback has a named Product owner and an SLA. Cost and time to first value are trending the right way.
+Result: Precision stayed high. Stakeholder trust stayed intact. Product team got real signal about what was breaking and why.
 
----
+### Pushback under pressure: TD-style negotiation
 
-## Questions for Sahil, ask two or three
+Situation: Senior stakeholder wanted faster timeline. I knew the timeline was risky.
 
-1. For the team of 4 to 6, what does excellent look like in week one versus month three?
-2. Where does the current launch motion break most often, and what have you already tried?
-3. How should frontline feedback enter Product, and how do you want me to show up with executives when something is red?
-4. When you say playbook of excellence, what artifact have you seen actually work here, and what has failed?
+Decision: Didn't panic or agree. Spoke the risk clearly: "We can hit that date, but here's what we're not testing and here's the cost if it breaks in production." Offered a protected alternative.
 
----
+Result: Stakeholder understood the tradeoff. We negotiated a timeline that was faster than safe but slower than reckless. Delivery was clean.
 
-## Do not
+## Questions to ask
 
-- Do not overclaim formal people manager headcount; claim outcomes leadership of deployed engineers clearly instead
-- Do not sound like pure strategy with no hands on customer ownership
-- Do not dunk on the current team; talk systems and standards instead
-- Do not ramble. If an answer hits 90 seconds, stop
+1. How is Regal thinking about the gap between AI capability and the operational constraints that come with scale? What's the biggest bottleneck right now?
 
----
+2. What does success look like for this role in the first 90 days? Is it a specific deployment, a cost target, a team structure, or something else?
 
-## Close
+3. How does the AI strategy and deployment function sit relative to product and engineering? Where are the friction points?
 
-"I'm excited to build the playbook and the team so Regal can scale deployments without burning people or surprising executives, and still jump on the customers that need a senior owner."
+## Don't
+
+- Overclaim domain depth in gov or MENA if you don't have it. Say "I haven't worked in that sector, but here's how I'd approach it."
+- Pretend you have formal manager headcount if you don't. Lead by ownership and coaching.
+- Panic or agree to timelines you know are risky. Speak risk and outcomes.
+- Treat field failures as operational crises. Treat them as product feedback.
+- Hoard the work. Build playbooks and coach teams into ownership.
+
+## Loop map
+
+Sahil is testing judgment and team leverage. He wants to see calm under pressure and the ability to operate in a high-stakes environment. He's probably also testing whether you'll overreach into product or engineering or whether you'll stay in your lane.
+
+## Prep bank
+
+- Kinage: 0 to 12 institutions, cost-to-serve 62 percent down, playbooks, team coaching.
+- Bank / regulated: eval gates, precision, production quality bar, field failures as product feedback.
+- Judgment under pressure: TD-style pushback, calm alternative, risk and outcomes, not emotion.
+- Incomplete-info shipping: cut scope, ship, measure, iterate.
+- People leadership: ownership and coaching, not formal manager headcount.
+
+## After the call
+
+- Write down what Sahil cares about most: cost, speed, precision, team structure, stakeholder trust, something else?
+- Note any friction points between AI strategy and product or engineering.
+- Identify what success looks like in the first 90 days.
+- Flag any gaps in your knowledge and plan to fill them before the next round.
+
+## Action items
+
+- Reply to Kelsey with 3 to 4 times for Sahil video call by EOD today.
+- Review Regal's public statements on AI and deployment (if available).
+- Prepare a 2-minute version of the Kinage cost-to-serve story.
+
+This is a living document. Add new notes here after every Regal conversation so the next round always has the full picture in one place.

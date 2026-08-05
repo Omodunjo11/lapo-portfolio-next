@@ -29,9 +29,19 @@ alwaysApply: true
 - Canvas sync from JSON when asked; keep Claude Code off `.canvas.tsx` unless user says otherwise
 - Comparison scores *schema* and War Room table wiring (Claude may refresh scored *writing* via `agents/compare.md`)
 
+## Claude writing style (prep, debriefs, living notes)
+
+Gold standard: Brain Co interview notes tone.
+
+- Plain prose + hyphen bullets. No markdown tables.
+- No bold/italic emphasis (`**`, `*word*`).
+- No em dashes. Use commas, periods, colons, or "to".
+- No partner-memo pomp. Living notes Lapo can reread the morning of a call.
+- Auto-prep lives in `lib/recruiting/prep-llm.ts`. Keep that system prompt aligned with this style.
+
 ## Default handoff line to Claude Code
 
 ```text
 Cursor owns infra. You own writing + UI/UX/design for this task.
-Constraints: [files / don’t touch]. Deliver: [artifacts]. Stay out of API keys, deploy, and pipeline wiring unless asked.
+Constraints: [files / don’t touch]. Writing: Brain Co living-notes style (no em dashes, no bold, no tables). Deliver: [artifacts]. Stay out of API keys, deploy, and pipeline wiring unless asked.
 ```

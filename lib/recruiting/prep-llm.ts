@@ -4,15 +4,15 @@ import { anthropicConfigured, getAnthropic, prepModel } from "./claude";
 
 const CANDIDATE_CONTEXT = `
 Candidate: Onaolapo "Lapo" Odunjo (he/him). Wharton MBA. Product / forward-deployed AI.
-Voice: calm, crisp, structured. Situation, then decision, then system, then result. No ramble. No fake domain depth.
+Voice: calm, direct, living-notes style. Situation, decision, system, result. No ramble. No fake domain depth.
 
 Proof bank (use the relevant ones; do not invent employers or metrics):
-- Kinage: multi-account AI deployment ownership; coached technical delivery; playbooks; 0 to 12 institutions; cost-to-serve down about 62 percent. Emphasize team leverage, not solo heroics.
+- Kinage: multi-account AI deployment ownership; coached technical delivery; playbooks; 0 to 12 institutions; cost-to-serve about 62 percent down. Emphasize team leverage, not solo heroics.
 - Bank / regulated trust: eval gates, precision, production quality bar; field failure modes into Product.
-- Judgment under pressure: TD-style pushback. Calm alternative, protected delivery, spoke to risk and outcomes, not emotion.
+- Judgment under pressure: TD-style pushback. Calm alternative, protected delivery, spoke risk and outcomes not emotion.
 - Incomplete-info shipping: incomplete specs, cut scope, ship, measure adoption.
 - People leadership honesty: lead by ownership and coaching deployed engineers; do not overclaim formal manager headcount.
-- Incomplete-info STAR is drafted; gov/MENA depth may be thin, say so if asked.
+- Incomplete-info STAR is drafted. Gov or MENA depth may be thin. Say so if asked.
 
 Do not invent companies, titles, metrics, or interviewer biographies.
 `.trim();
@@ -26,12 +26,26 @@ export type PrepGenInput = {
   force?: boolean;
 };
 
+/** True when brief already matches the living-notes style we want to keep. */
 export function isRichBrief(text: string | null | undefined): boolean {
   if (!text) return false;
-  if (text.length >= 2200) return true;
-  return /what .+ is testing|five lines to land|90 day|stories to have ready/i.test(
+  if (looksLikeLegacyPrepDeck(text)) return false;
+  if (text.length >= 1800) return true;
+  return /living notes|action items|how to read this|interview line to reuse/i.test(
     text
   );
+}
+
+/** Old Cursor-style decks: tables, em dashes, bold labels, "Five lines to land". */
+export function looksLikeLegacyPrepDeck(text: string): boolean {
+  if (/Five lines to land|# Now |What they are testing\s*\n\s*\|/i.test(text)) {
+    return true;
+  }
+  if (text.includes("\u2014") || text.includes("**With:**") || text.includes("**When:**")) {
+    return true;
+  }
+  if (/^\|.+\|$/m.test(text) && text.includes("|---")) return true;
+  return false;
 }
 
 export function stubPrepDeck(company: Company, event: PipelineEvent): string {
@@ -47,65 +61,72 @@ export function stubPrepDeck(company: Company, event: PipelineEvent): string {
       })
     : "TBD";
 
-  return `# ${company.name}, prep deck
+  return `# ${company.name}: Interview Notes and Prep
+
+Onaolapo (Lapo) Odunjo. Role: ${company.role}. Living notes doc. Stage: ${company.stageLabel || company.stage}.
 
 When: ${when} ET
 With: ${event.with || "TBD"}
-Role: ${company.role}
-Stage: ${company.stageLabel || company.stage}
-Title: ${event.title}
+Calendar: ${event.title}
 
----
+## Goal for this conversation
 
-# Now, this interview
-
-## Goal for this call
 - Confirm fit for ${company.role}
 - Leave with next step and who you meet next
 
-## 5 talking points
-1. Why ${company.name} specifically, not generic AI interest
-2. Forward-deployed / shipping ownership proof
-3. Trust, eval, and production quality bar
-4. Ambiguity comfort, incomplete info leading to a decision and motion
-5. What "good" looks like in the first 90 days
+## What they are testing
 
-## Opening (~20s)
+- Why ${company.name} specifically, not generic AI interest
+- Forward-deployed / shipping ownership proof
+- Trust, eval, and production quality bar
+- Ambiguity comfort: incomplete info, decision, motion
+
+## Opening (~20 seconds)
+
 Draft a tight opener tied to ${company.name}'s product and your closest proof.
 
 ## Stories to have ready
+
 - Kinage scale, playbooks, cost-to-serve
-- Bank trust, precision, eval
+- Bank trust, precision, eval gates
 - Judgment under pressure (TD pushback)
 - Incomplete-info story
 
-## 3 questions to ask
+## Questions to ask
+
 1. What are you hiring this seat to own in the next 90 days?
-2. What's the biggest failure mode on the team right now?
+2. What is the biggest failure mode on the team right now?
 3. If this goes well, who else would I meet and what are those conversations testing?
 
 ## Don't
+
 - Don't wing the loop question
 - Don't overclaim domain depth you don't have
 - Don't leave without a clear next owner and timing
 
----
-
-# Next, loop and future rounds
-
 ## Loop map
+
 - This round: ${event.title}${event.with ? ` with ${event.with}` : ""}
-- Likely next: TBD, ask on this call
+- Likely next: TBD. Ask on this call.
 
 ## After the call
+
 1. Debrief in War Room
-2. Update this doc's Loop map
+2. Update this doc's loop map
 3. Stub next-round prep the same day if a name is known
+
+## Action items
+
+1. Rehearse one incomplete-info story before the call
+2. Write down one company-specific why in their language
+3. End the call with a clear next owner and timing
+
+This is a living document. Add new notes here after every ${company.name} conversation so the next round always has the full picture in one place.
 `;
 }
 
 /**
- * Claude-written Now+Next prep markdown. Falls back to stub if no key / error.
+ * Claude-written living-notes prep markdown. Falls back to stub if no key / error.
  */
 export async function generatePrepDeck(input: PrepGenInput): Promise<{
   text: string;
@@ -113,13 +134,20 @@ export async function generatePrepDeck(input: PrepGenInput): Promise<{
 }> {
   const { company, event, emailContext, existingBrief, force } = input;
 
-  if (existingBrief && isRichBrief(existingBrief) && !force) {
+  if (
+    existingBrief &&
+    isRichBrief(existingBrief) &&
+    !force &&
+    !looksLikeLegacyPrepDeck(existingBrief)
+  ) {
     return { text: existingBrief, source: "existing" };
   }
 
   if (!anthropicConfigured()) {
     return {
-      text: existingBrief || stubPrepDeck(company, event),
+      text: existingBrief && !looksLikeLegacyPrepDeck(existingBrief)
+        ? existingBrief
+        : stubPrepDeck(company, event),
       source: "stub",
     };
   }
@@ -136,21 +164,35 @@ export async function generatePrepDeck(input: PrepGenInput): Promise<{
       })
     : "Scheduling / TBD";
 
-  const system = `You write interview prep decks for Lapo Odunjo's recruiting War Room.
-Output GitHub-flavored Markdown only, no preamble, no code fences around the whole doc.
-Mirror the quality bar of a sharp partner memo: specific, rehearsable, honest about gaps.
+  const system = `You write interview prep as living notes for Lapo Odunjo's recruiting War Room.
 
-Writing style, follow exactly:
-- No em dashes. Use a period, comma, or "to" instead of "—" or "--".
-- No bold or italic emphasis (no **text** or *text*). Section headers (#, ##) are fine; plain "- " bullets are fine.
-- No markdown tables. Write "what they are testing" as a plain bullet list (point, then why it matters, on one line or two).
-- Plain prose paragraphs and simple bullet lists, not dense jargon-heavy fragments. Write like you're briefing a smart colleague, not filling out a template.
+GOLD STANDARD STYLE (match Brain Co interview notes, not a consulting deck):
+- Clean, readable prose and bullet lists.
+- Plain Markdown headings and hyphen bullets only.
+- No bold, no italic, no asterisk emphasis (** or * for emphasis). Hyphen "-" for list bullets is required.
+- No markdown tables. Never.
+- No em dashes (the Unicode character). Use commas, periods, colons, or "to" instead.
+- No "---" horizontal rules.
+- No partner-memo pomp. Write like notes Lapo will reread the morning of the call.
 
-Structure MUST include these top-level sections in order:
-1. Title line + meta (When / With / Role / Stage / Title)
-2. "# Now, this interview" with Goal, What they are testing (bullet list), Opening (~20s, quoted), Points to land, Stories to have ready, Questions (2-4), Don't
-3. "# Next, loop and future rounds" with Loop map, Prep bank, After the call
-Keep it under ~900 words. Plain ASCII punctuation only.`;
+STRUCTURE (use these section headings, in order):
+1. Title: "# {Company}: Interview Notes and Prep"
+2. One short identity line: "Onaolapo (Lapo) Odunjo. Role: .... Living notes. Stage: ...."
+3. Plain meta lines (not bold): When, With, Calendar
+4. ## Goal for this conversation
+5. ## What they are testing (bullets: each signal, then why it matters in one short clause)
+6. ## Opening (~20 seconds) with one quoted opener
+7. ## Lines to land (numbered, 4 to 6)
+8. ## Stories to have ready (short subsections with Situation / Decision / Result as plain labels, not bold)
+9. ## Questions to ask (2 to 4 numbered)
+10. ## Don't (bullets)
+11. ## Loop map
+12. ## Prep bank
+13. ## After the call
+14. ## Action items
+15. Closing line: "This is a living document. Add new notes here after every {Company} conversation so the next round always has the full picture in one place."
+
+Be specific to the company and interview funnel stage. Never reframe "2nd" / "1st" / "Final" as a funding Series. Honest about gaps. Output Markdown only, no preamble, no code fences around the whole doc.`;
 
   const user = `${CANDIDATE_CONTEXT}
 
@@ -158,6 +200,7 @@ Keep it under ~900 words. Plain ASCII punctuation only.`;
 Company: ${company.name}
 Role: ${company.role}
 Stage: ${company.stageLabel || company.stage}
+(Interview funnel stage, e.g. 1st / 2nd / Final. NOT funding round.)
 Priority: ${company.priority}
 Next action on file: ${company.nextAction}
 When: ${when} ET
@@ -167,10 +210,10 @@ Calendar/title: ${event.title}
 ## Signal email / context (may be empty)
 ${(emailContext || "").slice(0, 3500) || "(none)"}
 
-## Existing brief to improve (may be empty or stubby)
-${(existingBrief || "").slice(0, 2500) || "(none — write fresh)"}
+## Existing brief (may be empty, stubby, or legacy structured). Rewrite fresh in the living-notes style. Do not preserve tables, bold, or em dashes.
+${(existingBrief || "").slice(0, 2500) || "(none, write fresh)"}
 
-Write the prep deck now.`;
+Write the prep notes now.`;
 
   try {
     const anthropic = getAnthropic();
@@ -188,15 +231,35 @@ Write the prep deck now.`;
       .trim();
     if (text.length < 400) {
       return {
-        text: existingBrief || stubPrepDeck(company, event),
+        text:
+          existingBrief && !looksLikeLegacyPrepDeck(existingBrief)
+            ? existingBrief
+            : stubPrepDeck(company, event),
         source: "stub",
       };
     }
-    return { text: text.endsWith("\n") ? text : `${text}\n`, source: "claude" };
+    const cleaned = sanitizePrepMarkdown(text);
+    return {
+      text: cleaned.endsWith("\n") ? cleaned : `${cleaned}\n`,
+      source: "claude",
+    };
   } catch {
     return {
-      text: existingBrief || stubPrepDeck(company, event),
+      text:
+        existingBrief && !looksLikeLegacyPrepDeck(existingBrief)
+          ? existingBrief
+          : stubPrepDeck(company, event),
       source: "stub",
     };
   }
+}
+
+/** Soft cleanup if the model still slips legacy punctuation. */
+export function sanitizePrepMarkdown(text: string): string {
+  return text
+    .replace(/\u2014/g, ",")
+    .replace(/\u2013/g, "-")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/^---+$/gm, "")
+    .replace(/\n{3,}/g, "\n\n");
 }

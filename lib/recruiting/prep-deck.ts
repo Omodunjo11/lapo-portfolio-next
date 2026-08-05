@@ -11,7 +11,12 @@ import {
 } from "./drive";
 import type { IngestProposal } from "./gmail/classify";
 import { extractNextInterviewer } from "./gmail/taxonomy";
-import { generatePrepDeck, isRichBrief, stubPrepDeck } from "./prep-llm";
+import {
+  generatePrepDeck,
+  isRichBrief,
+  looksLikeLegacyPrepDeck,
+  stubPrepDeck,
+} from "./prep-llm";
 
 function briefsDir() {
   // Vercel serverless FS is read-only except /tmp.
@@ -34,8 +39,8 @@ function localBriefText(briefPath?: string | null): string | null {
 
 function deckTitle(company: Company, event: PipelineEvent) {
   const day = event.start?.slice(0, 10) || "next";
-  const who = event.with ? `, ${event.with}` : "";
-  return `Prep deck, ${company.name}, ${day}${who}`;
+  const who = event.with ? ` (${event.with})` : "";
+  return `Interview notes: ${company.name} ${day}${who}`;
 }
 
 function briefSlug(company: Company, event: PipelineEvent) {
@@ -184,9 +189,13 @@ export async function ensurePrepDecks(
 
     const existingLocal = localBriefText(event.briefPath);
     const hasEmail = Boolean(opts.emailByCompany?.[company.id]);
-    // Claude only when we have fresh email context (or force). Otherwise stub.
+    const legacyLocal = Boolean(
+      existingLocal && looksLikeLegacyPrepDeck(existingLocal)
+    );
+    // Claude when force, legacy style, or fresh email with a thin/missing brief.
     const shouldClaude =
       opts.force ||
+      legacyLocal ||
       (hasEmail && (!existingLocal || !isRichBrief(existingLocal)));
 
     let text = existingLocal || stubPrepDeck(company, event);
@@ -314,7 +323,7 @@ export async function ensureAdvancePrepDecks(
       end: `${day}T12:45:00-04:00`,
       title: who
         ? `Next: ${who} @ ${company.name}`
-        : `Next interview, ${company.name}`,
+        : `Next interview: ${company.name}`,
       with: who || "",
       type: "other",
       status: "unscheduled",
@@ -344,6 +353,7 @@ export async function ensureAdvancePrepDecks(
     const force =
       !existingLocal ||
       !isRichBrief(existingLocal) ||
+      looksLikeLegacyPrepDeck(existingLocal || "") ||
       (who
         ? !new RegExp(who.split(/\s+/)[0] || "NOPE", "i").test(
             existingLocal || ""
