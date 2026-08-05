@@ -226,10 +226,6 @@
         {
           "name": "Jack Ahn",
           "role": "Interviewer"
-        },
-        {
-          "name": "Sanjay Rajagopalan",
-          "role": "Next interviewer"
         }
       ],
       "aliases": [
@@ -550,7 +546,7 @@
       "with": "Sanjay Rajagopalan",
       "type": "founding",
       "status": "scheduled",
-      "briefPath": "briefs/next-hang-ten.md",
+      "briefPath": "briefs/2026-08-10-hang-ten.md",
       "blocker": null
     },
     {
