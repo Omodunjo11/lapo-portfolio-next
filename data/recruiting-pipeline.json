@@ -306,8 +306,8 @@
       "stageLabel": "2nd",
       "ball": "you",
       "priority": "P0",
-      "nextAction": "Reply to Kelsey with 3–4 times for Sahil (COO) video call",
-      "due": "2026-08-05",
+      "nextAction": "Attend: Video Interview with Sahil Mehta, COO | Regal",
+      "due": "2026-08-07",
       "nudgeDate": null,
       "lean": 4,
       "contacts": [
@@ -636,6 +636,18 @@
       "status": "unscheduled",
       "briefPath": "briefs/next-regal.md",
       "blocker": "Re: Next Steps | Regal"
+    },
+    {
+      "id": "evt-regal-2026-08-07",
+      "companyId": "regal",
+      "start": "2026-08-07T14:30:00-04:00",
+      "end": "2026-08-07T15:00:00-04:00",
+      "title": "Video Interview with Sahil Mehta, COO | Regal",
+      "with": "",
+      "type": "other",
+      "status": "scheduled",
+      "briefPath": "briefs/2026-08-07-regal.md",
+      "blocker": null
     }
   ],
   "funnelStages": [
