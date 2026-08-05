@@ -164,14 +164,22 @@ export function classifyEmail({
   // name a COO or "hiring manager" are logistics for the current round.
   const advanceKind = classifyProcessAdvanceKind(text);
   const isScheduling =
-    /calendly|schedule a|book a time|availability|interview invite|zoom\.us|meet\.google|interview confirmation|phone interview is confirmed|you.?re invited to an interview|updated invitation|invitation from an unknown sender|invitation:|confirm a time|times? you (?:have )?shared|asking if you have|send you the (?:confirmation|invite)|calendar invite|what time (?:would|works?)|reschedul|any availability|time that works/i.test(
+    /calendly|schedule a|book a time|availability|interview invite|zoom\.us|meet\.google|interview confirmation|phone interview is confirmed|you.?re booked|booked for|you.?re confirmed|confirmed for your|all set for|you.?re invited to an interview|updated invitation|invitation from an unknown sender|invitation:|confirm a time|times? you (?:have )?shared|asking if you have|send you the (?:confirmation|invite)|calendar invite|what time (?:would|works?)|reschedul|any availability|time that works/i.test(
       text
     ) || isInterviewLogistics(text);
+
+  // Hard booked confirmations with a named interview window win over COO/HM advance.
+  const bookedHard =
+    isScheduling &&
+    /\b(you.?re booked|booked for|you.?re confirmed|confirmed for your|invitation:|all set for)\b/i.test(
+      text
+    );
 
   if (
     company &&
     advanceKind &&
     !hardReject &&
+    !bookedHard &&
     !(isScheduling && !hasExplicitProgression(text)) &&
     !(advanceKind === "generic_advance" && !hasExplicitProgression(text))
   ) {
@@ -186,8 +194,10 @@ export function classifyEmail({
   if (isScheduling) {
     return {
       signal: "schedule",
-      confidence: "medium",
-      reason: "interview scheduling",
+      confidence: bookedHard ? "high" : "medium",
+      reason: bookedHard
+        ? "interview booked / confirmed"
+        : "interview scheduling",
     };
   }
 

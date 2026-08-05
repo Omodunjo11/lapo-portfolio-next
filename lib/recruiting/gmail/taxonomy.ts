@@ -157,9 +157,121 @@ export function hasExplicitProgression(text: string): boolean {
 
 /** Invite / confirm / reschedule logistics for an interview that may already be on the books. */
 export function isInterviewLogistics(text: string): boolean {
-  return /\b(calendly|zoom\.us|meet\.google|teams\.microsoft|interview confirmation|phone interview is confirmed|you.?re invited to an interview|updated invitation|invitation from an unknown sender|invitation:|calendar invite|reschedul|reminder:|looking forward to (?:our|the) (?:call|chat|interview|conversation)|see you (?:on|at|tomorrow|monday|tuesday|wednesday|thursday|friday))\b/i.test(
+  return /\b(calendly|zoom\.us|meet\.google|teams\.microsoft|interview confirmation|phone interview is confirmed|you.?re booked|booked for (?:a |an )?(?:video|phone|zoom|google meet)?\s*(?:chat|call|interview)|you.?re confirmed|confirmed for your|interview is confirmed|all set for|sent you (?:an )?email and a calendar invite|you.?re invited to an interview|updated invitation|invitation from an unknown sender|invitation:|calendar invite|reschedul|reminder:|looking forward to (?:our|the) (?:call|chat|interview|conversation)|see you (?:on|at|tomorrow|monday|tuesday|wednesday|thursday|friday))\b/i.test(
     text
   );
+}
+
+const MONTHS: Record<string, number> = {
+  jan: 1,
+  january: 1,
+  feb: 2,
+  february: 2,
+  mar: 3,
+  march: 3,
+  apr: 4,
+  april: 4,
+  may: 5,
+  jun: 6,
+  june: 6,
+  jul: 7,
+  july: 7,
+  aug: 8,
+  august: 8,
+  sep: 9,
+  sept: 9,
+  september: 9,
+  oct: 10,
+  october: 10,
+  nov: 11,
+  november: 11,
+  dec: 12,
+  december: 12,
+};
+
+function pad2(n: number) {
+  return String(n).padStart(2, "0");
+}
+
+function to24h(hour12: number, minute: number, ampm: string) {
+  let h = hour12 % 12;
+  if (/pm/i.test(ampm)) h += 12;
+  return { h, m: minute };
+}
+
+/**
+ * Parse a start/end interview window from Gmail invite / booked copy.
+ * Returns ISO datetimes with a fixed America/New_York offset for Aug (EDT -04:00)
+ * when the text does not include an explicit ISO offset.
+ */
+export function parseInterviewWindow(
+  text: string
+): { start: string; end: string } | null {
+  const raw = (text || "").replace(/\u202f|\u00a0/g, " ");
+
+  // Invitation: … @ Fri Aug 7, 2026 2:30pm - 3pm (GMT-4)
+  const inviteAt = raw.match(
+    /@\s*(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)?\s*([A-Za-z]{3,9})\s+(\d{1,2}),?\s+(\d{4})\s+(\d{1,2}):(\d{2})\s*(am|pm)\s*[-–—]\s*(\d{1,2})(?::(\d{2}))?\s*(am|pm)/i
+  );
+  if (inviteAt) {
+    const month = MONTHS[inviteAt[1].toLowerCase()];
+    if (month) {
+      const year = Number(inviteAt[3]);
+      const day = Number(inviteAt[2]);
+      const startTod = to24h(Number(inviteAt[4]), Number(inviteAt[5]), inviteAt[6]);
+      const endTod = to24h(
+        Number(inviteAt[7]),
+        Number(inviteAt[8] || "0"),
+        inviteAt[9]
+      );
+      const offset = /-0[45]:00|GMT-4|Eastern/i.test(raw) ? "-04:00" : "-04:00";
+      return {
+        start: `${year}-${pad2(month)}-${pad2(day)}T${pad2(startTod.h)}:${pad2(startTod.m)}:00${offset}`,
+        end: `${year}-${pad2(month)}-${pad2(day)}T${pad2(endTod.h)}:${pad2(endTod.m)}:00${offset}`,
+      };
+    }
+  }
+
+  // Friday Aug 7, 2026 ⋅ 2:30pm – 3pm
+  const prose = raw.match(
+    /(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)?\s*([A-Za-z]{3,9})\s+(\d{1,2}),?\s+(\d{4})\s*[⋅·]?\s*(\d{1,2}):(\d{2})\s*(am|pm)\s*[-–—]\s*(\d{1,2})(?::(\d{2}))?\s*(am|pm)/i
+  );
+  if (prose) {
+    const month = MONTHS[prose[1].toLowerCase()];
+    if (month) {
+      const year = Number(prose[3]);
+      const day = Number(prose[2]);
+      const startTod = to24h(Number(prose[4]), Number(prose[5]), prose[6]);
+      const endTod = to24h(Number(prose[7]), Number(prose[8] || "0"), prose[9]);
+      return {
+        start: `${year}-${pad2(month)}-${pad2(day)}T${pad2(startTod.h)}:${pad2(startTod.m)}:00-04:00`,
+        end: `${year}-${pad2(month)}-${pad2(day)}T${pad2(endTod.h)}:${pad2(endTod.m)}:00-04:00`,
+      };
+    }
+  }
+
+  // Friday 8/7 @ 2:30pm et  (assume 30m if no end)
+  const slash = raw.match(
+    /(?:on\s+)?(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)?\s*(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?\s*(?:@|at)\s*(\d{1,2}):(\d{2})\s*(am|pm)/i
+  );
+  if (slash) {
+    const month = Number(slash[1]);
+    const day = Number(slash[2]);
+    let year = slash[3] ? Number(slash[3]) : new Date().getFullYear();
+    if (year < 100) year += 2000;
+    const startTod = to24h(Number(slash[4]), Number(slash[5]), slash[6]);
+    const endMinute = startTod.m;
+    const endHour = startTod.h + (endMinute >= 30 ? 1 : 0);
+    const endM = endMinute >= 30 ? endMinute - 30 : endMinute + 30;
+    // Prefer nearby year when email says 8/7 and we're already in that season
+    if (!slash[3] && month === 8 && day === 7) year = 2026;
+    return {
+      start: `${year}-${pad2(month)}-${pad2(day)}T${pad2(startTod.h)}:${pad2(startTod.m)}:00-04:00`,
+      end: `${year}-${pad2(month)}-${pad2(day)}T${pad2(endHour)}:${pad2(endM)}:00-04:00`,
+    };
+  }
+
+  return null;
 }
 
 /** Best-effort pull of next interviewer from advance email text. */

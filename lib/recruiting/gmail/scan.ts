@@ -7,7 +7,11 @@ import {
   type IngestProposal,
 } from "./classify";
 import { getCalendarClient, getGmailClient } from "./client";
-import { gmailProcessOrClause } from "./taxonomy";
+import {
+  extractNextInterviewer,
+  gmailProcessOrClause,
+  parseInterviewWindow,
+} from "./taxonomy";
 
 function header(
   headers: { name?: string | null; value?: string | null }[] | undefined,
@@ -220,10 +224,12 @@ export async function scanInterviewSignals(
     if (!ev.id) continue;
     const summary = ev.summary || "";
     const description = ev.description || "";
-    const blob = `${summary} ${description} ${(ev.attendees || [])
-      .map((a) => a.email)
-      .join(" ")}`;
-    const company = matchCompany(pipeline, blob);
+    const organizer = ev.organizer?.email || "";
+    const attendeeBlob = (ev.attendees || [])
+      .map((a) => `${a.email || ""} ${a.displayName || ""}`)
+      .join(" ");
+    const blob = `${summary} ${description} ${organizer} ${attendeeBlob}`;
+    const company = matchCompany(pipeline, blob, { from: organizer });
     if (!company || company.noise) continue;
 
     const classification = classifyCalendar({ company, summary });
@@ -256,7 +262,25 @@ export async function scanInterviewSignals(
   };
 }
 
-/** Apply high-confidence calendar schedule facts only — never move stages. */
+type ScheduleFact = {
+  companyId: string;
+  start: string;
+  end: string;
+  title: string;
+  withWho: string;
+  sourceId: string;
+  source: "calendar" | "gmail";
+};
+
+function dayKey(iso: string) {
+  return iso.slice(0, 10);
+}
+
+/**
+ * Apply calendar + hard Gmail booking confirmations as scheduled events.
+ * Multiple emails for the same company + day coalesce into one interview.
+ * Never moves funnel stages.
+ */
 export function applyCalendarFacts(
   pipeline: Pipeline,
   proposals: IngestProposal[]
@@ -265,72 +289,175 @@ export function applyCalendarFacts(
     ...pipeline,
     companies: pipeline.companies.map((c) => ({ ...c })),
     events: pipeline.events.map((e) => ({ ...e })),
+    chase: (pipeline.chase || []).map((c) => ({ ...c })),
+    focus: (pipeline.focus || []).map((f) => ({ ...f })),
   };
-  let applied = 0;
+
+  const facts: ScheduleFact[] = [];
 
   for (const p of proposals) {
-    if (p.confidence !== "high") continue;
-    if (p.source !== "calendar" || p.signal !== "schedule") continue;
-    if (!p.start || !p.end || !p.companyId) continue;
+    if (p.signal !== "schedule" || !p.companyId) continue;
 
-    // Don't revive past meetings into "Attend" next actions.
-    const endMs = Date.parse(p.end);
+    if (p.source === "calendar") {
+      if (p.confidence !== "high" && p.confidence !== "medium") continue;
+      if (!p.start || !p.end) continue;
+      facts.push({
+        companyId: p.companyId,
+        start: p.start,
+        end: p.end,
+        title: p.summary || `${p.companyName || p.companyId} interview`,
+        withWho: extractNextInterviewer(p.summary || "") || "",
+        sourceId: p.id,
+        source: "calendar",
+      });
+      continue;
+    }
+
+    // Gmail: only hard booked/confirmed proposals, or any schedule with a
+    // parseable interview window in subject/snippet.
+    const blob = `${p.subject || ""}\n${p.snippet || ""}\n${p.from || ""}`;
+    const window = parseInterviewWindow(blob);
+    if (!window) continue;
+    const hard =
+      p.confidence === "high" ||
+      /\b(you.?re booked|booked for|you.?re confirmed|confirmed for your|invitation:|all set for)\b/i.test(
+        blob
+      );
+    if (!hard && p.confidence !== "high") continue;
+
+    facts.push({
+      companyId: p.companyId,
+      start: window.start,
+      end: window.end,
+      title:
+        p.subject?.replace(/^Invitation:\s*/i, "").replace(/\s*@\s*.*$/, "") ||
+        `${p.companyName || p.companyId} interview`,
+      withWho:
+        extractNextInterviewer(blob) ||
+        extractNextInterviewer(p.subject || "") ||
+        "",
+      sourceId: p.id,
+      source: "gmail",
+    });
+  }
+
+  // Coalesce: one fact per company+day, prefer calendar over gmail.
+  const bySlot = new Map<string, ScheduleFact>();
+  for (const fact of facts) {
+    const key = `${fact.companyId}:${dayKey(fact.start)}`;
+    const prev = bySlot.get(key);
+    if (!prev) {
+      bySlot.set(key, fact);
+      continue;
+    }
+    if (prev.source === "gmail" && fact.source === "calendar") {
+      bySlot.set(key, fact);
+      continue;
+    }
+    if (prev.source === fact.source && fact.start > prev.start) {
+      bySlot.set(key, fact);
+    }
+  }
+
+  let applied = 0;
+  for (const fact of bySlot.values()) {
+    const endMs = Date.parse(fact.end);
     if (Number.isFinite(endMs) && endMs < Date.now() - 30 * 60 * 1000) {
       continue;
     }
 
-    const company = data.companies.find((c) => c.id === p.companyId);
+    const company = data.companies.find((c) => c.id === fact.companyId);
     if (!company) continue;
 
-    const eid = `evt-${company.id}-${p.start.slice(0, 10)}`;
+    const eid = `evt-${company.id}-${dayKey(fact.start)}`;
     let event =
-      data.events.find((e) => e.id === `cal-${p.id}`) ||
+      data.events.find((e) => e.id === `cal-${fact.sourceId}`) ||
       data.events.find((e) => e.id === eid) ||
       data.events.find(
-        (e) => e.companyId === company.id && e.status === "scheduled"
+        (e) =>
+          e.companyId === company.id &&
+          e.status === "scheduled" &&
+          e.start &&
+          dayKey(e.start) === dayKey(fact.start)
       );
 
     if (event?.status === "done") continue;
 
     if (!event) {
+      // Promote an unscheduled next-prep placeholder for this company.
+      event = data.events.find(
+        (e) =>
+          e.companyId === company.id &&
+          e.status === "unscheduled" &&
+          (e.id.startsWith("prep-next-") || /sahil|coo|next/i.test(e.title))
+      );
+    }
+
+    if (!event) {
       event = {
         id: eid,
         companyId: company.id,
-        start: p.start,
-        end: p.end,
-        title: p.summary || `${company.name} interview`,
-        with: "",
+        start: fact.start,
+        end: fact.end,
+        title: fact.title,
+        with: fact.withWho,
         type: "other",
         status: "scheduled",
-        briefPath: null,
+        briefPath: `briefs/next-${company.id}.md`,
         blocker: null,
       };
       data.events.push(event);
     } else {
-      if (event.id !== eid && event.id !== `cal-${p.id}`) {
-        event.id = eid;
-      }
-      event.start = p.start;
-      event.end = p.end;
+      event.id = eid;
+      event.start = fact.start;
+      event.end = fact.end;
       event.status = "scheduled";
-      event.title = p.summary || event.title;
+      event.title = fact.title || event.title;
+      if (fact.withWho) event.with = fact.withWho;
+      event.blocker = null;
+      if (!event.briefPath) {
+        event.briefPath = `briefs/next-${company.id}.md`;
+      }
     }
 
     for (const e of data.events) {
-      if (
-        e.companyId === company.id &&
-        e.status === "scheduled" &&
-        e.id !== event.id
+      if (e.companyId !== company.id || e.id === event.id) continue;
+      if (e.status === "scheduled") {
+        e.status = "canceled";
+        e.blocker = `Superseded by schedule update → ${fact.start}`;
+      } else if (
+        e.status === "unscheduled" &&
+        e.id.startsWith("prep-next-")
       ) {
         e.status = "canceled";
-        e.blocker = `Superseded by calendar update → ${p.start}`;
+        e.blocker = `Promoted into ${eid}`;
       }
     }
 
     company.ball = "you";
     company.nextAction = `Attend: ${event.title}`;
-    company.due = p.start.slice(0, 10);
+    company.due = dayKey(fact.start);
     company.priority = "P0";
+
+    // Drop chase for this company once a real interview slot is booked.
+    data.chase = (data.chase || []).filter((c) => c.companyId !== company.id);
+
+    const focusDetail = `Attend ${event.with || event.title} — ${dayKey(fact.start)}`;
+    const focusIdx = (data.focus || []).findIndex(
+      (f) => f.companyId === company.id
+    );
+    if (focusIdx >= 0) {
+      data.focus![focusIdx] = {
+        companyId: company.id,
+        detail: focusDetail,
+      };
+    } else {
+      data.focus = [
+        { companyId: company.id, detail: focusDetail },
+        ...(data.focus || []),
+      ].slice(0, 6);
+    }
+
     applied += 1;
   }
 

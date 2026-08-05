@@ -12,7 +12,7 @@
   "focus": [
     {
       "companyId": "regal",
-      "detail": "Reply with Sahil times — Kelsey Next Steps email Aug 4"
+      "detail": "Attend Sahil Mehta (COO) Fri Aug 7 2:30pm ET \u2014 Meet link in calendar"
     },
     {
       "companyId": "hang-ten",
@@ -20,17 +20,17 @@
     },
     {
       "companyId": "foundation-health",
-      "detail": "Chase Steve scheduling — next brief ready"
+      "detail": "Chase Steve scheduling \u2014 next brief ready"
     },
     {
       "companyId": "invisible",
-      "detail": "Nudge Aug 6 — next-round brief ready"
+      "detail": "Nudge Aug 6 \u2014 next-round brief ready"
     }
   ],
   "storyGaps": [
     {
       "id": "incomplete-info",
-      "detail": "Incomplete-info STAR drafted in story-bank — edit before Brain Co HM",
+      "detail": "Incomplete-info STAR drafted in story-bank \u2014 edit before Brain Co HM",
       "neededFor": [
         "brain-co",
         "hang-ten"
@@ -81,7 +81,7 @@
       "drive": {
         "folderUrl": "",
         "prepUrl": "",
-        "note": "No company Drive folder found in Gmail scan — create Recruiting Season/Blue Orange Digital and paste folderUrl."
+        "note": "No company Drive folder found in Gmail scan \u2014 create Recruiting Season/Blue Orange Digital and paste folderUrl."
       },
       "paths": {
         "folder": "Blue Orange Digital",
@@ -127,7 +127,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1VMTqazpBn2Dni4uqRtkD1NRiRylD7yK9",
         "prepUrl": "https://docs.google.com/document/d/1qqrwcstj98k0L9e67vPpiwCcDA3kdvHUEtXOssBRW2o/edit",
-        "note": "Mapped to Drive folder “Brain Co”"
+        "note": "Mapped to Drive folder \u201cBrain Co\u201d"
       }
     },
     {
@@ -207,7 +207,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1C4rZXq5ho87J-YHJEP2eSMTEp4qPXNBB",
         "prepUrl": "https://docs.google.com/document/d/1G24HcWf3DUyD5c2G264q2DIhDy75SxYH_VCeV_Y7VsQ/edit",
-        "note": "Mapped to Drive folder “Foundation Health”"
+        "note": "Mapped to Drive folder \u201cFoundation Health\u201d"
       }
     },
     {
@@ -246,7 +246,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/12xlBxLYw4ttCiolqWwylQswdyNGlr2IO",
         "prepUrl": "https://docs.google.com/document/d/1MIq0tBn5wfxJqcGcO3coDdrG_NsP-9TCR3fi_JuwaBQ/edit",
-        "note": "Mapped to Drive folder “Hang Ten”"
+        "note": "Mapped to Drive folder \u201cHang Ten\u201d"
       }
     },
     {
@@ -295,7 +295,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/16n5gZwJ2fNQr7rXqshRgE3xPkw-uOMX0",
         "prepUrl": "https://docs.google.com/document/d/1AoW5dFjve10_TakV0_yirOuEPZcqWvrRH6iKKeO8g6c/edit?usp=drivesdk",
-        "note": "Mapped to Drive folder “Invisible Technologies”"
+        "note": "Mapped to Drive folder \u201cInvisible Technologies\u201d"
       }
     },
     {
@@ -306,7 +306,7 @@
       "stageLabel": "2nd",
       "ball": "you",
       "priority": "P0",
-      "nextAction": "Attend: Video Interview with Sahil Mehta, COO | Regal",
+      "nextAction": "Attend: Sahil Mehta (COO) @ Regal \u2014 Fri Aug 7, 2:30pm ET",
       "due": "2026-08-07",
       "nudgeDate": null,
       "lean": 4,
@@ -323,6 +323,11 @@
         {
           "name": "Sahil",
           "role": "Next interviewer"
+        },
+        {
+          "name": "Kelsey Heitz",
+          "email": "kelsey@regal.ai",
+          "role": "Recruiting"
         }
       ],
       "aliases": [
@@ -330,7 +335,10 @@
         "Regal Voice",
         "regal.ai",
         "regalvoice.com",
-        "Kelsey"
+        "Kelsey",
+        "Sahil Mehta",
+        "Kelsey Heitz",
+        "kelsey@regal.ai"
       ],
       "paths": {
         "folder": "Regal",
@@ -340,7 +348,7 @@
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1zz0A9CKj2CJvcicO6dOrdgwTeM3fOjf0",
         "prepUrl": "https://docs.google.com/document/d/1yVUuVFFeaLNZ6nZr7288Sr11ZmCkyfjlo1ZPfYKoo1M/edit",
-        "note": "Mapped to Drive folder “Regal”"
+        "note": "Mapped to Drive folder \u201cRegal\u201d"
       }
     },
     {
@@ -348,10 +356,10 @@
       "name": "Semgrep",
       "role": "Unknown (never reached interview)",
       "stage": "passed",
-      "stageLabel": "Passed — no interview offered",
+      "stageLabel": "Passed \u2014 no interview offered",
       "ball": "them",
       "priority": "P2",
-      "nextAction": "Closed — confirmed no interview extended",
+      "nextAction": "Closed \u2014 confirmed no interview extended",
       "due": "",
       "nudgeDate": null,
       "lean": null,
@@ -370,7 +378,7 @@
       "drive": {
         "folderUrl": "",
         "prepUrl": "",
-        "note": "No company Drive folder found in Gmail scan — create Recruiting Season/Semgrep and paste folderUrl."
+        "note": "No company Drive folder found in Gmail scan \u2014 create Recruiting Season/Semgrep and paste folderUrl."
       },
       "paths": {
         "folder": "Semgrep",
@@ -411,7 +419,7 @@
       "drive": {
         "folderUrl": "",
         "prepUrl": "https://docs.google.com/document/d/1UjpnDOgPJeWCeNdKLkFNMg9hCBLuXlej1VReDDbmCms/edit",
-        "note": "Found via email scan, Aug 3 — this is the original Sierra_Interview_Prep_Final doc reused for Foundation Health | Folder URL not found in mail — create Drive folder and paste."
+        "note": "Found via email scan, Aug 3 \u2014 this is the original Sierra_Interview_Prep_Final doc reused for Foundation Health | Folder URL not found in mail \u2014 create Drive folder and paste."
       },
       "paths": {
         "folder": "Sierra",
@@ -426,7 +434,7 @@
       "companyId": "foundation-health",
       "start": "",
       "end": "",
-      "title": "Foundation Health — Steve Charette (not scheduled)",
+      "title": "Foundation Health \u2014 Steve Charette (not scheduled)",
       "with": "Steve Charette",
       "type": "hm",
       "status": "unscheduled",
@@ -438,7 +446,7 @@
       "companyId": "brain-co",
       "start": "",
       "end": "",
-      "title": "Brain Co — hiring manager screen",
+      "title": "Brain Co \u2014 hiring manager screen",
       "with": "TBD",
       "type": "hm",
       "status": "unscheduled",
@@ -450,7 +458,7 @@
       "companyId": "invisible",
       "start": "",
       "end": "",
-      "title": "Invisible — round 3 (time TBD)",
+      "title": "Invisible \u2014 round 3 (time TBD)",
       "with": "TBD",
       "type": "loop",
       "status": "unscheduled",
@@ -486,7 +494,7 @@
       "companyId": "invisible",
       "start": "2026-07-29T12:00:00-04:00",
       "end": "2026-07-29T13:00:00-04:00",
-      "title": "Invisible — HM with Alex Arutyunyants",
+      "title": "Invisible \u2014 HM with Alex Arutyunyants",
       "with": "Alex Arutyunyants",
       "type": "hm",
       "status": "done",
@@ -498,7 +506,7 @@
       "companyId": "foundation-health",
       "start": "2026-08-03T11:30:00-04:00",
       "end": "2026-08-03T11:45:00-04:00",
-      "title": "Foundation Health — Jack Leeming recruiter",
+      "title": "Foundation Health \u2014 Jack Leeming recruiter",
       "with": "Jack Leeming",
       "type": "recruiter",
       "status": "done",
@@ -522,7 +530,7 @@
       "companyId": "brain-co",
       "start": "2026-08-03T14:00:00-04:00",
       "end": "2026-08-03T14:30:00-04:00",
-      "title": "Brain Co — recruiter screen",
+      "title": "Brain Co \u2014 recruiter screen",
       "with": "Michal / Alina",
       "type": "recruiter",
       "status": "done",
@@ -561,9 +569,9 @@
       "title": "Next: Sahil @ Regal",
       "with": "Sahil",
       "type": "other",
-      "status": "unscheduled",
+      "status": "canceled",
       "briefPath": "briefs/next-regal.md",
-      "blocker": "Re: Next Steps | Regal"
+      "blocker": "Promoted into evt-regal-2026-08-07"
     },
     {
       "id": "evt-hang-ten-2026-08-04",
@@ -575,14 +583,14 @@
       "type": "founding",
       "status": "done",
       "briefPath": "briefs/2026-08-04-hang-ten.md",
-      "blocker": "Rescheduled from Mon Aug 3 7pm (calendar now shows Tue 12:30–1:00pm ET)"
+      "blocker": "Rescheduled from Mon Aug 3 7pm (calendar now shows Tue 12:30\u20131:00pm ET)"
     },
     {
       "id": "evt-regal-kelsey-2026-08-04",
       "companyId": "regal",
       "start": "2026-08-04T13:30:00-04:00",
       "end": "2026-08-04T14:00:00-04:00",
-      "title": "Regal — phone with Kelsey",
+      "title": "Regal \u2014 phone with Kelsey",
       "with": "Kelsey",
       "type": "phone",
       "status": "done",
@@ -606,12 +614,12 @@
       "companyId": "invisible",
       "start": "2026-08-07T10:30:00-04:00",
       "end": "2026-08-07T11:30:00-04:00",
-      "title": "Invisible — Ranjani (round 3)",
+      "title": "Invisible \u2014 Ranjani (round 3)",
       "with": "Ranjani",
       "type": "loop",
       "status": "canceled",
       "briefPath": "briefs/next-invisible.md",
-      "blocker": "Superseded by calendar update → 2026-08-07T10:30:00-04:00"
+      "blocker": "Superseded by calendar update \u2192 2026-08-07T10:30:00-04:00"
     },
     {
       "id": "evt-invisible-2026-08-07",
@@ -633,9 +641,9 @@
       "title": "Next: Sahil @ Regal",
       "with": "Sahil",
       "type": "other",
-      "status": "unscheduled",
+      "status": "canceled",
       "briefPath": "briefs/next-regal.md",
-      "blocker": "Re: Next Steps | Regal"
+      "blocker": "Promoted into evt-regal-2026-08-07"
     },
     {
       "id": "evt-regal-2026-08-07",
@@ -646,7 +654,7 @@
       "with": "Sahil Mehta",
       "type": "other",
       "status": "scheduled",
-      "briefPath": "briefs/2026-08-07-regal.md",
+      "briefPath": "briefs/next-regal.md",
       "blocker": null
     }
   ],
