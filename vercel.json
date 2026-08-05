@@ -3,6 +3,10 @@
     {
       "path": "/api/war-room/gmail/scan",
       "schedule": "0 12 * * *"
+    },
+    {
+      "path": "/api/war-room/digest",
+      "schedule": "15 12 * * *"
     }
   ]
 }

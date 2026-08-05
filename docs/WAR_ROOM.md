@@ -196,6 +196,39 @@ Then copy the new `refresh_token` from `.credentials/google-token.json` into
 Vercel `GOOGLE_REFRESH_TOKEN` and redeploy. Enable **Google Drive API** on the
 GCP project if create fails.
 
+## Daily digest email
+
+`GET /api/war-room/digest` (Vercel Cron, `15 12 * * *`, right after the daily
+scan) emails a plain-text digest to odunjoonaolapo@gmail.com covering:
+
+- Today and next: upcoming interviews with a prep link
+- Your move: companies where `ball` is you
+- Nudges due: `nudgeDate` at or before today
+- Ghost risk: `ball` is them and `due` passed 3+ days ago with no update
+- Debrief needed: scheduled events whose start time has passed but are
+  still marked `scheduled` (no debrief filed yet)
+- Open story gaps
+
+Quiet day (nothing in any section) still sends, just says so.
+
+**Requires the `gmail.send` OAuth scope**, which the existing
+`GOOGLE_REFRESH_TOKEN` does not have (it was issued for read-only Gmail +
+Calendar + Drive). Re-auth locally after pulling recruiting-season:
+
+```bash
+cd ~/projects/recruiting-season
+npm run gmail:auth   # now requests gmail.send too
+```
+
+Then copy the new `refresh_token` into Vercel `GOOGLE_REFRESH_TOKEN` and
+redeploy. Until that's done, the cron runs and fails cleanly with a
+`send_failed` / `insufficient scope` error rather than silently doing
+nothing — check Vercel's cron logs if the digest doesn't arrive.
+
+Manual trigger for testing without waiting on cron: `POST
+/api/war-room/digest` while signed into War Room (same auth as the rest of
+the app, no `CRON_SECRET` needed for this path).
+
 ## Sync from recruiting-season
 
 ```bash
