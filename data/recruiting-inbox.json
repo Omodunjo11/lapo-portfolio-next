@@ -1,9 +1,39 @@
 {
-  "scannedAt": "2026-08-05T14:23:31.394Z",
+  "scannedAt": "2026-08-05T18:40:54.704Z",
   "days": 7,
   "gmailMatched": 75,
   "calendarMatched": 9,
   "proposals": [
+    {
+      "source": "gmail",
+      "id": "19fd33a2bd0e29e5",
+      "threadId": "19fd3109745a02c9",
+      "date": "Wed, 5 Aug 2026 14:40:31 -0400",
+      "from": "Lapo Odunjo <odunjoonaolapo@gmail.com> → Catarina Valente - Blue Orange Digital <catarina.valente@blueorangedigital.na.teamtailor-mail.com>",
+      "subject": "Re: Chief of Staff role at Blue Orange",
+      "snippet": "Thanks for the update, Catarina.\r\n\r\nLe mer. 5 août 2026 à 1:55 PM, Catarina Valente - Blue Orange Digital <\r\ncatarina.valente@blueorangedigital.na.teamtailor-mail.com> a écrit :\r\n\r\n> Hi Onaolapo,\r\n>\r\n> Thank you for your interest in the Chief of Staff position at Blue Orange\r\n> D",
+      "companyId": "blue-orange-digital",
+      "companyName": "Blue Orange Digital",
+      "fromSpam": false,
+      "signal": "advance",
+      "confidence": "medium",
+      "reason": "next-round advance"
+    },
+    {
+      "source": "gmail",
+      "id": "19fd3109745a02c9",
+      "threadId": "19fd3109745a02c9",
+      "date": "Wed, 5 Aug 2026 17:55:07 +0000",
+      "from": "Catarina Valente - Blue Orange Digital <catarina.valente@blueorangedigital.na.teamtailor-mail.com> → odunjoonaolapo@gmail.com",
+      "subject": "Chief of Staff role at Blue Orange",
+      "snippet": "Hi Onaolapo,\r\n\r\nThank you for your interest in the Chief of Staff position at Blue Orange Digital. After careful consideration, we’ve decided not to move forward with your application for this role at this time.\r\n\r\nWe appreciate the time you took to connect with us and will keep ",
+      "companyId": "blue-orange-digital",
+      "companyName": "Blue Orange Digital",
+      "fromSpam": false,
+      "signal": "advance",
+      "confidence": "medium",
+      "reason": "next-round advance"
+    },
     {
       "source": "gmail",
       "id": "19fd23e4bd738af1",
@@ -513,36 +543,6 @@
       "signal": "wait",
       "confidence": "low",
       "reason": "interview-adjacent, unclear"
-    },
-    {
-      "source": "gmail",
-      "id": "19fb90209b2afdc5",
-      "threadId": "19fb8ebc2d8e02a7",
-      "date": "Sat, 1 Aug 2026 00:28:48 +0800",
-      "from": "Kate Alvarico <kate.alvarico@invisible.email> → Lapo Odunjo <odunjoonaolapo@gmail.com> Hafsa Tahir <hafsa.tahir@invisible.email>, Derek Pages <derek.pages@invisible.email>",
-      "subject": "Re: Invisible Technologies Senior Product Manager – Interview Scheduling Request",
-      "snippet": "No problem at all! I've copied in Derek here to confirm the interview\r\nrounds and what would this interview be about. :)\r\n\r\nRegards,\r\nKate\r\n\r\n\r\n<https://www.invisible.co/>\r\n\r\nKate Alvarico\r\n\r\nTalent Acquisition Coordinator • Invisible Technologies\r\n\r\nkate.alvarico@invisible.email",
-      "companyId": "invisible",
-      "companyName": "Invisible Technologies",
-      "fromSpam": false,
-      "signal": "advance",
-      "confidence": "medium",
-      "reason": "next-round advance + schedule ask"
-    },
-    {
-      "source": "gmail",
-      "id": "19fb8ff354574744",
-      "threadId": "19fb8ebc2d8e02a7",
-      "date": "Fri, 31 Jul 2026 09:26:00 -0700",
-      "from": "Lapo Odunjo <odunjoonaolapo@gmail.com> → Kate Alvarico <kate.alvarico@invisible.email> Hafsa Tahir <hafsa.tahir@invisible.email>",
-      "subject": "Re: Invisible Technologies Senior Product Manager – Interview Scheduling Request",
-      "snippet": "Really do appreciate this, one last question: do you have any information\r\non how many rounds left and also what sort of interview this is, just for\r\nmy preparation.\r\n\r\nLe ven. 31 juil. 2026 à 9:23 AM, Kate Alvarico\r\n<kate.alvarico@invisible.email> a écrit :\r\n\r\n> Thanks Lapo! I'l",
-      "companyId": "invisible",
-      "companyName": "Invisible Technologies",
-      "fromSpam": false,
-      "signal": "advance",
-      "confidence": "medium",
-      "reason": "next-round advance + schedule ask"
     },
     {
       "source": "calendar",
