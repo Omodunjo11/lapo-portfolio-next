@@ -1,5 +1,5 @@
 {
-  "scannedAt": "2026-08-05T14:11:07.445Z",
+  "scannedAt": "2026-08-05T14:23:31.394Z",
   "days": 7,
   "gmailMatched": 75,
   "calendarMatched": 9,
@@ -15,9 +15,9 @@
       "companyId": "regal",
       "companyName": "Regal",
       "fromSpam": false,
-      "signal": "advance",
-      "confidence": "medium",
-      "reason": "exec / HM advance + schedule ask"
+      "signal": "schedule",
+      "confidence": "high",
+      "reason": "interview booked / confirmed"
     },
     {
       "source": "gmail",
@@ -46,8 +46,8 @@
       "companyName": "Regal",
       "fromSpam": false,
       "signal": "schedule",
-      "confidence": "medium",
-      "reason": "interview scheduling"
+      "confidence": "high",
+      "reason": "interview booked / confirmed"
     },
     {
       "source": "gmail",
@@ -376,8 +376,8 @@
       "companyName": "Regal",
       "fromSpam": false,
       "signal": "schedule",
-      "confidence": "medium",
-      "reason": "interview scheduling"
+      "confidence": "high",
+      "reason": "interview booked / confirmed"
     },
     {
       "source": "gmail",
