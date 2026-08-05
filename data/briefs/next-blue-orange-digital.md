@@ -5,31 +5,30 @@ Onaolapo (Lapo) Odunjo. Role: Chief of Staff. Living notes doc, add to this afte
 ## Company and contacts, from your inbox
 
 - Blue Orange Digital. No additional company description on file yet
-- Final round scheduled for Tuesday, July 28, 2026, 4:00 PM ET
-- Meeting with Rizwan Yousuf confirmed on calendar
 - Contact: Catarina Valente (recruiter, catarina.valente@blueorangedigital.na.teamtailor-mail.com)
-- No prior recruiter screen or earlier round notes captured in this system
+- Next interview: Wed, Aug 5, 2026, 12:00 PM ET
+- With: TBD (interviewer name not yet confirmed)
 
 ## What is known so far
 
 - This is a Chief of Staff seat, which typically sits close to the founder or exec team
-- Final stage suggests they have already seen enough to move forward
+- Passed initial screening; now in final round
 - No transcript or prep email available yet, so the brief is incomplete
 
 ## What is still unknown
 
 - Company stage, funding, or core product focus
 - Whether this Chief of Staff role leans operational, strategic, or both
-- What Rizwan's role is and what he will be testing for
+- Who the interviewer is on Aug 5 and what they will be testing for
 - Whether there are other final round participants or if this is a single conversation
 
-## Next step prep (updated Aug 5, 2026): Final round with Rizwan Yousuf, Jul 28
+## Next step prep (updated Aug 5, 2026): Final round, Wed Aug 5, 12:00 PM ET
 
 ### What this conversation is about
 
-Chief of Staff final round. Rizwan Yousuf is on calendar but his role is not confirmed. Chief of Staff seats typically test for judgment under ambiguity, operational speed, and ability to work without a map. Final round with one named person suggests he is either the founder, the hiring exec, or close to the decision.
+Chief of Staff final round. Interviewer name TBD but this is a final stage, which means they have already seen enough to move forward. Chief of Staff seats typically test for judgment under ambiguity, operational speed, and ability to work without a map.
 
-This is thin on context, which is normal for a final that moved quickly. Use the first two minutes to calibrate what he cares about and what the role actually does day-to-day.
+This is thin on context, which is normal for a final that moved quickly. Use the first two minutes to calibrate what the interviewer cares about and what the role actually does day-to-day.
 
 ### What they are likely testing
 
@@ -55,17 +54,16 @@ If they ask about shipping with incomplete information, talk about cutting scope
 
 ### Questions to ask
 
-1. What does Rizwan do at Blue Orange, and what is he looking for in this conversation?
-2. What does the Chief of Staff role own day-to-day, and where does it sit in the org?
-3. What is the company working on right now, and what is the biggest operational or strategic gap?
-4. What does success look like in the first 90 days?
-5. What has made past Chiefs of Staff successful or unsuccessful here?
+1. What does the Chief of Staff role own day-to-day, and where does it sit in the org?
+2. What is the company working on right now, and what is the biggest operational or strategic gap?
+3. What does success look like in the first 90 days?
+4. What has made past Chiefs of Staff successful or unsuccessful here?
 
 These are calibration questions, not interview questions. Ask them early so you can adjust your answers to what they actually care about.
 
 ### Action items before the call
 
-1. Confirm Rizwan's role and what he is testing for in the first two minutes
+1. Confirm the interviewer's name and role in the first minute
 2. Have the Kinage deployment story and the TD pushback story ready as your two strongest proof points
 3. Keep answers short and grounded in real outcomes, not hypotheticals
 4. After the call, add notes here immediately so the next conversation or decision has full context
@@ -86,9 +84,9 @@ These are calibration questions, not interview questions. Ask them early so you 
 This is thin on context, which is normal for a final round that moved quickly. A few things worth noticing:
 
 - Chief of Staff roles test for judgment, speed, and ability to operate without a map
-- Final round with one named person suggests this may be the decision maker or close to it
+- Final round suggests you are close to a decision
 - No prior notes means you should ask clarifying questions early in the conversation to calibrate
 
-After the call, come back here and add what you learned about the company, what Rizwan cared about, and what the role actually does. That way if there is a follow-up conversation or a decision call, you have the full picture in one place.
+After the call, come back here and add what you learned about the company, what the interviewer cared about, and what the role actually does. That way if there is a follow-up conversation or a decision call, you have the full picture in one place.
 
 This is a living document. Add new notes here after every Blue Orange Digital conversation so the next round always has the full picture in one place.
