@@ -21,28 +21,22 @@ function cronAuthorized(req: NextRequest) {
 }
 
 function readBrief(companyId: string): string | null {
-  // Prefer human living notes in debriefs when present (Brain Co gold standard).
-  const goldCandidates = [
+  // Prefer next-round brief (forward prep). Fall back to human debrief notes.
+  const candidates = [
+    join(process.cwd(), "data", "briefs", `next-${companyId}.md`),
+    join("/tmp", "recruiting-briefs", `next-${companyId}.md`),
     join(process.cwd(), "data", "debriefs", `${companyId}-interview-notes.md`),
     join(process.cwd(), "data", "debriefs", `${companyId}-2026-08-04.md`),
     join(process.cwd(), "data", "debriefs", `${companyId}-notes.md`),
   ];
-  for (const gold of goldCandidates) {
-    if (!existsSync(gold)) continue;
-    let text = readFileSync(gold, "utf8");
+  for (const p of candidates) {
+    if (!existsSync(p)) continue;
+    let text = readFileSync(p, "utf8");
     text = text.replace(
       /\n(- Next-round brief:.*\n)(- Decision journal:.*\n)(- Pipeline:.*\n)(- Story gap:.*\n)?/,
       "\n"
     );
     return text;
-  }
-
-  const candidates = [
-    join(process.cwd(), "data", "briefs", `next-${companyId}.md`),
-    join("/tmp", "recruiting-briefs", `next-${companyId}.md`),
-  ];
-  for (const p of candidates) {
-    if (existsSync(p)) return readFileSync(p, "utf8");
   }
   return null;
 }

@@ -3,59 +3,59 @@ import type { Company, PipelineEvent } from "./types";
 import { anthropicConfigured, getAnthropic, prepModel } from "./claude";
 
 /**
- * Gold standard: the Brain Co Google Doc living notes.
- * Readable titles, short bullets, prose judgment, action items.
- * Not a consulting “prep deck” template.
+ * READABILITY gold standard: Brain Co Google Doc.
+ * JOB: turn email + Lapo's updates into next-round prep (not a static archive).
  */
-const BRAIN_CO_STYLE_SAMPLE = `
-# Brain Co: Interview Notes and Prep
+const STYLE_AND_JOB = `
+Write like the Brain Co Google Doc: readable titles, short bullets, clear judgment, action items.
+But the PURPOSE is always: prep Lapo for the NEXT interview round.
 
-Onaolapo (Lapo) Odunjo. Role: AI Deployment Lead. Living notes doc, add to this after every conversation.
+Primary job (in order):
+1. Read the email / calendar signal about who is next and what the conversation is about
+2. Fold in notes Lapo already captured (prior rounds, debriefs, updates he shared)
+3. Produce a forward brief: what they are likely testing, what to say, stories to warm, questions to ask, action items before that call
+
+Shape example:
+
+# {Company}: Interview Notes and Prep
+
+Onaolapo (Lapo) Odunjo. Role: …. Living notes doc, add to this after every conversation.
 
 ## Company and contacts, from your inbox
+- Who reached out, role, stage, logos / framing only if known from signal
 
-- Brain Co. is described as an applied AI startup, founded by Elad Gil and Eric Wu
-- Recruiter screen held Monday, August 3, coordinated by Michal, with Alina also involved
-- Otter's notetaker was not let into that meeting, so there is no automatic transcript
+## What we already know (from prior rounds)
+- Short bullets from prior notes / Lapo's updates. Skip this section if there is no prior signal.
 
-## Notes from the recruiter screen, August 3
+## Prep for {Next person}, {date or TBD}
+### What this conversation is about
+- From the email / invite / Lapo's update (do not invent)
 
-### Culture, what they want to hear
+### What they are likely testing
+- Tied to role stage and email language
 
-- People work hard because they like the pace, not because of grind for its own sake
-- Bias is to never wait: push forward with incomplete information
-- This is a lean, strong product org. The AI role sits between or adjacent to that group
+### Lines and stories to land
+- 3 to 5 concrete items mapped to Lapo's proof bank
 
-### Role shape
-
-- Comfortable with ambiguity
-- Able to push forward on small amounts of information
-- This is an evergreen seat: an ongoing hiring need, not a one time opening
+### Questions to ask
+- 2 to 4 numbered questions
 
 ## Interview line to reuse, in their own language
-
-"I'm at my best in lean, fast environments where the product bar is high and the brief is incomplete. I don't wait for perfect structure. I take partial signal, drive a decision, and keep the work moving."
+"…"
 
 ## How to read this and what to do with it
+- Short judgment paragraph + bullets on what matters for THIS next round
 
-This reads as a strong, live signal, not a generic pitch. A few things worth noticing:
+## Action items before the call
+1. …
+2. …
 
-- The heavy emphasis on ambiguity and "never wait" is the single biggest theme
-- Government and Qatar coming up in a recruiter screen suggests a live strategic question
-- Evergreen seat, hiring more than one: treat this like an ongoing relationship
-
-## Action items
-
-1. Watch for hiring manager outreach and respond quickly once it lands
-2. Prepare one or two specific stories that show deciding and moving with incomplete information
-3. Keep your answers short and decisive in tone, since that matches the culture they described
-
-This is a living document. Add new notes here after every Brain Co conversation so the next round always has the full picture in one place.
+This is a living document. Add new notes here after every {Company} conversation so the next round always has the full picture in one place.
 `.trim();
 
 const CANDIDATE_CONTEXT = `
 Candidate: Onaolapo "Lapo" Odunjo (he/him). Wharton MBA. Product / forward-deployed AI.
-Voice: calm, specific, readable. Like briefing a sharp friend the night before. Not a template.
+Voice: calm, specific, readable. Night-before brief for the next call. Not a template. Not a history essay.
 
 Proof bank (use only what is relevant; do not invent employers or metrics):
 - Kinage: multi-account AI deployment; playbooks; coached deployed engineers; 0 to 12 institutions; cost-to-serve about 62 percent down. Team leverage, not solo heroics.
@@ -65,29 +65,30 @@ Proof bank (use only what is relevant; do not invent employers or metrics):
 - Do not overclaim formal manager headcount. Lead by ownership and coaching.
 - Gov or MENA depth may be thin. Say so if asked.
 
-Do not invent companies, titles, metrics, or interviewer biographies.
+Do not invent companies, titles, metrics, interviewer biographies, or what the interview is about. If email does not say, mark it unknown and ask it as a question.
 `.trim();
 
 export type PrepGenInput = {
   company: Company;
   event: PipelineEvent;
   emailContext?: string | null;
+  /** Fresh notes Lapo shared (debrief, chat update, War Room text). */
+  userUpdate?: string | null;
   existingBrief?: string | null;
   force?: boolean;
 };
 
-/** Keep only Brain Co–style living notes. Force-regenerate robotic templates. */
+/** Forward prep that names a next conversation and has action items. */
 export function isRichBrief(text: string | null | undefined): boolean {
   if (!text) return false;
   if (looksLikeLegacyPrepDeck(text)) return false;
-  return (
+  const hasNextPrep = /## Prep for /i.test(text) || /Action items before/i.test(text);
+  const hasReadable =
     /How to read this and what to do with it/i.test(text) &&
-    /Action items/i.test(text) &&
-    text.length >= 1200
-  );
+    /Action items/i.test(text);
+  return hasNextPrep && hasReadable && text.length >= 1000;
 }
 
-/** Old decks + the failed auto template that feels unreadable in Drive. */
 export function looksLikeLegacyPrepDeck(text: string): boolean {
   if (/Five lines to land|# Now |Points to land|Lines to land/i.test(text)) {
     return true;
@@ -116,6 +117,7 @@ export function stubPrepDeck(company: Company, event: PipelineEvent): string {
     : "TBD";
 
   const withWho = event.with || "TBD";
+  const nextLabel = withWho !== "TBD" ? withWho : "next round";
 
   return `# ${company.name}: Interview Notes and Prep
 
@@ -129,39 +131,42 @@ Onaolapo (Lapo) Odunjo. Role: ${company.role}. Living notes doc, add to this aft
 - Next action on file: ${company.nextAction || "none"}
 - Upcoming: ${event.title} with ${withWho} (${when} ET)
 
-## Prep for the next conversation
+## Prep for ${nextLabel}${when !== "TBD" ? `, ${when}` : ""}
 
-### What matters in this room
+### What this conversation is about
 
-- Why ${company.name} specifically, not generic AI interest
-- Proof you ship under incomplete information
-- Trust and production quality when agents meet real operators
-- Calm judgment under pressure
+- Waiting on email / Lapo update for what they want this round to cover. Do not invent.
 
-### Interview line to reuse
+### What they are likely testing
 
-"I'm at my best when the product bar is high and the brief is incomplete. I take partial signal, drive a decision, and keep delivery protected."
+- Fit for ${company.role} at stage ${company.stageLabel || company.stage}
+- Shipping judgment under incomplete information
+- Calm ownership, not solo-hero polish
 
-### Stories to keep warm
+### Lines and stories to land
 
 - Kinage playbooks and cost-to-serve
 - Bank trust and eval gates
 - TD-style pushback that protected the outcome
 
-### Questions worth asking
+### Questions to ask
 
 1. What are you hiring this seat to own in the next 90 days?
 2. What is the biggest failure mode on the team right now?
 3. If this goes well, who else would I meet and what are those conversations testing?
 
+## Interview line to reuse, in their own language
+
+"I'm at my best when the product bar is high and the brief is incomplete. I take partial signal, drive a decision, and keep delivery protected."
+
 ## How to read this and what to do with it
 
-This is a stub until Claude can write from live signal. Replace the prep section after the next real conversation with notes in their language, the way the Brain Co doc does.
+This is a stub until live email or Lapo's update lands. Once Scan or War Room has signal about the next round, regenerate so the Prep for section names the person and what the conversation is about.
 
-## Action items
+## Action items before the call
 
-1. Rehearse one incomplete-info story before the call
-2. Write one company-specific why in their language
+1. Paste the latest email or your own update into War Room prep so this brief can be rewritten for the real next round
+2. Rehearse one incomplete-info story
 3. Leave with a clear next owner and timing
 
 This is a living document. Add new notes here after every ${company.name} conversation so the next round always has the full picture in one place.
@@ -172,12 +177,19 @@ export async function generatePrepDeck(input: PrepGenInput): Promise<{
   text: string;
   source: "claude" | "stub" | "existing";
 }> {
-  const { company, event, emailContext, existingBrief, force } = input;
+  const { company, event, emailContext, userUpdate, existingBrief, force } =
+    input;
+
+  const hasFreshSignal = Boolean(
+    (emailContext && emailContext.trim().length > 40) ||
+      (userUpdate && userUpdate.trim().length > 20)
+  );
 
   if (
     existingBrief &&
     isRichBrief(existingBrief) &&
     !force &&
+    !hasFreshSignal &&
     !looksLikeLegacyPrepDeck(existingBrief)
   ) {
     return { text: existingBrief, source: "existing" };
@@ -205,27 +217,23 @@ export async function generatePrepDeck(input: PrepGenInput): Promise<{
       })
     : "Scheduling / TBD";
 
-  const system = `You write living interview notes for Lapo Odunjo, matching the Brain Co Google Doc exactly in feel.
+  const system = `You write next-round interview prep for Lapo Odunjo.
 
-GOLD STANDARD (mirror this shape and readability):
-${BRAIN_CO_STYLE_SAMPLE}
+${STYLE_AND_JOB}
 
-RULES:
-- Real document title: "# {Company}: Interview Notes and Prep"
-- Identity line under the title, then useful sections with plain ## and ### titles that a human would write (named after the conversation, theme, or person), not a rigid template checklist.
-- Prefer sections like: Company and contacts; Notes from {person/date}; Prep for {upcoming person}; Interview line to reuse; How to read this and what to do with it; Action items.
-- Short hyphen bullets. Short prose where judgment helps.
-- No markdown tables. No em dashes. No horizontal rules made of ---.
-- Do not use "**bold**" spam. Titles carry hierarchy. Occasional plain emphasis in prose is fine without asterisks.
-- Do not invent. If signal is thin, say what is known and what is still unknown.
+HARD RULES:
+- The center of the document is "## Prep for {next person or next round}". Everything else supports that.
+- Use email + Lapo updates as ground truth for what the next interview is about. Do not invent agenda, product details, or interviewer bios.
+- Keep useful prior-round facts under "What we already know". Do not rewrite the whole history as the main event.
+- Readable Brain Co style: real ## / ### titles, hyphen bullets, short judgment prose.
+- No markdown tables. No em dashes. No --- rules. No **bold** spam.
 - Interview funnel stage ("2nd", "Final") is not a funding Series.
-- End with the living document closing line.
-- Under ~800 words. Easy to skim the morning of the call.
+- Under ~900 words. Skimmable the morning of the call.
 - Output Markdown only. No preamble.`;
 
   const user = `${CANDIDATE_CONTEXT}
 
-## Target
+## Target (next round)
 Company: ${company.name}
 Role: ${company.role}
 Interview stage: ${company.stageLabel || company.stage}
@@ -235,13 +243,16 @@ When: ${when} ET
 With: ${event.with || "TBD"}
 Calendar/title: ${event.title}
 
-## Signal email / context (may be empty)
-${(emailContext || "").slice(0, 3500) || "(none)"}
+## Email / invite signal about the next interview (priority source)
+${(emailContext || "").slice(0, 4000) || "(none)"}
 
-## Existing notes (may be wrong style). Rewrite into the Brain Co living-notes style. Keep real facts.
-${(existingBrief || "").slice(0, 2500) || "(none, write fresh)"}
+## Updates Lapo shared (debrief, chat, War Room). Treat as ground truth.
+${(userUpdate || "").slice(0, 4000) || "(none)"}
 
-Write the notes now.`;
+## Prior living notes (keep facts; rewrite so Prep for next round leads)
+${(existingBrief || "").slice(0, 3500) || "(none)"}
+
+Write the next-round prep now.`;
 
   try {
     const anthropic = getAnthropic();

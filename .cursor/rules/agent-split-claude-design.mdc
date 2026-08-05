@@ -31,20 +31,18 @@ alwaysApply: true
 
 ## Claude writing style (prep, debriefs, living notes)
 
-Gold standard: the Brain Co Google Doc
-(`https://docs.google.com/document/d/1qqrwcstj98k0L9e67vPpiwCcDA3kdvHUEtXOssBRW2o`).
+Gold standard readability: Brain Co Google Doc.
+Primary job of auto-prep: next-round prep from email + Lapo's updates (who/when/what), with prior notes kept short as context. Not a consulting deck and not a past-only archive.
 
-- Real title + section titles that name the conversation or theme
-- Short hyphen bullets and readable prose judgment ("How to read this…")
-- Interview line to reuse + Action items
-- No markdown tables, no em dashes
-- Do not dump raw `##` into Drive as plain text. Sync via HTML headings (`markdownToDriveHtml`)
-- Prefer human notes in `data/debriefs/*` over auto stubs when they exist
-- Auto-prep lives in `lib/recruiting/prep-llm.ts` and should mirror Brain Co, not a consulting deck
+- Real titles; "## Prep for {person}" is the center of the doc
+- Short hyphen bullets + "How to read this" + action items before the call
+- No tables, no em dashes
+- Drive sync must use HTML headings (`markdownToDriveHtml`), never raw `##` as plain text
+- `POST /api/war-room/prep` accepts `userUpdate` + email fields and regenerates for that next round
 
 ## Default handoff line to Claude Code
 
 ```text
 Cursor owns infra. You own writing + UI/UX/design for this task.
-Constraints: [files / don’t touch]. Writing: Brain Co Google Doc living-notes style (real titles, readable sections, no em dashes, no tables). Deliver: [artifacts]. Stay out of API keys, deploy, and pipeline wiring unless asked.
+Constraints: [files / don’t touch]. Writing: Brain Co readability, next-round prep from email + Lapo updates. Deliver: [artifacts]. Stay out of API keys, deploy, and pipeline wiring unless asked.
 ```

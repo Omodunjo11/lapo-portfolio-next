@@ -263,7 +263,7 @@ export async function ensurePrepDecks(
 export async function ensureAdvancePrepDecks(
   pipeline: Pipeline,
   advances: IngestProposal[],
-  opts: { limit?: number } = {}
+  opts: { limit?: number; userUpdate?: string | null; force?: boolean } = {}
 ): Promise<PrepEnsureResult> {
   const limit = opts.limit ?? 2;
   const errors: string[] = [];
@@ -348,9 +348,10 @@ export async function ensureAdvancePrepDecks(
         )?.briefPath
       );
 
-    // Force Claude when we have a fresh advance signal and only a stub/old brief.
-    // NDA / process mail without a named interviewer still regenerates if no next-* brief.
+    // Fresh email, named interviewer not yet in brief, or explicit force/user update.
     const force =
+      Boolean(opts.force) ||
+      Boolean(opts.userUpdate?.trim()) ||
       !existingLocal ||
       !isRichBrief(existingLocal) ||
       looksLikeLegacyPrepDeck(existingLocal || "") ||
@@ -364,6 +365,7 @@ export async function ensureAdvancePrepDecks(
       company,
       event,
       emailContext: `Subject: ${p.subject || ""}\nFrom: ${p.from || ""}\n\n${p.snippet || ""}`,
+      userUpdate: opts.userUpdate || null,
       existingBrief: existingLocal,
       force,
     });

@@ -46,8 +46,8 @@ async function commitBriefIfPresent(companyId: string, briefFiles?: Record<strin
 }
 
 /**
- * Generate Claude prep for one advance company.
- * Separate from inbox scan so we stay under Vercel time limits.
+ * Generate next-round Claude prep for one company from email + optional Lapo update.
+ * Body: { companyId, subject?, snippet?, from?, userUpdate?, force?, persist? }
  */
 export async function POST(req: NextRequest) {
   const cron = cronAuthorized(req);
@@ -71,6 +71,9 @@ export async function POST(req: NextRequest) {
   const subject = typeof body.subject === "string" ? body.subject : "";
   const snippet = typeof body.snippet === "string" ? body.snippet : "";
   const from = typeof body.from === "string" ? body.from : "";
+  const userUpdate =
+    typeof body.userUpdate === "string" ? body.userUpdate : "";
+  const force = body.force === true || Boolean(userUpdate.trim());
   const persist = body.persist !== false;
 
   if (!companyId) {
@@ -95,11 +98,15 @@ export async function POST(req: NextRequest) {
     from,
     signal: "advance",
     confidence: "medium",
-    reason: "manual / post-scan Claude prep",
+    reason: userUpdate.trim()
+      ? "manual prep from Lapo update + email"
+      : "manual / post-scan Claude prep",
   };
 
   const ensured = await ensureAdvancePrepDecks(pipeline, [advance], {
     limit: 1,
+    userUpdate: userUpdate || null,
+    force,
   });
   pipeline = ensured.pipeline;
 
