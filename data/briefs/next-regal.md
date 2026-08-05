@@ -6,8 +6,9 @@ Onaolapo (Lapo) Odunjo. Role: Manager, AI Strategy and Deployment. Living notes 
 
 - Regal (Regal Voice) is a voice AI agent platform for support, sales, and operations
 - Founders: Alex Levin and Rebecca Greene (Angi background)
-- Contact: Kelsey Heitz, kelsey@regalvoice.com
-- Phone interview confirmed for Tuesday, August 4, 2026, 1:30 to 2:00pm ET
+- Contact: Kelsey Heitz, kelsey@regal.ai
+- Phone interview completed Tuesday, August 4, 2026, 1:30 to 2:00pm ET
+- Second round confirmed Friday, August 7, 2026, 2:30 PM ET with Sahil Mehta, COO
 - Public role framing: owns end-to-end customer launches, manages Forward Deployed Engineers, defines success metrics, builds implementation playbooks, feeds Product/AI from the field
 - Impact bar called out publicly: measurable value in about the first two weeks
 - NYC-leaning company; confirm hybrid and travel expectations in conversation
@@ -31,7 +32,7 @@ Status: awaiting capture after call. Paste notes here immediately using the sect
 
 - (fill after call)
 
-## Prep for Sahil, Wed, Aug 5, 2026, 12:00 PM ET
+## Prep for Sahil Mehta, Fri, Aug 7, 2026, 2:30 PM ET
 
 Second round with Sahil, the COO. Kelsey advanced you after the phone screen. This is likely the operational judgment and launch ownership test. Sahil will care whether you can own customer go-lives end to end, manage deployed engineers, and ship measurable value fast. He may also probe people management scope, field-to-product translation, and how you handle incomplete information under a hard speed bar.
 
