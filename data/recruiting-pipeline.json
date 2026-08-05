@@ -434,7 +434,7 @@
     {
       "id": "northslope",
       "name": "Northslope Technologies",
-      "role": "",
+      "role": "Business Operations and Strategy",
       "stage": "first",
       "ball": "you",
       "priority": "P0",
@@ -703,7 +703,7 @@
       "with": "",
       "type": "other",
       "status": "scheduled",
-      "briefPath": "briefs/2026-08-06-northslope.md",
+      "briefPath": "briefs/next-northslope.md",
       "blocker": null
     }
   ],
