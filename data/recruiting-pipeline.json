@@ -443,7 +443,8 @@
       "aliases": [
         "Northslope"
       ],
-      "drive": {}
+      "drive": {},
+      "stageLabel": "1st"
     }
   ],
   "events": [
