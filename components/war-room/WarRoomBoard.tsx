@@ -274,7 +274,6 @@ export default function WarRoomBoard({
   lastScanAt = null,
   recentEvents = [],
   driveRootUrl,
-  comparisonSlot = null,
 }: {
   columns: Col[];
   initialCompanies: Company[];
@@ -287,8 +286,6 @@ export default function WarRoomBoard({
   lastScanAt?: string | null;
   recentEvents?: PipelineEvent[];
   driveRootUrl?: string;
-  /** Fit comparison panel, rendered between Today and the rest of the board. */
-  comparisonSlot?: React.ReactNode;
 }) {
   const [companies, setCompanies] = useState(initialCompanies);
   const [suggestions, setSuggestions] = useState(initialSuggestions);
@@ -782,8 +779,6 @@ export default function WarRoomBoard({
           </details>
         ) : null}
       </section>
-
-      {comparisonSlot}
 
       {debriefFor ? (
         <section className="wr-panel wr-debrief">

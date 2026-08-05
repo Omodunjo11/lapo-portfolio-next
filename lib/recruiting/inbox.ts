@@ -1,6 +1,7 @@
 import type { FunnelStage, Pipeline } from "./types";
 import { nextFunnelStage } from "./board";
 import type { IngestProposal, IngestSignal } from "./gmail/classify";
+import { hasExplicitProgression } from "./gmail/taxonomy";
 
 export type InboxSnapshot = {
   scannedAt: string;
@@ -44,6 +45,10 @@ export function dedupeFlagsByCompany(flags: InboxFlag[]): InboxFlag[] {
     // Equal rank: keep existing (proposals are newest-first from Gmail scan).
   }
   return [...best.values()];
+}
+
+function blob(p: IngestProposal) {
+  return `${p.subject || ""} ${p.reason || ""} ${p.snippet || ""} ${p.summary || ""}`;
 }
 
 /** Turn non-noise proposals into accept/dismiss flags (stage moves only on Accept). */
@@ -107,12 +112,9 @@ export function proposalsToFlags(
     }
 
     if (p.signal === "schedule") {
-      // Next-round schedule asks on companies already in-process should still
-      // surface (classifier usually promotes these to advance; belt-and-suspenders).
-      const nextRoundAsk =
-        /\b(next steps?|next stage|move forward|moving forward|next round|hiring manager)\b/i.test(
-          `${p.subject || ""} ${p.reason || ""} ${p.snippet || ""}`
-        );
+      // Calendar sync already adds the event — never treat calendar as a stage bump.
+      // Gmail schedule: only Applied → 1st. Same-round invites must not look like advances.
+      if (p.source === "calendar") continue;
       if (company.stage === "applied") {
         out.push({
           id,
@@ -124,20 +126,6 @@ export function proposalsToFlags(
           signal: p.signal,
           subject: p.subject || p.summary,
         });
-      } else if (nextRoundAsk && p.source === "gmail") {
-        const next = nextFunnelStage(company.stage);
-        if (next) {
-          out.push({
-            id,
-            companyId: company.id,
-            fromStage: company.stage,
-            toStage: next,
-            reason: `${p.reason}: ${p.subject || p.summary || "next-round schedule"}`,
-            source: p.source,
-            signal: "advance",
-            subject: p.subject || p.summary,
-          });
-        }
       }
       continue;
     }
@@ -145,6 +133,8 @@ export function proposalsToFlags(
     if (p.signal === "advance") {
       // Already at end of funnel — don't spam duplicate "advance" flags.
       if (company.stage === "final") continue;
+      // Require explicit progression words so same-round logistics don't +1 stage.
+      if (!hasExplicitProgression(blob(p))) continue;
       const next = nextFunnelStage(company.stage);
       if (!next) continue;
       out.push({

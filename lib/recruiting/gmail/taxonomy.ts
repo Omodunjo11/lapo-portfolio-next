@@ -145,6 +145,23 @@ export function processAdvanceReason(
   }
 }
 
+/**
+ * Explicit progression language — not just role titles or invite logistics.
+ * Calendar invites often mention COO/HM without meaning "you advanced a stage."
+ */
+export function hasExplicitProgression(text: string): boolean {
+  return /\b(next\s+steps?|next\s+stage|next\s+round|next\s+interview|move\s+forward|moving\s+forward|progress(?:ing)?\s+to|proceed(?:ing)?\s+to|invite you to the next|continue(?:d)?\s+(?:our\s+|the\s+)?process|pleased to (?:move|share|invite)|(?:we'd|we would|'d) like to move|excited to (?:move|continue)|advance(?:d)?\s+(?:you|your)|after (?:our|the) (?:call|conversation|screen|interview).{0,80}(?:next|would like|invite|schedule)|following up after.{0,60}(?:next|move|invite)|\bnda\b|non-?disclosure|take[- ]?home|work sample|reference check|verbal offer|offer (?:discussion|letter|details))\b/i.test(
+    text
+  );
+}
+
+/** Invite / confirm / reschedule logistics for an interview that may already be on the books. */
+export function isInterviewLogistics(text: string): boolean {
+  return /\b(calendly|zoom\.us|meet\.google|teams\.microsoft|interview confirmation|phone interview is confirmed|you.?re invited to an interview|updated invitation|invitation from an unknown sender|invitation:|calendar invite|reschedul|reminder:|looking forward to (?:our|the) (?:call|chat|interview|conversation)|see you (?:on|at|tomorrow|monday|tuesday|wednesday|thursday|friday))\b/i.test(
+    text
+  );
+}
+
 /** Best-effort pull of next interviewer from advance email text. */
 export function extractNextInterviewer(text: string): string | null {
   const patterns = [

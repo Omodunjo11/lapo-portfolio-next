@@ -12,6 +12,8 @@ Truth: scheduling conflict / reschedule. Lapo accepted Aug 7. Kate confirmed Ran
 4. Reject only on hard close language: not moving forward, other candidates selected, position filled, no longer under consideration, will not be advancing.
 5. Pipeline stage never auto-moves to passed. Flags require Accept. If a reject flag looks wrong, Dismiss it and fix the classifier if needed.
 6. Scheduling conflict language often includes soft apology words. Prefer process outcome over tone.
+7. **Same-round logistics are not stage advances.** Calendar invites, interview confirmations, updated invitations, and reminders that only name a COO / hiring manager / panel are `schedule` (or ignored for stage flags). Stage-advance flags require explicit progression language (`next steps`, `next round`, `move forward`, NDA, take-home, offer, etc.).
+8. Rescanning the same invite must not keep proposing "→ next round." Dismiss once; classifier should not reclassify logistics as advance.
 
 ## Classifier ownership
 

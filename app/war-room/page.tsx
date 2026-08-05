@@ -152,11 +152,6 @@ async function AuthenticatedWarRoom() {
         recentEvents={pipeline.events.filter(
           (e) => e.status === "scheduled" || e.status === "done"
         )}
-        comparisonSlot={
-          comparison ? (
-            <WarRoomComparison comparison={comparison} rows={comparisonRows} />
-          ) : null
-        }
       />
 
       {comparison ? (

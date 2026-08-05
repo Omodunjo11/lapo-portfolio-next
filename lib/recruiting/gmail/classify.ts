@@ -2,6 +2,8 @@ import type { Company, Pipeline } from "../types";
 import {
   INTERVIEW_SIGNAL_RE,
   classifyProcessAdvanceKind,
+  hasExplicitProgression,
+  isInterviewLogistics,
   processAdvanceReason,
 } from "./taxonomy";
 
@@ -157,10 +159,22 @@ export function classifyEmail({
       text
     );
 
-  // Process advance beats bare "schedule a …" — Regal "Next Steps" asks to
-  // book Sahil after Kelsey; that is an advance, not a silent schedule.
+  // Process advance beats bare "schedule a …" — but only when the body has
+  // explicit progression language. Calendar invites / confirmations that merely
+  // name a COO or "hiring manager" are logistics for the current round.
   const advanceKind = classifyProcessAdvanceKind(text);
-  if (company && advanceKind && !hardReject) {
+  const isScheduling =
+    /calendly|schedule a|book a time|availability|interview invite|zoom\.us|meet\.google|interview confirmation|phone interview is confirmed|you.?re invited to an interview|updated invitation|invitation from an unknown sender|invitation:|confirm a time|times? you (?:have )?shared|asking if you have|send you the (?:confirmation|invite)|calendar invite|what time (?:would|works?)|reschedul|any availability|time that works/i.test(
+      text
+    ) || isInterviewLogistics(text);
+
+  if (
+    company &&
+    advanceKind &&
+    !hardReject &&
+    !(isScheduling && !hasExplicitProgression(text)) &&
+    !(advanceKind === "generic_advance" && !hasExplicitProgression(text))
+  ) {
     return {
       signal: "advance",
       confidence: "medium",
@@ -169,11 +183,6 @@ export function classifyEmail({
   }
 
   // Scheduling first when both soft apology and new times appear.
-  const isScheduling =
-    /calendly|schedule a|book a time|availability|interview invite|zoom\.us|meet\.google|interview confirmation|phone interview is confirmed|you.?re invited to an interview|updated invitation|invitation from an unknown sender|invitation:|confirm a time|times? you (?:have )?shared|asking if you have|send you the (?:confirmation|invite)|calendar invite|what time (?:would|works?)|reschedul|any availability|time that works/i.test(
-      text
-    );
-
   if (isScheduling) {
     return {
       signal: "schedule",
