@@ -13,7 +13,7 @@ export default function WarRoomComparison({
     r.company?.name || r.companyId;
 
   return (
-    <section className="wr-panel wr-compare">
+    <section className="wr-panel wr-compare" id="fit-comparison">
       <div className="wr-board-head">
         <h2>Fit comparison</h2>
         <span className="wr-muted">as of {comparison.updated}</span>
@@ -25,34 +25,6 @@ export default function WarRoomComparison({
         outcome optionality (liquidity / brand / path clarity). Rank ={" "}
         {comparison.formula}.
       </p>
-
-      <div className="wr-compare-stats">
-        {comparison.memo.topDeploy.slice(0, 3).map((id, i) => {
-          const row = rows.find((r) => r.companyId === id);
-          return (
-            <div key={id} className="wr-stat">
-              <div className="wr-stat-label">#{i + 1} deploy</div>
-              <div className="wr-stat-value wr-stat-value-sm">
-                {row ? name(row) : id}
-              </div>
-              {row ? (
-                <div className="wr-muted">rank {row.rank}</div>
-              ) : null}
-            </div>
-          );
-        })}
-        <div className="wr-stat">
-          <div className="wr-stat-label">Best CoS</div>
-          <div className="wr-stat-value wr-stat-value-sm">
-            {(() => {
-              const cos = rows.find(
-                (r) => r.companyId === comparison.memo.bestCoS
-              );
-              return cos ? name(cos) : comparison.memo.bestCoS;
-            })()}
-          </div>
-        </div>
-      </div>
 
       <div className="wr-compare-scroll">
         <table className="wr-compare-table">

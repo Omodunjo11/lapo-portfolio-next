@@ -3916,13 +3916,6 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.45;
 }
 
-.wr-compare-stats {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-  margin-bottom: 14px;
-}
-
 .wr-stat-value-sm {
   font-size: 18px;
   line-height: 1.2;
@@ -3988,18 +3981,6 @@ a { color: inherit; text-decoration: none; }
 .wr-compare-table td:nth-child(8) {
   text-align: center;
   width: 6.6%;
-}
-
-/* Company name stays visible while scrolling the rest of the row
-   sideways — the whole point of a comparison table is losing sight
-   of which row you're on the moment you scroll to see Rank/Docs. */
-.wr-compare-table th:first-child,
-.wr-compare-table td.wr-compare-company {
-  position: sticky;
-  left: 0;
-  background: var(--card);
-  z-index: 1;
-  padding-right: 14px;
 }
 
 .wr-compare-role {
@@ -4076,12 +4057,6 @@ a { color: inherit; text-decoration: none; }
   margin: 0 0 8px;
   max-width: 80ch;
   line-height: 1.45;
-}
-
-@media (max-width: 900px) {
-  .wr-compare-stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 640px) {

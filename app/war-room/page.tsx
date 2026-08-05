@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+/** Always serve fresh board + comparison markup (no stale dual-panel RSC cache). */
+export const dynamic = "force-dynamic";
+
 export default function WarRoomPage() {
   const clerkReady =
     Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) &&
