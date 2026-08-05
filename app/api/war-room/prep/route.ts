@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { requireRecruitingAccess } from "@/lib/recruiting/access";
@@ -56,7 +56,7 @@ async function commitBriefIfPresent(
 /**
  * Generate next-round Claude prep for one company from email + Lapo notes.
  * Body: { companyId, subject?, snippet?, from?, userUpdate?, force?, persist? }
- * If userUpdate is empty, uses saved prep-notes for that company.
+ * Drive update runs first; GitHub persist is deferred via after().
  */
 export async function POST(req: NextRequest) {
   try {
@@ -99,7 +99,6 @@ async function handlePrepPost(req: NextRequest) {
   const bodyUpdate =
     typeof body.userUpdate === "string" ? body.userUpdate : "";
   const savedNotes = companyId ? loadPrepNotes(companyId) : "";
-  // Prefer the payload from the War Room form (fresh full log). Fall back to disk.
   const userUpdate = bodyUpdate.trim() || savedNotes.trim();
   const force = body.force === true || Boolean(userUpdate.trim());
   const persist = body.persist !== false;
@@ -142,59 +141,77 @@ async function handlePrepPost(req: NextRequest) {
       : "manual / post-scan Claude prep",
   };
 
+  // Skip Drive writes inside ensure; we push Drive immediately below so
+  // GitHub persistence never races the user-facing timeout.
   const ensured = await ensureAdvancePrepDecks(pipeline, [advance], {
     limit: 1,
     userUpdate: userUpdate || null,
     force,
+    skipDrive: true,
   });
   pipeline = ensured.pipeline;
 
-  if (
-    persist &&
-    (ensured.localBriefs > 0 ||
-      ensured.createdDocs > 0 ||
-      ensured.updatedDocs > 0 ||
-      ensured.claudeDecks > 0)
-  ) {
-    await commitBriefIfPresent(companyId, ensured.briefFiles);
-    await commitPipeline(
-      pipeline,
-      `War room: Claude prep ${companyId} (${ensured.claudeDecks} llm)`
-    );
-  }
-
-  // Prefer Drive write done inside ensureAdvancePrepDecks; only retry if needed.
-  let driveUpdated = ensured.updatedDocs > 0 || ensured.createdDocs > 0;
-  let driveError: string | undefined = ensured.errors.find((e) =>
-    /drive|prep doc|google/i.test(e)
-  );
   const briefText =
     ensured.briefFiles?.[`data/briefs/next-${companyId}.md`] ||
     ensured.briefFiles?.[`briefs/next-${companyId}.md`];
   const company = pipeline.companies.find((c) => c.id === companyId);
   const docId = docIdFromUrl(company?.drive?.prepUrl);
-  if (!driveUpdated && briefText && docId) {
+
+  let driveUpdated = false;
+  let driveError: string | undefined;
+  if (briefText && docId) {
     try {
       await updatePrepDoc({ docId, plainText: briefText });
       driveUpdated = true;
-      driveError = undefined;
     } catch (err) {
       driveError = (err as Error).message;
     }
-  } else if (!driveUpdated && briefText && !docId) {
-    driveError = driveError || "No Drive prepUrl for this company yet.";
+  } else if (briefText && !docId) {
+    driveError = "No Drive prepUrl for this company yet.";
+  } else if (!briefText) {
+    driveError = "No brief generated to push to Drive.";
+  }
+
+  const shouldPersist =
+    persist &&
+    (ensured.localBriefs > 0 ||
+      ensured.claudeDecks > 0 ||
+      driveUpdated);
+
+  if (shouldPersist) {
+    const briefFiles = ensured.briefFiles;
+    const pipelineSnap = pipeline;
+    const decks = ensured.claudeDecks;
+    after(async () => {
+      try {
+        await commitBriefIfPresent(companyId, briefFiles);
+        await commitPipeline(
+          pipelineSnap,
+          `War room: Claude prep ${companyId} (${decks} llm)`
+        );
+      } catch (err) {
+        console.error(
+          "[war-room/prep] deferred git persist failed",
+          (err as Error).message
+        );
+      }
+    });
   }
 
   return NextResponse.json({
     ok: true,
     companyId,
-    ...ensured,
-    // Avoid dumping full markdown into the client response.
-    briefFiles: undefined,
+    createdDocs: ensured.createdDocs,
+    updatedDocs: driveUpdated ? 1 : ensured.updatedDocs,
+    mappedFolders: ensured.mappedFolders,
+    localBriefs: ensured.localBriefs,
+    claudeDecks: ensured.claudeDecks,
+    errors: ensured.errors,
     anthropic: true,
     usedSavedNotes: !bodyUpdate.trim() && Boolean(savedNotes.trim()),
     driveUpdated,
     driveError,
+    deferredGit: shouldPersist,
     prepUrl: company?.drive?.prepUrl || null,
   });
 }

@@ -524,9 +524,9 @@ export default function WarRoomBoard({
         : "";
 
       setNotesStatus(
-        `Next-step prep refreshed${
-          prep.claudeDecks ? " with Claude" : " (no new Claude rewrite)"
-        }. Prior notes kept.${driveBit}${errBit}`
+        `Living Drive prep updated${
+          prep.claudeDecks ? " (edit, not full rewrite)" : ""
+        }. Same continuous doc; next-interview title/dates refreshed.${driveBit}${errBit}`
       );
     } catch (e) {
       setNotesStatus(`Update failed: ${(e as Error).message || String(e)}`);

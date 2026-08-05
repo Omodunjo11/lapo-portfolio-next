@@ -7,7 +7,8 @@ export function anthropicConfigured() {
 export function getAnthropic() {
   const apiKey = process.env.ANTHROPIC_API_KEY?.trim();
   if (!apiKey) throw new Error("Missing ANTHROPIC_API_KEY");
-  return new Anthropic({ apiKey, timeout: 45_000 });
+  // Keep under Vercel hobby/pro function budgets; surgical prep should finish earlier.
+  return new Anthropic({ apiKey, timeout: 40_000 });
 }
 
 /** Fast enough for scan path; prep writing defaults to Sonnet for Brain Co quality. */

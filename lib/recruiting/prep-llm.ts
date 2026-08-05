@@ -175,6 +175,39 @@ This is a living document. Add new notes here after every ${company.name} conver
 `;
 }
 
+function whenLabel(event: PipelineEvent): string {
+  if (!event.start) return "Scheduling / TBD";
+  return new Date(event.start).toLocaleString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: "America/New_York",
+  });
+}
+
+function todayLabel(): string {
+  return new Date().toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "America/New_York",
+  });
+}
+
+/** Prefer surgical update when a Brain Co living doc already exists. */
+function shouldSurgicalUpdate(
+  existingBrief: string | null | undefined,
+  force?: boolean,
+  hasFreshSignal?: boolean
+): boolean {
+  if (!existingBrief || looksLikeLegacyPrepDeck(existingBrief)) return false;
+  if (!isRichBrief(existingBrief)) return false;
+  return Boolean(force || hasFreshSignal);
+}
+
 export async function generatePrepDeck(input: PrepGenInput): Promise<{
   text: string;
   source: "claude" | "stub" | "existing";
@@ -207,69 +240,76 @@ export async function generatePrepDeck(input: PrepGenInput): Promise<{
     };
   }
 
-  const when = event.start
-    ? new Date(event.start).toLocaleString("en-US", {
-        weekday: "short",
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-        timeZone: "America/New_York",
-      })
-    : "Scheduling / TBD";
+  const when = whenLabel(event);
+  const today = todayLabel();
+  const withWho = event.with || "TBD";
+  const nextHeading =
+    withWho !== "TBD"
+      ? `Prep for ${withWho}, ${when} ET`
+      : `Next step prep (updated ${today})`;
 
-  const today = new Date().toLocaleString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "America/New_York",
-  });
+  const surgical = shouldSurgicalUpdate(existingBrief, force, hasFreshSignal);
 
-  const system = `You write accumulating interview notes + next-round prep for Lapo Odunjo.
+  const system = surgical
+    ? `You UPDATE an existing living Google Doc for Lapo Odunjo. Do not rewrite from scratch.
+
+Continuous doc identity (keep):
+# ${company.name}: Interview Notes and Prep
+Keep the company line and role line. This doc stays one continuous living notes file.
+
+UPDATE RULES:
+1. Preserve every prior section that is already history (company/contacts, Notes from …, What we already know, Feedback added …, interview lines worth keeping).
+2. Fold NEW Lapo feedback / email facts into history (new "## Feedback added ${today}" or extend company/contacts). Do not drop older feedback.
+3. There must be exactly ONE current upcoming-prep section. Rename it to:
+   ## ${nextHeading}
+   Update that section in place with dates, interview title/format, and prep for THIS next conversation. Older "## Prep for …" / "## Next step prep …" content that is no longer the upcoming round moves under a history heading if it still has substance.
+4. Ground truth = existing doc + email + Lapo feedback. Do not invent.
+5. Brain Co style: readable, short bullets, no tables, no em dashes, no --- rules, no **bold** spam.
+6. Prefer a focused edit. Most of the markdown should remain recognizably the same document.
+7. Output the FULL updated Markdown document only. No preamble.`
+    : `You write accumulating interview notes + next-round prep for Lapo Odunjo.
 
 ${STYLE_AND_JOB}
 
 HARD RULES:
 - Preserve prior feedback and prior round notes. Do not shrink history into a short summary that drops detail Lapo already captured.
-- Refresh "## Next step prep (updated ${today}): …" so it encompasses ALL feedback for the upcoming round.
-- You may keep an older "## Prep for …" section only if you rename/move substance into history; do not leave two conflicting next-step sections. One current next-step section only.
+- Refresh the upcoming prep heading to: ## ${nextHeading}
+- One current next-step section only.
 - Email + Lapo feedback log are ground truth. Do not invent.
 - Readable Brain Co style. No tables. No em dashes. No --- rules. No **bold** spam.
-- Interview funnel stage is not a funding Series.
 - Prefer under ~1200 words, but never cut prior feedback to hit a length target.
 - Output Markdown only. No preamble.`;
 
   const user = `${CANDIDATE_CONTEXT}
 
-## Target (next round)
+## Upcoming interview (use for continuous prep title / dates)
 Company: ${company.name}
 Role: ${company.role}
 Interview stage: ${company.stageLabel || company.stage}
-Priority: ${company.priority}
-Next action on file: ${company.nextAction}
 When: ${when} ET
-With: ${event.with || "TBD"}
+With: ${withWho}
 Calendar/title: ${event.title}
-Today (for Next step prep header): ${today}
+Target prep heading: ## ${nextHeading}
+Mode: ${surgical ? "surgical UPDATE of existing living doc" : "full living notes create/refresh"}
 
-## Email / invite signal about the next interview
-${(emailContext || "").slice(0, 4000) || "(none)"}
+## Email / invite signal
+${(emailContext || "").slice(0, surgical ? 3500 : 4000) || "(none)"}
 
-## Accumulated Lapo feedback log (KEEP ALL of this in the doc; newest may be on top)
-${(userUpdate || "").slice(0, 8000) || "(none)"}
+## New / accumulated Lapo feedback (fold into doc; keep prior)
+${(userUpdate || "").slice(0, surgical ? 6000 : 8000) || "(none)"}
 
-## Current living notes / prior brief (KEEP prior round sections; refresh next-step section only)
-${(existingBrief || "").slice(0, 9000) || "(none)"}
+## Current living doc (base; edit this)
+${(existingBrief || "").slice(0, surgical ? 14000 : 9000) || "(none)"}
 
-Rewrite the living document now. Preserve history. Update the next-step prep section so it uses every piece of feedback above.`;
+${surgical ? "Update the living document in place now." : "Write the living document now. Preserve history. Update the next-step prep section."}`;
 
   try {
     const anthropic = getAnthropic();
     const res = await anthropic.messages.create({
       model: prepModel(),
-      max_tokens: 8192,
-      temperature: 0.3,
+      // Surgical updates should finish well under the Vercel 60s limit.
+      max_tokens: surgical ? 4500 : 6000,
+      temperature: 0.25,
       system,
       messages: [{ role: "user", content: user }],
     });

@@ -263,7 +263,13 @@ export async function ensurePrepDecks(
 export async function ensureAdvancePrepDecks(
   pipeline: Pipeline,
   advances: IngestProposal[],
-  opts: { limit?: number; userUpdate?: string | null; force?: boolean } = {}
+  opts: {
+    limit?: number;
+    userUpdate?: string | null;
+    force?: boolean;
+    /** When true, write local brief only; caller pushes Drive. */
+    skipDrive?: boolean;
+  } = {}
 ): Promise<PrepEnsureResult> {
   const limit = opts.limit ?? 2;
   const errors: string[] = [];
@@ -316,28 +322,63 @@ export async function ensureAdvancePrepDecks(
 
     const blob = `${p.subject || ""}\n${p.snippet || ""}`;
     const who = extractNextInterviewer(blob) || undefined;
-    if (who) {
-      const contacts = company.contacts || [];
-      if (!contacts.some((c) => c.name.toLowerCase() === who.toLowerCase())) {
-        company.contacts = [...contacts, { name: who, role: "Next interviewer" }];
-      }
-    }
 
     const day = new Date().toISOString().slice(0, 10);
+    const upcoming = data.events.find(
+      (e) => e.companyId === company.id && e.status === "scheduled"
+    );
+
+    // Prefer calendar timing for the continuous next-prep heading.
+    let withWho =
+      who ||
+      upcoming?.with ||
+      "";
+    const titleBlob = `${upcoming?.title || ""}\n${p.subject || ""}\n${opts.userUpdate || ""}`;
+    const titleWho = extractNextInterviewer(titleBlob);
+    if (titleWho) withWho = titleWho;
+    // If calendar title names someone else and `with` is a stale prior interviewer, prefer title.
+    const titleName = (upcoming?.title || "").match(
+      /\band\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,2})\b/
+    )?.[1];
+    if (
+      titleName &&
+      withWho &&
+      !upcoming?.title?.toLowerCase().includes(withWho.toLowerCase().split(/\s+/)[0] || "")
+    ) {
+      withWho = titleName;
+    }
+
     const event: PipelineEvent = {
       id: `prep-next-${company.id}-${day}`,
       companyId: company.id,
-      start: `${day}T12:00:00-04:00`,
-      end: `${day}T12:45:00-04:00`,
-      title: who
-        ? `Next: ${who} @ ${company.name}`
-        : `Next interview: ${company.name}`,
-      with: who || "",
+      start: upcoming?.start || `${day}T12:00:00-04:00`,
+      end: upcoming?.end || `${day}T12:45:00-04:00`,
+      title:
+        p.subject &&
+        /interview|session|forward deployed|solution engineer/i.test(p.subject)
+          ? p.subject
+          : upcoming?.title ||
+            (withWho
+              ? `Next: ${withWho} @ ${company.name}`
+              : `Next interview: ${company.name}`),
+      with: withWho,
       type: "other",
       status: "unscheduled",
       briefPath: null,
       blocker: p.subject || p.reason,
     };
+
+    if (withWho) {
+      const contacts = company.contacts || [];
+      if (
+        !contacts.some((c) => c.name.toLowerCase() === withWho.toLowerCase())
+      ) {
+        company.contacts = [
+          ...contacts,
+          { name: withWho, role: "Next interviewer" },
+        ];
+      }
+    }
 
     const slug = `next-${company.id}`;
     const existingPath = `briefs/${slug}.md`;
@@ -350,14 +391,10 @@ export async function ensureAdvancePrepDecks(
     const existingLocal =
       localBriefText(existingPath) ||
       (existsSync(legacyNext) ? readFileSync(legacyNext, "utf8") : null) ||
-      localBriefText(
-        data.events.find(
-          (e) => e.companyId === company.id && e.status === "scheduled"
-        )?.briefPath
-      );
+      localBriefText(upcoming?.briefPath);
 
     // Fresh email, named interviewer not yet in brief, or explicit force/user update.
-    const firstName = (who || "").split(/\s+/)[0] || "";
+    const firstName = (withWho || "").split(/\s+/)[0] || "";
     const force =
       Boolean(opts.force) ||
       Boolean(opts.userUpdate?.trim()) ||
@@ -389,23 +426,20 @@ export async function ensureAdvancePrepDecks(
       continue;
     }
 
-    // Prefer linking upcoming scheduled event to this next brief when present.
-    const upcoming = data.events.find(
-      (e) => e.companyId === company.id && e.status === "scheduled"
-    );
-    if (upcoming && (!upcoming.briefPath || force)) {
-      upcoming.briefPath = event.briefPath;
-      if (who) upcoming.with = upcoming.with || who;
-    } else if (
-      !data.events.some((e) => e.id === event.id) &&
-      !upcoming
-    ) {
+    if (upcoming) {
+      if (!upcoming.briefPath || force) upcoming.briefPath = event.briefPath;
+      if (withWho && (!upcoming.with || /jack/i.test(upcoming.with))) {
+        upcoming.with = withWho;
+      }
+    } else if (!data.events.some((e) => e.id === event.id)) {
       data.events.push(event);
     }
 
-    const result = await persistPrepDoc(company, event, gen.text, {
-      overwriteDoc: Boolean(company.drive?.prepUrl),
-    });
+    const result = opts.skipDrive
+      ? { created: false, updated: false }
+      : await persistPrepDoc(company, event, gen.text, {
+          overwriteDoc: Boolean(company.drive?.prepUrl),
+        });
     if (result.error) errors.push(result.error);
     if (result.created) createdDocs += 1;
     if (result.updated) updatedDocs += 1;
