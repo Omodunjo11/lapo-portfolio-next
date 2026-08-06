@@ -52,15 +52,7 @@ Why they do this interview: As FDE-SE, you will be embedded with customers from 
 
 ### What they are testing
 
-- Can you uncover the real problem versus the surface request in discovery
-- How you think about business context, impact, success criteria, and constraints
-- Whether you design AI-native solutions or traditional plus AI bolt-ons
-- How fluently you use AI tools as a force multiplier
-- Whether you validate what AI generates and iterate based on what you learn
-- How you make smart tradeoffs between speed and quality
-- Whether you understand full scope of building for production
-- How clearly you communicate technical concepts to any audience
-- Your ability to articulate business value, not just technical merit
+Can you uncover the real problem versus the surface request in discovery. How you think about business context, impact, success criteria, and constraints. Whether you design AI-native solutions or traditional plus AI bolt-ons. How fluently you use AI tools as a force multiplier. Whether you validate what AI generates and iterate based on what you learn. How you make smart tradeoffs between speed and quality. Whether you understand full scope of building for production. How clearly you communicate technical concepts to any audience. Your ability to articulate business value, not just technical merit.
 
 ### Lines and stories to land
 
@@ -70,17 +62,8 @@ Incomplete-info shipping: incomplete specs, cut scope, ship, measure adoption. D
 
 Bank / regulated trust: eval gates, precision, production quality bar. Field failure modes into Product. Maps to their definition of done and production adoption bar.
 
-Judgment under pressure: TD-style pushback. Calm alternative, protected delivery, spoke to risk and outcomes. Shows how to navigate ambiguity and stakeholder tension in small-team scale-up.
+Judgment under pressure: TD-style pushback. Calm alternative, protected delivery, spoke to risk and outcomes. Maps to navigating ambiguity and stakeholder tension in customer engagements.
 
-### Day-before checklist
+### Night-before checklist
 
-- Read problem statement 2-3 times. Identify real pain point, not surface request
-- Do domain research if industry is new (30-60 min)
-- Sketch rough architecture and thinking on whiteboard or paper
-- Familiarize yourself with Cursor or preferred coding agent
-- Test Google Meet, screen sharing, audio/video
-- Confirm stable internet connection
-- Plan quiet environment
-- Have everything ready 5 minutes early
-- Do NOT write code in advance
-- Do NOT prepare slides or memorize answers
+Read problem statement 2-3 times. Identify real pain point, not surface request. Do 30-60 min domain research if industry is new. Sketch rough architecture and thinking on whiteboard (do not code). Confirm internet, audio, video, screen share on Google Meet. Test preferred coding agent tool. Quiet environment. Ready 5 minutes early.
