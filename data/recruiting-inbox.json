@@ -1,8 +1,8 @@
 {
-  "scannedAt": "2026-08-05T19:52:23.654Z",
+  "scannedAt": "2026-08-06T01:28:35.096Z",
   "days": 7,
   "gmailMatched": 75,
-  "calendarMatched": 10,
+  "calendarMatched": 9,
   "proposals": [
     {
       "source": "gmail",
@@ -546,19 +546,6 @@
     },
     {
       "source": "calendar",
-      "id": "a6tl4iljd6rt4t535blfo529bc",
-      "summary": "Interview with Invisible Technologies",
-      "start": "2026-07-29T16:00:00-04:00",
-      "end": "2026-07-29T16:45:00-04:00",
-      "htmlLink": "https://www.google.com/calendar/event?eid=YTZ0bDRpbGpkNnJ0NHQ1MzVibGZvNTI5YmMgb2R1bmpvb25hb2xhcG9AbQ",
-      "companyId": "invisible",
-      "companyName": "Invisible Technologies",
-      "signal": "schedule",
-      "confidence": "high",
-      "reason": "calendar interview matched company"
-    },
-    {
-      "source": "calendar",
       "id": "k4ijjgn8vb1p57bh59g38dvjrg",
       "summary": "Onaolapo Odunjo and Jack Leeming",
       "start": "2026-07-31T11:30:00-04:00",
@@ -630,7 +617,7 @@
       "end": "2026-08-06T17:00:00-04:00",
       "htmlLink": "https://www.google.com/calendar/event?eid=bTl1MmsxbjE5dW41dGM4aDFpcWl0MWtvNG8gb2R1bmpvb25hb2xhcG9AbQ",
       "companyId": "northslope",
-      "companyName": "Northslope",
+      "companyName": "Northslope Technologies",
       "signal": "schedule",
       "confidence": "high",
       "reason": "calendar interview matched company"
