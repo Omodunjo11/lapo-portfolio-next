@@ -5,8 +5,8 @@ import type {
   RankedComparisonRow,
   ComparisonFile,
   JoinedComparison,
-} from "@/lib/recruiting/comparison";
-import { joinComparison } from "@/lib/recruiting/comparison";
+} from "@/lib/recruiting/comparison-core";
+import { joinComparison } from "@/lib/recruiting/comparison-core";
 import type { Company } from "@/lib/recruiting/types";
 
 export const WAR_ROOM_SCAN_EVENT = "war-room-scan-complete";
