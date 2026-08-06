@@ -7,7 +7,6 @@ Onaolapo (Lapo) Odunjo. Role: Business Operations and Strategy. Living notes doc
 - Northslope Technologies, domain northslopetech.com.
 - Outreach from Samantha Obre (sobre@northslopetech.com).
 - Role frame on file: Business Operations and Strategy leadership.
-- First-round interview: Thu Aug 6, 2026, 4:30-5:00pm ET.
 - Public linkage signal (verify, do not overclaim): OpenAI deployment ecosystem association mentioned in current notes.
 - Why it matters for Lapo: ops + strategy seat near an AI deployment motion, if the thesis holds under diligence.
 
@@ -17,8 +16,8 @@ Onaolapo (Lapo) Odunjo. Role: Business Operations and Strategy. Living notes doc
 - Role on file: Business Operations and Strategy leader
 - Stage: first
 - Priority: P0
-- Next action on file: Attend interview with Northslope
-- Upcoming: Interview with Northslope with TBD (Thu, Aug 6, 2026, 4:30 PM ET)
+- Next action on file: Attend interview with Bill
+- Upcoming: Interview with Bill, Thu, Aug 6, 2026, 4:30 PM ET
 - Recruiter: Samantha Obre (Recruitment, Marketing & Communications, Full Stack Web Development)
 
 ## Feedback added Wed, Aug 5, 2026, 3:56 PM ET
@@ -33,7 +32,7 @@ Context: Northslope specializes in Forward Deployed Engineers (FDEs) helping ent
 
 For this recruiter screen, your goal is not to prove that you know every part of Northslope's technology. Your goal is to make Samantha believe:
 
-Lapo is already doing the work at the intersection of AI product, client delivery, operating design, and business strategy,and this role gives him broader ownership of it.
+Lapo is already doing the work at the intersection of AI product, client delivery, operating design, and business strategy, and this role gives him broader ownership of it.
 
 Samantha's outreach is unusually helpful. She specifically noticed your Kinage work and production ML experience, and described the need as someone who can operate without a playbook, identify inefficiencies, and find growth opportunities. Build every answer around those signals.
 
@@ -61,11 +60,27 @@ The throughline is that I like taking an ambiguous problem, determining the real
 
 This establishes your operating identity, AI credibility, and track record of shipping under pressure.
 
-## Next step prep (updated Aug 6, 2026)
+## Feedback added Thu, Aug 6, 2026, 5:15 PM ET
+
+Recruiter call with Samantha Obre completed. Extended beyond the scheduled 30 minutes. Key signals:
+
+- Location: NYC preferred, no fixed office schedule currently defined.
+- Work authorization: Confirmed permanent U.S. work authorization as green card holder.
+- Compensation: Approximately $200,000 to $220,000 cash, with equity and other variables affecting total package.
+
+Why Lapo took the call: Actively exploring permanent opportunities after completing MBA in May. Took June to reset, returned to Kinage in July as contractor, allowing continued contribution while deliberately searching for strongest long-term opportunity.
+
+Why Northslope attracted him: Business Operations & Strategy role combines product and technical problem-solving, client engagement, business operations, financial modeling and pricing, go-to-market strategy, organizational scaling, working across functions without rigid boundaries, and building systems where no complete playbook exists.
+
+Why the MBA: Entered business school to explore expansion beyond conventional fintech and enterprise-product trajectory. Evaluated chief of staff, consulting, investment banking, startup operating roles, and broader strategy and product leadership. Clarified that he performs best as an operator inside a growing company rather than solely as adviser or specialist. MBA strengthened financial and strategic toolkit and expanded professional network. Most important outcome: clarity about wanting broad ownership, proximity to clients and builders, and responsibility for translating strategy into execution.
+
+What he is looking for next: Role where he can work across product, operations, client strategy, regulation, commercialization, and growth. Does not want to leave product thinking behind; wants broader responsibility for the system surrounding the product. Questions he wants to own: What does the client actually need rather than what they initially requested? Which part of the workflow should be automated? How can one solution become reusable across multiple deployments? How do we measure adoption and impact?
+
+## Prep for Bill, Thu, Aug 6, 2026, 4:30 PM ET
 
 ### What this conversation is about
 
-First call with Samantha. Testing fit for Business Operations and Strategy role in a post-acquisition environment. Northslope is in transition: integrating into The OpenAI Deployment Company, scaling FDE deployment model, and identifying operational inefficiencies and growth opportunities.
+First interview with Bill (likely hiring manager or senior stakeholder). Testing fit for Business Operations and Strategy role in a post-acquisition environment. Northslope is in transition: integrating into The OpenAI Deployment Company, scaling FDE deployment model, and identifying operational inefficiencies and growth opportunities.
 
 ### What they are likely testing
 
@@ -94,11 +109,3 @@ First call with Samantha. Testing fit for Business Operations and Strategy role 
 1. Review The OpenAI Deployment Company structure and Tomoro acquisition (context for integration).
 2. Rehearse one incomplete-info story from Kinage (e.g., shipping with partial specs, measuring adoption).
 3. Prepare to ask about post-acquisition priorities and what "new era" means operationally.
-
-## Interview line to reuse, in their own language
-
-"I'm at my best when the product bar is high and the brief is incomplete. I take partial signal, drive a decision, and keep delivery protected."
-
-## How to read this and what to do with it
-
-This is a living document. Add new notes here after every Northslope conversation so the next round always has the full picture in one place.
