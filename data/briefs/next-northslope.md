@@ -7,7 +7,7 @@ Onaolapo (Lapo) Odunjo. Role: Business Operations and Strategy. Living notes doc
 - Northslope Technologies, domain northslopetech.com.
 - Outreach from Samantha Obre (sobre@northslopetech.com).
 - Role frame on file: Business Operations and Strategy leadership.
-- First-round interview: Thu Aug 6, 2026, 4:30–5:00pm ET.
+- First-round interview: Thu Aug 6, 2026, 4:30-5:00pm ET.
 - Public linkage signal (verify, do not overclaim): OpenAI deployment ecosystem association mentioned in current notes.
 - Why it matters for Lapo: ops + strategy seat near an AI deployment motion, if the thesis holds under diligence.
 
@@ -29,19 +29,51 @@ Lapo responded at 2:43 PM. Acknowledged acquisition news as a milestone. Express
 
 Context: Northslope specializes in Forward Deployed Engineers (FDEs) helping enterprises realize value from AI across critical operations. Acquisition brings together hundreds of FDEs under The OpenAI Deployment Company umbrella (also acquired Tomoro earlier this year).
 
-## Next step prep (updated Aug 5, 2026)
+## Feedback added Thu, Aug 6, 2026, 10:35 AM ET
+
+For this recruiter screen, your goal is not to prove that you know every part of Northslope's technology. Your goal is to make Samantha believe:
+
+Lapo is already doing the work at the intersection of AI product, client delivery, operating design, and business strategy,and this role gives him broader ownership of it.
+
+Samantha's outreach is unusually helpful. She specifically noticed your Kinage work and production ML experience, and described the need as someone who can operate without a playbook, identify inefficiencies, and find growth opportunities. Build every answer around those signals.
+
+### Your positioning
+
+Do not position yourself as a product manager trying something different, an MBA candidate moving into strategy, a technical person who wants to become more commercial, or a consultant who advises other people what to do.
+
+Position yourself as: An execution-oriented AI operator who identifies the real constraint, aligns the people involved, and builds the operating system required to produce a measurable result.
+
+Northslope describes its culture as high-trust and high-ownership, with employees effectively owning customer outcomes and operating each project like a small startup. Its recruiter conversation is explicitly focused on motivation, career goals, background, and mutual fit.
+
+### Tell me about yourself
+
+Use this tightened version:
+
+"I'm Lapo. I tend to become the person holding strategy, operations, product, and the client relationship together when the situation is ambiguous.
+
+Most of my recent work has been forward-deployed. I sit with the actual operators, understand where the workflow is breaking, and then work across product, engineering, and the client to build something that produces a measurable result.
+
+At Kinage, that has included product delivery, client operations, GTM planning, and working closely with the CEO. In one regulated bank deployment, analysts had lost trust in an AI workflow. I owned the evaluation and adoption process, introduced weekly override reviews and a compliance promotion gate, and helped increase precision from 22% to 50% while materially reducing false positives.
+
+Before Kinage, I worked in larger enterprise environments at TD and Capital One, so I'm comfortable aligning complex stakeholder groups, building operating cadence, and executing inside regulated environments.
+
+The throughline is that I like taking an ambiguous problem, determining the real constraint, aligning people around a decision, and making sure the solution actually gets implemented and used."
+
+This establishes your operating identity, AI credibility, and track record of shipping under pressure.
+
+## Next step prep (updated Aug 6, 2026)
 
 ### What this conversation is about
 
-First call with Samantha or hiring manager. Testing fit for Business Operations and Strategy role in a post-acquisition environment. Northslope is in transition: integrating into The OpenAI Deployment Company, scaling FDE deployment model, and identifying operational inefficiencies and growth opportunities.
+First call with Samantha. Testing fit for Business Operations and Strategy role in a post-acquisition environment. Northslope is in transition: integrating into The OpenAI Deployment Company, scaling FDE deployment model, and identifying operational inefficiencies and growth opportunities.
 
-### What they are likely testing (from ALL feedback so far)
+### What they are likely testing
 
 - Can you operate without a playbook in a high-ambiguity, post-acquisition environment?
 - Do you have judgment to spot operational inefficiencies and growth levers?
 - Can you ship and measure under incomplete information?
 - Do you understand applied AI deployment and the FDE model?
-- Fit for a "new era" at Northslope (post-acquisition integration and scaling)
+- Fit for a "new era" at Northslope (post-acquisition integration and scaling).
 
 ### Lines and stories to land
 
@@ -68,7 +100,5 @@ First call with Samantha or hiring manager. Testing fit for Business Operations 
 "I'm at my best when the product bar is high and the brief is incomplete. I take partial signal, drive a decision, and keep delivery protected."
 
 ## How to read this and what to do with it
-
-Stub until live feedback lands. Each update should keep prior feedback and refresh only the next-step section.
 
 This is a living document. Add new notes here after every Northslope conversation so the next round always has the full picture in one place.
