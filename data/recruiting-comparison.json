@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-04",
+  "updated": "2026-08-06",
   "formula": "Fit×2 + Compound×2 + Excited + Potential + Exit − max(0, Size−7)",
   "note": "Scores are judgment. Exit = company outcome optionality (liquidity / brand / path clarity). Thin data → lower Exit, do not invent rounds. Rows link by companyId; live stage/prepUrl from pipeline.",
   "memo": {
@@ -132,6 +132,20 @@
       "excitedWhy": "First round still scheduling — early curiosity, not chase energy.",
       "why": "Founder-proximal CoS; NYC onsite signals real proximity if/when it lands.",
       "watch": "Deprioritize vs Blue Orange; don’t split CoS attention this week."
+    },
+    {
+      "companyId": "northslope",
+      "track": "TBD",
+      "sizeBand": "Unknown, approx",
+      "size": 3,
+      "potential": 5,
+      "exit": 4,
+      "fit": 5,
+      "compound": 5,
+      "excited": 6,
+      "excitedWhy": "Interview scheduled — process interest shown; scoring pending research.",
+      "why": "Northslope Technologies just entered the pipeline. Scores are provisional until research lands.",
+      "watch": "Claude research will refine Fit / Compound / Excited / Exit."
     }
   ]
 }
