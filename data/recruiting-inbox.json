@@ -1,5 +1,5 @@
 {
-  "scannedAt": "2026-08-06T08:14:43.138Z",
+  "scannedAt": "2026-08-06T12:33:24.715Z",
   "days": 7,
   "gmailMatched": 75,
   "calendarMatched": 9,
@@ -524,21 +524,6 @@
       "snippet": "haha thanks, now i remember i didn't get the interview\r\n\r\nbut appreciate the nice message\r\n\r\nOn Fri, Jul 31, 2026 at 4:44 PM Jean Stormes <jean@semgrep.com> wrote:\r\n\r\n> Hi Onaolapo,\r\n>\r\n> My name is Jean, and I lead Recruiting Operations at Semgrep. I'm writing\r\n> because a recen",
       "companyId": "semgrep",
       "companyName": "Semgrep",
-      "fromSpam": false,
-      "signal": "wait",
-      "confidence": "low",
-      "reason": "interview-adjacent, unclear"
-    },
-    {
-      "source": "gmail",
-      "id": "19fb998803b4f782",
-      "threadId": "19fb987caccf866a",
-      "date": "Fri, 31 Jul 2026 12:13:27 -0700",
-      "from": "Lapo Odunjo <odunjoonaolapo@gmail.com> → Catarina Valente - Blue Orange Digital <catarina.valente@blueorangedigital.na.teamtailor-mail.com>",
-      "subject": "Re: Chief of Staff role at Blue Orange",
-      "snippet": "Thank you so much! - looking forward to it and hoping for good news!\r\n\r\nHave a good weekend.\r\n\r\nLe ven. 31 juil. 2026 à 11:55 AM, Catarina Valente - Blue Orange Digital <\r\ncatarina.valente@blueorangedigital.na.teamtailor-mail.com> a écrit :\r\n\r\n> Hi Lapo,\r\n>\r\n> Congrats on your of",
-      "companyId": "blue-orange-digital",
-      "companyName": "Blue Orange Digital",
       "fromSpam": false,
       "signal": "wait",
       "confidence": "low",
