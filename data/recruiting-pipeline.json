@@ -450,7 +450,13 @@
         "note": "Mapped to Drive folder “Northslope”",
         "prepUrl": "https://docs.google.com/document/d/1cW_KkEtumGEdc4ehlfYKLwIB4Yu3S4RU9Up6rQu-V84/edit?usp=drivesdk"
       },
-      "stageLabel": "1st"
+      "stageLabel": "1st",
+      "contacts": [
+        {
+          "name": "Bill",
+          "role": "Next interviewer"
+        }
+      ]
     }
   ],
   "events": [
@@ -700,7 +706,7 @@
       "start": "2026-08-06T16:30:00-04:00",
       "end": "2026-08-06T17:00:00-04:00",
       "title": "Interview with Northslope",
-      "with": "",
+      "with": "Bill",
       "type": "other",
       "status": "scheduled",
       "briefPath": "briefs/next-northslope.md",
