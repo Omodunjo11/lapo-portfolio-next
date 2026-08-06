@@ -22,7 +22,7 @@ Onaolapo (Lapo) Odunjo. Role: Chief of Staff. Living notes doc, add to this afte
 - Who the interviewer is on Aug 6 and what they will be testing for
 - Whether there are other final round participants or if this is a single conversation
 
-## Next step prep (updated Aug 5, 2026): Final round, Thu Aug 6, 12:00 PM ET
+## Next step prep (updated Aug 6, 2026): Final round, Thu Aug 6, 12:00 PM ET
 
 ### What this conversation is about
 
