@@ -83,9 +83,9 @@
         "Rizwan Yousuf"
       ],
       "drive": {
-        "folderUrl": "https://drive.google.com/drive/folders/19sn5zszI73Q54ETmKPfOHy6HNecOf6L_",
-        "prepUrl": "https://docs.google.com/document/d/1RpzSJ2vnAsbpr-zv8f059dugWnEHsyv9BS1_uKyZTiY/edit?usp=drivesdk",
-        "note": "Created Drive folder “Blue Orange Digital”"
+        "folderUrl": "",
+        "prepUrl": "",
+        "note": "No company Drive folder found in Gmail scan — create Recruiting Season/Blue Orange Digital and paste folderUrl."
       },
       "paths": {
         "folder": "Blue Orange Digital",
