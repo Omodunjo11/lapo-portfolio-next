@@ -707,7 +707,13 @@ export default function WarRoomBoard({
       const res = await fetch("/api/war-room/gmail/scan", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ applyCalendar: true, persist: true }),
+        body: JSON.stringify({
+          applyCalendar: true,
+          persist: true,
+          // Keep scan under Vercel 60s — Drive/Claude live on Update /prep.
+          ensurePrep: false,
+          scoreComparison: false,
+        }),
       });
       const data = await readWarRoomJson(res);
       if (!res.ok) {

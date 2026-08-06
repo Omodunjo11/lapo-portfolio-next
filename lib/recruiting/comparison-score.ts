@@ -145,15 +145,23 @@ Use web_search for public facts about ${opts.company.name}. Then output the JSON
   }
 }
 
-/** Add/score missing active companies into the comparison file. */
+/** Add missing active companies into the comparison file; optionally Claude-score them. */
 export async function upsertComparisonForCompanies(
   file: ComparisonFile,
   companies: Company[],
-  opts: { emailByCompany?: Record<string, string> } = {}
+  opts: {
+    emailByCompany?: Record<string, string>;
+    /** Claude + web_search per new row. Off for inbox scan (timeouts). */
+    score?: boolean;
+  } = {}
 ): Promise<{ file: ComparisonFile; added: ComparisonRow[]; scored: number }> {
   const covered = ensureComparisonCoverage(file, companies);
   let next = covered.file;
   let scored = 0;
+
+  if (opts.score === false) {
+    return { file: next, added: covered.added, scored: 0 };
+  }
 
   const targets = companiesMissingComparison(file, companies);
   // After ensure, targets are the ones that were missing — score those rows.

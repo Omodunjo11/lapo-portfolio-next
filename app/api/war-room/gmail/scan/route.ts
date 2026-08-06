@@ -37,7 +37,8 @@ import {
 import { upsertComparisonForCompanies } from "@/lib/recruiting/comparison-score";
 
 export const runtime = "nodejs";
-export const maxDuration = 90;
+/** Hobby plan gateway ~60s; keep scan under it (no Drive/Claude on this path). */
+export const maxDuration = 60;
 
 function cronAuthorized(req: NextRequest) {
   const secret = process.env.CRON_SECRET;
@@ -81,6 +82,11 @@ async function runScan(opts: {
   ensurePrep?: boolean;
   /** Claude on the scan request — keep false for cron (use /api/war-room/prep). */
   claudePrep?: boolean;
+  /**
+   * Claude + web_search scoring for new comparison rows.
+   * Default false — scoring blows the Vercel 60s gateway on inbox scan.
+   */
+  scoreComparison?: boolean;
 }) {
   if (!gmailConfigured()) {
     return {
@@ -156,7 +162,9 @@ async function runScan(opts: {
       : chunk;
   }
 
-  if (opts.ensurePrep !== false) {
+  // Prep/Drive bootstrap is optional and slow (Claude + Drive). Interactive
+  // Scan inbox turns this off; cron may still enable it.
+  if (opts.ensurePrep) {
     const beforePaths = new Set(
       pipeline.events.map((e) => e.briefPath).filter(Boolean) as string[]
     );
@@ -306,7 +314,11 @@ async function runScan(opts: {
       const upserted = await upsertComparisonForCompanies(
         comparisonFile,
         pipeline.companies,
-        { emailByCompany }
+        {
+          emailByCompany,
+          // Default: provisional rows only — Claude scoring 504s the scan.
+          score: opts.scoreComparison === true,
+        }
       );
       comparisonFile = upserted.file;
       comparisonAdded = upserted.added.map((r) => r.companyId);
@@ -372,11 +384,13 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
   try {
+    // Cron: calendar + inbox persist only. Prep/Claude live on /api/war-room/prep.
     const result = await runScan({
       applyCalendar: true,
       persist: true,
-      ensurePrep: true,
+      ensurePrep: false,
       claudePrep: false,
+      scoreComparison: false,
     });
     if ("error" in result && result.error) return result.error;
     return result.ok!;
@@ -398,8 +412,11 @@ export async function POST(req: NextRequest) {
   const days = typeof body.days === "number" ? body.days : undefined;
   const applyCalendar = body.applyCalendar !== false;
   const persist = body.persist !== false;
-  const ensurePrep = body.ensurePrep !== false;
+  // Interactive Scan inbox must finish under Vercel gateway (~60s). Heavy
+  // Drive/Claude work is opt-in; the board already calls /prep for advances.
+  const ensurePrep = body.ensurePrep === true;
   const claudePrep = body.claudePrep === true;
+  const scoreComparison = body.scoreComparison === true;
 
   try {
     const result = await runScan({
@@ -408,6 +425,7 @@ export async function POST(req: NextRequest) {
       persist,
       ensurePrep,
       claudePrep,
+      scoreComparison,
     });
     if ("error" in result && result.error) return result.error;
     return result.ok!;
