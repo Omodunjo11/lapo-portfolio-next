@@ -19,6 +19,13 @@ type PatchBody = {
   patch: Partial<Pick<Company, (typeof PATCHABLE_KEYS)[number]>>;
 };
 
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+
+function isDateOrEmpty(value: unknown): boolean {
+  if (value === null || value === undefined || value === "") return true;
+  return typeof value === "string" && DATE_RE.test(value);
+}
+
 function isValidPatch(body: unknown): body is PatchBody {
   if (!body || typeof body !== "object") return false;
   const b = body as Record<string, unknown>;
@@ -36,6 +43,8 @@ function isValidPatch(body: unknown): body is PatchBody {
   ) {
     return false;
   }
+  if ("due" in patch && !isDateOrEmpty(patch.due)) return false;
+  if ("nudgeDate" in patch && !isDateOrEmpty(patch.nudgeDate)) return false;
   return true;
 }
 

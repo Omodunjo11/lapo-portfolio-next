@@ -38,7 +38,7 @@ async function readWarRoomJson(
     const hint = text.replace(/\s+/g, " ").slice(0, 160);
     if (res.status === 504 || res.status === 502 || /timeout|gateway/i.test(text)) {
       throw new Error(
-        `Prep timed out (${res.status}). Wait a moment and try Update again.`
+        `Request timed out (${res.status}). Wait a moment and try again.`
       );
     }
     if (res.status === 401 || res.status === 403 || /sign-in|unauthorized/i.test(text)) {
@@ -46,6 +46,14 @@ async function readWarRoomJson(
     }
     throw new Error(`Non-JSON response (${res.status}): ${hint}`);
   }
+}
+
+/** Safari <input type="date"> rejects anything that isn't YYYY-MM-DD (incl. empty in some builds). */
+const DATE_INPUT_RE = /^\d{4}-\d{2}-\d{2}$/;
+function toDateInputValue(value: string | null | undefined): string {
+  if (!value) return "";
+  const day = value.trim().slice(0, 10);
+  return DATE_INPUT_RE.test(day) ? day : "";
 }
 
 const CHASE_DRAFTS: Record<string, string> = {
@@ -102,8 +110,8 @@ function CompanyCard({
     stage: c.stage,
     stageLabel: c.stageLabel || "",
     nextAction: c.nextAction,
-    due: c.due,
-    nudgeDate: c.nudgeDate || "",
+    due: toDateInputValue(c.due),
+    nudgeDate: toDateInputValue(c.nudgeDate),
   });
 
   const prev = prevFunnelStage(c.stage);
@@ -113,15 +121,34 @@ function CompanyCard({
     setSaving(true);
     setError(null);
     try {
+      const due = toDateInputValue(fields.due);
+      const nudgeDate = toDateInputValue(fields.nudgeDate) || null;
+      if (fields.due && !due) {
+        throw new Error("Due date must be YYYY-MM-DD (or leave blank).");
+      }
+      if (fields.nudgeDate && !nudgeDate) {
+        throw new Error("Nudge date must be YYYY-MM-DD (or leave blank).");
+      }
       const res = await fetch("/api/war-room/pipeline", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           companyId: c.id,
-          patch: { ...fields, nudgeDate: fields.nudgeDate || null },
+          patch: {
+            ...fields,
+            due,
+            nudgeDate,
+          },
         }),
       });
-      if (!res.ok) throw new Error((await res.json()).error || "save_failed");
+      const data = await readWarRoomJson(res);
+      if (!res.ok) {
+        throw new Error(
+          (typeof data.detail === "string" && data.detail) ||
+            (typeof data.error === "string" && data.error) ||
+            "save_failed"
+        );
+      }
       setSaved(true);
       setEditing(false);
       if (fields.stage !== c.stage) {
@@ -263,7 +290,7 @@ function CompanyCard({
             Due
             <input
               type="date"
-              value={fields.due}
+              value={toDateInputValue(fields.due)}
               onChange={(e) =>
                 setFields((f) => ({ ...f, due: e.target.value }))
               }
@@ -273,7 +300,7 @@ function CompanyCard({
             Nudge date
             <input
               type="date"
-              value={fields.nudgeDate || ""}
+              value={toDateInputValue(fields.nudgeDate)}
               onChange={(e) =>
                 setFields((f) => ({ ...f, nudgeDate: e.target.value }))
               }
@@ -583,25 +610,30 @@ export default function WarRoomBoard({
 
   async function post(body: Record<string, unknown>) {
     setError(null);
-    const res = await fetch("/api/war-room", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) {
-      const detail =
-        typeof data.detail === "string"
-          ? data.detail
-          : typeof data.error === "string"
-            ? data.error
-            : "Request failed";
-      setError(detail);
+    try {
+      const res = await fetch("/api/war-room", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const data = await readWarRoomJson(res);
+      if (!res.ok) {
+        const detail =
+          typeof data.detail === "string"
+            ? data.detail
+            : typeof data.error === "string"
+              ? data.error
+              : "Request failed";
+        setError(detail);
+        return false;
+      }
+      if (data.pipeline?.companies) setCompanies(data.pipeline.companies);
+      if (data.suggestions) setSuggestions(data.suggestions);
+      return true;
+    } catch (e) {
+      setError((e as Error).message);
       return false;
     }
-    if (data.pipeline?.companies) setCompanies(data.pipeline.companies);
-    if (data.suggestions) setSuggestions(data.suggestions);
-    return true;
   }
 
   function move(companyId: string, stage: FunnelStage) {
@@ -677,7 +709,7 @@ export default function WarRoomBoard({
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ applyCalendar: true, persist: true }),
       });
-      const data = await res.json();
+      const data = await readWarRoomJson(res);
       if (!res.ok) {
         throw new Error(data.detail || data.error || "scan_failed");
       }
@@ -708,7 +740,7 @@ export default function WarRoomBoard({
               persist: true,
             }),
           });
-          const prep = await prepRes.json();
+          const prep = await readWarRoomJson(prepRes);
           if (prepRes.ok && (prep.claudeDecks || 0) > 0) claudeN += 1;
         } catch {
           /* prep is best-effort after scan */
@@ -849,7 +881,7 @@ export default function WarRoomBoard({
           markEventDone: true,
         }),
       });
-      const data = await res.json();
+      const data = await readWarRoomJson(res);
       if (!res.ok) throw new Error(data.detail || data.error || "debrief_failed");
       if (data.pipeline?.companies) setCompanies(data.pipeline.companies);
       setDebriefNote(
