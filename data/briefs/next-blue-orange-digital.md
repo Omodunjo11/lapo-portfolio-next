@@ -4,7 +4,7 @@ Onaolapo (Lapo) Odunjo. Role: Chief of Staff. Living notes doc, add to this afte
 
 ## Company and contacts, from your inbox
 
-- Blue Orange Digital. No additional company description on file yet
+- Blue Orange Digital. blueorangedigital.com. No additional company description on file yet.
 - Contact: Catarina Valente (recruiter, catarina.valente@blueorangedigital.na.teamtailor-mail.com)
 - Next interview: Thu, Aug 6, 2026, 12:00 PM ET
 - With: TBD (interviewer name not yet confirmed)
