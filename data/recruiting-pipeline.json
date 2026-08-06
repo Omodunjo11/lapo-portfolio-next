@@ -1,7 +1,7 @@
 {
   "version": 1,
   "owner": "Onaolapo (Lapo) Odunjo",
-  "updated": "2026-08-05",
+  "updated": "2026-08-06",
   "timezone": "America/New_York",
   "killCriteria": [
     "Role is pure strategy / slideware with no shipping ownership",
@@ -447,7 +447,7 @@
       ],
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1BPr95AGzGMzIW6PQKzbWemTIZjrFu_CO",
-        "note": "Created Drive folder “Northslope”",
+        "note": "Mapped to Drive folder “Northslope”",
         "prepUrl": "https://docs.google.com/document/d/1cW_KkEtumGEdc4ehlfYKLwIB4Yu3S4RU9Up6rQu-V84/edit?usp=drivesdk"
       },
       "stageLabel": "1st"
@@ -703,7 +703,7 @@
       "with": "",
       "type": "other",
       "status": "scheduled",
-      "briefPath": "briefs/next-northslope.md",
+      "briefPath": "briefs/2026-08-06-northslope.md",
       "blocker": null
     }
   ],
