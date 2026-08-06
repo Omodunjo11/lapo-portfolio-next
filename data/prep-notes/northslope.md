@@ -1,3 +1,63 @@
+## Official job listing (prep extract) — captured Thu, Aug 6, 2026
+
+Use this as the public scoreboard. Recruiter debrief below is the private / post-acq version — reconcile both when prepping Bill and decks.
+
+### Snapshot
+| | |
+|---|---|
+| Title | Business Operations and Strategy |
+| Dept | Operations |
+| Location | New York · Hybrid · Full time |
+| Comp posted | **$152K–$236K** + equity (options) |
+| Travel | <10% (NY / London offsites) |
+| Ideal background | Mgmt consulting or biz ops/strategy (top-tier or boutique); startup + |
+
+Posted band vs screen: Samantha discussed ~$200–220K cash. That sits near the top of the posted range — treat equity / level / DeployCo structure as open variables.
+
+### Job in one line
+Operator at the intersection of **account expansion, business operations, and commercial strategy** — find where money and value are left on the table, then build systems so it doesn’t keep happening.
+
+### Mandate (turn JD verbs into ownership)
+1. **Expand** — unlock customer expansions with implementation / project leads
+2. **Renew** — arm strategic renewal conversations with evidence and narrative
+3. **Win** — support pre-sales with clear value storytelling (not feature dumps)
+4. **Institutionalize** — turn one-off heroics into habits, systems, and scoreboards
+5. **Translate** — make AI / delivery work legible to executives who buy outcomes
+
+### How they describe “good” (mirror this language)
+- Visual storytelling that **drives decisions** (decks that land)
+- Numbers fluency: simple models, quantified impact (Sheets/Excel)
+- Ambiguity + multi-hat: pre-sales ↔ account strategy ↔ internal ops
+- Proactive: anticipate, connect dots, don’t wait for a ticket
+- Outcomes over activity; ownership and velocity
+- Curiosity about AI / data platforms / operating transformation (depth earned on the job is fine)
+
+### Fit map — what to prove with stories
+| They hire for | Bring proof from |
+|---|---|
+| Leave-no-money-on-table | Kinage multi-account expansion / packaging / reuse |
+| Value storytelling for execs | Decks that changed a buyer or internal prioritization |
+| Simple models / quantified impact | Cost-to-serve ↓, adoption, margin, pricing experiments |
+| Ambiguity / multi-hat | Client + internal ops + commercial in one arc |
+| Institutionalize habits | Playbooks, FDE coaching, scoreboards — not one-off firefight |
+| Consulting posture + builder bias | MBA / strategy toolkit + shipping production systems |
+
+### Principles to cite back (their words, not yours)
+- Only Valuable Problems
+- Outcomes, Not Activity
+- Forward Deployed Engineering
+- One size fits none (build for the specific customer/context)
+
+Company self-frame: more product startup than services firm; mission-specific production AI vs commoditized SaaS; hubs NY / London / UAE.
+
+### Prep uses
+- **Elevator / “why this role”:** use the one-liner + mandate 1–4; avoid “I want more strategy.”
+- **Behavioral:** map each story to one column in the fit table.
+- **Questions for Bill:** What does “leaving money on the table” look like here today — expansion, delivery leverage, or packaging? Which of expand / renew / pre-sales is the 90-day job?
+- **Deck / take-home:** default to decision slides, not status; show a lightweight model whenever you claim impact.
+
+---
+
 ## Feedback added Thu, Aug 6, 2026, 5:15 PM ET
 
 # Northslope Recruiter Interview Summary

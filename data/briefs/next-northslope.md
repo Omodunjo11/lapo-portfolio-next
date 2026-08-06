@@ -10,6 +10,17 @@ Onaolapo (Lapo) Odunjo. Role: Business Operations and Strategy. Living notes doc
 - Public linkage signal (verify, do not overclaim): OpenAI deployment ecosystem association mentioned in current notes.
 - Why it matters for Lapo: ops + strategy seat near an AI deployment motion, if the thesis holds under diligence.
 
+## Posted JD (prep-ready)
+
+- **Title / seat:** Business Operations and Strategy · Operations · NY hybrid · FT · travel <10%.
+- **Comp posted:** $152K–$236K + equity. Screen discussed ~$200–220K cash → near top of band; confirm equity/level.
+- **One-liner to mirror:** Unlock account expansion + renewals + pre-sales value storytelling; institutionalize habits so the team stops leaving money on the table.
+- **Must demonstrate:** executive presence, decision-driving decks, light models / quantified impact, comfort in ambiguity across pre-sales / account strategy / internal ops, owned outcomes, AI curiosity (not prior AI title required).
+- **Ideal backdrop they wrote:** consulting or biz ops/strategy (top-tier or boutique) + startup plus.
+- **Company thesis in their words:** mission-specific production AI (not commoditized SaaS); FDE; outcomes not billable hours; one-size-fits-none.
+- **Story checklist before Bill / take-home:** (1) expansion or reuse that unlocked revenue or margin, (2) an exec deck that forced a decision, (3) a simple model you used to quantify impact, (4) a habit/system you installed after a firefight.
+- Full prep extract: `data/prep-notes/northslope.md` → “Official job listing (prep extract)”.
+
 ## Company and contacts, from your inbox
 
 - Company: Northslope Technologies (acquired by The OpenAI Deployment Company, announced July 8, 2026)
