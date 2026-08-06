@@ -12,7 +12,7 @@
   "focus": [
     {
       "companyId": "northslope",
-      "detail": "Attend Interview with Northslope — 2026-08-06"
+      "detail": "Attend Bill — 2026-08-06"
     },
     {
       "companyId": "regal",
@@ -443,7 +443,8 @@
       "aliases": [
         "Northslope",
         "Northslope Technologies",
-        "northslopetech.com"
+        "northslopetech.com",
+        "otter.ai"
       ],
       "drive": {
         "folderUrl": "https://drive.google.com/drive/folders/1BPr95AGzGMzIW6PQKzbWemTIZjrFu_CO",
