@@ -88,6 +88,8 @@ export type PrepGenInput = {
   force?: boolean;
   /** New company / first doc: research-first with public web search. */
   researchBootstrap?: boolean;
+  /** Prefer fast in-place edit (War Room Update). Never web_search. */
+  preferSurgical?: boolean;
 };
 
 export function isRichBrief(text: string | null | undefined): boolean {
@@ -248,6 +250,7 @@ export async function generatePrepDeck(input: PrepGenInput): Promise<{
     existingBrief,
     force,
     researchBootstrap,
+    preferSurgical,
   } = input;
 
   const hasFreshSignal = Boolean(
@@ -284,14 +287,24 @@ export async function generatePrepDeck(input: PrepGenInput): Promise<{
       ? `Prep for ${withWho}, ${when} ET`
       : `Next step prep (updated ${today})`;
 
+  // Fast Update path: if we have a living doc base, always surgical + haiku.
+  // Never web_search on Update — that is what 504s the War Room button.
+  const canSurgical =
+    Boolean(preferSurgical) &&
+    Boolean(existingBrief) &&
+    !looksLikeLegacyPrepDeck(existingBrief || "");
+
   const bootstrap =
-    Boolean(researchBootstrap) ||
-    !existingBrief ||
-    !isRichBrief(existingBrief) ||
-    looksLikeLegacyPrepDeck(existingBrief || "");
+    !preferSurgical &&
+    !canSurgical &&
+    (Boolean(researchBootstrap) ||
+      !existingBrief ||
+      !isRichBrief(existingBrief) ||
+      looksLikeLegacyPrepDeck(existingBrief || ""));
 
   const surgical =
-    !bootstrap && shouldSurgicalUpdate(existingBrief, force, hasFreshSignal);
+    canSurgical ||
+    (!bootstrap && shouldSurgicalUpdate(existingBrief, force, hasFreshSignal));
 
   const domainHint = (company.aliases || []).find((a) =>
     /\./.test(String(a))
@@ -361,31 +374,32 @@ ${(emailContext || "").slice(0, surgical ? 2500 : 4000) || "(none)"}
 ${(userUpdate || "").slice(0, surgical ? 2800 : 8000) || "(none)"}
 
 ## Current living doc (base; edit this)
-${(existingBrief || "").slice(0, surgical ? 10000 : 9000) || "(none)"}
+${(existingBrief || "").slice(0, surgical ? 7000 : 9000) || "(none — write a short living doc; no web research in this request)"}
 
 ${
     surgical
-      ? "Update the living document in place now. Keep research first. Keep history. Refresh only the continuous next-interview heading and that prep section plus any new feedback block under research."
+      ? "Update the living document in place now. Keep research first. Keep history. Refresh only the continuous next-interview heading and that prep section plus any new feedback block under research. Keep under ~900 words if history allows."
       : bootstrap
         ? `Research ${company.name} on the public web (use web_search). Write a research-first living document now: Company research first, then inbox contacts, then any Lapo notes, then next-step prep.`
-        : "Write the living document now. Research first. Preserve history. Update the next-step prep section."
+        : "Write the living document now from the signal provided (no web search). Research section first from known facts. Preserve history. Update the next-step prep section."
   }`;
 
   try {
-    const anthropic = getAnthropic(bootstrap ? 55_000 : 35_000);
-    const tools = bootstrap
-      ? ([
-          {
-            type: "web_search_20250305",
-            name: "web_search",
-            max_uses: 5,
-          },
-        ] as unknown as Anthropic.Messages.ToolUnion[])
-      : undefined;
+    // Surgical updates must finish well under Vercel's gateway timeout (~60s).
+    const anthropic = getAnthropic(surgical ? 22_000 : bootstrap ? 45_000 : 35_000);
+    const tools =
+      bootstrap && !surgical
+        ? ([
+            {
+              type: "web_search_20250305",
+              name: "web_search",
+              max_uses: 3,
+            },
+          ] as unknown as Anthropic.Messages.ToolUnion[])
+        : undefined;
     const res = await anthropic.messages.create({
       model: prepModel(surgical ? "update" : "full"),
-      // Surgical updates must finish inside the Vercel 60s window.
-      max_tokens: surgical ? 3200 : 6000,
+      max_tokens: surgical ? 2400 : 6000,
       temperature: 0.25,
       system,
       tools,

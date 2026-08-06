@@ -22,7 +22,7 @@ import type { IngestProposal } from "@/lib/recruiting/gmail/classify";
 import type { PipelineEvent } from "@/lib/recruiting/types";
 
 export const runtime = "nodejs";
-export const maxDuration = 90;
+export const maxDuration = 60;
 
 function cronAuthorized(req: NextRequest) {
   const secret = process.env.CRON_SECRET;
@@ -148,13 +148,16 @@ async function handlePrepPost(req: NextRequest) {
   // Skip Drive writes inside ensure; we push Drive immediately below so
   // GitHub persistence never races the user-facing timeout.
   const companyBefore = pipeline.companies.find((c) => c.id === companyId);
-  const needsBootstrap = !companyBefore?.drive?.prepUrl;
+  const hasPrepUrl = Boolean(companyBefore?.drive?.prepUrl);
+  // War Room Update must stay under the gateway timeout: surgical edit only.
+  const needsBootstrap = !hasPrepUrl && !userUpdate.trim();
   const ensured = await ensureAdvancePrepDecks(pipeline, [advance], {
     limit: 1,
     userUpdate: userUpdate || null,
     force,
     skipDrive: true,
     researchBootstrap: needsBootstrap,
+    fastUpdate: true,
   });
   pipeline = ensured.pipeline;
 

@@ -18,6 +18,7 @@ import {
   looksLikeLegacyPrepDeck,
   stubPrepDeck,
 } from "./prep-llm";
+import { readTextFileFromGitHub } from "../git-store";
 
 function briefsDir() {
   // Vercel serverless FS is read-only except /tmp.
@@ -34,6 +35,33 @@ function localBriefText(briefPath?: string | null): string | null {
   for (const dir of [briefsDir(), join(process.cwd(), "data", "briefs")]) {
     const abs = join(dir, `${slug}.md`);
     if (existsSync(abs)) return readFileSync(abs, "utf8");
+  }
+  return null;
+}
+
+/** Local brief first, then GitHub main (Vercel has no durable /tmp across invokes). */
+export async function loadBriefText(
+  companyId: string,
+  briefPath?: string | null
+): Promise<string | null> {
+  const candidates = [
+    briefPath,
+    `briefs/next-${companyId}.md`,
+    `briefs/${companyId}.md`,
+  ].filter(Boolean) as string[];
+
+  for (const p of candidates) {
+    const local = localBriefText(p);
+    if (local) return local;
+  }
+
+  try {
+    const remote = await readTextFileFromGitHub(
+      `data/briefs/next-${companyId}.md`
+    );
+    if (remote?.content?.trim()) return remote.content;
+  } catch {
+    /* ignore — fall through */
   }
   return null;
 }
@@ -305,6 +333,8 @@ export async function ensureAdvancePrepDecks(
     /** When true, write local brief only; caller pushes Drive. */
     skipDrive?: boolean;
     researchBootstrap?: boolean;
+    /** Fast in-place update for War Room "Update" — never web search. */
+    fastUpdate?: boolean;
   } = {}
 ): Promise<PrepEnsureResult> {
   const limit = opts.limit ?? 2;
@@ -333,12 +363,15 @@ export async function ensureAdvancePrepDecks(
 
   let folders: { id: string; name: string; webViewLink: string }[] = [];
   try {
-    // Skip Drive folder listing when every company we touch already has a folder.
-    const needsFolderMap = work.some((p) => {
-      if (!p.companyId) return false;
-      const c = data.companies.find((x) => x.id === p.companyId);
-      return Boolean(c && !folderIdFromUrl(c.drive?.folderUrl));
-    });
+    // Skip Drive folder listing on fast Update or when every company already has a folder.
+    const needsFolderMap =
+      !opts.fastUpdate &&
+      !opts.skipDrive &&
+      work.some((p) => {
+        if (!p.companyId) return false;
+        const c = data.companies.find((x) => x.id === p.companyId);
+        return Boolean(c && !folderIdFromUrl(c.drive?.folderUrl));
+      });
     if (needsFolderMap) {
       folders = await listChildFolders();
       const mapped = mapCompanyFolders(data, folders);
@@ -419,21 +452,20 @@ export async function ensureAdvancePrepDecks(
 
     const slug = `next-${company.id}`;
     const existingPath = `briefs/${slug}.md`;
-    const legacyNext = join(
-      process.cwd(),
-      "data",
-      "briefs",
-      `next-${company.id}-sahil.md`
+    const existingLocal = await loadBriefText(
+      company.id,
+      upcoming?.briefPath || existingPath
     );
-    const existingLocal =
-      localBriefText(existingPath) ||
-      (existsSync(legacyNext) ? readFileSync(legacyNext, "utf8") : null) ||
-      localBriefText(upcoming?.briefPath);
 
     // Fresh email, named interviewer not yet in brief, or explicit force/user update.
     const firstName = (withWho || "").split(/\s+/)[0] || "";
+    const hasPrepUrl = Boolean(company.drive?.prepUrl);
+    // Update clicks must never web-search — that is what 504s Vercel.
     const needsBootstrap =
-      Boolean(opts.researchBootstrap) || !company.drive?.prepUrl;
+      !opts.fastUpdate &&
+      Boolean(opts.researchBootstrap) &&
+      !hasPrepUrl &&
+      !existingLocal;
     const force =
       Boolean(opts.force) ||
       needsBootstrap ||
@@ -443,7 +475,7 @@ export async function ensureAdvancePrepDecks(
       looksLikeLegacyPrepDeck(existingLocal || "") ||
       (firstName
         ? !existingLocal?.toLowerCase().includes(firstName.toLowerCase())
-        : !localBriefText(existingPath));
+        : !existingLocal);
 
     const gen = await generatePrepDeck({
       company,
@@ -453,6 +485,7 @@ export async function ensureAdvancePrepDecks(
       existingBrief: existingLocal,
       force,
       researchBootstrap: needsBootstrap,
+      preferSurgical: Boolean(opts.fastUpdate) || hasPrepUrl || Boolean(existingLocal),
     });
     if (gen.source === "claude") claudeDecks += 1;
 

@@ -8,5 +8,13 @@
       "path": "/api/war-room/digest",
       "schedule": "15 12 * * *"
     }
-  ]
+  ],
+  "functions": {
+    "app/api/war-room/prep/route.ts": {
+      "maxDuration": 60
+    },
+    "app/api/war-room/gmail/scan/route.ts": {
+      "maxDuration": 60
+    }
+  }
 }
