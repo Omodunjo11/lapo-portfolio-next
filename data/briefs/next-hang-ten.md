@@ -24,7 +24,7 @@ Onaolapo (Lapo) Odunjo. Role: Forward Deployed Engineer - Solution Engineer. Liv
 
 ## Feedback added Wed, Aug 5, 2026, 1:25 AM ET
 
-Received formal interview invite for 90-minute live interactive session with Sanjay Rajagopalan. Format is virtual whiteboard session on Google Meet with shared screen. Bring computer with access to preferred coding agent tool.
+Formal interview invite received for 90-minute live interactive session with Sanjay Rajagopalan. Format is virtual whiteboard session on Google Meet with shared screen. Bring computer with access to preferred coding agent tool.
 
 Four-phase structure:
 
@@ -64,35 +64,23 @@ Why they do this interview: As FDE-SE, you will be embedded with customers from 
 
 ### Lines and stories to land
 
-- Kinage multi-account AI deployment: 0 to 12 institutions, cost-to-serve down about 62 percent. Playbooks, coached deployed engineers, team leverage. Production quality bar, not solo heroics. Maps to their customer-facing build team and end-to-end ownership through deploy and usage
-- Incomplete-info shipping: incomplete specs, cut scope, ship, measure adoption. Directly maps to their problem quality under incomplete information and diversity of environments
-- Bank / regulated trust: eval gates, precision, production quality bar. Field failure modes into Product. Maps to their definition of done and production adoption bar
-- Judgment under pressure: TD-style pushback. Calm alternative, protected delivery, spoke to risk and outcomes. Maps to their filter for rejecting AI when it is the wrong tool and making judgment calls in discovery or early stages
-- Do not overclaim formal manager headcount. Lead by ownership and coaching. Fits their small-team scale-up and culture filter
+Kinage multi-account AI deployment: 0 to 12 institutions, cost-to-serve down about 62 percent. Playbooks, coached deployed engineers, team leverage. Production quality bar, not solo heroics. Maps to their customer-facing build team and end-to-end ownership through deploy and usage.
 
-### Questions to ask
+Incomplete-info shipping: incomplete specs, cut scope, ship, measure adoption. Directly maps to their problem quality under incomplete information and diversity of environments.
 
-1. What does Sanjay's role look like, and what part of the company does he focus on day-to-day?
-2. When a customer engagement starts, how do you decide whether the problem is generic enough to reuse prior work versus highly custom?
-3. What does the internal enablement team's tooling look like today, and how does it connect to customer delivery in practice?
-4. What does the next quarter or two of team growth look like, and where are the biggest gaps you are trying to fill?
+Bank / regulated trust: eval gates, precision, production quality bar. Field failure modes into Product. Maps to their definition of done and production adoption bar.
 
-### Discovery phase prep (10 minutes)
+Judgment under pressure: TD-style pushback. Calm alternative, protected delivery, spoke to risk and outcomes. Shows how to navigate ambiguity and stakeholder tension in small-team scale-up.
 
-Your Kinage work is the cleanest map. You started with incomplete specs from institutions. You asked clarifying questions to understand what they really needed (not just what they asked for). You identified success criteria (cost-to-serve reduction, adoption by deployed engineers) and constraints (regulated environment, production quality bar, multi-account deployment complexity). You uncovered the real problem (team leverage and playbooks, not solo heroics). Use this framing in discovery phase.
+### Day-before checklist
 
-### Solution design phase prep (5-10 minutes)
-
-Think AI-native, not traditional plus AI bolt-on. Your Kinage playbooks and coaching model is an example of designing for AI deployment at scale, not one-off custom builds. Be ready to articulate why behind approach. Ground thinking in customer's actual needs. Do not design for design's sake.
-
-### Live prototyping phase prep (50 minutes)
-
-You will use a coding agent (Claude Code, Cursor, or whatever you prefer). Practice fluency with your tool of choice before the interview. Review and iterate on what it generates. Validate what AI generates. Make smart tradeoffs between speed and quality. Stay focused on proving core concept. Explain thinking and decisions as you go. This is a conversation, not a silent coding session.
-
-### Presentation phase prep (15-20 minutes)
-
-Walk through prototype and explain what it proves, why this approach solves customer's problem, what is still needed for production, any tradeoffs made and why. Communicate technical concepts clearly. Understand full scope of building for production. Articulate business value, not just technical merit. Think about handing off to engineering team. Your bank / regulated trust work (eval gates, precision, production quality bar, field failure modes into Product) is the cleanest example of understanding what is still needed for production.
-
-### Interview line to reuse, in their own language
-
-"I measure the work the same way you do. Understanding the problem and running an agentic process is necessary, but it is not done. Done is fully deployed and actively used, by people or by systems. I'm comfortable deciding when AI is the wrong tool."
+- Read problem statement 2-3 times. Identify real pain point, not surface request
+- Do domain research if industry is new (30-60 min)
+- Sketch rough architecture and thinking on whiteboard or paper
+- Familiarize yourself with Cursor or preferred coding agent
+- Test Google Meet, screen sharing, audio/video
+- Confirm stable internet connection
+- Plan quiet environment
+- Have everything ready 5 minutes early
+- Do NOT write code in advance
+- Do NOT prepare slides or memorize answers
