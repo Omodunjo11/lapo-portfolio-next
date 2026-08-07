@@ -2,25 +2,21 @@
 
 Onaolapo (Lapo) Odunjo. Role: Chief of Staff. Living notes doc, add to this after every conversation.
 
-## Company and contacts, from your inbox
+## Company research
 
-- Blue Orange Digital. blueorangedigital.com. No additional company description on file yet.
+Blue Orange Digital. blueorangedigital.com. Stage, funding, and core product focus not yet confirmed. No additional company description on file yet.
+
+## Company and contacts
+
+- Blue Orange Digital
 - Contact: Catarina Valente (recruiter, catarina.valente@blueorangedigital.na.teamtailor-mail.com)
-- Next interview: Fri, Aug 7, 2026, 12:00 PM ET
+- Interview: Fri, Aug 7, 2026, 12:00 PM ET
 - With: TBD (interviewer name not yet confirmed)
+- Stage: Final round (passed initial screening)
 
-## What is known so far
+## Notes and feedback
 
-- This is a Chief of Staff seat, which typically sits close to the founder or exec team
-- Passed initial screening; now in final round
-- No transcript or prep email available yet, so the brief is incomplete
-
-## What is still unknown
-
-- Company stage, funding, or core product focus
-- Whether this Chief of Staff role leans operational, strategic, or both
-- Who the interviewer is on Aug 7 and what they will be testing for
-- Whether there are other final round participants or if this is a single conversation
+None yet. Add after first conversation.
 
 ## Next step prep (updated Aug 7, 2026): Final round, Fri Aug 7, 12:00 PM ET
 
