@@ -62,8 +62,8 @@ Incomplete-info shipping: incomplete specs, cut scope, ship, measure adoption. D
 
 Bank / regulated trust: eval gates, precision, production quality bar. Field failure modes into Product. Maps to their definition of done and production adoption bar.
 
-Judgment under pressure: calm alternative, protected delivery, spoke to risk and outcomes. Maps to navigating ambiguity and small-team pace.
+Judgment under pressure: calm alternative, protected delivery, spoke to risk and outcomes. Maps to their culture of thrive-in-ambiguity and small-team decision-making.
 
 ### Night-before checklist
 
-Problem statement arrives Aug 9. Read 2-3 times. Identify real pain point, not surface ask. Sketch rough architecture and discovery questions on whiteboard. Do 30-60 min domain research if industry is new. Familiarize yourself with Cursor or your preferred coding agent. Test Google Meet, screen share, audio/video. Confirm stable internet. Have everything ready 5 minutes early. Quiet environment. No pre-built code. No slides. No memorized answers. This is a conversation.
+Read problem statement 2-3 times. Understand customer's real pain point, not just surface request. Do 30-60 min domain research if industry is new. Sketch rough architecture and thinking on whiteboard (do not code in advance). Confirm stable internet, test Google Meet audio/video, test screen sharing. Install and test preferred coding agent (Cursor, Claude Code, or equivalent). Plan quiet environment. Be ready 5 minutes early.
