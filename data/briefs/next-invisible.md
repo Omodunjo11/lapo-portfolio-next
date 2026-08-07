@@ -16,11 +16,11 @@ Onaolapo (Lapo) Odunjo. Role: Senior Product Manager. Living notes doc, add to t
 
 ### What they care about
 
-- (expand with whatever was captured)
+(expand with whatever was captured)
 
 ### What landed
 
-- (fill)
+(fill)
 
 ### Next step
 
@@ -112,7 +112,7 @@ Tailor once you know more about Ranjani's role.
 
 ## Interview line to reuse, in their own language
 
-"(Write after expanding Alex notes. Mirror Invisible's language once the themes are clear.)"
+(Write after expanding Alex notes. Mirror Invisible's language once the themes are clear.)
 
 ## How to read this and what to do with it
 
