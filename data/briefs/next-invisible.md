@@ -45,7 +45,15 @@ Continue into next round once scheduled. Loop shape still partly unknown.
 - About July 31: Kate (+ Derek). Asked how many rounds remain and what type.
 - August 4: accepted Aug 7 / 10:30am ET path with Kate
 
-## Next step prep (updated Aug 5, 2026): Final round with Ranjani, Aug 7, 10:30 AM ET
+## Feedback added Aug 7, 2026 (Lapo email post-interview)
+
+Lapo sent a note to Derek Pages and nancy.vo@invisibletech.ai after the Ranjani conversation:
+
+"Just wanted to let you know that I finished the interview with Ranjani. I think it went well, and I really enjoyed the conversation. I'm definitely still excited about the opportunity and hoping for positive news."
+
+Email was cut off mid-sentence. No additional substance captured yet. Tone: positive, engaged, waiting for next signal.
+
+## Prep for Ranjani, Fri, Aug 7, 2026, 10:30 AM ET
 
 ### What this conversation is about
 
