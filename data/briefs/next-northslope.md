@@ -26,7 +26,7 @@ Onaolapo (Lapo) Odunjo. Role: Business Operations and Strategy. Living notes doc
 
 - Company: Northslope Technologies (acquired by The OpenAI Deployment Company, July 8, 2026).
 - Role on file: Business Operations and Strategy leader.
-- Stage: first round (interview with Bill).
+- Stage: second round (interview with Bill).
 - Priority: P0.
 - Recruiter: Samantha Obre (Recruitment, Marketing & Communications).
 - Next action: Interview with Bill, Thu, Aug 6, 2026, 4:30 PM ET.
@@ -46,6 +46,10 @@ Recruiter call with Samantha Obre completed. Extended beyond the scheduled 30 mi
 - Compensation: Approximately $200,000 to $220,000 cash, with equity and other variables affecting total package.
 - Career context: Completed MBA in May. Took June to reset, returned to Kinage in July as contractor, allowing continued contribution while deliberately searching for strongest long-term opportunity.
 - Why Northslope attracted him: Business Operations & Strategy role combines product and technical problem-solving, client engagement, business operations, financial modeling and pricing, go-to-market strategy, organizational scaling, working across functions without rigid boundaries, and building systems where one-off heroics become repeatable habits.
+
+## Feedback added Thu, Aug 6, 2026, 6:45 PM ET
+
+Email from Samantha Obre clarifying take-home assessment scope. Noted that Lapo is welcome to submit more than 3 slides if desired. Confirms flexibility on deliverable format and depth.
 
 ## Prep for Bill, Thu, Aug 6, 2026, 4:30 PM ET
 
@@ -71,8 +75,8 @@ Stories to have ready:
 
 1. Expansion / reuse: Kinage multi-account deployment, playbooks, cost-to-serve down ~62%, team leverage not solo heroics.
 2. Exec deck that forced a decision: Bring a specific example where a visual or model changed a buyer's or internal prioritization.
-3. Simple model / quantified impact: Cost-to-serve, adoption curves, margin, pricing experiments , show you think in numbers.
-4. Habit / system after a firefight: Playbooks, FDE coaching, scoreboards, weekly cadence , how you turned one-off heroics into repeatable process.
+3. Simple model / quantified impact: Cost-to-serve, adoption curves, margin, pricing experiments, show you think in numbers.
+4. Habit / system after a firefight: Playbooks, FDE coaching, scoreboards, weekly cadence, how you turned one-off heroics into repeatable process.
 
 Themes to mirror back:
 
