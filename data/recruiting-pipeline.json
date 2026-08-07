@@ -97,13 +97,13 @@
       "id": "brain-co",
       "name": "Brain Co",
       "role": "AI Deployment Lead",
-      "stage": "first",
-      "stageLabel": "1st done (recruiter); waiting HM = 2nd",
+      "stage": "passed",
+      "stageLabel": "Passed",
       "ball": "them",
       "priority": "P1",
-      "nextAction": "Watch for hiring manager outreach; nudge Michal/Alina if silent",
+      "nextAction": "Passed - no further chase",
       "due": "2026-08-07",
-      "nudgeDate": "2026-08-07",
+      "nudgeDate": null,
       "lean": 4,
       "contacts": [
         {
@@ -481,7 +481,7 @@
       "title": "Brain Co — hiring manager screen",
       "with": "TBD",
       "type": "hm",
-      "status": "unscheduled",
+      "status": "canceled",
       "briefPath": "briefs/next-brain-co.md",
       "blocker": "Waiting on Michal/Alina forward"
     },
@@ -577,7 +577,7 @@
       "title": "Interview with  Brain Co.",
       "with": "",
       "type": "other",
-      "status": "scheduled",
+      "status": "canceled",
       "briefPath": "briefs/2026-08-03-brain-co.md",
       "blocker": null
     },
@@ -754,12 +754,6 @@
       "due": "2026-08-05",
       "detail": "Chase Jack Leeming to schedule Steve Charette",
       "draft": "schedule-confirm"
-    },
-    {
-      "companyId": "brain-co",
-      "due": "2026-08-07",
-      "detail": "Nudge Michal/Alina if no HM forward yet",
-      "draft": "soft-nudge"
     },
     {
       "companyId": "enterpret",
