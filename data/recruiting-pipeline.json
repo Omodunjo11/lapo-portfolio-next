@@ -435,7 +435,7 @@
       "id": "northslope",
       "name": "Northslope Technologies",
       "role": "Business Operations and Strategy",
-      "stage": "first",
+      "stage": "second",
       "ball": "you",
       "priority": "P0",
       "nextAction": "Attend: Interview with Northslope",
@@ -451,7 +451,7 @@
         "note": "Mapped to Drive folder “Northslope”",
         "prepUrl": "https://docs.google.com/document/d/1cW_KkEtumGEdc4ehlfYKLwIB4Yu3S4RU9Up6rQu-V84/edit?usp=drivesdk"
       },
-      "stageLabel": "1st",
+      "stageLabel": "2nd",
       "contacts": [
         {
           "name": "Bill",
