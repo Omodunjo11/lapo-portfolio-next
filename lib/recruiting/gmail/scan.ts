@@ -146,6 +146,87 @@ async function proposalFromMessage(
   };
 }
 
+function quoteGmailTerm(a: string) {
+  return `"${String(a).replace(/"/g, "")}"`;
+}
+
+/** Prefer company name + domains first so later board rows are never dropped. */
+function collectSearchAliases(
+  pipeline: Pipeline,
+  mode: "all" | "strong"
+): string[] {
+  const out: string[] = [];
+  const seen = new Set<string>();
+  const add = (raw: string) => {
+    const t = String(raw || "").trim();
+    if (!t) return;
+    const key = t.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    out.push(t);
+  };
+
+  // Pass 1 — every company gets a guaranteed foothold.
+  for (const c of pipeline.companies) {
+    add(c.name);
+    for (const a of c.aliases || []) {
+      const s = String(a || "").trim();
+      if (!s) continue;
+      if (s.includes(".") || s.includes("@")) add(s);
+    }
+  }
+
+  // Pass 2 — multi-word / remaining aliases (optional for "strong").
+  for (const c of pipeline.companies) {
+    for (const a of c.aliases || [c.name]) {
+      const s = String(a || "").trim();
+      if (!s) continue;
+      if (mode === "strong") {
+        if (/\s/.test(s) || s.includes(".") || s.includes("@")) add(s);
+        continue;
+      }
+      add(s);
+    }
+  }
+  return out;
+}
+
+/** Gmail queries explode if OR-clauses get huge — chunk and merge ids. */
+async function listMessageIdsChunked(
+  gmail: ReturnType<typeof getGmailClient>,
+  buildQuery: (orClause: string) => string,
+  terms: string[],
+  opts: { chunkSize: number; maxPerChunk: number; includeSpamTrash?: boolean }
+) {
+  const quoted = terms.map(quoteGmailTerm);
+  const chunks: string[] = [];
+  for (let i = 0; i < quoted.length; i += opts.chunkSize) {
+    chunks.push(quoted.slice(i, i + opts.chunkSize).join(" OR "));
+  }
+  if (!chunks.length) return [] as { id?: string | null }[];
+
+  const seen = new Set<string>();
+  const out: { id?: string | null }[] = [];
+  const results = await Promise.all(
+    chunks.map((orClause) =>
+      listMessageIds(
+        gmail,
+        buildQuery(orClause),
+        opts.maxPerChunk,
+        opts.includeSpamTrash
+      )
+    )
+  );
+  for (const msgs of results) {
+    for (const m of msgs) {
+      if (!m.id || seen.has(m.id)) continue;
+      seen.add(m.id);
+      out.push(m);
+    }
+  }
+  return out;
+}
+
 export async function scanInterviewSignals(
   pipeline: Pipeline,
   opts: { days?: number } = {}
@@ -156,51 +237,43 @@ export async function scanInterviewSignals(
   const calendar = getCalendarClient();
 
   const after = Math.floor((Date.now() - days * 86400000) / 1000);
-  const aliasQuery = pipeline.companies
-    .flatMap((c) => c.aliases || [c.name])
-    .filter(Boolean)
-    .slice(0, 40)
-    .map((a) => `"${String(a).replace(/"/g, "")}"`)
-    .join(" OR ");
+  const allAliases = collectSearchAliases(pipeline, "all");
+  const strongAliases = collectSearchAliases(pipeline, "strong");
 
   const interviewTerms =
-    '(interview OR interviewer OR "phone screen" OR "hiring manager" OR onsite OR calendly OR "final round" OR "next round" OR "first round" OR "google meet" OR invitation OR NDA OR "non-disclosure" OR "next step" OR "next stage" OR "move forward" OR "moving forward" OR "take-home" OR "work sample" OR "meet the team" OR "reference check")';
+    '(interview OR interviewer OR "phone screen" OR "hiring manager" OR onsite OR calendly OR "final round" OR "next round" OR "first round" OR "google meet" OR invitation OR NDA OR "non-disclosure" OR "next step" OR "next stage" OR "move forward" OR "moving forward" OR "take-home" OR "take home" OR assessment OR "work sample" OR "meet the team" OR "reference check")';
   const sentChaseTerms =
     '("first round" OR schedule OR scheduled OR "find some time" OR "looking forward" OR calendly OR "attached" OR applied OR resume OR NDA)';
   const processTerms = gmailProcessOrClause();
 
-  // Keyword / process pass (inbox + sent chase).
-  const inboxQ = `after:${after} -in:spam -in:trash ((${aliasQuery}) (${interviewTerms} OR ${processTerms}) OR (in:sent (${aliasQuery}) ${sentChaseTerms}))`;
-  // Safety net: recent mail for company names / domains (not first-name aliases).
-  const strongAliasQuery = pipeline.companies
-    .flatMap((c) => {
-      const out = [c.name];
-      for (const a of c.aliases || []) {
-        const s = String(a || "").trim();
-        if (!s) continue;
-        if (s.includes(".") || s.includes("@") || /\s/.test(s)) out.push(s);
-      }
-      return out;
-    })
-    .filter(Boolean)
-    .slice(0, 40)
-    .map((a) => `"${String(a).replace(/"/g, "")}"`)
-    .join(" OR ");
-  const companyQ = `after:${after} -in:spam -in:trash (${strongAliasQuery})`;
-  // Explicit Spam pass — Hang Ten and others have landed here.
-  const spamQ = `in:spam after:${after} (${aliasQuery})`;
-  // Discovery pass: interview / invite mail that does NOT require a tracked
-  // company alias (e.g. "Interview with Northslope" before the firm is on
-  // the board). Kept narrow so digests do not flood the queue.
-  const openInterviewQ = `after:${after} -in:spam -in:trash (subject:("Interview with" OR "video interview" OR "interview is confirmed" OR "interview confirmed" OR Invitation OR calendly OR "phone screen") OR "Interview with")`;
-  const openSpamQ = `in:spam after:${after} (subject:("Interview with" OR "video interview" OR Invitation OR calendly) OR "Interview with")`;
+  // Discovery pass: interview / invite / take-home mail that does NOT require
+  // a tracked company alias (covers boards that lag inbox).
+  const openInterviewQ = `after:${after} -in:spam -in:trash (subject:("Interview with" OR "video interview" OR "interview is confirmed" OR "interview confirmed" OR Invitation OR calendly OR "phone screen" OR "Take Home" OR "take-home" OR "Take Home Assessment") OR "Interview with" OR "Take Home Assessment")`;
+  const openSpamQ = `in:spam after:${after} (subject:("Interview with" OR "video interview" OR Invitation OR calendly OR "Take Home" OR "take-home") OR "Interview with")`;
 
   const [inboxMsgs, companyMsgs, openMsgs, spamMsgs, openSpamMsgs] =
     await Promise.all([
-      listMessageIds(gmail, inboxQ, 40, false),
-      listMessageIds(gmail, companyQ, 35, false),
-      listMessageIds(gmail, openInterviewQ, 25, false),
-      listMessageIds(gmail, spamQ, 25, true),
+      listMessageIdsChunked(
+        gmail,
+        (aliasOr) =>
+          `after:${after} -in:spam -in:trash ((${aliasOr}) (${interviewTerms} OR ${processTerms}) OR (in:sent (${aliasOr}) ${sentChaseTerms}))`,
+        allAliases,
+        { chunkSize: 25, maxPerChunk: 40 }
+      ),
+      listMessageIdsChunked(
+        gmail,
+        (aliasOr) =>
+          `after:${after} -in:spam -in:trash (${aliasOr})`,
+        strongAliases,
+        { chunkSize: 25, maxPerChunk: 40 }
+      ),
+      listMessageIds(gmail, openInterviewQ, 30, false),
+      listMessageIdsChunked(
+        gmail,
+        (aliasOr) => `in:spam after:${after} (${aliasOr})`,
+        allAliases,
+        { chunkSize: 25, maxPerChunk: 20, includeSpamTrash: true }
+      ),
       listMessageIds(gmail, openSpamQ, 15, true),
     ]);
 

@@ -41,6 +41,7 @@ export const PROCESS_GMAIL_TERMS = [
   "case interview",
   "take-home",
   "take home",
+  "assessment",
   "work sample",
   "reference check",
   "offer discussion",

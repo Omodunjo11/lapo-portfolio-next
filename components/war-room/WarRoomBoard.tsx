@@ -793,6 +793,13 @@ export default function WarRoomBoard({
 
       setScanNote(
         `Scanned · ${data.gmailMatched ?? 0} mail · ${data.calendarMatched ?? 0} cal · ${data.proposals?.length ?? 0} signals` +
+          (Array.isArray(data.flags)
+            ? data.flags.length
+              ? ` · ${data.flags.length} new flag(s) to Accept`
+              : data.proposals?.length
+                ? " · no new stage moves (same threads as last scan)"
+                : ""
+            : "") +
           (data.companiesAdded
             ? ` · +${data.companiesAdded} company${discoveredNames ? ` (${discoveredNames})` : ""}`
             : "") +
@@ -808,7 +815,22 @@ export default function WarRoomBoard({
           (data.appliedCalendar
             ? ` · ${data.appliedCalendar} calendar fact(s) saved`
             : "") +
-          (claudeN ? ` · Claude prep ×${claudeN}` : "")
+          (claudeN ? ` · Claude prep ×${claudeN}` : "") +
+          (() => {
+            const advances = (data.proposals || [])
+              .filter(
+                (p: { signal?: string; companyName?: string; subject?: string }) =>
+                  p.signal === "advance" && p.companyName
+              )
+              .slice(0, 3)
+              .map(
+                (p: { companyName?: string; subject?: string; reason?: string }) =>
+                  `${p.companyName}${/take.?home|assessment/i.test(`${p.subject || ""} ${p.reason || ""}`) ? " take-home" : ""}`
+              );
+            return advances.length
+              ? ` · seen: ${[...new Set(advances)].join(", ")}`
+              : "";
+          })()
       );
 
       window.dispatchEvent(
