@@ -102,22 +102,10 @@ Tailor once you know more about Ranjani's role.
 - What is the biggest product trade-off you have made recently, and how did you decide?
 - How do you think about quality and speed when you are scaling a new capability?
 
-### Action items before the call
-
-1. Watch inbox for Kate's confirmation email and calendar invite. Confirm duration and any prep instructions.
-2. Expand the July 29 Alex notes in this doc before Aug 7 so you have substance from the hiring manager conversation.
-3. Research Ranjani on LinkedIn once last name is available from the invite.
-4. Refresh this brief same day if the invite reveals round format or focus area.
-5. Do not accept any War Room reject flag for Invisible based only on the Aug 4 "Unfortunately" scheduling email.
-
-## Interview line to reuse, in their own language
-
-(Write after expanding Alex notes. Mirror Invisible's language once the themes are clear.)
-
 ## How to read this and what to do with it
 
 Keep Invisible live unless you get hard close language: not moving forward, other candidates selected, role filled. The Aug 4 scheduling friction was logistical, not a rejection.
 
-Expand Alex notes before Aug 7 so the Ranjani conversation has full context. Once the invite confirms duration and format, refresh the next-step section same day if new signal appears.
+Expand Alex notes before next round so the next conversation has full context. Once new signal arrives, refresh this doc same day.
 
 This is a living document. Add new notes here after every Invisible conversation so the next round always has the full picture in one place.
