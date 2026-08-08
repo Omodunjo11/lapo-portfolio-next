@@ -53,59 +53,10 @@ Lapo sent a note to Derek Pages and nancy.vo@invisibletech.ai after the Ranjani 
 
 Email was cut off mid-sentence. No additional substance captured yet. Tone: positive, engaged, waiting for next signal.
 
-## Prep for Ranjani, Fri, Aug 7, 2026, 10:30 AM ET
+## Current next-step prep
 
-### What this conversation is about
+Waiting for next signal from Invisible. Ranjani conversation completed Aug 7 at 10:30 AM ET. Lapo reported positive read and continued interest. No timeline given for decision or next round.
 
-Final round interview. Stage label is known, but format, duration, and Ranjani's role at Invisible are not yet confirmed. Watch for Kate's calendar invite to clarify.
+Keep this doc live. Hard close language would be: not moving forward, other candidates selected, role filled. Absence of signal is not rejection.
 
-Likely a senior stakeholder conversation testing judgment, product sense, and culture fit for a Senior PM role at a company that operates AI-enabled process automation at scale.
-
-### What they are likely testing (from ALL feedback so far)
-
-Limited signal from the Alex conversation is captured in this doc. Expand those notes before Aug 7 to understand what themes landed and what Alex cared about.
-
-General final-round Senior PM tests:
-- Judgment under ambiguity and how you make product decisions when specs are incomplete
-- How you work cross-functionally, especially with engineering and operations teams in a deployed or process-heavy environment
-- Ability to ship iteratively and measure what matters
-- How you handle production quality and risk in customer-facing or regulated contexts
-- Culture and team fit at a senior level
-
-If Invisible's model involves human-in-the-loop AI or process orchestration, expect questions about how you balance automation quality with operational leverage.
-
-### Lines and stories to land
-
-Use only if relevant to what Ranjani asks. Do not force.
-
-Deployed AI at scale, team leverage:
-Kinage: took multi-account AI deployment from 0 to 12 institutions. Built playbooks so deployed engineers could own rollout. Cost-to-serve dropped about 62 percent. Team leverage, not solo heroics.
-
-Production quality and risk:
-Banking context: eval gates, precision bar, production quality discipline. Field failure modes back into Product so the next release is tighter.
-
-Judgment under pressure:
-TD-style pushback example. Stayed calm, proposed alternative, protected delivery timeline, spoke to risk and outcomes.
-
-Shipping with incomplete info:
-Cut scope when specs were incomplete, shipped, measured adoption, iterated. Prefer learning from real usage over waiting for perfect requirements.
-
-Limitations:
-Do not overclaim formal manager headcount. Lead by ownership and coaching, not org chart authority. Gov or MENA depth may be thin; say so if asked.
-
-### Questions to ask
-
-Tailor once you know more about Ranjani's role.
-
-- What does great look like for this role in the first six months?
-- How does Product work with operations or delivery teams here? (if human-in-the-loop or process model applies)
-- What is the biggest product trade-off you have made recently, and how did you decide?
-- How do you think about quality and speed when you are scaling a new capability?
-
-## How to read this and what to do with it
-
-Keep Invisible live unless you get hard close language: not moving forward, other candidates selected, role filled. The Aug 4 scheduling friction was logistical, not a rejection.
-
-Expand Alex notes before next round so the next conversation has full context. Once new signal arrives, refresh this doc same day.
-
-This is a living document. Add new notes here after every Invisible conversation so the next round always has the full picture in one place.
+If Invisible reaches out with next steps or decision, refresh this section same day with new notes and any prep needed.
