@@ -40,18 +40,27 @@ Continue into next round once scheduled. Loop shape still partly unknown.
 - This is a live process. Soft apology language is not a rejection
 - Ball is briefly on them for the calendar invite, then on Lapo to attend
 
+## Notes from final round, August 7 (Ranjani)
+
+### What happened
+
+- Lapo completed the conversation with Ranjani at 10:30 AM ET as scheduled
+- Lapo's read: positive, engaged conversation
+- Lapo reported continued strong interest in the opportunity
+
+### What landed
+
+(details to be filled if Lapo adds substance)
+
+### Next step
+
+Waiting for signal from Invisible on decision or next steps. No timeline provided yet.
+
 ## Follow-ups sent
 
 - About July 31: Kate (+ Derek). Asked how many rounds remain and what type.
 - August 4: accepted Aug 7 / 10:30am ET path with Kate
-
-## Feedback added Aug 7, 2026 (Lapo email post-interview)
-
-Lapo sent a note to Derek Pages and nancy.vo@invisibletech.ai after the Ranjani conversation:
-
-"Just wanted to let you know that I finished the interview with Ranjani. I think it went well, and I really enjoyed the conversation. I'm definitely still excited about the opportunity and hoping for positive news."
-
-Email was cut off mid-sentence. No additional substance captured yet. Tone: positive, engaged, waiting for next signal.
+- August 7 (post-interview): Lapo sent brief note to Derek Pages and nancy.vo@invisibletech.ai confirming positive read and continued interest
 
 ## Current next-step prep
 
