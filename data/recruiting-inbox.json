@@ -1,5 +1,5 @@
 {
-  "scannedAt": "2026-08-09T12:27:45.292Z",
+  "scannedAt": "2026-08-09T18:24:20.506Z",
   "days": 7,
   "gmailMatched": 133,
   "calendarMatched": 9,
@@ -629,6 +629,21 @@
       "snippet": "See your week ahead and pick the meetings to record  \r\n\r\n( https://tldv.io/ )\r\n\r\n***********************\r\nGet ready for your week\r\n***********************\r\n\r\nHi Lapo, take a quick look at what's ahead\r\n\r\nOnaolapo Michael Odunjo and Jack Leeming ( https://tldv.io/app/record )\r\n\r\nM",
       "companyId": "brain-co",
       "companyName": "Brain Co",
+      "fromSpam": false,
+      "signal": "schedule",
+      "confidence": "medium",
+      "reason": "interview scheduling"
+    },
+    {
+      "source": "gmail",
+      "id": "19fe74b75642eaa5",
+      "threadId": "19fe74b75642eaa5",
+      "date": "Sun, 09 Aug 2026 16:11:47 +0000",
+      "from": "Upgrade <email@e.upgrade.com> → odunjoonaolapo@gmail.com",
+      "subject": "Onaolapo, here's your Sunday loan invitation",
+      "snippet": "See if a fixed rate personal loan can help you save money\n\n\n\n\n\n\n\n\n\n\n\n      Upgrade     96\n \n( https://link.upgrade.com/f/a/bMNwpUdqSKtwI1DaNch9IA~~/AAQRxRA~/e7bEZ2pedF_LqzmoEaAKN1l7TgfVy7WNjT3KmS-zWlIQiOIwwqeg17PvbgPCfLa0C9uuq6H1LhkvBPEDJGwBZ080YgNobg-zidEQRkXeqrgDhf83zuOLqnOuD8O",
+      "companyId": null,
+      "companyName": "Terms of Use",
       "fromSpam": false,
       "signal": "schedule",
       "confidence": "medium",
