@@ -8,7 +8,7 @@ Onaolapo (Lapo) Odunjo. Role: Senior Product Manager. Living notes doc, add to t
 - Applied June 2026
 - Hiring manager interview held July 29 with Alex Arutyunyants
 - Recruiting: Kate Alvarico, Hafsa Tahir, Derek Pages
-- Final round scheduled: Friday, August 7, 2026, 10:30 AM ET
+- Final round completed: Friday, August 7, 2026, 10:30 AM ET
 - Final round interviewer: Ranjani (last name unknown)
 - Do not treat scheduling friction as a reject. The Aug 4 Kate note that started with "Unfortunately" was about time windows, not candidacy
 
