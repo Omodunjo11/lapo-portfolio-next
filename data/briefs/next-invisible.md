@@ -62,10 +62,12 @@ Waiting for signal from Invisible on decision or next steps. No timeline provide
 - August 4: accepted Aug 7 / 10:30am ET path with Kate
 - August 7 (post-interview): Lapo sent brief note to Derek Pages and nancy.vo@invisibletech.ai confirming positive read and continued interest
 
-## Current next-step prep
+## Prep for Ranjani, Fri, Aug 7, 2026, 10:30 AM ET
 
-Waiting for next signal from Invisible. Ranjani conversation completed Aug 7 at 10:30 AM ET. Lapo reported positive read and continued interest. No timeline given for decision or next round.
+Interview completed. Lapo reported positive, engaged conversation and continued strong interest.
 
-Keep this doc live. Hard close language would be: not moving forward, other candidates selected, role filled. Absence of signal is not rejection.
+Waiting for next signal from Invisible on decision or next steps. No timeline given.
 
-If Invisible reaches out with next steps or decision, refresh this section same day with new notes and any prep needed.
+Hard close language would be: not moving forward, other candidates selected, role filled. Absence of signal is not rejection.
+
+If Invisible reaches out with next steps or decision, refresh this doc same day with new notes and any prep needed.
