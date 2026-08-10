@@ -2,6 +2,10 @@
 
 Onaolapo (Lapo) Odunjo. Role: Senior Product Manager. Living notes doc, add to this after every conversation.
 
+## Company research
+
+Invisible Technologies. Applied June 2026. Domain and specific product focus not yet confirmed in writing. Hiring team includes Kate Alvarico, Hafsa Tahir, Derek Pages (recruiting). Hiring manager: Alex Arutyunyants.
+
 ## Company and contacts, from your inbox
 
 - Invisible Technologies, Senior Product Manager
