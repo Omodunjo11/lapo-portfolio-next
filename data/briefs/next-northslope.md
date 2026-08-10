@@ -51,6 +51,10 @@ Recruiter call with Samantha Obre completed. Extended beyond the scheduled 30 mi
 
 Email from Samantha Obre clarifying take-home assessment scope. Noted that Lapo is welcome to submit more than 3 slides if desired. Confirms flexibility on deliverable format and depth.
 
+## Feedback added Aug 10, 2026
+
+Lapo submitted take-home assessment (PDF and PowerPoint). High-level approach: focused less on predicting every customer churn and more on where the bank can actually step in and create value. Centered on connecting refinance signals already sitting in the data to actionable account expansion and renewal opportunities. Demonstrates outcome-first thinking aligned with company thesis.
+
 ## Prep for Bill, Thu, Aug 6, 2026, 4:30 PM ET
 
 Interview format: Unknown. Likely 45-60 min. Confirm with Bill or calendar invite.
