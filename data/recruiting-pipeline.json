@@ -28,7 +28,7 @@
     },
     {
       "companyId": "invisible",
-      "detail": "Attend Interview with Invisible Technologies — 2026-08-07"
+      "detail": "Attend Interview with Invisible — 2026-08-11"
     }
   ],
   "storyGaps": [
@@ -261,8 +261,8 @@
       "stageLabel": "Final",
       "ball": "you",
       "priority": "P0",
-      "nextAction": "Attend: Interview with Invisible Technologies",
-      "due": "2026-08-07",
+      "nextAction": "Attend: Interview with Invisible",
+      "due": "2026-08-11",
       "nudgeDate": "2026-08-07",
       "lean": 3,
       "contacts": [
@@ -661,9 +661,9 @@
       "title": "Interview with Invisible Technologies",
       "with": "Ranjani",
       "type": "other",
-      "status": "scheduled",
+      "status": "canceled",
       "briefPath": "briefs/next-invisible.md",
-      "blocker": null
+      "blocker": "Superseded by schedule update → 2026-08-11T12:30:00-04:00"
     },
     {
       "id": "prep-next-regal-2026-08-05",
@@ -736,6 +736,18 @@
       "status": "unscheduled",
       "briefPath": "briefs/next-blue-orange-digital.md",
       "blocker": "Re: Chief of Staff role at Blue Orange"
+    },
+    {
+      "id": "evt-invisible-2026-08-11",
+      "companyId": "invisible",
+      "start": "2026-08-11T12:30:00-04:00",
+      "end": "2026-08-11T13:00:00-04:00",
+      "title": "Interview with Invisible",
+      "with": "",
+      "type": "other",
+      "status": "scheduled",
+      "briefPath": "briefs/next-invisible.md",
+      "blocker": null
     }
   ],
   "funnelStages": [
