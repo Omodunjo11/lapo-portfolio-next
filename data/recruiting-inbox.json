@@ -1,7 +1,7 @@
 {
-  "scannedAt": "2026-08-11T00:55:48.547Z",
+  "scannedAt": "2026-08-11T06:46:40.316Z",
   "days": 7,
-  "gmailMatched": 129,
+  "gmailMatched": 128,
   "calendarMatched": 8,
   "proposals": [
     {
@@ -603,21 +603,6 @@
       "signal": "advance",
       "confidence": "medium",
       "reason": "next-round advance + schedule ask"
-    },
-    {
-      "source": "gmail",
-      "id": "19fcb1315bc543de",
-      "threadId": "19fcb1315bc543de",
-      "date": "Tue, 04 Aug 2026 04:40:52 +0000",
-      "from": "Jack Ahn <jack@hangten.ai> → odunjoonaolapo@gmail.com",
-      "subject": "Updated invitation: Onaolapo Odunjo and Jack Ahn @ Tue Aug 4, 2026 12:30pm - 1pm (GMT-4) (odunjoonaolapo@gmail.com)",
-      "snippet": "This event has been updated\r\nChanged: time, conferencing, description\r\n\r\n\r\nOnaolapo Odunjo and Jack Ahn\r\nTuesday Aug 4, 2026 ⋅ 12:30pm – 1pm\r\nEastern Time - New York\r\n\r\nLocation\r\nGoogle Meet (instructions in description)\t\r\nhttps://www.google.com/maps/search/Google+Meet+(instructi",
-      "companyId": "hang-ten",
-      "companyName": "Hang Ten",
-      "fromSpam": false,
-      "signal": "schedule",
-      "confidence": "medium",
-      "reason": "interview scheduling"
     },
     {
       "source": "gmail",
