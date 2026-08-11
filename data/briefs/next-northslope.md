@@ -20,7 +20,7 @@ Onaolapo (Lapo) Odunjo. Role: Business Operations and Strategy. Living notes doc
 - Must demonstrate: executive presence, decision-driving decks, light models / quantified impact, comfort in ambiguity across pre-sales / account strategy / internal ops, owned outcomes, AI curiosity (not prior AI title required).
 - Ideal backdrop they wrote: consulting or biz ops/strategy (top-tier or boutique) + startup plus.
 - Company thesis in their words: mission-specific production AI; FDE; outcomes not billable hours; one-size-fits-none.
-- Story checklist before Bill / take-home: (1) expansion or reuse that unlocked revenue or margin, (2) an exec deck that forced a decision, (3) a simple model you used to quantify impact, (4) a habit/system you installed after a firefight.
+- Story checklist before Bill: (1) expansion or reuse that unlocked revenue or margin, (2) an exec deck that forced a decision, (3) a simple model you used to quantify impact, (4) a habit/system you installed after a firefight.
 
 ## Company and contacts
 
@@ -82,13 +82,19 @@ The throughline is that I like taking an ambiguous problem, determining the real
 Stories to have ready:
 
 1. Expansion / reuse: Kinage multi-account deployment, playbooks, cost-to-serve down ~62%, team leverage not solo heroics.
-2. Exec deck that forced a decision: Bring a specific example where a visual or model changed a buyer's or internal prioritization.
-3. Simple model / quantified impact: Cost-to-serve, adoption curves, margin, pricing experiments, show you think in numbers.
-4. Habit / system after a firefight: Playbooks, FDE coaching, scoreboards, weekly cadence, how you turned one-off heroics into repeatable process.
+2. Exec deck that forced a decision: Bring a specific example where a visual or model changed a buyer's or internal priority.
+3. Simple model / quantified impact: Cost-to-serve reduction, adoption metrics, or a pricing experiment with clear before/after.
+4. Habit / system you installed: Playbooks, FDE coaching, scoreboards, or a weekly cadence that turned a firefight into repeatable process.
 
-Themes to mirror back:
+Key themes to weave in:
 
-- Only Valuable Problems.
-- Outcomes, Not Activity.
-- Forward Deployed Engineering.
-- One size fits none.
+- Only Valuable Problems: Your take-home showed this. You didn't just predict churn; you identified where the bank could actually step in and expand.
+- Outcomes, Not Activity: Precision up, false positives down. Cost-to-serve down. Adoption measured. Not hours billed or tickets closed.
+- Forward Deployed Engineering: You sit with operators, understand the real constraint, and build the system that solves it.
+- One Size Fits None: Each client, each workflow, each constraint is different. You tailor the approach.
+
+Anticipate questions:
+
+- Why Northslope? Post-acquisition, the role is evolving. You see an opportunity to scale the operating model and help the team institutionalize the habits that work. You're drawn to the FDE philosophy and the mission-specific AI thesis.
+- What would you do in the first 90 days? Listen. Map where money is being left on the table (account expansion, renewal risk, pre-sales friction). Pick one high-impact area and build a simple system to address it. Share the result and the process so others can replicate it.
+- How do you think about AI / data platforms? You're curious and learn on the job. You've seen AI workflows fail because the operating model wasn't there. You're not here to be the AI expert; you're here to make sure the AI work actually gets used and produces value.
