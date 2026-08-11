@@ -8,7 +8,7 @@ Onaolapo (Lapo) Odunjo. Role: Manager, AI Strategy and Deployment. Living notes 
 - Founders: Alex Levin and Rebecca Greene (Angi background)
 - Contact: Kelsey Heitz, kelsey@regal.ai
 - Phone interview completed Tuesday, August 4, 2026, 1:30 to 2:00pm ET
-- Second round confirmed Friday, August 7, 2026, 2:30 PM ET with Sahil Mehta, COO
+- Second round scheduled Friday, August 7, 2026, 2:30 PM ET with Sahil Mehta, COO
 - Public role framing: owns end-to-end customer launches, manages Forward Deployed Engineers, defines success metrics, builds implementation playbooks, feeds Product/AI from the field
 - Impact bar called out publicly: measurable value in about the first two weeks
 - NYC-leaning company; confirm hybrid and travel expectations in conversation
@@ -31,6 +31,10 @@ Status: awaiting capture after call. Paste notes here immediately using the sect
 ### Next step
 
 - (fill after call)
+
+## Feedback added Aug 10, 2026
+
+Email from Kelsey Heitz, Aug 10, 2026: Regal has decided not to move forward at this time after the Sahil Mehta conversation on Aug 7. Described as a "highly competitive" process. No further detail on feedback or specific misalignment provided.
 
 ## Prep for Sahil Mehta, Fri, Aug 7, 2026, 2:30 PM ET
 
