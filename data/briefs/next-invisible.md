@@ -75,7 +75,7 @@ Interview loop continues. Panel call scheduled for Tuesday, August 11, 2026, 12:
 
 Hard close language would be: not moving forward, other candidates selected, role filled. Absence of signal is not rejection.
 
-## Next step prep (updated Aug 10, 2026)
+## Next step prep (updated Aug 11, 2026)
 
 ### Interview details
 
