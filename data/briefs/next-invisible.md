@@ -20,17 +20,7 @@ Invisible Technologies. Applied June 2026. Domain and specific product focus not
 
 ## Notes from the hiring manager screen, July 29 (Alex Arutyunyants)
 
-### What they care about
-
 (expand with whatever was captured)
-
-### What landed
-
-(fill)
-
-### Next step
-
-Continue into next round once scheduled. Loop shape still partly unknown.
 
 ## Notes from scheduling thread, August 4 (Kate Alvarico)
 
