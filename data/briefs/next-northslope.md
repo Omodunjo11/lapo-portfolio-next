@@ -88,9 +88,3 @@ Themes to mirror back:
 - Outcomes, Not Activity.
 - Forward Deployed Engineering.
 - One size fits none.
-
-Questions to ask Bill:
-
-- How is the Business Operations & Strategy role evolving post-acquisition? What are the top 2-3 operational inefficiencies or expansion opportunities the team is focused on in the next 6 months?
-- What does success look like in the first 90 days?
-- How does this role interact with the FDE teams and account leadership?
